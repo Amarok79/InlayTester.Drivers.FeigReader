@@ -65,5 +65,27 @@
       <Version>3.10.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Drivers.FeigReader\Test_DefaultFeigReader.cs" />
+    <Compile Include="Drivers.FeigReader\Test_DefaultFeigTransport.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigChecksum.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigCommand.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigException.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigParseResult.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigParseStatus.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigProtocol.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigReader.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigReaderSettings.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigRequest.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigResponse.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigStatus.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigTransferResult.cs" />
+    <Compile Include="Drivers.FeigReader\Test_FeigTransferStatus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\InlayTester.Drivers.FeigReader.licenseheader">
+      <Link>InlayTester.Drivers.FeigReader.licenseheader</Link>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

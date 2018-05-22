@@ -23,17 +23,35 @@
 */
 
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using NFluent;
+using NUnit.Framework;
 
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
+namespace InlayTester.Drivers.Feig
+{
+	[TestFixture]
+	public class Test_FeigParseStatus
+	{
+		[Test]
+		public void TestNames()
+		{
+			Check.That(Enum.GetNames(typeof(FeigParseStatus)))
+				.IsOnlyMadeOf(
+					nameof(FeigParseStatus.Success),
+					nameof(FeigParseStatus.MoreDataNeeded),
+					nameof(FeigParseStatus.ChecksumError)
+				);
+		}
 
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
-
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+		[Test]
+		public void TestValues()
+		{
+			Check.That((Int32)FeigParseStatus.Success)
+				.IsEqualTo(0);
+			Check.That((Int32)FeigParseStatus.MoreDataNeeded)
+				.IsEqualTo(1);
+			Check.That((Int32)FeigParseStatus.ChecksumError)
+				.IsEqualTo(-1);
+		}
+	}
+}

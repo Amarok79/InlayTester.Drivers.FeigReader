@@ -23,17 +23,32 @@
 */
 
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
+namespace InlayTester.Drivers.Feig
+{
+	internal interface IFeigTransport :
+		IDisposable
+	{
+		/// <summary>
+		/// Opens the transport.
+		/// </summary>
+		void Open();
 
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
+		/// <summary>
+		/// Closes the transport.
+		/// </summary>
+		void Close();
 
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+		/// <summary>
+		/// Performs a transfer by sending a request and waiting for a response or timeout.
+		/// </summary>
+		Task<FeigTransferResult> Transfer(
+			FeigRequest request,
+			FeigProtocol protocol,
+			TimeSpan timeout,
+			CancellationToken cancellationToken);
+	}
+}

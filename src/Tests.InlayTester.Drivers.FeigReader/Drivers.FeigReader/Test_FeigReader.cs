@@ -23,17 +23,33 @@
 */
 
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using NFluent;
+using NUnit.Framework;
 
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
+namespace InlayTester.Drivers.Feig
+{
+	[TestFixture]
+	public class Test_FeigReader
+	{
+		[Test]
+		public void Create()
+		{
+			var settings = new FeigReaderSettings {
+				PortName = "COMA"
+			};
 
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
+			var reader = FeigReader.Create(settings);
 
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+			Check.That(reader)
+				.IsInstanceOf<DefaultFeigReader>();
+		}
+
+		[Test]
+		public void Exception_For_NullSettings()
+		{
+			Check.ThatCode(() => FeigReader.Create(null))
+				.Throws<ArgumentNullException>();
+		}
+	}
+}

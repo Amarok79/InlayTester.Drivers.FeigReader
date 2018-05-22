@@ -23,17 +23,38 @@
 */
 
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using NFluent;
+using NUnit.Framework;
 
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
+namespace InlayTester.Drivers.Feig
+{
+	[TestFixture]
+	public class Test_FeigTransferStatus
+	{
+		[Test]
+		public void TestNames()
+		{
+			Check.That(Enum.GetNames(typeof(FeigTransferStatus)))
+				.IsOnlyMadeOf(
+					nameof(FeigTransferStatus.Success),
+					nameof(FeigTransferStatus.Canceled),
+					nameof(FeigTransferStatus.Timeout),
+					nameof(FeigTransferStatus.ChecksumError)
+				);
+		}
 
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
-
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+		[Test]
+		public void TestValues()
+		{
+			Check.That((Int32)FeigTransferStatus.Success)
+				.IsEqualTo(0);
+			Check.That((Int32)FeigTransferStatus.Canceled)
+				.IsEqualTo(1);
+			Check.That((Int32)FeigTransferStatus.Timeout)
+				.IsEqualTo(-1);
+			Check.That((Int32)FeigTransferStatus.ChecksumError)
+				.IsEqualTo(-2);
+		}
+	}
+}

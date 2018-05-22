@@ -22,18 +22,26 @@
  * SOFTWARE.
 */
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+namespace InlayTester.Drivers.Feig
+{
+	/// <summary>
+	/// This enumeration lists possible parse statuses.
+	/// </summary>
+	public enum FeigParseStatus
+	{
+		/// <summary>
+		/// A response has been successfully parsed.
+		/// </summary>
+		Success = 0,
 
+		/// <summary>
+		/// More data is needed for an entire frame.
+		/// </summary>
+		MoreDataNeeded = 1,
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
-
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
-
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+		/// <summary>
+		/// A checksum error has been detected.
+		/// </summary>
+		ChecksumError = -1,
+	}
+}

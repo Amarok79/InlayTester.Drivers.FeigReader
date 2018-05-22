@@ -35,4 +35,10 @@
     <None Include="..\InlayTester.Drivers.FeigReader.licenseheader" Link="InlayTester.Drivers.FeigReader.licenseheader" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Amarok.InlayTester.Shared" Version="1.0.0" />
+    <PackageReference Include="Amarok.InlayTester.Shared.Transports" Version="1.0.0" />
+    <PackageReference Include="Nito.AsyncEx" Version="5.0.0-pre-05" />
+  </ItemGroup>
+
 </Project>

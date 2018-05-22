@@ -22,18 +22,31 @@
  * SOFTWARE.
 */
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+namespace InlayTester.Drivers.Feig
+{
+	/// <summary>
+	/// This enumeration lists possible transfer statuses.
+	/// </summary>
+	public enum FeigTransferStatus
+	{
+		/// <summary>
+		/// The transfer completed successful. A response has been received.
+		/// </summary>
+		Success = 0,
 
+		/// <summary>
+		/// The transfer has been canceled. No response has been received.
+		/// </summary>
+		Canceled = 1,
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
+		/// <summary>
+		/// The transfer has timed out. No response has been received.
+		/// </summary>
+		Timeout = -1,
 
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
-
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+		/// <summary>
+		/// The transfer failed, because the received response cannot be decoded.
+		/// </summary>
+		ChecksumError = -2,
+	}
+}

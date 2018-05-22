@@ -22,18 +22,25 @@
  * SOFTWARE.
 */
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using InlayTester.Shared;
 
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
+namespace InlayTester.Drivers.Feig
+{
+	/// <summary>
+	/// This class provides methods for creating <see cref="IFeigReader"/>.
+	/// </summary>
+	public static class FeigReader
+	{
+		/// <summary>
+		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
+		/// </summary>
+		public static IFeigReader Create(FeigReaderSettings settings)
+		{
+			Verify.NotNull(settings, nameof(settings));
 
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
-
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+			var transport = new DefaultFeigTransport(settings.PortName);
+			return new DefaultFeigReader(settings, transport);
+		}
+	}
+}

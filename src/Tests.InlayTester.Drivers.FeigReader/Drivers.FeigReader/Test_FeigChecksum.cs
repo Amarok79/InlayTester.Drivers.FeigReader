@@ -23,17 +23,40 @@
 */
 
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using System.Text;
+using InlayTester.Shared;
+using NFluent;
+using NUnit.Framework;
 
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
+namespace InlayTester.Drivers.Feig
+{
+	[TestFixture]
+	public class Test_FeigChecksum
+	{
+		[Test]
+		public void UseCase()
+		{
+			var buffer = new Byte[] {
+				0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
+				0x53, 0x0D, 0x30
+			};
 
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
+			var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
 
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+			Check.That(crc)
+				.IsEqualTo(0x0933);
+		}
+
+		[Test]
+		public void UseCase_123456789()
+		{
+			var buffer = Encoding.UTF8.GetBytes("123456789");
+
+			var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
+
+			Check.That(crc)
+				.IsEqualTo(0x6F91);
+		}
+	}
+}

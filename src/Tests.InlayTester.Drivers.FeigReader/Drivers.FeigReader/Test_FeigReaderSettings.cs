@@ -23,17 +23,50 @@
 */
 
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using NFluent;
+using NUnit.Framework;
 
 
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
+namespace InlayTester.Drivers.Feig
+{
+	[TestFixture]
+	public class Test_FeigReaderSettings
+	{
+		[Test]
+		public void Construction_Default()
+		{
+			var settings = new FeigReaderSettings();
 
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
+			Check.That(settings.PortName)
+				.IsNull();
+			Check.That(settings.Address)
+				.IsEqualTo(255);
+			Check.That(settings.Timeout)
+				.IsEqualTo(TimeSpan.FromMilliseconds(1000));
+			Check.That(settings.Protocol)
+				.IsEqualTo(FeigProtocol.Advanced);
+		}
 
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+		[Test]
+		public void Construction_Copy()
+		{
+			var copy = new FeigReaderSettings {
+				PortName = "COM1",
+				Address = 123,
+				Timeout = TimeSpan.FromMilliseconds(500),
+				Protocol = FeigProtocol.Standard
+			};
+
+			var settings = new FeigReaderSettings(copy);
+
+			Check.That(settings.PortName)
+				.IsEqualTo("COM1");
+			Check.That(settings.Address)
+				.IsEqualTo(123);
+			Check.That(settings.Timeout)
+				.IsEqualTo(TimeSpan.FromMilliseconds(500));
+			Check.That(settings.Protocol)
+				.IsEqualTo(FeigProtocol.Standard);
+		}
+	}
+}

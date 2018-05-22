@@ -22,18 +22,21 @@
  * SOFTWARE.
 */
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+namespace InlayTester.Drivers.Feig
+{
+	/// <summary>
+	/// This enumeration lists supported protocols.
+	/// </summary>
+	public enum FeigProtocol
+	{
+		/// <summary>
+		/// Standard Frame Protocol
+		/// </summary>
+		Standard = 0,
 
-
-// Assembly Configuration
-[assembly: CLSCompliant(true)]
-
-// COM Configuration
-[assembly: ComVisible(false)]
-[assembly: Guid("8DF577C6-3714-48A0-9090-2703C7FC4E93")]
-
-// test assemblies
-[assembly: InternalsVisibleTo("Tests.InlayTester.Drivers.FeigReader")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+		/// <summary>
+		/// Advanced Frame Protocol
+		/// </summary>
+		Advanced = 1,
+	}
+}
