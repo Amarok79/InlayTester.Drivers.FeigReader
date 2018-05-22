@@ -38,13 +38,16 @@ namespace InlayTester.Drivers.Feig
 			var settings = new FeigReaderSettings();
 
 			Check.That(settings.PortName)
-				.IsNull();
+				.IsEqualTo("COM1");
 			Check.That(settings.Address)
 				.IsEqualTo(255);
 			Check.That(settings.Timeout)
 				.IsEqualTo(TimeSpan.FromMilliseconds(1000));
 			Check.That(settings.Protocol)
 				.IsEqualTo(FeigProtocol.Advanced);
+
+			Check.That(settings.ToString())
+				.IsEqualTo("Port: COM1, Address: 255, Timeout: 1000 ms, Protocol: Advanced");
 		}
 
 		[Test]
@@ -67,6 +70,9 @@ namespace InlayTester.Drivers.Feig
 				.IsEqualTo(TimeSpan.FromMilliseconds(500));
 			Check.That(settings.Protocol)
 				.IsEqualTo(FeigProtocol.Standard);
+
+			Check.That(settings.ToString())
+				.IsEqualTo("Port: COM1, Address: 123, Timeout: 500 ms, Protocol: Standard");
 		}
 	}
 }

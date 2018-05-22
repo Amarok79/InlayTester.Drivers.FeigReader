@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Globalization;
 using InlayTester.Shared;
 
 
@@ -35,7 +36,7 @@ namespace InlayTester.Drivers.Feig
 	{
 		/// <summary>
 		/// The name of the serial port, i.e. "COM1".
-		/// Defaults to null.
+		/// Defaults to "COM1".
 		/// </summary>
 		public String PortName { get; set; }
 
@@ -63,6 +64,7 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public FeigReaderSettings()
 		{
+			this.PortName = "COM1";
 			this.Address = 0xff;
 			this.Timeout = TimeSpan.FromMilliseconds(1000);
 			this.Protocol = FeigProtocol.Advanced;
@@ -79,6 +81,21 @@ namespace InlayTester.Drivers.Feig
 			this.Address = settings.Address;
 			this.Timeout = settings.Timeout;
 			this.Protocol = settings.Protocol;
+		}
+
+
+		/// <summary>
+		/// Returns a string that represents the current instance.
+		/// </summary>
+		public override String ToString()
+		{
+			return String.Format(CultureInfo.InvariantCulture,
+				"Port: {0}, Address: {1}, Timeout: {2} ms, Protocol: {3}",
+				this.PortName,
+				this.Address,
+				this.Timeout.TotalMilliseconds,
+				this.Protocol
+			);
 		}
 	}
 }
