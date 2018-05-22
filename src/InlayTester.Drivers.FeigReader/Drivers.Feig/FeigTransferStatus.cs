@@ -22,6 +22,7 @@
  * SOFTWARE.
 */
 
+
 namespace InlayTester.Drivers.Feig
 {
 	/// <summary>
