@@ -25,6 +25,7 @@
 using System;
 using System.Globalization;
 using InlayTester.Shared;
+using InlayTester.Shared.Transports;
 
 
 namespace InlayTester.Drivers.Feig
@@ -35,10 +36,10 @@ namespace InlayTester.Drivers.Feig
 	public sealed class FeigReaderSettings
 	{
 		/// <summary>
-		/// The name of the serial port, i.e. "COM1".
-		/// Defaults to "COM1".
+		/// The transport settings for serial communication.
+		/// Defaults to COM1,38400,8,e,n,None.
 		/// </summary>
-		public String PortName { get; set; }
+		public SerialTransportSettings TransportSettings { get; set; }
 
 		/// <summary>
 		/// The address of the RFID reader.
@@ -64,7 +65,14 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public FeigReaderSettings()
 		{
-			this.PortName = "COM1";
+			this.TransportSettings = new SerialTransportSettings {
+				PortName = "COM1",
+				Baud = 38400,
+				DataBits = 8,
+				Parity = Parity.Even,
+				StopBits = StopBits.One,
+				Handshake = Handshake.None,
+			};
 			this.Address = 0xff;
 			this.Timeout = TimeSpan.FromMilliseconds(1000);
 			this.Protocol = FeigProtocol.Advanced;
@@ -77,7 +85,7 @@ namespace InlayTester.Drivers.Feig
 		{
 			Verify.NotNull(settings, nameof(settings));
 
-			this.PortName = settings.PortName;
+			this.TransportSettings = new SerialTransportSettings(settings.TransportSettings);
 			this.Address = settings.Address;
 			this.Timeout = settings.Timeout;
 			this.Protocol = settings.Protocol;
@@ -90,8 +98,8 @@ namespace InlayTester.Drivers.Feig
 		public override String ToString()
 		{
 			return String.Format(CultureInfo.InvariantCulture,
-				"Port: {0}, Address: {1}, Timeout: {2} ms, Protocol: {3}",
-				this.PortName,
+				"Transport: '{0}', Address: {1}, Timeout: {2} ms, Protocol: {3}",
+				this.TransportSettings,
 				this.Address,
 				this.Timeout.TotalMilliseconds,
 				this.Protocol
