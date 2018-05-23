@@ -22,6 +22,9 @@
  * SOFTWARE.
 */
 
+using System;
+using Common.Logging;
+using Common.Logging.Simple;
 using InlayTester.Shared;
 
 
@@ -35,12 +38,33 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static IFeigReader Create(FeigReaderSettings settings)
 		{
 			Verify.NotNull(settings, nameof(settings));
 
-			var transport = new DefaultFeigTransport(settings.PortName);
-			return new DefaultFeigReader(settings, transport);
+			var copy = new FeigReaderSettings(settings);
+			var logger = new NoOpLogger();
+			var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
+			return new DefaultFeigReader(copy, transport, logger);
+		}
+
+		/// <summary>
+		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
+		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+		public static IFeigReader Create(FeigReaderSettings settings, ILog logger)
+		{
+			Verify.NotNull(settings, nameof(settings));
+			Verify.NotNull(logger, nameof(logger));
+
+			var copy = new FeigReaderSettings(settings);
+			var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
+			return new DefaultFeigReader(copy, transport, logger);
 		}
 	}
 }
