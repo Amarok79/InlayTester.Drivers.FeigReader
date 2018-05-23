@@ -38,7 +38,7 @@
   <ItemGroup>
     <PackageReference Include="Amarok.InlayTester.Shared" Version="1.0.0" />
     <PackageReference Include="Amarok.InlayTester.Shared.Transports" Version="1.0.0" />
-    <PackageReference Include="Nito.AsyncEx" Version="5.0.0-pre-05" />
+    <PackageReference Include="Common.Logging" Version="3.4.1" />
   </ItemGroup>
 
 </Project>

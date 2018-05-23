@@ -26,7 +26,9 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Logging.Simple;
 using InlayTester.Shared;
+using InlayTester.Shared.Transports;
 using Moq;
 using NCrunch.Framework;
 using NFluent;
@@ -40,11 +42,11 @@ namespace InlayTester.Drivers.Feig
 		[TestFixture]
 		public class Open
 		{
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Success_For_FirstTime()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -54,11 +56,11 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -70,11 +72,11 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyOpen()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -87,11 +89,11 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, Serial]
+			[Test]
 			public void Exception_For_InvalidPortName()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "InvalidPortName",
+					TransportSettings = new SerialTransportSettings { PortName = "InvalidPortName" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -105,11 +107,11 @@ namespace InlayTester.Drivers.Feig
 		[TestFixture]
 		public class Close
 		{
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_NotOpen()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -119,11 +121,11 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_Open()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -135,11 +137,11 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -155,11 +157,11 @@ namespace InlayTester.Drivers.Feig
 		[TestFixture]
 		public class Dispose
 		{
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_NotOpen()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -169,11 +171,11 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_Open()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -185,11 +187,11 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_AlreadyDisposed()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -205,11 +207,11 @@ namespace InlayTester.Drivers.Feig
 		[TestFixture]
 		public class Transfer_RequestProtocolTimeout
 		{
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -229,7 +231,7 @@ namespace InlayTester.Drivers.Feig
 			{
 				// arrange
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
@@ -251,7 +253,7 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
 					.Returns(Task.FromResult(FeigTransferResult.Success(response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object);
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
 				// act
 				await reader.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token);
@@ -264,11 +266,11 @@ namespace InlayTester.Drivers.Feig
 		[TestFixture]
 		public class Transfer_CommandData
 		{
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -285,7 +287,7 @@ namespace InlayTester.Drivers.Feig
 			{
 				// arrange
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
@@ -304,7 +306,7 @@ namespace InlayTester.Drivers.Feig
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; })
 					.Returns(Task.FromResult(FeigTransferResult.Success(response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object);
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
 				// act
 				await reader.Transfer(
@@ -329,11 +331,11 @@ namespace InlayTester.Drivers.Feig
 		[TestFixture]
 		public class Transfer_CommandTimeoutData
 		{
-			[Test, Serial]
+			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
 				using (var reader = FeigReader.Create(settings))
@@ -350,7 +352,7 @@ namespace InlayTester.Drivers.Feig
 			{
 				// arrange
 				var settings = new FeigReaderSettings {
-					PortName = "COMA",
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
@@ -369,7 +371,7 @@ namespace InlayTester.Drivers.Feig
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; })
 					.Returns(Task.FromResult(FeigTransferResult.Success(response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object);
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
 				// act
 				await reader.Transfer(

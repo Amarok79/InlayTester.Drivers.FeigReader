@@ -26,6 +26,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Logging;
 using InlayTester.Shared;
 
 
@@ -37,15 +38,24 @@ namespace InlayTester.Drivers.Feig
 		// data
 		private readonly FeigReaderSettings mSettings;
 		private readonly IFeigTransport mTransport;
+		private readonly ILog mLogger;
+
+
+		public FeigReaderSettings Settings => mSettings;
+
+		public IFeigTransport Transport => mTransport;
+
+		public ILog Logger => mLogger;
 
 
 		/// <summary>
 		/// Initializes a new instance.
 		/// </summary>
-		public DefaultFeigReader(FeigReaderSettings settings, IFeigTransport transport)
+		public DefaultFeigReader(FeigReaderSettings settings, IFeigTransport transport, ILog logger)
 		{
 			mSettings = settings;
 			mTransport = transport;
+			mLogger = logger;
 		}
 
 
