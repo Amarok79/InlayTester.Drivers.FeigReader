@@ -81,6 +81,9 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Initializes a new instance.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public FeigReaderSettings(FeigReaderSettings settings)
 		{
 			Verify.NotNull(settings, nameof(settings));
