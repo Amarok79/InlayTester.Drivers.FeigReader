@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InlayTester.Drivers.FeigReader", "src\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj", "{D9834205-826D-4CB9-B34D-9CFAF4C064B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InlayTester.Drivers.FeigReader", "src\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj", "{D9834205-826D-4CB9-B34D-9CFAF4C064B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InlayTester.Drivers.FeigReader", "src\Tests.InlayTester.Drivers.FeigReader\Tests.InlayTester.Drivers.FeigReader.csproj", "{E82767EA-8E26-4A06-A288-1B323CE0BED8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debug.InlayTester.Drivers.FeigReader", "src\Debug.InlayTester.Drivers.FeigReader\Debug.InlayTester.Drivers.FeigReader.csproj", "{73172515-3EE6-4FD6-8FC4-C770AA10A42B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E82767EA-8E26-4A06-A288-1B323CE0BED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E82767EA-8E26-4A06-A288-1B323CE0BED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E82767EA-8E26-4A06-A288-1B323CE0BED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73172515-3EE6-4FD6-8FC4-C770AA10A42B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73172515-3EE6-4FD6-8FC4-C770AA10A42B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73172515-3EE6-4FD6-8FC4-C770AA10A42B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73172515-3EE6-4FD6-8FC4-C770AA10A42B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
