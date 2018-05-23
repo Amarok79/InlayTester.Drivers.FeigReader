@@ -25,6 +25,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Logging.Simple;
 using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 using NCrunch.Framework;
@@ -37,20 +38,28 @@ namespace InlayTester.Drivers.Feig
 	[TestFixture]
 	public class Test_DefaultFeigTransport
 	{
-		[Test, Serial]
+		[Test, ExclusivelyUses("COMA")]
 		public void Open_Close_Dispose()
 		{
-			using (var transportA = new DefaultFeigTransport("COMA"))
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA"
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
 			{
 				transportA.Open();
 				transportA.Close();
 			}
 		}
 
-		[Test, Serial]
+		[Test, ExclusivelyUses("COMA", "COMB")]
 		public void ReceivedDataIgnored()
 		{
-			using (var transportA = new DefaultFeigTransport("COMA"))
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA"
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -66,17 +75,24 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Send(BufferSpan.From(0x11, 0x22, 0x33));
+					transportB.Send(BufferSpan.From(
+						0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
+						0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69
+					));
 
-					Thread.Sleep(200);
+					Thread.Sleep(2000);
 				}
 			}
 		}
 
-		[Test, Serial]
+		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Success_ReceivedResponse()
 		{
-			using (var transportA = new DefaultFeigTransport("COMA"))
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA"
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -101,12 +117,16 @@ namespace InlayTester.Drivers.Feig
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
 								0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
 						}
+						else
+						{
+							Assert.Fail("Received unknown data");
+						}
 					};
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
-						TimeSpan.FromMilliseconds(2000),
+						TimeSpan.FromMilliseconds(5000),
 						default);
 
 					Check.That(result.Status)
@@ -123,10 +143,14 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, Serial]
+		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Success_ReceivedResponse_MultiplePackets()
 		{
-			using (var transportA = new DefaultFeigTransport("COMA"))
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA"
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -155,12 +179,16 @@ namespace InlayTester.Drivers.Feig
 							transportB.Send(BufferSpan.From(
 								0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
 						}
+						else
+						{
+							Assert.Fail("Received unknown data");
+						}
 					};
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
-						TimeSpan.FromMilliseconds(2000),
+						TimeSpan.FromMilliseconds(5000),
 						default);
 
 					Check.That(result.Status)
@@ -177,10 +205,14 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, Serial]
+		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Timeout()
 		{
-			using (var transportA = new DefaultFeigTransport("COMA"))
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA"
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -206,6 +238,10 @@ namespace InlayTester.Drivers.Feig
 							transportB.Send(BufferSpan.From(
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
 								0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
+						}
+						else
+						{
+							Assert.Fail("Received unknown data");
 						}
 					};
 
@@ -219,14 +255,20 @@ namespace InlayTester.Drivers.Feig
 						.IsEqualTo(FeigTransferStatus.Timeout);
 					Check.That(result.Response)
 						.IsNull();
+
+					Thread.Sleep(1000);
 				}
 			}
 		}
 
-		[Test, Serial]
+		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Canceled()
 		{
-			using (var transportA = new DefaultFeigTransport("COMA"))
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA"
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -253,6 +295,10 @@ namespace InlayTester.Drivers.Feig
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
 								0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
 						}
+						else
+						{
+							Assert.Fail("Received unknown data");
+						}
 					};
 
 					var cts = new CancellationTokenSource();
@@ -260,7 +306,7 @@ namespace InlayTester.Drivers.Feig
 					var task = transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
-						TimeSpan.FromMilliseconds(100),
+						TimeSpan.FromMilliseconds(5000),
 						cts.Token);
 
 					cts.Cancel();
@@ -271,14 +317,20 @@ namespace InlayTester.Drivers.Feig
 						.IsEqualTo(FeigTransferStatus.Canceled);
 					Check.That(result.Response)
 						.IsNull();
+
+					Thread.Sleep(1000);
 				}
 			}
 		}
 
-		[Test, Serial]
+		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task ChecksumError()
 		{
-			using (var transportA = new DefaultFeigTransport("COMA"))
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA",
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -303,12 +355,16 @@ namespace InlayTester.Drivers.Feig
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
 								0xFF, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
 						}
+						else
+						{
+							Assert.Fail("Received unknown data");
+						}
 					};
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
-						TimeSpan.FromMilliseconds(2000),
+						TimeSpan.FromMilliseconds(5000),
 						default);
 
 					Check.That(result.Status)
@@ -325,10 +381,14 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, Serial]
+		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Success_ReceivedResponse_MultipleTimes()
 		{
-			using (var transportA = new DefaultFeigTransport("COMA"))
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA"
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -353,6 +413,10 @@ namespace InlayTester.Drivers.Feig
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
 								0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
 						}
+						else
+						{
+							Assert.Fail("Received unknown data");
+						}
 					};
 
 					for (Int32 i = 0; i < 100; i++)
@@ -360,7 +424,7 @@ namespace InlayTester.Drivers.Feig
 						var result = await transportA.Transfer(
 							new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
 							FeigProtocol.Advanced,
-							TimeSpan.FromMilliseconds(2000),
+							TimeSpan.FromMilliseconds(5000),
 							default);
 
 						Check.That(result.Status)

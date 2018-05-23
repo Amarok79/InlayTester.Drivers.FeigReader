@@ -25,9 +25,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Logging;
 using InlayTester.Shared;
 using InlayTester.Shared.Transports;
-using Nito.AsyncEx;
 
 
 namespace InlayTester.Drivers.Feig
@@ -37,33 +37,30 @@ namespace InlayTester.Drivers.Feig
 	{
 		// data
 		private readonly Object mSyncThis = new Object();
-		private readonly AsyncAutoResetEvent mResultSignal = new AsyncAutoResetEvent(false);
+		private readonly SerialTransportSettings mSettings;
+		private readonly ILog mLog;
 		private readonly ITransport mTransport;
-		private readonly Task[] mTaskArray = new Task[2];
 
 		// state
-		private Boolean mAcceptResponse;
 		private BufferSpan mReceiveBuffer;
-		private FeigParseResult mResult;
+		private TaskCompletionSource<FeigTransferResult> mCompletionSource;
 
 
-		public DefaultFeigTransport(String portName)
+		public SerialTransportSettings Settings => mSettings;
+
+		public ILog Log => mLog;
+
+
+		public DefaultFeigTransport(SerialTransportSettings settings, ILog logger)
 		{
-			Verify.NotEmpty(portName, nameof(portName));
+			mSettings = settings;
+			mLog = logger;
 
-			// pre-allocate a receive buffer
+			mCompletionSource = new TaskCompletionSource<FeigTransferResult>();
+			mCompletionSource.SetCanceled();
+
 			mReceiveBuffer = BufferSpan.From(new Byte[1024]);
 			mReceiveBuffer = mReceiveBuffer.Clear();
-
-			// set up serial transport
-			var settings = new SerialTransportSettings {
-				PortName = portName,
-				Baud = 38400,
-				DataBits = 8,
-				Parity = Parity.Even,
-				StopBits = StopBits.One,
-				Handshake = Handshake.None,
-			};
 
 			mTransport = Transport.Create(settings);
 			mTransport.Received += _HandleReceived;
@@ -85,7 +82,8 @@ namespace InlayTester.Drivers.Feig
 			mTransport.Dispose();
 		}
 
-		public async Task<FeigTransferResult> Transfer(
+
+		public Task<FeigTransferResult> Transfer(
 			FeigRequest request,
 			FeigProtocol protocol,
 			TimeSpan timeout,
@@ -96,45 +94,45 @@ namespace InlayTester.Drivers.Feig
 				// clear buffers
 				mReceiveBuffer = mReceiveBuffer.Clear();
 
+				// create new completion source for this transfer operation
+				mCompletionSource = new TaskCompletionSource<FeigTransferResult>();
+
+				// handle cancellation
+				var cancellationRegistration = cancellationToken.Register(
+					() => mCompletionSource.TrySetResult(FeigTransferResult.Canceled()),
+					false
+				);
+
+				// handle timeout
+				var cts = new CancellationTokenSource(timeout);
+				var timeoutRegistration = cts.Token.Register(
+					() => mCompletionSource.TrySetResult(FeigTransferResult.Timeout()),
+					false
+				);
+
+				// cleanup after completion
+				mCompletionSource.Task.ContinueWith(_ =>
+				{
+					cancellationRegistration.Dispose();
+					timeoutRegistration.Dispose();
+				},
+				TaskContinuationOptions.ExecuteSynchronously);
+
 				// send request
 				var requestData = request.ToBufferSpan(protocol);
 				mTransport.Send(requestData);
-
-				mAcceptResponse = true;
 			}
 
-			// wait for response or timeout
-			var receiveTask = mResultSignal.WaitAsync(cancellationToken);
-			var timeoutTask = Task.Delay(timeout);
-
-			mTaskArray[0] = receiveTask;
-			mTaskArray[1] = timeoutTask;
-
-			await Task.WhenAny(mTaskArray)
-				.ConfigureAwait(false);
-
-			lock (mSyncThis)
-			{
-				mAcceptResponse = false;
-
-				if (timeoutTask.IsCompleted)
-					return FeigTransferResult.Timeout();
-				if (receiveTask.IsCanceled)
-					return FeigTransferResult.Canceled();
-
-				if (mResult.Status == FeigParseStatus.ChecksumError)
-					return FeigTransferResult.ChecksumError(mResult.Response);
-
-				return FeigTransferResult.Success(mResult.Response);
-			}
+			return mCompletionSource.Task;
 		}
 
 		private void _HandleReceived(Object sender, TransportDataReceivedEventArgs e)
 		{
 			lock (mSyncThis)
 			{
-				if (!mAcceptResponse)
-					return;     // ignore
+				// ignore received data
+				if (mCompletionSource.Task.IsCompleted)
+					return;
 
 				// append to receive buffer
 				mReceiveBuffer = mReceiveBuffer.Append(e.Data);
@@ -145,9 +143,11 @@ namespace InlayTester.Drivers.Feig
 				if (result.Status == FeigParseStatus.MoreDataNeeded)
 					return;     // wait for more data
 
-				// set result
-				mResult = result;
-				mResultSignal.Set();
+				// complete transfer
+				if (result.Status == FeigParseStatus.ChecksumError)
+					mCompletionSource.TrySetResult(FeigTransferResult.ChecksumError(result.Response));
+
+				mCompletionSource.TrySetResult(FeigTransferResult.Success(result.Response));
 			}
 		}
 	}
