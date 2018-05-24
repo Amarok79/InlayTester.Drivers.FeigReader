@@ -439,8 +439,8 @@ namespace InlayTester.Drivers.Feig
 					.IsEqualTo(123);
 				Check.That(request.Command)
 					.IsEqualTo(FeigCommand.BaudRateDetection);
-				Check.That(request.Data.IsEmpty)
-					.IsTrue();
+				Check.That(request.Data.ToArray())
+					.ContainsExactly(0x00);
 
 				Check.That(timeout)
 					.IsEqualTo(TimeSpan.FromMilliseconds(275));
@@ -484,8 +484,8 @@ namespace InlayTester.Drivers.Feig
 					.IsEqualTo(123);
 				Check.That(request.Command)
 					.IsEqualTo(FeigCommand.BaudRateDetection);
-				Check.That(request.Data.IsEmpty)
-					.IsTrue();
+				Check.That(request.Data.ToArray())
+					.ContainsExactly(0x00);
 
 				Check.That(timeout)
 					.IsEqualTo(TimeSpan.FromMilliseconds(275));

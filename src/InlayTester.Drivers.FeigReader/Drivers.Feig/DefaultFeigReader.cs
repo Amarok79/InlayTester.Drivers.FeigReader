@@ -187,7 +187,7 @@ namespace InlayTester.Drivers.Feig
 			CancellationToken cancellationToken = default)
 		{
 			var result = await this.Transfer(
-				FeigCommand.BaudRateDetection, BufferSpan.Empty, timeout, cancellationToken)
+				FeigCommand.BaudRateDetection, BufferSpan.From(0x00), timeout, cancellationToken)
 				.ConfigureAwait(false);
 
 			return result.Status == FeigTransferStatus.Success;
