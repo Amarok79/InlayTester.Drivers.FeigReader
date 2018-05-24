@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using InlayTester.Drivers.Feig;
 using InlayTester.Shared.Transports;
@@ -34,6 +35,15 @@ namespace InlayTester
 	{
 		public static async Task Main()
 		{
+			AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
+			{
+				if (e.Name.StartsWith("RJCP.SerialPortStream", StringComparison.Ordinal))
+					return Assembly.LoadFrom(AppDomain.CurrentDomain.BaseDirectory + "RJCP.SerialPortStream.dll");
+
+				return e.RequestingAssembly;
+			};
+
+
 			var settings = new FeigReaderSettings {
 				TransportSettings = new SerialTransportSettings {
 					PortName = "COM4",
@@ -52,11 +62,22 @@ namespace InlayTester
 			{
 				reader.Open();
 
-				var result = await reader.Transfer(FeigCommand.BaudRateDetection)
-					.ConfigureAwait(false);
+				for (Int32 i = 0; i < 10000; i++)
+				{
+					if (i % 1000 == 0)
+						Console.WriteLine(i);
 
-				if (result.Status != FeigTransferStatus.Success)
-					Console.WriteLine(result.Status);
+					//var result = await reader.Transfer(FeigCommand.BaudRateDetection)
+					//	.ConfigureAwait(false);
+
+					//if (result.Status != FeigTransferStatus.Success)
+					//	Console.WriteLine(result.Status);
+
+					var result = await reader.TestCommunication()
+						.ConfigureAwait(false);
+
+					Console.WriteLine(result);
+				}
 			}
 		}
 	}

@@ -66,7 +66,7 @@ namespace InlayTester.Drivers.Feig
 		/// Performs a transfer operation by sending a request and waiting for the response or timeout.
 		/// 
 		/// This method takes all settings, i.e. the reader address and timeout, from the supplied parameters. 
-		/// Settings supplied during the reader's construction are not respected.
+		/// Global settings supplied during the reader's construction are not respected.
 		/// </summary>
 		/// 
 		/// <param name="request">
@@ -74,9 +74,9 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="protocol">
 		/// The protocol to use in communication with the reader.</param>
 		/// <param name="timeout">
-		/// The timeout for the transfer operation.</param>
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
-		/// A cancellation token that can be used to cancel the transfer operation.</param>
+		/// (Optional) A token that can be used to cancel the transfer operation.</param>
 		/// 
 		/// <exception cref="ObjectDisposedException">
 		/// A method or property was called on an already disposed object.</exception>
@@ -85,7 +85,7 @@ namespace InlayTester.Drivers.Feig
 		Task<FeigTransferResult> Transfer(
 			FeigRequest request,
 			FeigProtocol protocol,
-			TimeSpan timeout,
+			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
 
 		/// <summary>
@@ -135,6 +135,26 @@ namespace InlayTester.Drivers.Feig
 			FeigCommand command,
 			TimeSpan timeout,
 			BufferSpan requestData = default,
+			CancellationToken cancellationToken = default);
+
+
+		/// <summary>
+		/// Tests whether communication to RFID reader is working.
+		/// 
+		/// This method sends a 'Baud Rate Detection' command request to the reader to determine whether 
+		/// communication is working.
+		/// </summary>
+		/// 
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <returns>
+		/// True, if the communication test succeeded; otherwise False. In case of cancellation, False is returned.
+		/// </returns>
+		Task<Boolean> TestCommunication(
+			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
 	}
 }

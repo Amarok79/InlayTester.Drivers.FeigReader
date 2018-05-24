@@ -210,6 +210,38 @@ namespace InlayTester.Drivers.Feig
 		}
 
 
+		/// <summary>
+		/// Tests whether communication to RFID reader is working.
+		/// 
+		/// This method sends a 'Baud Rate Detection' command request to the reader to determine whether 
+		/// communication is working.
+		/// </summary>
+		/// 
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <returns>
+		/// True, if the communication test succeeded; otherwise False. In case of cancellation, False is returned.
+		/// </returns>
+		public async Task<Boolean> TestCommunication(
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default)
+		{
+			var result = await this.Transfer(
+				FeigCommand.BaudRateDetection, 
+				cancellationToken: cancellationToken
+				)
+				.ConfigureAwait(false);
+
+			if (result.Status == FeigTransferStatus.Success)
+				return true;
+
+			return false;
+		}
+
+
 
 
 		//public async Task<Byte[]> ReadConfiguration(Int32 configurationBlock, Boolean readFromEEPROM)
