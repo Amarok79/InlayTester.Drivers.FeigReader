@@ -100,19 +100,16 @@ namespace InlayTester.Drivers.Feig
 
 		/// <summary>
 		/// Performs a transfer operation by sending a request and waiting for the response or timeout.
-		/// 
-		/// This method takes all settings, i.e. the reader address and timeout, from the supplied parameters. 
-		/// Settings supplied during the reader's construction are not respected.
 		/// </summary>
 		/// 
 		/// <param name="request">
 		/// The request to send to the reader.</param>
 		/// <param name="protocol">
-		/// The protocol to use in communication with the reader.</param>
+		/// (Optional) The protocol to use in communication with the reader. If not specified, the gloabl setting is used.</param>
 		/// <param name="timeout">
-		/// The timeout for the transfer operation.</param>
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
-		/// A cancellation token that can be used to cancel the transfer operation.</param>
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
 		/// 
 		/// <exception cref="ObjectDisposedException">
 		/// A method or property was called on an already disposed object.</exception>
@@ -120,70 +117,30 @@ namespace InlayTester.Drivers.Feig
 		/// The transport has not been opened yet.</exception>
 		public Task<FeigTransferResult> Transfer(
 			FeigRequest request,
-			FeigProtocol protocol,
-			TimeSpan timeout,
+			FeigProtocol? protocol = null,
+			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
 			return mTransport.Transfer(
 				request,
-				protocol,
-				timeout,
+				protocol ?? mSettings.Protocol,
+				timeout ?? mSettings.Timeout,
 				cancellationToken
 			);
 		}
 
 		/// <summary>
 		/// Performs a transfer operation by sending a request and waiting for the response or timeout.
-		/// 
-		/// This method takes some settings, i.e. the reader address, protocol and timeout, from the settings 
-		/// supplied during the reader's construction.
 		/// </summary>
 		/// 
 		/// <param name="command">
 		/// The command to execute with this transfer operation.</param>
 		/// <param name="requestData">
-		/// The data associated with the command that should be sent to the reader.</param>
-		/// <param name="cancellationToken">
-		/// A cancellation token that can be used to cancel the transfer operation.</param>
-		/// 
-		/// <exception cref="ObjectDisposedException">
-		/// A method or property was called on an already disposed object.</exception>
-		/// <exception cref="InvalidOperationException">
-		/// The transport has not been opened yet.</exception>
-		public Task<FeigTransferResult> Transfer(
-			FeigCommand command,
-			BufferSpan requestData = default,
-			CancellationToken cancellationToken = default)
-		{
-			var request = new FeigRequest {
-				Address = mSettings.Address,
-				Command = command,
-				Data = requestData,
-			};
-
-			return mTransport.Transfer(
-				request,
-				mSettings.Protocol,
-				mSettings.Timeout,
-				cancellationToken
-			);
-		}
-
-		/// <summary>
-		/// Performs a transfer operation by sending a request and waiting for the response or timeout.
-		/// 
-		/// This method takes some settings, i.e. the reader address and protocol, from the settings 
-		/// supplied during the reader's construction.
-		/// </summary>
-		/// 
-		/// <param name="command">
-		/// The command to execute with this transfer operation.</param>
+		/// (Optional) The data associated with the command that should be sent to the reader.</param>
 		/// <param name="timeout">
-		/// The timeout for the transfer operation.</param>
-		/// <param name="requestData">
-		/// The data associated with the command that should be sent to the reader.</param>
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
-		/// A cancellation token that can be used to cancel the transfer operation.</param>
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
 		/// 
 		/// <exception cref="ObjectDisposedException">
 		/// A method or property was called on an already disposed object.</exception>
@@ -191,8 +148,8 @@ namespace InlayTester.Drivers.Feig
 		/// The transport has not been opened yet.</exception>
 		public Task<FeigTransferResult> Transfer(
 			FeigCommand command,
-			TimeSpan timeout,
 			BufferSpan requestData = default,
+			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
 			var request = new FeigRequest {
@@ -201,7 +158,7 @@ namespace InlayTester.Drivers.Feig
 				Data = requestData,
 			};
 
-			return mTransport.Transfer(
+			return this.Transfer(
 				request,
 				mSettings.Protocol,
 				timeout,
@@ -220,7 +177,7 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="timeout">
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
-		/// (Optional) A token that can be used to cancel the transfer operation.</param>
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
 		/// 
 		/// <returns>
 		/// True, if the communication test succeeded; otherwise False. In case of cancellation, False is returned.
@@ -230,15 +187,10 @@ namespace InlayTester.Drivers.Feig
 			CancellationToken cancellationToken = default)
 		{
 			var result = await this.Transfer(
-				FeigCommand.BaudRateDetection, 
-				cancellationToken: cancellationToken
-				)
+				FeigCommand.BaudRateDetection, BufferSpan.Empty, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
-			if (result.Status == FeigTransferStatus.Success)
-				return true;
-
-			return false;
+			return result.Status == FeigTransferStatus.Success;
 		}
 
 

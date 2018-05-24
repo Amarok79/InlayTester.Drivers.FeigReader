@@ -36,32 +36,32 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// The length of the response frame.
 		/// </summary>
-		public Int32 FrameLength { get; private set; }
+		public Int32 FrameLength { get; set; }
 
 		/// <summary>
 		/// The address of the device.
 		/// </summary>
-		public Byte Address { get; private set; }
+		public Byte Address { get; set; }
 
 		/// <summary>
 		/// The command the reader performed.
 		/// </summary>
-		public FeigCommand Command { get; private set; }
+		public FeigCommand Command { get; set; }
 
 		/// <summary>
 		/// The status of the command.
 		/// </summary>
-		public FeigStatus Status { get; private set; }
+		public FeigStatus Status { get; set; }
 
 		/// <summary>
 		/// The response data for the command.
 		/// </summary>
-		public BufferSpan Data { get; private set; }
+		public BufferSpan Data { get; set; }
 
 		/// <summary>
 		/// The checksum of the response frame.
 		/// </summary>
-		public Int32 Crc { get; private set; }
+		public Int32 Crc { get; set; }
 
 
 		/// <summary>

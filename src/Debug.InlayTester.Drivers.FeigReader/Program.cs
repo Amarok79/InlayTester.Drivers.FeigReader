@@ -55,7 +55,7 @@ namespace InlayTester
 				},
 				Address = 255,
 				Protocol = FeigProtocol.Advanced,
-				Timeout = TimeSpan.FromMilliseconds(1000)
+				Timeout = TimeSpan.FromMilliseconds(250)
 			};
 
 			using (var reader = FeigReader.Create(settings))
