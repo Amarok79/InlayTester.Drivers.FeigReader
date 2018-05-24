@@ -37,22 +37,32 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success_With_Response()
 			{
+				var request = new FeigRequest();
 				var response = new FeigResponse();
-				var result = FeigTransferResult.Success(response);
+				var result = FeigTransferResult.Success(request, response);
 
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.Success);
+				Check.That(result.Request)
+					.IsSameReferenceAs(request);
 				Check.That(result.Response)
 					.IsSameReferenceAs(response);
 
 				Check.That(result.ToString())
-					.IsEqualTo("Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+					.IsEqualTo("Status: Success, Request: { }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+			}
+
+			[Test]
+			public void Exception_With_NullRequest()
+			{
+				Check.ThatCode(() => FeigTransferResult.Success(null, new FeigResponse()))
+					.Throws<ArgumentNullException>();
 			}
 
 			[Test]
 			public void Exception_With_NullResponse()
 			{
-				Check.ThatCode(() => FeigTransferResult.Success(null))
+				Check.ThatCode(() => FeigTransferResult.Success(new FeigRequest(), null))
 					.Throws<ArgumentNullException>();
 			}
 		}

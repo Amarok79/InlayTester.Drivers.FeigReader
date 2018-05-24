@@ -69,11 +69,15 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="request">
 		/// The request to send to the reader.</param>
 		/// <param name="protocol">
-		/// (Optional) The protocol to use in communication with the reader. If not specified, the gloabl setting is used.</param>
+		/// (Optional) The protocol to use in communication with the reader. If not specified, the global setting is used.</param>
 		/// <param name="timeout">
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
 		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <returns>
+		/// An object describing the outcome of the transfer operation.
+		/// </returns>
 		/// 
 		/// <exception cref="ObjectDisposedException">
 		/// A method or property was called on an already disposed object.</exception>
@@ -97,6 +101,10 @@ namespace InlayTester.Drivers.Feig
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
 		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <returns>
+		/// An object describing the outcome of the transfer operation.
+		/// </returns>
 		/// 
 		/// <exception cref="ObjectDisposedException">
 		/// A method or property was called on an already disposed object.</exception>
@@ -127,5 +135,21 @@ namespace InlayTester.Drivers.Feig
 		Task<Boolean> TestCommunication(
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
+
+
+		/// <summary>
+		/// Resets the CPU on the reader.
+		/// </summary>
+		/// 
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		Task ResetCPU(
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
+
+
 	}
 }

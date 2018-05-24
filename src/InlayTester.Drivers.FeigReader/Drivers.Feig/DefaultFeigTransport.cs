@@ -42,6 +42,7 @@ namespace InlayTester.Drivers.Feig
 		private readonly ITransport mTransport;
 
 		// state
+		private FeigRequest mRequest;
 		private BufferSpan mReceiveBuffer;
 		private TaskCompletionSource<FeigTransferResult> mCompletionSource;
 
@@ -99,14 +100,14 @@ namespace InlayTester.Drivers.Feig
 
 				// handle cancellation
 				var cancellationRegistration = cancellationToken.Register(
-					() => mCompletionSource.TrySetResult(FeigTransferResult.Canceled()),
+					() => mCompletionSource.TrySetResult(FeigTransferResult.Canceled(request)),
 					false
 				);
 
 				// handle timeout
 				var cts = new CancellationTokenSource(timeout);
 				var timeoutRegistration = cts.Token.Register(
-					() => mCompletionSource.TrySetResult(FeigTransferResult.Timeout()),
+					() => mCompletionSource.TrySetResult(FeigTransferResult.Timeout(request)),
 					false
 				);
 
@@ -119,6 +120,7 @@ namespace InlayTester.Drivers.Feig
 				TaskContinuationOptions.ExecuteSynchronously);
 
 				// send request
+				mRequest = request;
 				var requestData = request.ToBufferSpan(protocol);
 				mTransport.Send(requestData);
 			}
@@ -145,9 +147,9 @@ namespace InlayTester.Drivers.Feig
 
 				// complete transfer
 				if (result.Status == FeigParseStatus.ChecksumError)
-					mCompletionSource.TrySetResult(FeigTransferResult.ChecksumError(result.Response));
+					mCompletionSource.TrySetResult(FeigTransferResult.ChecksumError(mRequest, result.Response));
 
-				mCompletionSource.TrySetResult(FeigTransferResult.Success(result.Response));
+				mCompletionSource.TrySetResult(FeigTransferResult.Success(mRequest, result.Response));
 			}
 		}
 	}

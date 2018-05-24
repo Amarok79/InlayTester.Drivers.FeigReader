@@ -39,14 +39,20 @@ namespace InlayTester.Drivers.Feig
 		public FeigTransferStatus Status { get; }
 
 		/// <summary>
+		/// Gets the request of this transfer operation.
+		/// </summary>
+		public FeigRequest Request { get; }
+
+		/// <summary>
 		/// Gets the parsed response, if available, otherwise null.
 		/// </summary>
 		public FeigResponse Response { get; }
 
 
-		private FeigTransferResult(FeigTransferStatus status, FeigResponse response)
+		private FeigTransferResult(FeigTransferStatus status, FeigRequest request, FeigResponse response)
 		{
 			this.Status = status;
+			this.Request = request;
 			this.Response = response;
 		}
 
@@ -56,44 +62,50 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public override String ToString()
 		{
-			return $"Status: {Status}, Response: {{ {Response?.ToString() ?? "<null>"} }}";
+			return $"Status: {Status}, Request: {{ {Request.ToString()} }}, Response: {{ {Response?.ToString() ?? "<null>"} }}";
 		}
 
 
 		/// <summary>
 		/// Returns a result indicating a successfully transfer operation.
 		/// </summary>
-		public static FeigTransferResult Success(FeigResponse response)
+		public static FeigTransferResult Success(FeigRequest request, FeigResponse response)
 		{
+			Verify.NotNull(request, nameof(request));
 			Verify.NotNull(response, nameof(response));
 
-			return new FeigTransferResult(FeigTransferStatus.Success, response);
+			return new FeigTransferResult(FeigTransferStatus.Success, request, response);
 		}
 
 		/// <summary>
 		/// Returns a result indicating that the transfer operation has been canceled.
 		/// </summary>
-		public static FeigTransferResult Canceled()
+		public static FeigTransferResult Canceled(FeigRequest request)
 		{
-			return new FeigTransferResult(FeigTransferStatus.Canceled, null);
+			Verify.NotNull(request, nameof(request));
+
+			return new FeigTransferResult(FeigTransferStatus.Canceled, request, null);
 		}
 
 		/// <summary>
 		/// Returns a result indicating that the transfer operation has timed out.
 		/// </summary>
-		public static FeigTransferResult Timeout()
+		public static FeigTransferResult Timeout(FeigRequest request)
 		{
-			return new FeigTransferResult(FeigTransferStatus.Timeout, null);
+			Verify.NotNull(request, nameof(request));
+
+			return new FeigTransferResult(FeigTransferStatus.Timeout, request, null);
 		}
 
 		/// <summary>
 		/// Returns a result indicating that the transfer operation failed due to a checksum error.
 		/// </summary>
-		public static FeigTransferResult ChecksumError(FeigResponse response)
+		public static FeigTransferResult ChecksumError(FeigRequest request, FeigResponse response)
 		{
+			Verify.NotNull(request, nameof(request));
 			Verify.NotNull(response, nameof(response));
 
-			return new FeigTransferResult(FeigTransferStatus.ChecksumError, response);
+			return new FeigTransferResult(FeigTransferStatus.ChecksumError, request, response);
 		}
 	}
 }
