@@ -256,7 +256,12 @@ namespace InlayTester.Drivers.Feig
 			else
 			if (result.Status == FeigTransferStatus.Success)
 			{
-				if (result.Response.Status != FeigStatus.OK)
+				if (result.Response.Status == FeigStatus.OK ||
+					result.Response.Status == FeigStatus.NoTransponder)
+				{
+					return result.Response;     // success
+				}
+				else
 				{
 					throw new FeigException(
 						$"The operation '{result.Request}' failed because the reader returned error code " +
@@ -264,10 +269,6 @@ namespace InlayTester.Drivers.Feig
 						result.Request,
 						result.Response
 					);
-				}
-				else
-				{
-					return result.Response;     // success
 				}
 			}
 			else
