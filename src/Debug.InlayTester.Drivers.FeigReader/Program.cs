@@ -35,15 +35,6 @@ namespace InlayTester
 	{
 		public static async Task Main()
 		{
-			AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
-			{
-				if (e.Name.StartsWith("RJCP.SerialPortStream", StringComparison.Ordinal))
-					return Assembly.LoadFrom(AppDomain.CurrentDomain.BaseDirectory + "RJCP.SerialPortStream.dll");
-
-				return e.RequestingAssembly;
-			};
-
-
 			var settings = new FeigReaderSettings {
 				TransportSettings = new SerialTransportSettings {
 					PortName = "COM4",
