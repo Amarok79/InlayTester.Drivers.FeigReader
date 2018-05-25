@@ -203,6 +203,23 @@ namespace InlayTester.Drivers.Feig
 			return result.Response;
 		}
 
+		private void _ThrowIfNotSuccessful(FeigTransferResult result)
+		{
+			if (result.Status == FeigTransferStatus.Timeout)
+				throw new TimeoutException();
+			else
+			if (result.Status == FeigTransferStatus.Canceled)
+				throw new OperationCanceledException();
+			else
+			if (result.Status == FeigTransferStatus.ChecksumError)
+				throw new FeigException(result.Request, result.Response);
+			else
+			{
+				if (result.Response.Status != FeigStatus.OK)
+					throw new FeigException(result.Request, result.Response);
+			}
+		}
+
 
 
 
@@ -256,22 +273,7 @@ namespace InlayTester.Drivers.Feig
 		}
 
 
-		private void _ThrowIfNotSuccessful(FeigTransferResult result)
-		{
-			if (result.Status == FeigTransferStatus.Timeout)
-				throw new TimeoutException();
-			else
-			if (result.Status == FeigTransferStatus.Canceled)
-				throw new OperationCanceledException();
-			else
-			if (result.Status == FeigTransferStatus.ChecksumError)
-				throw new FeigException(result.Request, result.Response);
-			else
-			{
-				if (result.Response.Status != FeigStatus.OK)
-					throw new FeigException(result.Request, result.Response);
-			}
-		}
+
 
 
 		//public async Task<Byte[]> ReadConfiguration(Int32 configurationBlock, Boolean readFromEEPROM)

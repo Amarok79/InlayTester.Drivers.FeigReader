@@ -64,6 +64,11 @@ namespace InlayTester
 					//if (result.Status != FeigTransferStatus.Success)
 					//	Console.WriteLine(result.Status);
 
+					await reader.ResetCPU()
+						.ConfigureAwait(false);
+
+					await Task.Delay(25);
+
 					var result = await reader.TestCommunication()
 						.ConfigureAwait(false);
 
