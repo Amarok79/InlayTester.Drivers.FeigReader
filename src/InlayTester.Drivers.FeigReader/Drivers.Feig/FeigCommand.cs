@@ -37,6 +37,7 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		None = 0x00,
 
+
 		/// <summary>
 		/// 52h Baud Rate Detection
 		/// </summary>

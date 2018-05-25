@@ -46,6 +46,11 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Initializes a new instance.
 		/// </summary>
+		/// 
+		/// <param name="request">
+		/// The request sent to the reader, if available, otherwise null.</param>
+		/// <param name="response">
+		/// The response received from the reader, if available, otherwise null.</param>
 		public FeigException(FeigRequest request, FeigResponse response)
 		{
 			this.Request = request;
@@ -65,6 +70,10 @@ namespace InlayTester.Drivers.Feig
 		/// 
 		/// <param name="message">
 		/// The error message that explains the reason for the exception.</param>
+		/// <param name="request">
+		/// The request sent to the reader, if available, otherwise null.</param>
+		/// <param name="response">
+		/// The response received from the reader, if available, otherwise null.</param>
 		public FeigException(String message, FeigRequest request, FeigResponse response)
 			: base(message)
 		{
