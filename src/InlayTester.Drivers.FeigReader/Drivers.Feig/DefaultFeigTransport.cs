@@ -63,7 +63,7 @@ namespace InlayTester.Drivers.Feig
 			mReceiveBuffer = BufferSpan.From(new Byte[1024]);
 			mReceiveBuffer = mReceiveBuffer.Clear();
 
-			mTransport = Transport.Create(settings);
+			mTransport = Transport.Create(settings, logger);
 			mTransport.Received += _HandleReceived;
 		}
 

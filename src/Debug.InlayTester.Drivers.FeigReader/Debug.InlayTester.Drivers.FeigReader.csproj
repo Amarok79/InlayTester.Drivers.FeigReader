@@ -65,6 +65,9 @@
       <Link>InlayTester.Drivers.FeigReader.licenseheader</Link>
     </None>
     <None Include="App.config" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
@@ -91,7 +94,7 @@
     <PackageReference Include="Common.Logging">
       <Version>3.4.1</Version>
     </PackageReference>
-    <PackageReference Include="Common.Logging.NLog41">
+    <PackageReference Include="Common.Logging.NLog444">
       <Version>3.4.1</Version>
     </PackageReference>
   </ItemGroup>

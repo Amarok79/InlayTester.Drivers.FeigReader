@@ -24,6 +24,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Common.Logging.NLog;
 using InlayTester.Drivers.Feig;
 using InlayTester.Shared.Transports;
 
@@ -34,6 +35,22 @@ namespace InlayTester
 	{
 		public static async Task Main()
 		{
+			var config = new Common.Logging.Configuration.LogConfiguration {
+				FactoryAdapter = new Common.Logging.Configuration.FactoryAdapterConfiguration {
+					Type = typeof(Common.Logging.NLog.NLogLoggerFactoryAdapter).AssemblyQualifiedName,
+					Arguments = new Common.Logging.Configuration.NameValueCollection {
+						{ "configType", "FILE" },
+						{ "configFile", "./nlog.config" }
+					}
+				}
+			};
+
+			Common.Logging.LogManager.Configure(config);
+
+			var log = Common.Logging.LogManager.GetLogger("Feig");
+
+			log.Info("STARTED");
+
 			var settings = new FeigReaderSettings {
 				TransportSettings = new SerialTransportSettings {
 					PortName = "COM4",
@@ -48,7 +65,7 @@ namespace InlayTester
 				Timeout = TimeSpan.FromMilliseconds(1000),
 			};
 
-			using (IFeigReader reader = FeigReader.Create(settings))
+			using (IFeigReader reader = FeigReader.Create(settings, log))
 			{
 				reader.Open();
 
