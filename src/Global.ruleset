@@ -727,6 +727,7 @@
     <Rule Id="THR016" Action="None" />
   </Rules>
   <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <Rule Id="S101" Action="None" />
     <Rule Id="S104" Action="Warning" />
     <Rule Id="S107" Action="Warning" />
     <Rule Id="S1109" Action="Warning" />
