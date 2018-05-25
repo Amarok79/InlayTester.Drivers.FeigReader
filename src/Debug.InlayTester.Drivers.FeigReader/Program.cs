@@ -25,7 +25,6 @@
 using System;
 using System.Threading.Tasks;
 using InlayTester.Drivers.Feig;
-using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 
 
@@ -46,12 +45,14 @@ namespace InlayTester
 				},
 				Address = 255,
 				Protocol = FeigProtocol.Advanced,
-				Timeout = TimeSpan.FromMilliseconds(250),
+				Timeout = TimeSpan.FromMilliseconds(1000),
 			};
 
 			using (IFeigReader reader = FeigReader.Create(settings))
 			{
 				reader.Open();
+
+				var data = await reader.ReadConfiguration(3, true);
 
 
 				for (Int32 i = 0; i < 10000; i++)
