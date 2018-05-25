@@ -49,5 +49,10 @@ namespace InlayTester.Drivers.Feig
 		/// The transfer failed, because the received response cannot be decoded.
 		/// </summary>
 		ChecksumError = -2,
+
+		/// <summary>
+		/// The transfer failed, because an unexpected response has been received.
+		/// </summary>
+		UnexpectedResponse = -3,
 	}
 }

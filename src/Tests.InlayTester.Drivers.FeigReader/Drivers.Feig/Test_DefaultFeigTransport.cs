@@ -382,6 +382,64 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		[Test, ExclusivelyUses("COMA", "COMB")]
+		public async Task UnexpectedResponse()
+		{
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA",
+			};
+
+			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			{
+				var settings = new SerialTransportSettings {
+					PortName = "COMB",
+					Baud = 38400,
+					DataBits = 8,
+					Parity = Parity.Even,
+					StopBits = StopBits.One,
+					Handshake = Handshake.None,
+				};
+
+				using (var transportB = Transport.Create(settings))
+				{
+					transportA.Open();
+					transportB.Open();
+
+					transportB.Received += (sender, e) =>
+					{
+						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
+						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+						{
+							transportB.Send(BufferSpan.From(
+								0x02, 0x00, 0x08, 0xff, 0x80, 0x81, 0x40, 0x3a,
+								0x02, 0x00, 0x08, 0xff, 0x80, 0x82, 0xdb, 0x08,
+								0x02, 0x00, 0x08, 0xff, 0x80, 0x83, 0x52
+							));
+						}
+						else
+						{
+							Assert.Fail("Received unknown data");
+						}
+					};
+
+					var result = await transportA.Transfer(
+						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						FeigProtocol.Advanced,
+						TimeSpan.FromMilliseconds(5000),
+						default);
+
+					Check.That(result.Status)
+						.IsEqualTo(FeigTransferStatus.UnexpectedResponse);
+					Check.That(result.Response.Address)
+						.IsEqualTo(0xff);
+					Check.That(result.Response.Command)
+						.IsEqualTo(FeigCommand.ReadConfiguration);
+					Check.That(result.Response.Status)
+						.IsEqualTo(FeigStatus.LengthError);
+				}
+			}
+		}
+
+		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Success_ReceivedResponse_MultipleTimes()
 		{
 			var settingsA = new SerialTransportSettings {

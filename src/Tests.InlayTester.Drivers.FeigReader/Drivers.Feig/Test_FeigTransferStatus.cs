@@ -40,7 +40,8 @@ namespace InlayTester.Drivers.Feig
 					nameof(FeigTransferStatus.Success),
 					nameof(FeigTransferStatus.Canceled),
 					nameof(FeigTransferStatus.Timeout),
-					nameof(FeigTransferStatus.ChecksumError)
+					nameof(FeigTransferStatus.ChecksumError),
+					nameof(FeigTransferStatus.UnexpectedResponse)
 				);
 		}
 
@@ -55,6 +56,8 @@ namespace InlayTester.Drivers.Feig
 				.IsEqualTo(-1);
 			Check.That((Int32)FeigTransferStatus.ChecksumError)
 				.IsEqualTo(-2);
+			Check.That((Int32)FeigTransferStatus.UnexpectedResponse)
+				.IsEqualTo(-3);
 		}
 	}
 }

@@ -107,5 +107,17 @@ namespace InlayTester.Drivers.Feig
 
 			return new FeigTransferResult(FeigTransferStatus.ChecksumError, request, response);
 		}
+
+		/// <summary>
+		/// Returns a result indicating that the transfer operation failed because an unexpected response 
+		/// has been received.
+		/// </summary>
+		public static FeigTransferResult UnexpectedResponse(FeigRequest request, FeigResponse response)
+		{
+			Verify.NotNull(request, nameof(request));
+			Verify.NotNull(response, nameof(response));
+
+			return new FeigTransferResult(FeigTransferStatus.UnexpectedResponse, request, response);
+		}
 	}
 }

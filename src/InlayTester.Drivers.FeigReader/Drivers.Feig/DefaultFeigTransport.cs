@@ -149,6 +149,9 @@ namespace InlayTester.Drivers.Feig
 				if (result.Status == FeigParseStatus.ChecksumError)
 					mCompletionSource.TrySetResult(FeigTransferResult.ChecksumError(mRequest, result.Response));
 
+				if (result.Response.Command != mRequest.Command)
+					mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest, result.Response));
+
 				mCompletionSource.TrySetResult(FeigTransferResult.Success(mRequest, result.Response));
 			}
 		}

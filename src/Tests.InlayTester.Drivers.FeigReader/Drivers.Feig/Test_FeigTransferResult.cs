@@ -143,5 +143,40 @@ namespace InlayTester.Drivers.Feig
 					.Throws<ArgumentNullException>();
 			}
 		}
+
+		[TestFixture]
+		public class UnexpectedResponse
+		{
+			[Test]
+			public void Success()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse();
+				var result = FeigTransferResult.UnexpectedResponse(request, response);
+
+				Check.That(result.Status)
+					.IsEqualTo(FeigTransferStatus.UnexpectedResponse);
+				Check.That(result.Request)
+					.IsSameReferenceAs(request);
+				Check.That(result.Response)
+					.IsSameReferenceAs(response);
+				Check.That(result.ToString())
+					.IsEqualTo("Status: UnexpectedResponse, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+			}
+
+			[Test]
+			public void Exception_With_NullRequest()
+			{
+				Check.ThatCode(() => FeigTransferResult.UnexpectedResponse(null, new FeigResponse()))
+					.Throws<ArgumentNullException>();
+			}
+
+			[Test]
+			public void Exception_With_NullResponse()
+			{
+				Check.ThatCode(() => FeigTransferResult.UnexpectedResponse(new FeigRequest(), null))
+					.Throws<ArgumentNullException>();
+			}
+		}
 	}
 }
