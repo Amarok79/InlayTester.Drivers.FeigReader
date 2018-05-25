@@ -34,7 +34,7 @@ namespace InlayTester.Drivers.Feig
 	public class Test_FeigReaderSettings
 	{
 		[Test]
-		public void Construction_Default()
+		public void Construction_Defaults()
 		{
 			var settings = new FeigReaderSettings();
 
@@ -67,6 +67,11 @@ namespace InlayTester.Drivers.Feig
 			var copy = new FeigReaderSettings {
 				TransportSettings = new SerialTransportSettings {
 					PortName = "COM3",
+					Baud = 19200,
+					DataBits = 7,
+					Parity = Parity.Mark,
+					StopBits = StopBits.Two,
+					Handshake = Handshake.RequestToSendXOnXOff,
 				},
 				Address = 123,
 				Timeout = TimeSpan.FromMilliseconds(500),
@@ -78,15 +83,15 @@ namespace InlayTester.Drivers.Feig
 			Check.That(settings.TransportSettings.PortName)
 				.IsEqualTo("COM3");
 			Check.That(settings.TransportSettings.Baud)
-				.IsEqualTo(9600);
+				.IsEqualTo(19200);
 			Check.That(settings.TransportSettings.DataBits)
-				.IsEqualTo(8);
+				.IsEqualTo(7);
 			Check.That(settings.TransportSettings.Parity)
-				.IsEqualTo(Parity.None);
+				.IsEqualTo(Parity.Mark);
 			Check.That(settings.TransportSettings.StopBits)
-				.IsEqualTo(StopBits.One);
+				.IsEqualTo(StopBits.Two);
 			Check.That(settings.TransportSettings.Handshake)
-				.IsEqualTo(Handshake.None);
+				.IsEqualTo(Handshake.RequestToSendXOnXOff);
 			Check.That(settings.Address)
 				.IsEqualTo(123);
 			Check.That(settings.Timeout)
@@ -95,7 +100,7 @@ namespace InlayTester.Drivers.Feig
 				.IsEqualTo(FeigProtocol.Standard);
 
 			Check.That(settings.ToString())
-				.IsEqualTo("Transport: 'COM3,9600,8,None,One,None', Address: 123, Timeout: 500 ms, Protocol: Standard");
+				.IsEqualTo("Transport: 'COM3,19200,7,Mark,Two,RequestToSendXOnXOff', Address: 123, Timeout: 500 ms, Protocol: Standard");
 		}
 	}
 }

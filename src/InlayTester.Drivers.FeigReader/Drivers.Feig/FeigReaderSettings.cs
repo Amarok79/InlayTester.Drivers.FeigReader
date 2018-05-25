@@ -73,7 +73,7 @@ namespace InlayTester.Drivers.Feig
 				StopBits = StopBits.One,
 				Handshake = Handshake.None,
 			};
-			this.Address = 0xff;
+			this.Address = 0xFF;
 			this.Timeout = TimeSpan.FromMilliseconds(1000);
 			this.Protocol = FeigProtocol.Advanced;
 		}
