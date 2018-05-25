@@ -53,6 +53,7 @@ namespace InlayTester
 			{
 				reader.Open();
 
+
 				for (Int32 i = 0; i < 10000; i++)
 				{
 					if (i % 1000 == 0)
