@@ -69,6 +69,7 @@
     <Compile Include="Drivers.Feig\Test_DefaultFeigReader.cs" />
     <Compile Include="Drivers.Feig\Test_DefaultFeigTransport.cs" />
     <Compile Include="Drivers.Feig\Test_FeigChecksum.cs" />
+    <Compile Include="Drivers.Feig\Test_FeigISOStandardCommandCommand.cs" />
     <Compile Include="Drivers.Feig\Test_FeigCommand.cs" />
     <Compile Include="Drivers.Feig\Test_FeigException.cs" />
     <Compile Include="Drivers.Feig\Test_FeigParseResult.cs" />
