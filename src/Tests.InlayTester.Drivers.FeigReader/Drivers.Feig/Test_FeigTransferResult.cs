@@ -49,7 +49,7 @@ namespace InlayTester.Drivers.Feig
 					.IsSameReferenceAs(response);
 
 				Check.That(result.ToString())
-					.IsEqualTo("Status: Success, Request: { }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+					.IsEqualTo("Status: Success, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
 			}
 
 			[Test]
@@ -73,15 +73,18 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
-				var result = FeigTransferResult.Canceled();
+				var request = new FeigRequest();
+				var result = FeigTransferResult.Canceled(request);
 
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.Canceled);
+				Check.That(result.Request)
+					.IsSameReferenceAs(request);
 				Check.That(result.Response)
 					.IsNull();
 
 				Check.That(result.ToString())
-					.IsEqualTo("Status: Canceled, Response: { <null> }");
+					.IsEqualTo("Status: Canceled, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }");
 			}
 		}
 
@@ -91,15 +94,18 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
-				var result = FeigTransferResult.Timeout();
+				var request = new FeigRequest();
+				var result = FeigTransferResult.Timeout(request);
 
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.Timeout);
+				Check.That(result.Request)
+					.IsSameReferenceAs(request);
 				Check.That(result.Response)
 					.IsNull();
 
 				Check.That(result.ToString())
-					.IsEqualTo("Status: Timeout, Response: { <null> }");
+					.IsEqualTo("Status: Timeout, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }");
 			}
 		}
 
@@ -109,15 +115,32 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				var request = new FeigRequest();
 				var response = new FeigResponse();
-				var result = FeigTransferResult.ChecksumError(response);
+				var result = FeigTransferResult.ChecksumError(request, response);
 
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.ChecksumError);
+				Check.That(result.Request)
+					.IsSameReferenceAs(request);
 				Check.That(result.Response)
 					.IsSameReferenceAs(response);
 				Check.That(result.ToString())
-					.IsEqualTo("Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+					.IsEqualTo("Status: ChecksumError, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+			}
+
+			[Test]
+			public void Exception_With_NullRequest()
+			{
+				Check.ThatCode(() => FeigTransferResult.ChecksumError(null, new FeigResponse()))
+					.Throws<ArgumentNullException>();
+			}
+
+			[Test]
+			public void Exception_With_NullResponse()
+			{
+				Check.ThatCode(() => FeigTransferResult.ChecksumError(new FeigRequest(), null))
+					.Throws<ArgumentNullException>();
 			}
 		}
 	}

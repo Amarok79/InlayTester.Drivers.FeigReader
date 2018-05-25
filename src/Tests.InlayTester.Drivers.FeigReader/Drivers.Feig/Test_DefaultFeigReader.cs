@@ -249,7 +249,7 @@ namespace InlayTester.Drivers.Feig
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
 				transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
-					.Returns(Task.FromResult(FeigTransferResult.Success(response)));
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
@@ -281,7 +281,7 @@ namespace InlayTester.Drivers.Feig
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
 				transport.Setup(x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default))
-					.Returns(Task.FromResult(FeigTransferResult.Success(response)));
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
@@ -334,7 +334,7 @@ namespace InlayTester.Drivers.Feig
 
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, It.IsAny<TimeSpan>(), cts.Token))
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; })
-					.Returns(Task.FromResult(FeigTransferResult.Success(response)));
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
@@ -377,7 +377,7 @@ namespace InlayTester.Drivers.Feig
 
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; })
-					.Returns(Task.FromResult(FeigTransferResult.Success(response)));
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
@@ -422,7 +422,7 @@ namespace InlayTester.Drivers.Feig
 
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
-					.Returns(Task.FromResult(FeigTransferResult.Success(response)));
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
@@ -467,7 +467,7 @@ namespace InlayTester.Drivers.Feig
 
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
-					.Returns(Task.FromResult(FeigTransferResult.Timeout()));
+					.Returns(() => Task.FromResult(FeigTransferResult.Timeout(request)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
