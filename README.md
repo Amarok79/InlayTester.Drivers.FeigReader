@@ -9,7 +9,7 @@ For development, you need *Visual Studio 2017* (v15.7 or later). For running the
 
 ### Documentation
 
-#### IFeigReader
+#### Create, Open, Close
 
 To communicate with a Feig RFID reader/module connected via RS232, you first have to instantiate a **IFeigReader**. This is done via factory method **FeigReader.Create(..)**, which requires an instance of **FeigReaderSettings**.
 
@@ -43,6 +43,12 @@ So far, we only configured and created an instance of our reader in code. The sp
     }
 
 Just, don't forget to dispose the **IFeigReader** at the end.
+
+#### Transfer
+
+*work in progress*
+
+
 
 
 
