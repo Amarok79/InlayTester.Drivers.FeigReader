@@ -194,13 +194,13 @@ namespace InlayTester.Drivers.Feig
 			CancellationToken cancellationToken = default);
 
 
-
-
 		/// <summary>
 		/// Tests whether communication to RFID reader is working.
 		/// 
 		/// This method sends a 'Baud Rate Detection' command request to the reader to determine whether 
 		/// communication is working.
+		/// 
+		/// This method doesn't throw exceptions for communication errors.
 		/// </summary>
 		/// 
 		/// <param name="timeout">
@@ -211,24 +211,40 @@ namespace InlayTester.Drivers.Feig
 		/// <returns>
 		/// True, if the communication test succeeded; otherwise False. In case of cancellation, False is returned.
 		/// </returns>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
 		Task<Boolean> TestCommunication(
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
 
-
 		/// <summary>
 		/// Resets the CPU on the reader.
+		/// 
+		/// The RF-field will be switched off during a CPU reset.
 		/// </summary>
 		/// 
 		/// <param name="timeout">
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
 		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
 		Task ResetCPU(
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
-
-
-
 	}
 }

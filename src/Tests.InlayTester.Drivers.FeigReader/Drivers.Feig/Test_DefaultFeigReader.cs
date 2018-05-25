@@ -849,5 +849,38 @@ namespace InlayTester.Drivers.Feig
 					.IsEqualTo(default);
 			}
 		}
+
+		[TestFixture]
+		public class ResetCPU
+		{
+			[Test]
+			public async Task Success()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var response = new FeigResponse { Status = FeigStatus.OK };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				await reader.ResetCPU();
+
+				// assert
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.CPUReset);
+				Check.That(request.Data.ToArray())
+					.IsEmpty();
+			}
+		}
 	}
 }
