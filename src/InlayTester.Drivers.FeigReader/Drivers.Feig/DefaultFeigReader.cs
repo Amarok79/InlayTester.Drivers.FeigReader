@@ -59,6 +59,8 @@ namespace InlayTester.Drivers.Feig
 		}
 
 
+		#region ++ IFeigReader Interface (Open, Close, Dispose) ++
+
 		/// <summary>
 		/// Opens the transport (serial connection) to the Feig RFID reader.
 		/// 
@@ -97,9 +99,16 @@ namespace InlayTester.Drivers.Feig
 			mTransport.Dispose();
 		}
 
+		#endregion
+
+		#region ++ IFeigReader Interface (Transfer) ++
 
 		/// <summary>
-		/// Performs a transfer operation by sending a request and waiting for the response or timeout.
+		/// Performs a transfer operation by sending a request to the reader/module and then waits for 
+		/// a corresponding response from the reader/module or for timeout, whatever comes first.
+		/// 
+		/// This method doesn't throw exceptions for timeout or failed transfer operations. Instead, a 
+		/// result object providing detailed information about the transfer operation is returned.
 		/// </summary>
 		/// 
 		/// <param name="request">
@@ -134,7 +143,11 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		/// <summary>
-		/// Performs a transfer operation by sending a request and waiting for the response or timeout.
+		/// Performs a transfer operation by sending a request to the reader/module and then waits for 
+		/// a corresponding response from the reader/module or for timeout, whatever comes first.
+		/// 
+		/// This method doesn't throw exceptions for timeout or failed transfer operations. Instead, a 
+		/// result object providing detailed information about the transfer operation is returned.
 		/// </summary>
 		/// 
 		/// <param name="command">
@@ -173,6 +186,16 @@ namespace InlayTester.Drivers.Feig
 				cancellationToken
 			);
 		}
+
+		#endregion
+
+
+
+
+
+
+
+
 
 
 		public async Task<FeigResponse> Execute(
