@@ -38,7 +38,7 @@ namespace InlayTester.Drivers.Feig
 		OK = 0x00,
 
 		/// <summary>
-		/// 01h No Transponder
+		/// 01h No Transponder (Success)
 		/// </summary>
 		NoTransponder = 0x01,
 
