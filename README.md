@@ -34,7 +34,7 @@ To communicate with a Feig RFID reader/module connected via RS232, you first hav
 
 These settings are used to provide configuration about serial communication (**SerialTransportSettings**) to the reader, but also to provide Feig-specific global settings like **Address**, **Protocol** and **Timeout**.
 
-So far, we only configured and created an instance of our reader in code. The specified serial port hasn't been opened yet. To open communication you have to call **Open()** on the reader. If needed, you can **Close()** and re-open the communication transport multiple times on the same **IFeigReader** instance.
+So far, we only configured and created an instance of our reader in code. The specified serial port hasn't been opened yet. To open communication you have to call **Open()** on the reader. If necessary, you can **Close()** and re-open the communication transport multiple times on the same **IFeigReader** instance.
 
     using (IFeigReader reader = FeigReader.Create(settings))
     {
@@ -58,13 +58,13 @@ Now, to communicate with the reader/module, we perform a transfer operation, whi
     FeigTransferResult result = await reader.Transfer(request)
         .ConfigureAwait(false);
 
-Here we first instantiate a **FeigRequest** and then call the async **Transfer(..)**. The used overload uses *protocol* and *timeout* from global settings supplied earlier during reader construction. To override global settings for this single transfer operation only, you can provide them as arguments. You can even provide a cancellation token to cancel the transfer operation at any time.
+Here we first instantiate a **FeigRequest** and then call the async **Transfer(..)**. The method overload uses *protocol* and *timeout* from global settings supplied earlier during reader construction. To override global settings for this single transfer operation only, you can provide them as additional arguments. You can even provide a cancellation token to cancel the transfer operation at any time.
 
     FeigTransferResult result = await reader.Transfer(
             request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(1000), cancellationToken)
         .ConfigureAwait(false);
 
-Now, **Transfer(..)** never throws exceptions for timeout, cancellation or errors. Instead, it returns a specific result object that contains detailed information about the transfer operation. You can use it to determine whether the transfer operation succeeded.
+Now, **Transfer(..)** never throws exceptions for timeout, cancellation or errors. Instead, it returns a specific result object that contains detailed information about the transfer operation. You can use it to determine whether the transfer operation succeeded as shown in the following code snippet.
 
     if (result.Status == FeigTransferStatus.Canceled)
     {
@@ -94,7 +94,7 @@ Now, **Transfer(..)** never throws exceptions for timeout, cancellation or error
         }
     }
 
-Well, error handling is a bit complex. But, generally, you won't need to do it yourself. **Transfer(..)** represents a low-level method that gives you full control over transfer operations. In general, you will use other high-level methods better suited for most cases. It's just that you know you can gain full control.
+Error handling seems a bit tedious. But, you won't need to do it yourself. **Transfer(..)** represents a low-level method that gives you full control over transfer operations. In general, you will use other high-level methods better suited for most cases. It's just that you know you can do it that way.
 
 ### Execute
 
