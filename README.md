@@ -1,4 +1,4 @@
-### Introduction
+## Introduction
 
 This library is available as NuGet package:
 [Amarok.InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/Amarok.InlayTester.Drivers.FeigReader/) (*available soon*)
@@ -7,9 +7,9 @@ The library is compiled as *.NET Standard 2.0* library. Tests are performed with
 
 For development, you need *Visual Studio 2017* (v15.7 or later). For running the tests you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
-### Documentation
+## Documentation
 
-#### Create, Open, Close
+### Create, Open, Close
 
 To communicate with a Feig RFID reader/module connected via RS232, you first have to instantiate a **IFeigReader**. This is done via factory method **FeigReader.Create(..)**, which requires an instance of **FeigReaderSettings**.
 
@@ -45,7 +45,7 @@ So far, we only configured and created an instance of our reader in code. The sp
 
 Just, don't forget to dispose the **IFeigReader** at the end.
 
-#### Transfer
+### Transfer
 
 Now, to communicate with the reader/module, we perform a transfer operation, which sends a request to the reader and then waits for a response.
 
@@ -96,7 +96,7 @@ Now, **Transfer(..)** never throws exceptions for timeout, cancellation or error
 
 Well, error handling is a bit complex. But, generally, you won't need to do it yourself. **Transfer(..)** represents a low-level method that gives you full control over transfer operations. In general, you will use other high-level methods better suited for most cases. It's just that you know you can gain full control.
 
-#### Execute
+### Execute
 
 *work in progress*
 
