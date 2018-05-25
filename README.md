@@ -125,5 +125,15 @@ This overload constructs the necessary **FeigRequest** internally.
 
 ### Common Commands
 
+Most Feig RFID reader/modules support a set of common commands. These commands are already implemented and exposed as methods on the **IFeigReader** interface. For example, instead of sending a request with **FeigCommand.GetSoftwareVersion** and manually parse the returning bytes, invoke **GetSoftwareVersion(..)** instead.
+
+Following commands are supported out-of-the-box:
+
+| Feig Command              | Method on IFeigReader |
+| ---                       | ---
+| 0x52  Baud Rate Detection | TestCommunication()   |
+| 0x63  CPU Reset           | ResetCPU()            |
+
+
 *work in progress*
 
