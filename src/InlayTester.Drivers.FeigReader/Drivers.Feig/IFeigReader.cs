@@ -126,6 +126,77 @@ namespace InlayTester.Drivers.Feig
 
 
 		/// <summary>
+		/// Executes the supplied command by sending a request to the reader/module and then waits for 
+		/// a corresponding response from the reader/module or for timeout, whatever comes first.
+		/// 
+		/// This methods throws appropriate exceptions for timeout, cancellation or failed operations.
+		/// </summary>
+		/// 
+		/// <param name="request">
+		/// The request to send to the reader.</param>
+		/// <param name="protocol">
+		/// (Optional) The protocol to use in communication with the reader. If not specified, the global setting is used.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		Task<FeigResponse> Execute(
+			FeigRequest request,
+			FeigProtocol? protocol = null,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Executes the supplied command by sending a request to the reader/module and then waits for 
+		/// a corresponding response from the reader/module or for timeout, whatever comes first.
+		/// 
+		/// This methods throws appropriate exceptions for timeout, cancellation or failed operations.
+		/// </summary>
+		/// 
+		/// <param name="command">
+		/// The command to execute with this transfer operation.</param>
+		/// <param name="requestData">
+		/// (Optional) The data associated with the command that should be sent to the reader.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		Task<FeigResponse> Execute(
+			FeigCommand command,
+			BufferSpan requestData = default,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
+
+
+
+		/// <summary>
 		/// Tests whether communication to RFID reader is working.
 		/// 
 		/// This method sends a 'Baud Rate Detection' command request to the reader to determine whether 

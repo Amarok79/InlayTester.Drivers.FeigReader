@@ -53,49 +53,6 @@ namespace InlayTester
 			{
 				reader.Open();
 
-				var request = new FeigRequest {
-					Address = 0xFF,
-					Command = FeigCommand.CPUReset,
-					Data = BufferSpan.Empty,
-				};
-
-				FeigTransferResult result = await reader.Transfer(request)
-					.ConfigureAwait(false);
-
-
-				if (result.Status == FeigTransferStatus.Canceled)
-				{
-					// canceled
-				}
-				else
-				if (result.Status == FeigTransferStatus.Timeout)
-				{
-					// timeout, no response received
-				}
-				else
-				if (result.Status == FeigTransferStatus.ChecksumError)
-				{
-					// corrupted response received; communication error
-				}
-				else
-				if (result.Status == FeigTransferStatus.Success)
-				{
-					if (result.Response.Status != FeigStatus.OK)
-					{
-						// received response, but reader returned error
-					}
-					else
-					{
-						// received response; interpret data
-						Console.WriteLine(result.Response.Data);
-					}
-				}
-
-				
-
-
-
-
 				for (Int32 i = 0; i < 10000; i++)
 				{
 					if (i % 1000 == 0)

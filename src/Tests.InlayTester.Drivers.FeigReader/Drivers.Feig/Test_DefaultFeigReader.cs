@@ -399,6 +399,362 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		[TestFixture]
+		public class Execute_Request
+		{
+			[Test, ExclusivelyUses("COMA")]
+			public void Exception_When_AlreadyDisposed()
+			{
+				var settings = new FeigReaderSettings {
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				};
+
+				using (var reader = FeigReader.Create(settings))
+				{
+					reader.Dispose();
+
+					var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
+
+					Check.ThatAsyncCode(async () => await reader.Execute(request, FeigProtocol.Advanced))
+						.Throws<ObjectDisposedException>();
+				}
+			}
+
+			[Test]
+			public async Task Success_AllSpecified()
+			{
+				// arrange
+				var settings = new FeigReaderSettings {
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+					Address = 123,
+					Protocol = FeigProtocol.Standard,
+					Timeout = TimeSpan.FromMilliseconds(275)
+				};
+
+				var request = new FeigRequest {
+					Command = FeigCommand.GetSoftwareVersion,
+					Address = 236,
+				};
+
+				var response = new FeigResponse();
+
+				var timeout = TimeSpan.FromMilliseconds(1000);
+				var cts = new CancellationTokenSource();
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				var rsp = await reader.Execute(request, FeigProtocol.Advanced, timeout, cts.Token);
+
+				// assert
+				transport.Verify(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token), Times.Once);
+
+				Check.That(rsp)
+					.IsSameReferenceAs(response);
+			}
+
+			[Test]
+			public async Task Success_MinimumSpecified()
+			{
+				// arrange
+				var settings = new FeigReaderSettings {
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+					Address = 123,
+					Protocol = FeigProtocol.Standard,
+					Timeout = TimeSpan.FromMilliseconds(275)
+				};
+
+				var request = new FeigRequest {
+					Command = FeigCommand.GetSoftwareVersion,
+					Address = 236,
+				};
+
+				var response = new FeigResponse();
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				var rsp = await reader.Execute(request);
+
+				// assert
+				transport.Verify(x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default), Times.Once);
+
+				Check.That(rsp)
+					.IsSameReferenceAs(response);
+			}
+
+			[Test]
+			public void Timeout()
+			{
+				var request = new FeigRequest();
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(request))
+					.Throws<TimeoutException>();
+			}
+
+			[Test]
+			public void Canceled()
+			{
+				var request = new FeigRequest();
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(request))
+					.Throws<OperationCanceledException>();
+			}
+
+			[Test]
+			public void ChecksumError()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse();
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.ChecksumError(request, response)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(request))
+					.Throws<FeigException>()
+					.WithProperty(x => x.Request, request)
+					.And
+					.WithProperty(x => x.Response, response);
+			}
+
+			[Test]
+			public void Success_NotOk()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse { Status = FeigStatus.GeneralError };
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(request))
+					.Throws<FeigException>()
+					.WithProperty(x => x.Request, request)
+					.And
+					.WithProperty(x => x.Response, response);
+			}
+		}
+
+		[TestFixture]
+		public class Execute_Command
+		{
+			[Test, ExclusivelyUses("COMA")]
+			public void Exception_When_AlreadyDisposed()
+			{
+				var settings = new FeigReaderSettings {
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				};
+
+				using (var reader = FeigReader.Create(settings))
+				{
+					reader.Dispose();
+
+					Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+						.Throws<ObjectDisposedException>();
+				}
+			}
+
+			[Test]
+			public async Task Success_AllSpecified()
+			{
+				// arrange
+				var settings = new FeigReaderSettings {
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+					Address = 123,
+					Protocol = FeigProtocol.Standard,
+					Timeout = TimeSpan.FromMilliseconds(275)
+				};
+
+				var request = new FeigRequest {
+					Command = FeigCommand.GetSoftwareVersion,
+					Address = 236,
+				};
+
+				var response = new FeigResponse();
+
+				var timeout = TimeSpan.FromMilliseconds(1000);
+				var cts = new CancellationTokenSource();
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, timeout, cts.Token))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				var rsp = await reader.Execute(FeigCommand.GetSoftwareVersion, BufferSpan.Empty, timeout, cts.Token);
+
+				// assert
+				transport.Verify(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, timeout, cts.Token), Times.Once);
+
+				Check.That(rsp)
+					.IsSameReferenceAs(response);
+			}
+
+			[Test]
+			public async Task Success_MinimumSpecified()
+			{
+				// arrange
+				var settings = new FeigReaderSettings {
+					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+					Address = 123,
+					Protocol = FeigProtocol.Standard,
+					Timeout = TimeSpan.FromMilliseconds(275)
+				};
+
+				var request = new FeigRequest {
+					Command = FeigCommand.GetSoftwareVersion,
+					Address = 236,
+				};
+
+				var response = new FeigResponse();
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				var rsp = await reader.Execute(FeigCommand.GetSoftwareVersion);
+
+				// assert
+				transport.Verify(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default), Times.Once);
+
+				Check.That(rsp)
+					.IsSameReferenceAs(response);
+			}
+
+			[Test]
+			public void Timeout()
+			{
+				var request = new FeigRequest();
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+					.Throws<TimeoutException>();
+			}
+
+			[Test]
+			public void Canceled()
+			{
+				var request = new FeigRequest();
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+					.Throws<OperationCanceledException>();
+			}
+
+			[Test]
+			public void ChecksumError()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse();
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.ChecksumError(request, response)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+					.Throws<FeigException>()
+					.WithProperty(x => x.Request, request)
+					.And
+					.WithProperty(x => x.Response, response);
+			}
+
+			[Test]
+			public void Success_NotOk()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse { Status = FeigStatus.GeneralError };
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+					.Throws<FeigException>()
+					.WithProperty(x => x.Request, request)
+					.And
+					.WithProperty(x => x.Response, response);
+			}
+		}
+
+		[TestFixture]
 		public class TestCommunication
 		{
 			[Test]

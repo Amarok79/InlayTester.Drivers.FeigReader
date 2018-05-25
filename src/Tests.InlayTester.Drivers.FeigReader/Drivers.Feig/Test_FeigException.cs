@@ -86,6 +86,25 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		[Test]
+		public void Succeed_With_MessageRequestResponse()
+		{
+			// arrange
+			var request = new FeigRequest();
+			var response = new FeigResponse();
+			var exception = new FeigException("MSG", request, response);
+
+			// assert
+			Check.That(exception.Message)
+				.IsEqualTo("MSG");
+			Check.That(exception.InnerException)
+				.IsNull();
+			Check.That(exception.Request)
+				.IsSameReferenceAs(request);
+			Check.That(exception.Response)
+				.IsSameReferenceAs(response);
+		}
+
+		[Test]
 		public void Succeed_With_MessageInnerException()
 		{
 			// arrange

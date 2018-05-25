@@ -65,6 +65,19 @@ namespace InlayTester.Drivers.Feig
 		/// 
 		/// <param name="message">
 		/// The error message that explains the reason for the exception.</param>
+		public FeigException(String message, FeigRequest request, FeigResponse response)
+			: base(message)
+		{
+			this.Request = request;
+			this.Response = response;
+		}
+
+		/// <summary>
+		/// Initializes a new instance.
+		/// </summary>
+		/// 
+		/// <param name="message">
+		/// The error message that explains the reason for the exception.</param>
 		public FeigException(String message)
 			: base(message)
 		{

@@ -189,15 +189,36 @@ namespace InlayTester.Drivers.Feig
 
 		#endregion
 
+		#region ++ IFeigReader Interface (Execute) ++
 
-
-
-
-
-
-
-
-
+		/// <summary>
+		/// Executes the supplied command by sending a request to the reader/module and then waits for 
+		/// a corresponding response from the reader/module or for timeout, whatever comes first.
+		/// 
+		/// This methods throws appropriate exceptions for timeout, cancellation or failed operations.
+		/// </summary>
+		/// 
+		/// <param name="request">
+		/// The request to send to the reader.</param>
+		/// <param name="protocol">
+		/// (Optional) The protocol to use in communication with the reader. If not specified, the global setting is used.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
 		public async Task<FeigResponse> Execute(
 			FeigRequest request,
 			FeigProtocol? protocol = null,
@@ -207,41 +228,115 @@ namespace InlayTester.Drivers.Feig
 			var result = await this.Transfer(request, protocol, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
-			_ThrowIfNotSuccessful(result);
+			if (result.Status == FeigTransferStatus.Timeout)
+			{
+				var resolvedTimeout = timeout ?? mSettings.Timeout;
 
-			return result.Response;
+				throw new TimeoutException(
+					$"The operation '{request}' timed out after {resolvedTimeout.TotalMilliseconds} ms."
+				);
+			}
+			else
+			if (result.Status == FeigTransferStatus.Canceled)
+			{
+				throw new OperationCanceledException(
+					$"The operation '{request}' has been canceled."
+				);
+			}
+			else
+			if (result.Status == FeigTransferStatus.ChecksumError)
+			{
+				throw new FeigException(
+					$"The operation '{result.Request}' failed because of a communication error. " +
+					$"Received corrupted response: '{result.Request}'.",
+					result.Request,
+					result.Response
+				);
+			}
+			else
+			if (result.Status == FeigTransferStatus.Success)
+			{
+				if (result.Response.Status != FeigStatus.OK)
+				{
+					throw new FeigException(
+						$"The operation '{result.Request}' failed because the reader returned error code " +
+						$"'{result.Response.Status}'. Received response: '{result.Response}'.",
+						result.Request,
+						result.Response
+					);
+				}
+				else
+				{
+					return result.Response;     // success
+				}
+			}
+			else
+			{
+				throw new InvalidOperationException("Encountered unknown FeigTransferStatus!");
+			}
 		}
 
-		public async Task<FeigResponse> Execute(
+		/// <summary>
+		/// Executes the supplied command by sending a request to the reader/module and then waits for 
+		/// a corresponding response from the reader/module or for timeout, whatever comes first.
+		/// 
+		/// This methods throws appropriate exceptions for timeout, cancellation or failed operations.
+		/// </summary>
+		/// 
+		/// <param name="command">
+		/// The command to execute with this transfer operation.</param>
+		/// <param name="requestData">
+		/// (Optional) The data associated with the command that should be sent to the reader.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		public Task<FeigResponse> Execute(
 			FeigCommand command,
 			BufferSpan requestData = default,
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			var result = await this.Transfer(command, requestData, timeout, cancellationToken)
-				.ConfigureAwait(false);
+			var request = new FeigRequest {
+				Address = mSettings.Address,
+				Command = command,
+				Data = requestData,
+			};
 
-			_ThrowIfNotSuccessful(result);
-
-			return result.Response;
+			return this.Execute(
+				request,
+				mSettings.Protocol,
+				timeout,
+				cancellationToken
+			);
 		}
 
-		private void _ThrowIfNotSuccessful(FeigTransferResult result)
-		{
-			if (result.Status == FeigTransferStatus.Timeout)
-				throw new TimeoutException();
-			else
-			if (result.Status == FeigTransferStatus.Canceled)
-				throw new OperationCanceledException();
-			else
-			if (result.Status == FeigTransferStatus.ChecksumError)
-				throw new FeigException(result.Request, result.Response);
-			else
-			{
-				if (result.Response.Status != FeigStatus.OK)
-					throw new FeigException(result.Request, result.Response);
-			}
-		}
+		#endregion
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
