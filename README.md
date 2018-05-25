@@ -45,6 +45,7 @@ So far, we only configured and created an instance of our reader in code. The sp
 
 Just, don't forget to dispose the **IFeigReader** at the end.
 
+
 ### Transfer
 
 Now, to communicate with the reader/module, we perform a transfer operation, which sends a request to the reader and then waits for a response.
@@ -96,7 +97,33 @@ Now, **Transfer(..)** never throws exceptions for timeout, cancellation or error
 
 Error handling seems a bit tedious. But, you won't need to do it yourself. **Transfer(..)** represents a low-level method that gives you full control over transfer operations. In general, you will use other high-level methods better suited for most cases. It's just that you know you can do it that way.
 
+
 ### Execute
+
+**Execute(..)** is one of those higher-level methods that does this result-code checking for you and that throws appropriate exceptions in certain error cases. On success, the method returns the received response.
+
+    var request = new FeigRequest {
+        Address = 0xFF,
+        Command = FeigCommand.CPUReset,
+        Data = BufferSpan.Empty,
+    };
+
+    var response = await reader.Execute(request)
+        .ConfigureAwait(false);
+        
+    var data = response.Data;
+
+In case of timeout, a **TimeoutException** is thrown. In case of cancellation an **OperationCanceledException**. Otherwise, if a communication error ocurred or the reader/module returned an error code, an exception of type **FeigException** is thrown. In all other cases, the received **FeigResponse** is returned.
+
+Regarding the previous code snippet. There exists another overload that allows you to write this in a much shorter way.
+
+    var response = await reader.Execute(FeigCommand.CPUReset)
+        .ConfigureAwait(false);
+        
+This overload constructs the necessary **FeigRequest** internally.
+
+
+### Common Commands
 
 *work in progress*
 
