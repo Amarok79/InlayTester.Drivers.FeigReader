@@ -9,6 +9,8 @@ For development, you need *Visual Studio 2017* (v15.7 or later). For running the
 
 ### Documentation
 
+#### IFeigReader
+
 To communicate with a Feig RFID reader/module connected via RS232, you first have to instantiate a **IFeigReader**. This is done via factory method **FeigReader.Create(..)**, which requires an instance of **FeigReaderSettings**.
 
     var settings = new FeigReaderSettings {
@@ -31,7 +33,17 @@ To communicate with a Feig RFID reader/module connected via RS232, you first hav
     }
 These settings are used to provide configuration about serial communication (**SerialTransportSettings**) to the reader, but also to provide Feig-specific global settings like **Address**, **Protocol** and **Timeout**.
 
-(!) Don't forget to dispose the **IFeigReader** at the end.
+So far, we only configured and created an instance of our reader in code. The specified serial port hasn't been opened yet. To open communication you have to call **Open()** on the reader. If needed, you can **Close()** and re-open the communication transport multiple times on the same **IFeigReader** instance.
+
+    using (IFeigReader reader = FeigReader.Create(settings))
+    {
+        reader.Open();      // now serial port is open
+        reader.Close();     // serial port is closed again
+        reader.Open();      // it's possible to open/close it multiple times
+    }
+
+Just, don't forget to dispose the **IFeigReader** at the end.
+
 
 
 
