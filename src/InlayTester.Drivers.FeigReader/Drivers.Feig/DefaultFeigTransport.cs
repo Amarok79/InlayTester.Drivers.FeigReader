@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
@@ -116,14 +117,45 @@ namespace InlayTester.Drivers.Feig
 
 				// handle cancellation
 				var cancellationRegistration = cancellationToken.Register(
-					() => mCompletionSource.TrySetResult(FeigTransferResult.Canceled(mRequest)),
+					() =>
+					{
+						#region (logging)
+						{
+							if (mLog.IsInfoEnabled)
+							{
+								mLog.InfoFormat(CultureInfo.InvariantCulture,
+									"[{0}]  CANCELED",
+									mSettings.PortName
+								);
+							}
+						}
+						#endregion
+
+						mCompletionSource.TrySetResult(FeigTransferResult.Canceled(mRequest));
+					},
 					false
 				);
 
 				// handle timeout
 				var cts = new CancellationTokenSource(timeout);
 				var timeoutRegistration = cts.Token.Register(
-					() => mCompletionSource.TrySetResult(FeigTransferResult.Timeout(mRequest)),
+					() =>
+					{
+						#region (logging)
+						{
+							if (mLog.IsInfoEnabled)
+							{
+								mLog.InfoFormat(CultureInfo.InvariantCulture,
+									"[{0}]  TIMEOUT   {1} ms",
+									mSettings.PortName,
+									timeout.TotalMilliseconds
+								);
+							}
+						}
+						#endregion
+
+						mCompletionSource.TrySetResult(FeigTransferResult.Timeout(mRequest));
+					},
 					false
 				);
 
@@ -136,6 +168,20 @@ namespace InlayTester.Drivers.Feig
 				TaskContinuationOptions.ExecuteSynchronously);
 
 				// send request
+
+				#region (logging)
+				{
+					if (mLog.IsInfoEnabled)
+					{
+						mLog.InfoFormat(CultureInfo.InvariantCulture,
+							"[{0}]  SENT      {1}",
+							mSettings.PortName,
+							mRequest
+						);
+					}
+				}
+				#endregion
+
 				var requestData = request.ToBufferSpan(protocol);
 				mTransport.Send(requestData);
 			}
@@ -147,28 +193,111 @@ namespace InlayTester.Drivers.Feig
 		{
 			lock (mSyncThis)
 			{
-				// ignore received data
 				if (mCompletionSource.Task.IsCompleted)
-					return;
+				{
+					// ignore received data
 
-				// append to receive buffer
-				mReceiveBuffer = mReceiveBuffer.Append(e.Data);
+					#region (logging)
+					{
+						mLog.TraceFormat(CultureInfo.InvariantCulture,
+							"[{0}]  IGNORED   {1}",
+							mSettings.PortName,
+							e.Data
+						);
+					}
+					#endregion
+				}
+				else
+				{
+					mReceiveBuffer = mReceiveBuffer.Append(e.Data);
+					var result = FeigResponse.TryParse(mReceiveBuffer, mProtocol);
 
-				// parse response
-				var result = FeigResponse.TryParse(mReceiveBuffer, mProtocol);
+					if (result.Status == FeigParseStatus.MoreDataNeeded)
+					{
+						// wait for more data
 
-				if (result.Status == FeigParseStatus.MoreDataNeeded)
-					return;     // wait for more data
+						#region (logging)
+						{
+							if (mLog.IsTraceEnabled)
+							{
+								mLog.TraceFormat(CultureInfo.InvariantCulture,
+									"[{0}]  PARSED    MoreDataNeeded;  ReceiveBuffer: {1}",
+									mSettings.PortName,
+									mReceiveBuffer
+								);
+							}
+						}
+						#endregion
+					}
+					else
+					if (result.Status == FeigParseStatus.FrameError ||
+						result.Status == FeigParseStatus.ChecksumError)
+					{
+						// complete with error
 
-				// complete transfer
-				if (result.Status == FeigParseStatus.FrameError ||
-					result.Status == FeigParseStatus.ChecksumError)
-					mCompletionSource.TrySetResult(FeigTransferResult.CommunicationError(mRequest, result.Response));
+						#region (logging)
+						{
+							if (mLog.IsTraceEnabled)
+							{
+								mLog.TraceFormat(CultureInfo.InvariantCulture,
+									"[{0}]  PARSED    {1};  ReceiveBuffer: {2}",
+									mSettings.PortName,
+									result.Status,
+									mReceiveBuffer
+								);
+							}
+							if (mLog.IsInfoEnabled)
+							{
+								mLog.InfoFormat(CultureInfo.InvariantCulture,
+									"[{0}]  COMMERR",
+									mSettings.PortName
+								);
+							}
+						}
+						#endregion
 
-				if (result.Response.Command != mRequest.Command)
-					mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest, result.Response));
+						mCompletionSource.TrySetResult(FeigTransferResult.CommunicationError(mRequest));
+					}
+					else
+					if (result.Response.Command != mRequest.Command)
+					{
+						// complete with error
 
-				mCompletionSource.TrySetResult(FeigTransferResult.Success(mRequest, result.Response));
+						#region (logging)
+						{
+							if (mLog.IsInfoEnabled)
+							{
+								mLog.InfoFormat(CultureInfo.InvariantCulture,
+									"[{0}]  UNEXPECT  {1}",
+									mSettings.PortName,
+									result.Response
+								);
+							}
+						}
+						#endregion
+
+						mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest, result.Response));
+					}
+					else
+					{
+						// complete with success
+
+						#region (logging)
+						{
+							if (mLog.IsInfoEnabled)
+							{
+								mLog.InfoFormat(CultureInfo.InvariantCulture,
+									"[{0}]  RECEIVED  {1}",
+									mSettings.PortName,
+									result.Response
+								);
+							}
+						}
+						#endregion
+
+						mCompletionSource.TrySetResult(FeigTransferResult.Success(mRequest, result.Response));
+					}
+				}
 			}
 		}
 	}

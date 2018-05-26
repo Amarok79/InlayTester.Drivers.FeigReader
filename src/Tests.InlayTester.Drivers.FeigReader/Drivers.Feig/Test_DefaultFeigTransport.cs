@@ -25,6 +25,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Logging;
 using Common.Logging.Simple;
 using InlayTester.Shared;
 using InlayTester.Shared.Transports;
@@ -45,7 +46,8 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				transportA.Open();
 				transportA.Close();
@@ -59,7 +61,8 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -92,7 +95,8 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -150,7 +154,8 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -212,7 +217,8 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -268,7 +274,8 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -324,13 +331,14 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		[Test, ExclusivelyUses("COMA", "COMB")]
-		public async Task CommunicationError()
+		public async Task CommunicationError_ChecksumError()
 		{
 			var settingsA = new SerialTransportSettings {
 				PortName = "COMA",
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -369,14 +377,61 @@ namespace InlayTester.Drivers.Feig
 
 					Check.That(result.Status)
 						.IsEqualTo(FeigTransferStatus.CommunicationError);
-					Check.That(result.Response.Address)
-						.IsEqualTo(0x00);
-					Check.That(result.Response.Command)
-						.IsEqualTo(FeigCommand.GetSoftwareVersion);
-					Check.That(result.Response.Status)
-						.IsEqualTo(FeigStatus.OK);
-					Check.That(result.Response.Data.ToArray())
-						.ContainsExactly(0x03, 0x03, 0xFF, 0x44, 0x53, 0x0d, 0x30);
+					Check.That(result.Response)
+						.IsNull();
+				}
+			}
+		}
+
+		[Test, ExclusivelyUses("COMA", "COMB")]
+		public async Task CommunicationError_FrameError()
+		{
+			var settingsA = new SerialTransportSettings {
+				PortName = "COMA",
+			};
+
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
+			{
+				var settings = new SerialTransportSettings {
+					PortName = "COMB",
+					Baud = 38400,
+					DataBits = 8,
+					Parity = Parity.Even,
+					StopBits = StopBits.One,
+					Handshake = Handshake.None,
+				};
+
+				using (var transportB = Transport.Create(settings))
+				{
+					transportA.Open();
+					transportB.Open();
+
+					transportB.Received += (sender, e) =>
+					{
+						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
+						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+						{
+							transportB.Send(BufferSpan.From(
+								0xFF, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
+								0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
+						}
+						else
+						{
+							Assert.Fail("Received unknown data");
+						}
+					};
+
+					var result = await transportA.Transfer(
+						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						FeigProtocol.Advanced,
+						TimeSpan.FromMilliseconds(5000),
+						default);
+
+					Check.That(result.Status)
+						.IsEqualTo(FeigTransferStatus.CommunicationError);
+					Check.That(result.Response)
+						.IsNull();
 				}
 			}
 		}
@@ -388,7 +443,8 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA",
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",
@@ -446,7 +502,8 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			using (var transportA = new DefaultFeigTransport(settingsA, new NoOpLogger()))
+			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings {
 					PortName = "COMB",

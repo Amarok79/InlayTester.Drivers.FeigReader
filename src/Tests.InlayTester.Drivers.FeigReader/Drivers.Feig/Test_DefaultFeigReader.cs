@@ -534,23 +534,20 @@ namespace InlayTester.Drivers.Feig
 			public void ChecksumError()
 			{
 				var request = new FeigRequest();
-				var response = new FeigResponse();
 
 				// arrange
 				var settings = new FeigReaderSettings();
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-					.Returns(Task.FromResult(FeigTransferResult.CommunicationError(request, response)));
+					.Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(request))
 					.Throws<FeigException>()
-					.WithProperty(x => x.Request, request)
-					.And
-					.WithProperty(x => x.Response, response);
+					.WithProperty(x => x.Request, request);
 			}
 
 			[Test]
@@ -711,23 +708,20 @@ namespace InlayTester.Drivers.Feig
 			public void ChecksumError()
 			{
 				var request = new FeigRequest();
-				var response = new FeigResponse();
 
 				// arrange
 				var settings = new FeigReaderSettings();
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-					.Returns(Task.FromResult(FeigTransferResult.CommunicationError(request, response)));
+					.Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
 					.Throws<FeigException>()
-					.WithProperty(x => x.Request, request)
-					.And
-					.WithProperty(x => x.Response, response);
+					.WithProperty(x => x.Request, request);
 			}
 
 			[Test]
