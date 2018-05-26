@@ -37,10 +37,12 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success_With_Response()
 			{
+				// act
 				var request = new FeigRequest();
 				var response = new FeigResponse();
 				var result = FeigTransferResult.Success(request, response);
 
+				// assert
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.Success);
 				Check.That(result.Request)
@@ -73,9 +75,11 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				// act
 				var request = new FeigRequest();
 				var result = FeigTransferResult.Canceled(request);
 
+				// assert
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.Canceled);
 				Check.That(result.Request)
@@ -101,9 +105,11 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				// act
 				var request = new FeigRequest();
 				var result = FeigTransferResult.Timeout(request);
 
+				// assert
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.Timeout);
 				Check.That(result.Request)
@@ -129,10 +135,12 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				// act
 				var request = new FeigRequest();
 				var response = new FeigResponse();
 				var result = FeigTransferResult.ChecksumError(request, response);
 
+				// assert
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.ChecksumError);
 				Check.That(result.Request)
@@ -164,10 +172,12 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				// act
 				var request = new FeigRequest();
 				var response = new FeigResponse();
 				var result = FeigTransferResult.UnexpectedResponse(request, response);
 
+				// assert
 				Check.That(result.Status)
 					.IsEqualTo(FeigTransferStatus.UnexpectedResponse);
 				Check.That(result.Request)
