@@ -35,7 +35,7 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Succeed_With_RequestResponse()
 		{
-			// arrange
+			// act
 			var request = new FeigRequest();
 			var response = new FeigResponse();
 			var exception = new FeigException(request, response);
@@ -54,7 +54,7 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Succeed_With_DefaultConstructor()
 		{
-			// arrange
+			// act
 			var exception = new FeigException();
 
 			// assert
@@ -71,7 +71,7 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Succeed_With_Message()
 		{
-			// arrange
+			// act
 			var exception = new FeigException("MSG");
 
 			// assert
@@ -88,7 +88,7 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Succeed_With_MessageRequestResponse()
 		{
-			// arrange
+			// act
 			var request = new FeigRequest();
 			var response = new FeigResponse();
 			var exception = new FeigException("MSG", request, response);
@@ -107,7 +107,7 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Succeed_With_MessageInnerException()
 		{
-			// arrange
+			// act
 			var innerException = new ApplicationException();
 			var exception = new FeigException("MSG", innerException);
 
