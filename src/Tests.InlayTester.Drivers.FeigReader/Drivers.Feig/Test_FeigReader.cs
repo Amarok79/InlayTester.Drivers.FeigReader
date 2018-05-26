@@ -39,9 +39,11 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				// act
 				var settings = new FeigReaderSettings();
 				var reader = FeigReader.Create(settings);
 
+				// assert
 				Check.That(reader)
 					.IsInstanceOf<DefaultFeigReader>();
 
@@ -78,10 +80,12 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				// act
 				var settings = new FeigReaderSettings();
 				var logger = new ConsoleOutLogger("A", LogLevel.Info, false, false, false, "G");
 				var reader = FeigReader.Create(settings, logger);
 
+				// assert
 				Check.That(reader)
 					.IsInstanceOf<DefaultFeigReader>();
 

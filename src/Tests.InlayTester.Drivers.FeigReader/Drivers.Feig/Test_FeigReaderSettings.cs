@@ -36,8 +36,10 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Construction_Defaults()
 		{
+			// act
 			var settings = new FeigReaderSettings();
 
+			// assert
 			Check.That(settings.TransportSettings.PortName)
 				.IsEqualTo("COM1");
 			Check.That(settings.TransportSettings.Baud)
@@ -64,6 +66,7 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Construction_Copy()
 		{
+			// act
 			var copy = new FeigReaderSettings {
 				TransportSettings = new SerialTransportSettings {
 					PortName = "COM3",
@@ -80,6 +83,7 @@ namespace InlayTester.Drivers.Feig
 
 			var settings = new FeigReaderSettings(copy);
 
+			// assert
 			Check.That(settings.TransportSettings.PortName)
 				.IsEqualTo("COM3");
 			Check.That(settings.TransportSettings.Baud)

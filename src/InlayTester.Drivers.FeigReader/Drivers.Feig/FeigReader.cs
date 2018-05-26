@@ -39,6 +39,9 @@ namespace InlayTester.Drivers.Feig
 		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
 		/// </summary>
 		/// 
+		/// <param name="settings">
+		/// The settings used to create the reader.</param>
+		/// 
 		/// <exception cref="ArgumentNullException">
 		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static IFeigReader Create(FeigReaderSettings settings)
@@ -54,6 +57,11 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
 		/// </summary>
+		/// 
+		/// <param name="settings">
+		/// The settings used to create the reader.</param>
+		/// <param name="logger">
+		/// The logger used to log operations of transport and reader.</param>
 		/// 
 		/// <exception cref="ArgumentNullException">
 		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
