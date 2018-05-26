@@ -63,6 +63,9 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Returns a result indicating a successfully parsed response.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static FeigParseResult Success(FeigResponse response)
 		{
 			Verify.NotNull(response, nameof(response));
@@ -81,11 +84,25 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Returns a result indicating that a checksum error has been detected.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static FeigParseResult ChecksumError(FeigResponse response)
 		{
 			Verify.NotNull(response, nameof(response));
 
 			return new FeigParseResult(FeigParseStatus.ChecksumError, response);
+		}
+
+		/// <summary>
+		/// Returns a result indicating that an error in the protocol frame has been detected.
+		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+		public static FeigParseResult FrameError()
+		{
+			return new FeigParseResult(FeigParseStatus.FrameError, null);
 		}
 	}
 }

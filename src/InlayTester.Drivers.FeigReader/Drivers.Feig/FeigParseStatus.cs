@@ -44,5 +44,10 @@ namespace InlayTester.Drivers.Feig
 		/// A checksum error has been detected.
 		/// </summary>
 		ChecksumError = -1,
+
+		/// <summary>
+		/// An error in the protocol frame has been detected.
+		/// </summary>
+		FrameError = -2,
 	}
 }

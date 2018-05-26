@@ -39,7 +39,8 @@ namespace InlayTester.Drivers.Feig
 				.IsOnlyMadeOf(
 					nameof(FeigParseStatus.Success),
 					nameof(FeigParseStatus.MoreDataNeeded),
-					nameof(FeigParseStatus.ChecksumError)
+					nameof(FeigParseStatus.ChecksumError),
+					nameof(FeigParseStatus.FrameError)
 				);
 		}
 
@@ -52,6 +53,8 @@ namespace InlayTester.Drivers.Feig
 				.IsEqualTo(1);
 			Check.That((Int32)FeigParseStatus.ChecksumError)
 				.IsEqualTo(-1);
+			Check.That((Int32)FeigParseStatus.FrameError)
+				.IsEqualTo(-2);
 		}
 	}
 }

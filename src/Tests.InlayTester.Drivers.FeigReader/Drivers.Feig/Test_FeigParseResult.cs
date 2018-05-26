@@ -37,9 +37,11 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success_With_Response()
 			{
+				// act
 				var response = new FeigResponse();
 				var result = FeigParseResult.Success(response);
 
+				// assert
 				Check.That(result.Status)
 					.IsEqualTo(FeigParseStatus.Success);
 				Check.That(result.Response)
@@ -63,8 +65,10 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				// act
 				var result = FeigParseResult.MoreDataNeeded();
 
+				// assert
 				Check.That(result.Status)
 					.IsEqualTo(FeigParseStatus.MoreDataNeeded);
 				Check.That(result.Response)
@@ -81,15 +85,37 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Success()
 			{
+				// act
 				var response = new FeigResponse();
 				var result = FeigParseResult.ChecksumError(response);
 
+				// assert
 				Check.That(result.Status)
 					.IsEqualTo(FeigParseStatus.ChecksumError);
 				Check.That(result.Response)
 					.IsSameReferenceAs(response);
 				Check.That(result.ToString())
 					.IsEqualTo("Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+			}
+		}
+
+		[TestFixture]
+		public class FrameError
+		{
+			[Test]
+			public void Success()
+			{
+				// act
+				var result = FeigParseResult.FrameError();
+
+				// assert
+				Check.That(result.Status)
+					.IsEqualTo(FeigParseStatus.FrameError);
+				Check.That(result.Response)
+					.IsNull();
+
+				Check.That(result.ToString())
+					.IsEqualTo("Status: FrameError, Response: { <null> }");
 			}
 		}
 	}
