@@ -541,7 +541,7 @@ namespace InlayTester.Drivers.Feig
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-					.Returns(Task.FromResult(FeigTransferResult.ChecksumError(request, response)));
+					.Returns(Task.FromResult(FeigTransferResult.CommunicationError(request, response)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 
@@ -718,7 +718,7 @@ namespace InlayTester.Drivers.Feig
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-					.Returns(Task.FromResult(FeigTransferResult.ChecksumError(request, response)));
+					.Returns(Task.FromResult(FeigTransferResult.CommunicationError(request, response)));
 
 				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
 

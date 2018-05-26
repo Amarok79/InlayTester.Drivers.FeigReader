@@ -43,13 +43,14 @@ namespace InlayTester.Drivers.Feig
 
 		// state
 		private FeigRequest mRequest;
+		private FeigProtocol mProtocol;
 		private BufferSpan mReceiveBuffer;
 		private TaskCompletionSource<FeigTransferResult> mCompletionSource;
 
 
-		public SerialTransportSettings Settings => mSettings;
+		internal SerialTransportSettings Settings => mSettings;
 
-		public ILog Log => mLog;
+		internal ILog Logger => mLog;
 
 
 		public DefaultFeigTransport(SerialTransportSettings settings, ILog logger)
@@ -68,22 +69,33 @@ namespace InlayTester.Drivers.Feig
 		}
 
 
+		/// <summary>
+		/// Opens the transport.
+		/// </summary>
 		public void Open()
 		{
 			mTransport.Open();
 		}
 
+		/// <summary>
+		/// Closes the transport.
+		/// </summary>
 		public void Close()
 		{
 			mTransport.Close();
 		}
 
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
 		public void Dispose()
 		{
 			mTransport.Dispose();
 		}
 
-
+		/// <summary>
+		/// Performs a transfer by sending a request and waiting for a response or timeout.
+		/// </summary>
 		public Task<FeigTransferResult> Transfer(
 			FeigRequest request,
 			FeigProtocol protocol,
@@ -92,6 +104,10 @@ namespace InlayTester.Drivers.Feig
 		{
 			lock (mSyncThis)
 			{
+				// store for later use
+				mRequest = request;
+				mProtocol = protocol;
+
 				// clear buffers
 				mReceiveBuffer = mReceiveBuffer.Clear();
 
@@ -100,14 +116,14 @@ namespace InlayTester.Drivers.Feig
 
 				// handle cancellation
 				var cancellationRegistration = cancellationToken.Register(
-					() => mCompletionSource.TrySetResult(FeigTransferResult.Canceled(request)),
+					() => mCompletionSource.TrySetResult(FeigTransferResult.Canceled(mRequest)),
 					false
 				);
 
 				// handle timeout
 				var cts = new CancellationTokenSource(timeout);
 				var timeoutRegistration = cts.Token.Register(
-					() => mCompletionSource.TrySetResult(FeigTransferResult.Timeout(request)),
+					() => mCompletionSource.TrySetResult(FeigTransferResult.Timeout(mRequest)),
 					false
 				);
 
@@ -120,7 +136,6 @@ namespace InlayTester.Drivers.Feig
 				TaskContinuationOptions.ExecuteSynchronously);
 
 				// send request
-				mRequest = request;
 				var requestData = request.ToBufferSpan(protocol);
 				mTransport.Send(requestData);
 			}
@@ -140,14 +155,15 @@ namespace InlayTester.Drivers.Feig
 				mReceiveBuffer = mReceiveBuffer.Append(e.Data);
 
 				// parse response
-				var result = FeigResponse.TryParse(mReceiveBuffer);
+				var result = FeigResponse.TryParse(mReceiveBuffer, mProtocol);
 
 				if (result.Status == FeigParseStatus.MoreDataNeeded)
 					return;     // wait for more data
 
 				// complete transfer
-				if (result.Status == FeigParseStatus.ChecksumError)
-					mCompletionSource.TrySetResult(FeigTransferResult.ChecksumError(mRequest, result.Response));
+				if (result.Status == FeigParseStatus.FrameError ||
+					result.Status == FeigParseStatus.ChecksumError)
+					mCompletionSource.TrySetResult(FeigTransferResult.CommunicationError(mRequest, result.Response));
 
 				if (result.Response.Command != mRequest.Command)
 					mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest, result.Response));

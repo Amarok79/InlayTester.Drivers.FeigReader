@@ -244,7 +244,7 @@ namespace InlayTester.Drivers.Feig
 				);
 			}
 			else
-			if (result.Status == FeigTransferStatus.ChecksumError)
+			if (result.Status == FeigTransferStatus.CommunicationError)
 			{
 				throw new FeigException(
 					$"The operation '{result.Request}' failed because of a communication error. " +

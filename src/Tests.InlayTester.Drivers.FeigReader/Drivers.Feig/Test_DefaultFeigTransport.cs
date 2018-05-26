@@ -324,7 +324,7 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		[Test, ExclusivelyUses("COMA", "COMB")]
-		public async Task ChecksumError()
+		public async Task CommunicationError()
 		{
 			var settingsA = new SerialTransportSettings {
 				PortName = "COMA",
@@ -368,7 +368,7 @@ namespace InlayTester.Drivers.Feig
 						default);
 
 					Check.That(result.Status)
-						.IsEqualTo(FeigTransferStatus.ChecksumError);
+						.IsEqualTo(FeigTransferStatus.CommunicationError);
 					Check.That(result.Response.Address)
 						.IsEqualTo(0x00);
 					Check.That(result.Response.Command)

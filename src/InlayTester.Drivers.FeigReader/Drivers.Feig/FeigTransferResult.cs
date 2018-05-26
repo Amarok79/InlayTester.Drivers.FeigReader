@@ -107,17 +107,17 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		/// <summary>
-		/// Returns a result indicating that the transfer operation failed due to a checksum error.
+		/// Returns a result indicating that the transfer operation failed due to a communication error.
 		/// </summary>
 		/// 
 		/// <exception cref="ArgumentNullException">
 		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-		public static FeigTransferResult ChecksumError(FeigRequest request, FeigResponse response)
+		public static FeigTransferResult CommunicationError(FeigRequest request, FeigResponse response)
 		{
 			Verify.NotNull(request, nameof(request));
 			Verify.NotNull(response, nameof(response));
 
-			return new FeigTransferResult(FeigTransferStatus.ChecksumError, request, response);
+			return new FeigTransferResult(FeigTransferStatus.CommunicationError, request, response);
 		}
 
 		/// <summary>

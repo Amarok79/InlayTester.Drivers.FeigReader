@@ -130,7 +130,7 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		[TestFixture]
-		public class ChecksumError
+		public class CommunicationError
 		{
 			[Test]
 			public void Success()
@@ -138,30 +138,30 @@ namespace InlayTester.Drivers.Feig
 				// act
 				var request = new FeigRequest();
 				var response = new FeigResponse();
-				var result = FeigTransferResult.ChecksumError(request, response);
+				var result = FeigTransferResult.CommunicationError(request, response);
 
 				// assert
 				Check.That(result.Status)
-					.IsEqualTo(FeigTransferStatus.ChecksumError);
+					.IsEqualTo(FeigTransferStatus.CommunicationError);
 				Check.That(result.Request)
 					.IsSameReferenceAs(request);
 				Check.That(result.Response)
 					.IsSameReferenceAs(response);
 				Check.That(result.ToString())
-					.IsEqualTo("Status: ChecksumError, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+					.IsEqualTo("Status: CommunicationError, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
 			}
 
 			[Test]
 			public void Exception_With_NullRequest()
 			{
-				Check.ThatCode(() => FeigTransferResult.ChecksumError(null, new FeigResponse()))
+				Check.ThatCode(() => FeigTransferResult.CommunicationError(null, new FeigResponse()))
 					.Throws<ArgumentNullException>();
 			}
 
 			[Test]
 			public void Exception_With_NullResponse()
 			{
-				Check.ThatCode(() => FeigTransferResult.ChecksumError(new FeigRequest(), null))
+				Check.ThatCode(() => FeigTransferResult.CommunicationError(new FeigRequest(), null))
 					.Throws<ArgumentNullException>();
 			}
 		}
