@@ -60,7 +60,7 @@ namespace InlayTester.Drivers.Feig
 
 				Check.That(transportImpl.Settings)
 					.Not.IsSameReferenceAs(settings.TransportSettings);
-				Check.That(transportImpl.Log)
+				Check.That(transportImpl.Logger)
 					.IsInstanceOf<NoOpLogger>()
 					.And
 					.IsSameReferenceAs(readerImpl.Logger);
@@ -102,7 +102,7 @@ namespace InlayTester.Drivers.Feig
 
 				Check.That(transportImpl.Settings)
 					.Not.IsSameReferenceAs(settings.TransportSettings);
-				Check.That(transportImpl.Log)
+				Check.That(transportImpl.Logger)
 					.IsInstanceOf<ConsoleOutLogger>()
 					.And
 					.IsSameReferenceAs(readerImpl.Logger);
