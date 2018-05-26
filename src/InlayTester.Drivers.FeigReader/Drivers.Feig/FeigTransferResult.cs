@@ -112,12 +112,11 @@ namespace InlayTester.Drivers.Feig
 		/// 
 		/// <exception cref="ArgumentNullException">
 		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-		public static FeigTransferResult CommunicationError(FeigRequest request, FeigResponse response)
+		public static FeigTransferResult CommunicationError(FeigRequest request)
 		{
 			Verify.NotNull(request, nameof(request));
-			Verify.NotNull(response, nameof(response));
 
-			return new FeigTransferResult(FeigTransferStatus.CommunicationError, request, response);
+			return new FeigTransferResult(FeigTransferStatus.CommunicationError, request, null);
 		}
 
 		/// <summary>

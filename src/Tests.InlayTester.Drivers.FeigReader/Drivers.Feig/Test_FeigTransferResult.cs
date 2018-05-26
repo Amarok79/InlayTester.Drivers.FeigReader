@@ -137,8 +137,7 @@ namespace InlayTester.Drivers.Feig
 			{
 				// act
 				var request = new FeigRequest();
-				var response = new FeigResponse();
-				var result = FeigTransferResult.CommunicationError(request, response);
+				var result = FeigTransferResult.CommunicationError(request);
 
 				// assert
 				Check.That(result.Status)
@@ -146,22 +145,15 @@ namespace InlayTester.Drivers.Feig
 				Check.That(result.Request)
 					.IsSameReferenceAs(request);
 				Check.That(result.Response)
-					.IsSameReferenceAs(response);
+					.IsNull();
 				Check.That(result.ToString())
-					.IsEqualTo("Status: CommunicationError, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+					.IsEqualTo("Status: CommunicationError, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }");
 			}
 
 			[Test]
 			public void Exception_With_NullRequest()
 			{
-				Check.ThatCode(() => FeigTransferResult.CommunicationError(null, new FeigResponse()))
-					.Throws<ArgumentNullException>();
-			}
-
-			[Test]
-			public void Exception_With_NullResponse()
-			{
-				Check.ThatCode(() => FeigTransferResult.CommunicationError(new FeigRequest(), null))
+				Check.ThatCode(() => FeigTransferResult.CommunicationError(null))
 					.Throws<ArgumentNullException>();
 			}
 		}
