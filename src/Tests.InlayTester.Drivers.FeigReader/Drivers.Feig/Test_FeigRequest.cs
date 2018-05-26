@@ -35,8 +35,10 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Defaults()
 		{
+			// act
 			var req = new FeigRequest();
 
+			// assert
 			Check.That(req.Address)
 				.IsEqualTo(0xff);
 			Check.That(req.Command)
@@ -50,12 +52,14 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void StandardFrame()
 		{
+			// act
 			var req = new FeigRequest {
 				Address = 0x12,
 				Command = FeigCommand.ReadConfiguration,
 				Data = BufferSpan.From(0x07),
 			};
 
+			// assert
 			Check.That(req.Address)
 				.IsEqualTo(0x12);
 			Check.That(req.Command)
@@ -63,8 +67,10 @@ namespace InlayTester.Drivers.Feig
 			Check.That(req.Data.Buffer)
 				.ContainsExactly(0x07);
 
+			// act
 			var frame = req.ToBufferSpan(FeigProtocol.Standard);
 
+			// assert
 			Check.That(frame.ToArray())
 				.ContainsExactly(
 					0x06, 0x12, 0x80, 0x07, 0xe5, 0x80
@@ -77,10 +83,12 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void StandardFrame_GetSoftwareVersion()
 		{
+			// act
 			var req = new FeigRequest {
 				Command = FeigCommand.GetSoftwareVersion,
 			};
 
+			// assert
 			Check.That(req.Address)
 				.IsEqualTo(0xFF);
 			Check.That(req.Command)
@@ -88,8 +96,10 @@ namespace InlayTester.Drivers.Feig
 			Check.That(req.Data.IsEmpty)
 				.IsTrue();
 
+			// act
 			var frame = req.ToBufferSpan(FeigProtocol.Standard);
 
+			// assert
 			Check.That(frame.ToArray())
 				.ContainsExactly(
 					0x05, 0xFF, 0x65, 0xE5, 0xCB
@@ -102,12 +112,14 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void AdvancedFrame()
 		{
+			// act
 			var req = new FeigRequest {
 				Address = 0x12,
 				Command = FeigCommand.ReadConfiguration,
 				Data = BufferSpan.From(0x07),
 			};
 
+			// assert
 			Check.That(req.Address)
 				.IsEqualTo(0x12);
 			Check.That(req.Command)
@@ -115,8 +127,10 @@ namespace InlayTester.Drivers.Feig
 			Check.That(req.Data.Buffer)
 				.ContainsExactly(0x07);
 
+			// act
 			var frame = req.ToBufferSpan(FeigProtocol.Advanced);
 
+			// assert
 			Check.That(frame.ToArray())
 				.ContainsExactly(
 					0x02, 0x00, 0x08, 0x12, 0x80, 0x07, 0xA0, 0x2D
@@ -129,10 +143,12 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void AdvancedFrame_GetSoftwareVersion()
 		{
+			// act
 			var req = new FeigRequest {
 				Command = FeigCommand.GetSoftwareVersion,
 			};
 
+			// assert
 			Check.That(req.Address)
 				.IsEqualTo(0xFF);
 			Check.That(req.Command)
@@ -140,8 +156,10 @@ namespace InlayTester.Drivers.Feig
 			Check.That(req.Data.IsEmpty)
 				.IsTrue();
 
+			// act
 			var frame = req.ToBufferSpan(FeigProtocol.Advanced);
 
+			// assert
 			Check.That(frame.ToArray())
 				.ContainsExactly(
 					0x02, 0x00, 0x07, 0xFF, 0x65, 0x6E, 0x61

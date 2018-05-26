@@ -64,14 +64,14 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Formats the request into its byte representation.
 		/// </summary>
-		public BufferSpan ToBufferSpan(FeigProtocol protocolFrame = FeigProtocol.Standard)
+		public BufferSpan ToBufferSpan(FeigProtocol protocol = FeigProtocol.Standard)
 		{
-			if (protocolFrame == FeigProtocol.Standard)
+			if (protocol == FeigProtocol.Standard)
 				return _ToStandardProtocolFrame();
-			else if (protocolFrame == FeigProtocol.Advanced)
+			else if (protocol == FeigProtocol.Advanced)
 				return _ToAdvancedProtocolFrame();
 			else
-				throw new NotSupportedException($"FeigProtocolFrame '{protocolFrame}'");
+				throw ExceptionFactory.NotSupportedException("Protocol {0} not supported!", protocol);
 		}
 
 

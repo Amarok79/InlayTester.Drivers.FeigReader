@@ -76,21 +76,24 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Attempts to parse a response from the given data.
 		/// </summary>
-		public static FeigParseResult TryParse(in BufferSpan span)
+		public static FeigParseResult TryParse(in BufferSpan span, FeigProtocol protocol)
 		{
-			if (span.Count < 1)
-				return FeigParseResult.MoreDataNeeded();
-
-			if (span[0] == 0x02)
+			if (protocol == FeigProtocol.Advanced)
 				return _TryParseAdvancedProtocolFrame(span);
 			else
+			if (protocol == FeigProtocol.Standard)
 				return _TryParseStandardProtocolFrame(span);
+			else
+				throw ExceptionFactory.NotSupportedException("Protocol {0} not supported!", protocol);
 		}
 
 		private static FeigParseResult _TryParseAdvancedProtocolFrame(in BufferSpan span)
 		{
 			if (span.Count < 8)
 				return FeigParseResult.MoreDataNeeded();
+
+			if (span[0] != 0x02)
+				return FeigParseResult.FrameError();
 
 			var lenHigh = span[1];
 			var lenLow = span[2];
@@ -132,6 +135,9 @@ namespace InlayTester.Drivers.Feig
 				return FeigParseResult.MoreDataNeeded();
 
 			var frameLength = span[0];
+
+			if (frameLength < 6)
+				return FeigParseResult.FrameError();
 
 			if (span.Count < frameLength)
 				return FeigParseResult.MoreDataNeeded();
