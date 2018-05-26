@@ -86,6 +86,13 @@ namespace InlayTester.Drivers.Feig
 				Check.That(result.ToString())
 					.IsEqualTo("Status: Canceled, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }");
 			}
+
+			[Test]
+			public void Exception_With_NullRequest()
+			{
+				Check.ThatCode(() => FeigTransferResult.Canceled(null))
+					.Throws<ArgumentNullException>();
+			}
 		}
 
 		[TestFixture]
@@ -106,6 +113,13 @@ namespace InlayTester.Drivers.Feig
 
 				Check.That(result.ToString())
 					.IsEqualTo("Status: Timeout, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }");
+			}
+
+			[Test]
+			public void Exception_With_NullRequest()
+			{
+				Check.ThatCode(() => FeigTransferResult.Timeout(null))
+					.Throws<ArgumentNullException>();
 			}
 		}
 

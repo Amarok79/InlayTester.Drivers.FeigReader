@@ -69,6 +69,9 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Returns a result indicating a successfully transfer operation.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static FeigTransferResult Success(FeigRequest request, FeigResponse response)
 		{
 			Verify.NotNull(request, nameof(request));
@@ -80,6 +83,9 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Returns a result indicating that the transfer operation has been canceled.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static FeigTransferResult Canceled(FeigRequest request)
 		{
 			Verify.NotNull(request, nameof(request));
@@ -90,6 +96,9 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Returns a result indicating that the transfer operation has timed out.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static FeigTransferResult Timeout(FeigRequest request)
 		{
 			Verify.NotNull(request, nameof(request));
@@ -100,6 +109,9 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Returns a result indicating that the transfer operation failed due to a checksum error.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static FeigTransferResult ChecksumError(FeigRequest request, FeigResponse response)
 		{
 			Verify.NotNull(request, nameof(request));
@@ -112,6 +124,9 @@ namespace InlayTester.Drivers.Feig
 		/// Returns a result indicating that the transfer operation failed because an unexpected response 
 		/// has been received.
 		/// </summary>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
 		public static FeigTransferResult UnexpectedResponse(FeigRequest request, FeigResponse response)
 		{
 			Verify.NotNull(request, nameof(request));
