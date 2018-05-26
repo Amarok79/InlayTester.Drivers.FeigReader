@@ -355,10 +355,6 @@ namespace InlayTester.Drivers.Feig
 
 		#endregion
 
-
-
-
-
 		#region ++ IFeigReader Interface (Common Commands) ++
 
 		/// <summary>
@@ -387,11 +383,32 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
+			#region (logging)
+			{
+				mLog.InfoFormat(CultureInfo.InvariantCulture,
+					"[{0}]  TestCommunication()",
+					mSettings.TransportSettings.PortName
+				);
+			}
+			#endregion
+
 			var result = await this.Transfer(
 				FeigCommand.BaudRateDetection, BufferSpan.From(0x00), timeout, cancellationToken)
 				.ConfigureAwait(false);
 
-			return result.Status == FeigTransferStatus.Success;
+			var flag = result.Status == FeigTransferStatus.Success;
+
+			#region (logging)
+			{
+				mLog.InfoFormat(CultureInfo.InvariantCulture,
+					"[{0}]  TestCommunication()  =>  {1}",
+					mSettings.TransportSettings.PortName,
+					flag
+				);
+			}
+			#endregion
+
+			return flag;
 		}
 
 		/// <summary>
@@ -417,16 +434,31 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		public Task ResetCPU(
+		public async Task ResetCPU(
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			return this.Execute(
-				FeigCommand.CPUReset,
-				BufferSpan.Empty,
-				timeout,
-				cancellationToken
-			);
+			#region (logging)
+			{
+				mLog.InfoFormat(CultureInfo.InvariantCulture,
+					"[{0}]  ResetCPU()",
+					mSettings.TransportSettings.PortName
+				);
+			}
+			#endregion
+
+			await this.Execute(
+				FeigCommand.CPUReset, BufferSpan.Empty, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			#region (logging)
+			{
+				mLog.InfoFormat(CultureInfo.InvariantCulture,
+					"[{0}]  ResetCPU()  =>  <done>",
+					mSettings.TransportSettings.PortName
+				);
+			}
+			#endregion
 		}
 
 		/// <summary>
@@ -453,16 +485,31 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		public Task ResetRF(
+		public async Task ResetRF(
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			return this.Execute(
-				FeigCommand.RFReset,
-				BufferSpan.Empty,
-				timeout,
-				cancellationToken
-			);
+			#region (logging)
+			{
+				mLog.InfoFormat(CultureInfo.InvariantCulture,
+					"[{0}]  ResetRF()",
+					mSettings.TransportSettings.PortName
+				);
+			}
+			#endregion
+
+			await this.Execute(
+				FeigCommand.RFReset, BufferSpan.Empty, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			#region (logging)
+			{
+				mLog.InfoFormat(CultureInfo.InvariantCulture,
+					"[{0}]  ResetRF()  =>  <done>",
+					mSettings.TransportSettings.PortName
+				);
+			}
+			#endregion
 		}
 
 		/// <summary>
@@ -500,6 +547,17 @@ namespace InlayTester.Drivers.Feig
 		{
 			Verify.InRange(block, 0, 63, nameof(block));
 
+			#region (logging)
+			{
+				mLog.InfoFormat(CultureInfo.InvariantCulture,
+					"[{0}]  ReadConfiguration(Block: {1}, Location: {2})",
+					mSettings.TransportSettings.PortName,
+					block,
+					eeprom ? "EEPROM" : "RAM"
+				);
+			}
+			#endregion
+
 			Byte addr = 0x00;
 			addr |= (Byte)(eeprom ? 0x80 : 0x00);
 			addr |= (Byte)(block & 0x3F);
@@ -507,6 +565,16 @@ namespace InlayTester.Drivers.Feig
 			var response = await this.Execute(
 				FeigCommand.ReadConfiguration, BufferSpan.From(addr), timeout, cancellationToken)
 				.ConfigureAwait(false);
+
+			#region (logging)
+			{
+				mLog.InfoFormat(CultureInfo.InvariantCulture,
+					"[{0}]  ReadConfiguration()  =>  {1}",
+					mSettings.TransportSettings.PortName,
+					response.Data
+				);
+			}
+			#endregion
 
 			return response.Data;
 		}
