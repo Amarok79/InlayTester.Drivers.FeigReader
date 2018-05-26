@@ -26,6 +26,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Logging;
 using Common.Logging.Simple;
 using InlayTester.Shared;
 using InlayTester.Shared.Transports;
@@ -49,7 +50,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					Check.ThatCode(() => reader.Open())
 						.DoesNotThrow();
@@ -63,7 +65,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Dispose();
 
@@ -79,7 +82,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					Check.ThatCode(() => reader.Open())
 						.DoesNotThrow();
@@ -96,7 +100,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "InvalidPortName" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					Check.ThatCode(() => reader.Open())
 						.Throws<IOException>();
@@ -114,7 +119,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					Check.ThatCode(() => reader.Close())
 						.DoesNotThrow();
@@ -128,7 +134,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Open();
 
@@ -144,7 +151,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Dispose();
 
@@ -164,7 +172,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					Check.ThatCode(() => reader.Dispose())
 						.DoesNotThrow();
@@ -178,7 +187,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Open();
 
@@ -194,7 +204,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Dispose();
 
@@ -214,7 +225,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Dispose();
 
@@ -251,7 +263,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
 					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				await reader.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token);
@@ -283,7 +296,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default))
 					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				await reader.Transfer(request);
@@ -303,7 +317,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Dispose();
 
@@ -336,7 +351,8 @@ namespace InlayTester.Drivers.Feig
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; })
 					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				await reader.Transfer(
@@ -379,7 +395,8 @@ namespace InlayTester.Drivers.Feig
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; })
 					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				await reader.Transfer(FeigCommand.BaudRateDetection);
@@ -408,7 +425,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Dispose();
 
@@ -445,7 +463,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
 					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				var rsp = await reader.Execute(request, FeigProtocol.Advanced, timeout, cts.Token);
@@ -480,7 +499,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default))
 					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				var rsp = await reader.Execute(request);
@@ -504,7 +524,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(request))
@@ -523,7 +544,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(request))
@@ -531,7 +553,7 @@ namespace InlayTester.Drivers.Feig
 			}
 
 			[Test]
-			public void ChecksumError()
+			public void CommunicationError()
 			{
 				var request = new FeigRequest();
 
@@ -542,12 +564,37 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(request))
 					.Throws<FeigException>()
 					.WithProperty(x => x.Request, request);
+			}
+
+			[Test]
+			public void UnexpectedResponse()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse();
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.UnexpectedResponse(request, response)));
+
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(request))
+					.Throws<FeigException>()
+					.WithProperty(x => x.Request, request)
+					.And
+					.WithProperty(x => x.Response, response);
 			}
 
 			[Test]
@@ -563,7 +610,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(request))
@@ -571,6 +619,52 @@ namespace InlayTester.Drivers.Feig
 					.WithProperty(x => x.Request, request)
 					.And
 					.WithProperty(x => x.Response, response);
+			}
+
+			[Test]
+			public async Task Success_OK()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse { Status = FeigStatus.OK };
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				var rsp = await reader.Execute(request);
+
+				Check.That(rsp)
+					.IsSameReferenceAs(response);
+			}
+
+			[Test]
+			public async Task Success_NoTransponder()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse { Status = FeigStatus.NoTransponder };
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				var rsp = await reader.Execute(request);
+
+				Check.That(rsp)
+					.IsSameReferenceAs(response);
 			}
 		}
 
@@ -584,7 +678,8 @@ namespace InlayTester.Drivers.Feig
 					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
 				};
 
-				using (var reader = FeigReader.Create(settings))
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				using (var reader = FeigReader.Create(settings, logger))
 				{
 					reader.Dispose();
 
@@ -619,7 +714,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, timeout, cts.Token))
 					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				var rsp = await reader.Execute(FeigCommand.GetSoftwareVersion, BufferSpan.Empty, timeout, cts.Token);
@@ -654,7 +750,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default))
 					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				var rsp = await reader.Execute(FeigCommand.GetSoftwareVersion);
@@ -678,7 +775,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
@@ -697,7 +795,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
@@ -705,7 +804,7 @@ namespace InlayTester.Drivers.Feig
 			}
 
 			[Test]
-			public void ChecksumError()
+			public void CommunicationError()
 			{
 				var request = new FeigRequest();
 
@@ -716,12 +815,37 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
 					.Throws<FeigException>()
 					.WithProperty(x => x.Request, request);
+			}
+
+			[Test]
+			public void UnexpectedResponse()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse();
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.UnexpectedResponse(request, response)));
+
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.BaudRateDetection))
+					.Throws<FeigException>()
+					.WithProperty(x => x.Request, request)
+					.And
+					.WithProperty(x => x.Response, response);
 			}
 
 			[Test]
@@ -737,7 +861,8 @@ namespace InlayTester.Drivers.Feig
 				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
 					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
@@ -746,7 +871,54 @@ namespace InlayTester.Drivers.Feig
 					.And
 					.WithProperty(x => x.Response, response);
 			}
+
+			[Test]
+			public async Task Success_OK()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse { Status = FeigStatus.OK };
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				var rsp = await reader.Execute(FeigCommand.CPUReset);
+
+				Check.That(rsp)
+					.IsSameReferenceAs(response);
+			}
+
+			[Test]
+			public async Task Success_NoTransponder()
+			{
+				var request = new FeigRequest();
+				var response = new FeigResponse { Status = FeigStatus.NoTransponder };
+
+				// arrange
+				var settings = new FeigReaderSettings();
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), It.IsAny<FeigProtocol>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				var rsp = await reader.Execute(FeigCommand.CPUReset);
+
+				Check.That(rsp)
+					.IsSameReferenceAs(response);
+			}
 		}
+
 
 		[TestFixture]
 		public class TestCommunication
@@ -774,7 +946,8 @@ namespace InlayTester.Drivers.Feig
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
 					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				var result = await reader.TestCommunication();
@@ -819,7 +992,8 @@ namespace InlayTester.Drivers.Feig
 					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
 					.Returns(() => Task.FromResult(FeigTransferResult.Timeout(request)));
 
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				var result = await reader.TestCommunication();
@@ -864,7 +1038,8 @@ namespace InlayTester.Drivers.Feig
 					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
 				var settings = new FeigReaderSettings();
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				await reader.ResetCPU();
@@ -897,7 +1072,8 @@ namespace InlayTester.Drivers.Feig
 					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
 				var settings = new FeigReaderSettings();
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				await reader.ResetRF();
@@ -931,7 +1107,8 @@ namespace InlayTester.Drivers.Feig
 					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
 				var settings = new FeigReaderSettings();
-				var reader = new DefaultFeigReader(settings, transport.Object, new NoOpLogger());
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
 				var result = await reader.ReadConfiguration(3, true);

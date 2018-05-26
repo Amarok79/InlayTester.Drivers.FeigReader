@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,14 +39,17 @@ namespace InlayTester.Drivers.Feig
 		// data
 		private readonly FeigReaderSettings mSettings;
 		private readonly IFeigTransport mTransport;
-		private readonly ILog mLogger;
+		private readonly ILog mLog;
+
+		// state
+		private Int32 mTransferNo;
 
 
 		public FeigReaderSettings Settings => mSettings;
 
 		public IFeigTransport Transport => mTransport;
 
-		public ILog Logger => mLogger;
+		public ILog Logger => mLog;
 
 
 		/// <summary>
@@ -55,7 +59,7 @@ namespace InlayTester.Drivers.Feig
 		{
 			mSettings = settings;
 			mTransport = transport;
-			mLogger = logger;
+			mLog = logger;
 		}
 
 
@@ -134,6 +138,21 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
+			mTransferNo++;
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  TRANSFER  #{1}",
+						mSettings.TransportSettings.PortName,
+						mTransferNo
+					);
+				}
+			}
+			#endregion
+
 			return mTransport.Transfer(
 				request,
 				protocol ?? mSettings.Protocol,
@@ -228,6 +247,24 @@ namespace InlayTester.Drivers.Feig
 			var result = await this.Transfer(request, protocol, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
+			if (result.Status == FeigTransferStatus.Success)
+			{
+				if (result.Response.Status == FeigStatus.OK ||
+					result.Response.Status == FeigStatus.NoTransponder)
+				{
+					return result.Response;     // success
+				}
+				else
+				{
+					throw new FeigException(
+						$"The operation '{result.Request}' failed because the reader returned error code " +
+						$"'{result.Response.Status}'. Received response: '{result.Response}'.",
+						result.Request,
+						result.Response
+					);
+				}
+			}
+			else
 			if (result.Status == FeigTransferStatus.Timeout)
 			{
 				var resolvedTimeout = timeout ?? mSettings.Timeout;
@@ -247,33 +284,24 @@ namespace InlayTester.Drivers.Feig
 			if (result.Status == FeigTransferStatus.CommunicationError)
 			{
 				throw new FeigException(
-					$"The operation '{result.Request}' failed because of a communication error. " +
-					$"Received corrupted response: '{result.Request}'.",
+					$"The operation '{result.Request}' failed because of a communication error.",
+					result.Request,
+					null
+				);
+			}
+			else
+			if (result.Status == FeigTransferStatus.UnexpectedResponse)
+			{
+				throw new FeigException(
+					$"The operation '{result.Request}' failed because an unexpected response " +
+					$"'{result.Response}' has been received.",
 					result.Request,
 					result.Response
 				);
 			}
 			else
-			if (result.Status == FeigTransferStatus.Success)
 			{
-				if (result.Response.Status == FeigStatus.OK ||
-					result.Response.Status == FeigStatus.NoTransponder)
-				{
-					return result.Response;     // success
-				}
-				else
-				{
-					throw new FeigException(
-						$"The operation '{result.Request}' failed because the reader returned error code " +
-						$"'{result.Response.Status}'. Received response: '{result.Response}'.",
-						result.Request,
-						result.Response
-					);
-				}
-			}
-			else
-			{
-				throw new InvalidOperationException("Encountered unknown FeigTransferStatus!");
+				throw ExceptionFactory.NotSupportedException("Unexpected FeigTransferStatus '{0}'!", result.Status);
 			}
 		}
 
@@ -326,6 +354,10 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		#endregion
+
+
+
+
 
 		#region ++ IFeigReader Interface (Common Commands) ++
 
