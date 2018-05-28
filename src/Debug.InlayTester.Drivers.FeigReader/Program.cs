@@ -23,8 +23,10 @@
 */
 
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
-using Common.Logging.NLog;
+using Common.Logging.Simple;
 using InlayTester.Drivers.Feig;
 using InlayTester.Shared.Transports;
 
@@ -47,13 +49,12 @@ namespace InlayTester
 
 			Common.Logging.LogManager.Configure(config);
 
-			var log = Common.Logging.LogManager.GetLogger("Feig");
-
-			log.Info("STARTED");
+			//var log = Common.Logging.LogManager.GetLogger("Feig");
+			var log = new NoOpLogger();
 
 			var settings = new FeigReaderSettings {
 				TransportSettings = new SerialTransportSettings {
-					PortName = "COM4",
+					PortName = "COM3",
 					Baud = 38400,
 					DataBits = 8,
 					Parity = Parity.Even,
@@ -69,29 +70,31 @@ namespace InlayTester
 			{
 				reader.Open();
 
-				var data = await reader.ReadConfiguration(3, true);
-
+				var sw = new Stopwatch();
 
 				for (Int32 i = 0; i < 10000; i++)
 				{
 					if (i % 1000 == 0)
 						Console.WriteLine(i);
 
-					//var result = await reader.Transfer(FeigCommand.BaudRateDetection)
-					//	.ConfigureAwait(false);
+					try
+					{
+						sw.Restart();
 
-					//if (result.Status != FeigTransferStatus.Success)
-					//	Console.WriteLine(result.Status);
+						var result = await reader.TestCommunication()
+							.ConfigureAwait(false);
 
-					await reader.ResetCPU()
-						.ConfigureAwait(false);
+						sw.Stop();
 
-					await Task.Delay(25);
+						//File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
 
-					var result = await reader.TestCommunication()
-						.ConfigureAwait(false);
+						if (!result)
+							Debugger.Break();
+					}
+					catch (Exception ex)
+					{
 
-					Console.WriteLine(result);
+					}
 				}
 			}
 		}

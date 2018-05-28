@@ -38,6 +38,7 @@
   <ItemGroup>
     <PackageReference Include="Amarok.InlayTester.Shared" Version="1.1.0" />
     <PackageReference Include="Amarok.InlayTester.Shared.Transports" Version="1.1.0" />
+    <PackageReference Include="Amarok.SerialPortStream" Version="2.1.4" />
     <PackageReference Include="Common.Logging" Version="3.4.1" />
   </ItemGroup>
 
