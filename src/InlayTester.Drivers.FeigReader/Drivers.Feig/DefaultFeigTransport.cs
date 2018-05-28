@@ -117,7 +117,7 @@ namespace InlayTester.Drivers.Feig
 
 				// handle cancellation
 				var cancellationRegistration = cancellationToken.Register(
-					() =>
+					_completionSource =>
 					{
 						#region (logging)
 						{
@@ -131,15 +131,18 @@ namespace InlayTester.Drivers.Feig
 						}
 						#endregion
 
-						mCompletionSource.TrySetResult(FeigTransferResult.Canceled(mRequest));
+						((TaskCompletionSource<FeigTransferResult>)_completionSource).TrySetResult(
+							FeigTransferResult.Canceled(mRequest)
+						);
 					},
+					mCompletionSource,
 					false
 				);
 
 				// handle timeout
 				var cts = new CancellationTokenSource(timeout);
 				var timeoutRegistration = cts.Token.Register(
-					() =>
+					_completionSource =>
 					{
 						#region (logging)
 						{
@@ -154,8 +157,11 @@ namespace InlayTester.Drivers.Feig
 						}
 						#endregion
 
-						mCompletionSource.TrySetResult(FeigTransferResult.Timeout(mRequest));
+						((TaskCompletionSource<FeigTransferResult>)_completionSource).TrySetResult(
+							FeigTransferResult.Timeout(mRequest)
+						);
 					},
+					mCompletionSource,
 					false
 				);
 
