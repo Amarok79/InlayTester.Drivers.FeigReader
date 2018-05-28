@@ -40,6 +40,7 @@ namespace InlayTester.Drivers.Feig
 		private readonly FeigReaderSettings mSettings;
 		private readonly IFeigTransport mTransport;
 		private readonly ILog mLog;
+		private readonly Byte[] mRequestBuffer = new Byte[256];
 
 		// state
 		private Int32 mTransferNo;
@@ -392,8 +393,11 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
+			mRequestBuffer[0] = 0x00;
+			var data = BufferSpan.From(mRequestBuffer, 0, 1);
+
 			var result = await this.Transfer(
-				FeigCommand.BaudRateDetection, BufferSpan.From(0x00), timeout, cancellationToken)
+				FeigCommand.BaudRateDetection, data, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
 			var flag = result.Status == FeigTransferStatus.Success;
@@ -562,8 +566,11 @@ namespace InlayTester.Drivers.Feig
 			addr |= (Byte)(eeprom ? 0x80 : 0x00);
 			addr |= (Byte)(block & 0x3F);
 
+			mRequestBuffer[0] = addr;
+			var data = BufferSpan.From(mRequestBuffer, 0, 1);
+
 			var response = await this.Execute(
-				FeigCommand.ReadConfiguration, BufferSpan.From(addr), timeout, cancellationToken)
+				FeigCommand.ReadConfiguration, data, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
 			#region (logging)
