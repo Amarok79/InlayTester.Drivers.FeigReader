@@ -49,8 +49,8 @@ namespace InlayTester
 
 			Common.Logging.LogManager.Configure(config);
 
-			//var log = Common.Logging.LogManager.GetLogger("Feig");
-			var log = new NoOpLogger();
+			var log = Common.Logging.LogManager.GetLogger("Feig");
+			//var log = new NoOpLogger();
 
 			var settings = new FeigReaderSettings {
 				TransportSettings = new SerialTransportSettings {
@@ -72,7 +72,7 @@ namespace InlayTester
 
 				var sw = new Stopwatch();
 
-				for (Int32 i = 0; i < 10000; i++)
+				for (Int32 i = 0; i < 1000000; i++)
 				{
 					if (i % 1000 == 0)
 						Console.WriteLine(i);
@@ -81,19 +81,19 @@ namespace InlayTester
 					{
 						sw.Restart();
 
-						var result = await reader.TestCommunication()
+						//var result = await reader.TestCommunication()
+						//	.ConfigureAwait(false);
+
+						await reader.ResetRF()
 							.ConfigureAwait(false);
 
 						sw.Stop();
 
-						//File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
-
-						if (!result)
-							Debugger.Break();
+						File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
 					}
 					catch (Exception ex)
 					{
-
+						Debugger.Break();
 					}
 				}
 			}
