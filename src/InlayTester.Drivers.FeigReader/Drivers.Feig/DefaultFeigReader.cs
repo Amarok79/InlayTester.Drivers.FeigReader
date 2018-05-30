@@ -386,10 +386,13 @@ namespace InlayTester.Drivers.Feig
 		{
 			#region (logging)
 			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  TestCommunication()",
-					mSettings.TransportSettings.PortName
-				);
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  TestCommunication()",
+						mSettings.TransportSettings.PortName
+					);
+				}
 			}
 			#endregion
 
@@ -404,11 +407,14 @@ namespace InlayTester.Drivers.Feig
 
 			#region (logging)
 			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  TestCommunication()  =>  {1}",
-					mSettings.TransportSettings.PortName,
-					flag
-				);
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  TestCommunication()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						flag
+					);
+				}
 			}
 			#endregion
 
@@ -444,10 +450,13 @@ namespace InlayTester.Drivers.Feig
 		{
 			#region (logging)
 			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  ResetCPU()",
-					mSettings.TransportSettings.PortName
-				);
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ResetCPU()",
+						mSettings.TransportSettings.PortName
+					);
+				}
 			}
 			#endregion
 
@@ -457,10 +466,13 @@ namespace InlayTester.Drivers.Feig
 
 			#region (logging)
 			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  ResetCPU()  =>  <done>",
-					mSettings.TransportSettings.PortName
-				);
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ResetCPU()  =>  <done>",
+						mSettings.TransportSettings.PortName
+					);
+				}
 			}
 			#endregion
 		}
@@ -495,10 +507,13 @@ namespace InlayTester.Drivers.Feig
 		{
 			#region (logging)
 			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  ResetRF()",
-					mSettings.TransportSettings.PortName
-				);
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ResetRF()",
+						mSettings.TransportSettings.PortName
+					);
+				}
 			}
 			#endregion
 
@@ -508,10 +523,13 @@ namespace InlayTester.Drivers.Feig
 
 			#region (logging)
 			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  ResetRF()  =>  <done>",
-					mSettings.TransportSettings.PortName
-				);
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ResetRF()  =>  <done>",
+						mSettings.TransportSettings.PortName
+					);
+				}
 			}
 			#endregion
 		}
@@ -553,12 +571,15 @@ namespace InlayTester.Drivers.Feig
 
 			#region (logging)
 			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  ReadConfiguration(Block: {1}, Location: {2})",
-					mSettings.TransportSettings.PortName,
-					block,
-					eeprom ? "EEPROM" : "RAM"
-				);
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ReadConfiguration(Block: {1}, Location: {2})",
+						mSettings.TransportSettings.PortName,
+						block,
+						eeprom ? "EEPROM" : "RAM"
+					);
+				}
 			}
 			#endregion
 
@@ -575,11 +596,14 @@ namespace InlayTester.Drivers.Feig
 
 			#region (logging)
 			{
-				mLog.InfoFormat(CultureInfo.InvariantCulture,
-					"[{0}]  ReadConfiguration()  =>  {1}",
-					mSettings.TransportSettings.PortName,
-					response.Data
-				);
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ReadConfiguration()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Data
+					);
+				}
 			}
 			#endregion
 
