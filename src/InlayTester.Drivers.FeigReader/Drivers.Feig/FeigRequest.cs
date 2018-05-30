@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Text;
 using InlayTester.Shared;
 
 
@@ -57,7 +58,25 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public override String ToString()
 		{
-			return $"Address: {Address}, Command: {Command}, Data: {Data}";
+			StringBuilder sb = null;
+
+			try
+			{
+				sb = StringBuilderPool.Alloc();
+
+				sb.Append("Address: ");
+				sb.Append(this.Address);
+				sb.Append(", Command: ");
+				sb.Append(this.Command);
+				sb.Append(", Data: ");
+				sb.Append(this.Data);
+
+				return sb.ToString();
+			}
+			finally
+			{
+				StringBuilderPool.Free(sb);
+			}
 		}
 
 

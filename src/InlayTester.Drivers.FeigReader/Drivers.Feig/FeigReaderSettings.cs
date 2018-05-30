@@ -23,7 +23,7 @@
 */
 
 using System;
-using System.Globalization;
+using System.Text;
 using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 
@@ -100,13 +100,27 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public override String ToString()
 		{
-			return String.Format(CultureInfo.InvariantCulture,
-				"Transport: '{0}', Address: {1}, Timeout: {2} ms, Protocol: {3}",
-				this.TransportSettings,
-				this.Address,
-				this.Timeout.TotalMilliseconds,
-				this.Protocol
-			);
+			StringBuilder sb = null;
+
+			try
+			{
+				sb = StringBuilderPool.Alloc();
+
+				sb.Append("Transport: '");
+				sb.Append(this.TransportSettings);
+				sb.Append("', Address: ");
+				sb.Append(this.Address);
+				sb.Append(", Timeout: ");
+				sb.Append(this.Timeout.TotalMilliseconds);
+				sb.Append(" ms, Protocol: ");
+				sb.Append(this.Protocol);
+
+				return sb.ToString();
+			}
+			finally
+			{
+				StringBuilderPool.Free(sb);
+			}
 		}
 	}
 }
