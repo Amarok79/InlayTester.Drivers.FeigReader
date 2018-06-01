@@ -79,6 +79,7 @@
     <Compile Include="Drivers.Feig\Test_FeigReaderSettings.cs" />
     <Compile Include="Drivers.Feig\Test_FeigRequest.cs" />
     <Compile Include="Drivers.Feig\Test_FeigResponse.cs" />
+    <Compile Include="Drivers.Feig\Test_FeigBlockLocation.cs" />
     <Compile Include="Drivers.Feig\Test_FeigStatus.cs" />
     <Compile Include="Drivers.Feig\Test_FeigTransferResult.cs" />
     <Compile Include="Drivers.Feig\Test_FeigTransferStatus.cs" />

@@ -1111,7 +1111,7 @@ namespace InlayTester.Drivers.Feig
 				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
-				var result = await reader.ReadConfiguration(3, true);
+				var result = await reader.ReadConfiguration(3, FeigBlockLocation.EEPROM);
 
 				// assert
 				Check.That(result.Count)
@@ -1121,6 +1121,44 @@ namespace InlayTester.Drivers.Feig
 					.IsEqualTo(FeigCommand.ReadConfiguration);
 				Check.That(request.Data.ToArray())
 					.ContainsExactly(0x83);
+			}
+		}
+
+		[TestFixture]
+		public class WriteConfiguration
+		{
+			[Test]
+			public async Task Success()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				await reader.WriteConfiguration(3, FeigBlockLocation.EEPROM, BufferSpan.From(
+					0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE));
+
+				// assert
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.WriteConfiguration);
+				Check.That(request.Data.ToArray())
+					.ContainsExactly(
+						0x83,
+						0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE
+					);
 			}
 		}
 	}

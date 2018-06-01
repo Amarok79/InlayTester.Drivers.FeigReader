@@ -540,8 +540,8 @@ namespace InlayTester.Drivers.Feig
 		/// 
 		/// <param name="block">
 		/// The configuration block to read.</param>
-		/// <param name="eeprom">
-		/// True, to read from EEPROM, otherwise from RAM.</param>
+		/// <param name="location">
+		/// The location of the block, either EEPROM or RAM.</param>
 		/// <param name="timeout">
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
@@ -563,7 +563,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
 		public async Task<BufferSpan> ReadConfiguration(
 			Int32 block,
-			Boolean eeprom,
+			FeigBlockLocation location,
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
@@ -577,14 +577,14 @@ namespace InlayTester.Drivers.Feig
 						"[{0}]  ReadConfiguration(Block: {1}, Location: {2})",
 						mSettings.TransportSettings.PortName,
 						block,
-						eeprom ? "EEPROM" : "RAM"
+						location
 					);
 				}
 			}
 			#endregion
 
 			Byte addr = 0x00;
-			addr |= (Byte)(eeprom ? 0x80 : 0x00);
+			addr |= (Byte)location;
 			addr |= (Byte)(block & 0x3F);
 
 			mRequestBuffer[0] = addr;
@@ -608,6 +608,87 @@ namespace InlayTester.Drivers.Feig
 			#endregion
 
 			return response.Data;
+		}
+
+		/// <summary>
+		/// Writes a configuration block (14 bytes) to the reader's RAM or EEPROM.
+		/// </summary>
+		/// 
+		/// <param name="block">
+		/// The configuration block to write.</param>
+		/// <param name="location">
+		/// The location of the block, either EEPROM or RAM.</param>
+		/// <param name="data">
+		/// The data of the configuration block; must be exactly 14 bytes.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// The block number must be between 0 and 63.</exception>
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		public async Task WriteConfiguration(
+			Int32 block,
+			FeigBlockLocation location,
+			BufferSpan data,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default)
+		{
+			Verify.InRange(block, 0, 63, nameof(block));
+			Verify.That(data.Count == 14, nameof(data), "Exactly 14 bytes must be specified as configuration data.");
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  WriteConfiguration(Block: {1}, Location: {2}, Data: {3})",
+						mSettings.TransportSettings.PortName,
+						block,
+						location,
+						data
+					);
+				}
+			}
+			#endregion
+
+			Byte addr = 0x00;
+			addr |= (Byte)location;
+			addr |= (Byte)(block & 0x3F);
+
+			mRequestBuffer[0] = addr;
+			Buffer.BlockCopy(data.Buffer, data.Offset, mRequestBuffer, 1, data.Count);
+
+			var cfgdata = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
+
+			var response = await this.Execute(
+				FeigCommand.WriteConfiguration, cfgdata, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  WriteConfiguration()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Data
+					);
+				}
+			}
+			#endregion
 		}
 
 		#endregion

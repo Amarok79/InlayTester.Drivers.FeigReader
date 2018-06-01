@@ -24,8 +24,8 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
-using Common.Logging.Simple;
 using InlayTester.Drivers.Feig;
 using InlayTester.Shared.Transports;
 
@@ -48,8 +48,8 @@ namespace InlayTester
 
 			Common.Logging.LogManager.Configure(config);
 
-			//var log = Common.Logging.LogManager.GetLogger("Feig");
-			var log = new NoOpLogger();
+			var log = Common.Logging.LogManager.GetLogger("Feig");
+			//var log = new NoOpLogger();
 
 			var settings = new FeigReaderSettings {
 				TransportSettings = new SerialTransportSettings {
@@ -76,10 +76,10 @@ namespace InlayTester
 					if (i % 1000 == 0)
 						Console.WriteLine(i);
 
-					if (i == 1000)
-						Console.ReadLine();
-					if (i == 2000)
-						Console.ReadLine();
+					//if (i == 1000)
+					//	Console.ReadLine();
+					//if (i == 2000)
+					//	Console.ReadLine();
 
 					try
 					{
@@ -96,7 +96,7 @@ namespace InlayTester
 
 						sw.Stop();
 
-						//File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
+						File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
 					}
 					catch (Exception ex)
 					{
