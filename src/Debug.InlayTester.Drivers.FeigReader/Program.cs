@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using InlayTester.Drivers.Feig;
+using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 
 
@@ -91,7 +92,22 @@ namespace InlayTester
 						//await reader.ResetRF()
 						//	.ConfigureAwait(false);
 
-						await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
+						BufferSpan cfg;
+
+						cfg = await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
+							.ConfigureAwait(false);
+						cfg = await reader.ReadConfiguration(1, FeigBlockLocation.EEPROM)
+							.ConfigureAwait(false);
+
+						cfg.Buffer[cfg.Offset + 0] = 0xCD;
+
+						await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
+							.ConfigureAwait(false);
+
+						await reader.SaveConfiguration(1)
+							.ConfigureAwait(false);
+
+						await reader.ResetConfigurations(FeigBlockLocation.EEPROM)
 							.ConfigureAwait(false);
 
 						sw.Stop();
