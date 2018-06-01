@@ -111,7 +111,7 @@ Error handling seems a bit tedious. But, you won't need to do it yourself. **Tra
 
 ### Execute
 
-**Execute(..)** is one of those higher-level methods that does this result-code checking for you and that throws appropriate exceptions in certain error cases. On success, the method returns the received response.
+**Execute(..)** is one of those higher-level methods that does this result-code checking for you and that throws appropriate exceptions in certain error situations. On success, the method returns the received response.
 
 ````cs
     var request = new FeigRequest {
