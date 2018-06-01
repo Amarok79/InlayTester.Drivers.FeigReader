@@ -46,6 +46,14 @@
     <Rule Id="CR0009" Action="None" />
     <Rule Id="CR0010" Action="None" />
   </Rules>
+  <Rules AnalyzerId="ErrorProne.Net.StructAnalyzers" RuleNamespace="ErrorProne.Net.StructAnalyzers">
+    <Rule Id="EPS01" Action="Info" />
+    <Rule Id="EPS02" Action="Info" />
+    <Rule Id="EPS03" Action="Info" />
+    <Rule Id="EPS05" Action="Info" />
+    <Rule Id="EPS06" Action="Info" />
+    <Rule Id="ESP04" Action="Info" />
+  </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1000" Action="Warning" />
     <Rule Id="CA1001" Action="Warning" />
