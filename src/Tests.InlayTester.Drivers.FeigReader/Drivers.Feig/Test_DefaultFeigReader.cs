@@ -1161,5 +1161,141 @@ namespace InlayTester.Drivers.Feig
 					);
 			}
 		}
+
+		[TestFixture]
+		public class SaveConfigurations
+		{
+			[Test]
+			public async Task Success()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				await reader.SaveConfigurations();
+
+				// assert
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.SaveConfiguration);
+				Check.That(request.Data.ToArray())
+					.ContainsExactly(0x40);
+			}
+		}
+
+		[TestFixture]
+		public class SaveConfiguration
+		{
+			[Test]
+			public async Task Success()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				await reader.SaveConfiguration(13);
+
+				// assert
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.SaveConfiguration);
+				Check.That(request.Data.ToArray())
+					.ContainsExactly(0x0D);
+			}
+		}
+
+		[TestFixture]
+		public class ResetConfigurations
+		{
+			[Test]
+			public async Task Success()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				await reader.ResetConfigurations(FeigBlockLocation.EEPROM);
+
+				// assert
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.SetDefaultConfiguration);
+				Check.That(request.Data.ToArray())
+					.ContainsExactly(0xC0);
+			}
+		}
+
+		[TestFixture]
+		public class ResetConfiguration
+		{
+			[Test]
+			public async Task Success()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				await reader.ResetConfiguration(13, FeigBlockLocation.EEPROM);
+
+				// assert
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.SetDefaultConfiguration);
+				Check.That(request.Data.ToArray())
+					.ContainsExactly(0x8D);
+			}
+		}
 	}
 }

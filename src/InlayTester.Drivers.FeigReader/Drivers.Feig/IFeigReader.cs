@@ -120,7 +120,7 @@ namespace InlayTester.Drivers.Feig
 		/// The transport has not been opened yet.</exception>
 		Task<FeigTransferResult> Transfer(
 			FeigCommand command,
-			BufferSpan requestData = default,
+			in BufferSpan requestData = default,
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
 
@@ -189,7 +189,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
 		Task<FeigResponse> Execute(
 			FeigCommand command,
-			BufferSpan requestData = default,
+			in BufferSpan requestData = default,
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
 
@@ -275,6 +275,7 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
 
+
 		/// <summary>
 		/// Reads a configuration block (14 bytes) from the reader's RAM or EEPROM.
 		/// </summary>
@@ -282,7 +283,7 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="block">
 		/// The configuration block to read.</param>
 		/// <param name="location">
-		/// The location of the block, either EEPROM or RAM.</param>
+		/// The location of the block to read from, either EEPROM or RAM.</param>
 		/// <param name="timeout">
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
@@ -315,9 +316,68 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="block">
 		/// The configuration block to write.</param>
 		/// <param name="location">
-		/// The location of the block, either EEPROM or RAM.</param>
+		/// The location of the block to write to, either EEPROM or RAM.</param>
 		/// <param name="data">
 		/// The data of the configuration block; must be exactly 14 bytes.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// The block number must be between 0 and 63.</exception>
+		/// <exception cref="ArgumentException">
+		/// Exactly 14 bytes must be specified as configuration data.</exception>
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		Task WriteConfiguration(
+			Int32 block,
+			FeigBlockLocation location,
+			BufferSpan data,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Saves all configuration blocks currently in the reader's RAM to EEPROM.
+		/// </summary>
+		/// 
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		Task SaveConfigurations(
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Saves the specified configuration block currently in the reader's RAM to EEPROM.
+		/// </summary>
+		/// 
+		/// <param name="block">
+		/// The configuration block to save.</param>
 		/// <param name="timeout">
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
@@ -337,10 +397,69 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		Task WriteConfiguration(
+		Task SaveConfiguration(
+			Int32 block,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Resets all configuration blocks to their defaults.
+		/// </summary>
+		/// 
+		/// <param name="location">
+		/// The location of the block to reset, either EEPROM or RAM.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		Task ResetConfigurations(
+			FeigBlockLocation location,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Resets the specified configuration block to its defaults.
+		/// </summary>
+		/// 
+		/// <param name="block">
+		/// The configuration block to reset.</param>
+		/// <param name="location">
+		/// The location of the block to reset, either EEPROM or RAM.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// The block number must be between 0 and 63.</exception>
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		Task ResetConfiguration(
 			Int32 block,
 			FeigBlockLocation location,
-			BufferSpan data,
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
 	}

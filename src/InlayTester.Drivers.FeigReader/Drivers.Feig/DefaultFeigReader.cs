@@ -189,7 +189,7 @@ namespace InlayTester.Drivers.Feig
 		/// The transport has not been opened yet.</exception>
 		public Task<FeigTransferResult> Transfer(
 			FeigCommand command,
-			BufferSpan requestData = default,
+			in BufferSpan requestData = default,
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
@@ -336,7 +336,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
 		public Task<FeigResponse> Execute(
 			FeigCommand command,
-			BufferSpan requestData = default,
+			in BufferSpan requestData = default,
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
@@ -541,7 +541,7 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="block">
 		/// The configuration block to read.</param>
 		/// <param name="location">
-		/// The location of the block, either EEPROM or RAM.</param>
+		/// The location of the block to read from, either EEPROM or RAM.</param>
 		/// <param name="timeout">
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
@@ -617,7 +617,7 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="block">
 		/// The configuration block to write.</param>
 		/// <param name="location">
-		/// The location of the block, either EEPROM or RAM.</param>
+		/// The location of the block to write to, either EEPROM or RAM.</param>
 		/// <param name="data">
 		/// The data of the configuration block; must be exactly 14 bytes.</param>
 		/// <param name="timeout">
@@ -627,6 +627,8 @@ namespace InlayTester.Drivers.Feig
 		/// 
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// The block number must be between 0 and 63.</exception>
+		/// <exception cref="ArgumentException">
+		/// Exactly 14 bytes must be specified as configuration data.</exception>
 		/// <exception cref="ObjectDisposedException">
 		/// A method or property was called on an already disposed object.</exception>
 		/// <exception cref="InvalidOperationException">
@@ -673,7 +675,7 @@ namespace InlayTester.Drivers.Feig
 
 			var cfgdata = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
 
-			var response = await this.Execute(
+			await this.Execute(
 				FeigCommand.WriteConfiguration, cfgdata, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
@@ -682,9 +684,272 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  WriteConfiguration()  =>  {1}",
+						"[{0}]  WriteConfiguration()  =>  <done>",
+						mSettings.TransportSettings.PortName
+					);
+				}
+			}
+			#endregion
+		}
+
+		/// <summary>
+		/// Saves all configuration blocks currently in the reader's RAM to EEPROM.
+		/// </summary>
+		/// 
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		public async Task SaveConfigurations(
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default)
+		{
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  SaveConfigurations()",
+						mSettings.TransportSettings.PortName
+					);
+				}
+			}
+			#endregion
+
+			mRequestBuffer[0] = 0x40;
+
+			var data = BufferSpan.From(mRequestBuffer, 0, 1);
+
+			await this.Execute(
+				FeigCommand.SaveConfiguration, data, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  SaveConfigurations()  =>  <done>",
+						mSettings.TransportSettings.PortName
+					);
+				}
+			}
+			#endregion
+		}
+
+		/// <summary>
+		/// Saves the specified configuration block currently in the reader's RAM to EEPROM.
+		/// </summary>
+		/// 
+		/// <param name="block">
+		/// The configuration block to save.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// The block number must be between 0 and 63.</exception>
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		public async Task SaveConfiguration(
+			Int32 block,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default)
+		{
+			Verify.InRange(block, 0, 63, nameof(block));
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  SaveConfiguration(Block: {1})",
 						mSettings.TransportSettings.PortName,
-						response.Data
+						block
+					);
+				}
+			}
+			#endregion
+
+			mRequestBuffer[0] = (Byte)(block & 0x3F);
+
+			var data = BufferSpan.From(mRequestBuffer, 0, 1);
+
+			await this.Execute(
+				FeigCommand.SaveConfiguration, data, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  SaveConfiguration()  =>  <done>",
+						mSettings.TransportSettings.PortName
+					);
+				}
+			}
+			#endregion
+		}
+
+		/// <summary>
+		/// Resets all configuration blocks to their defaults.
+		/// </summary>
+		/// 
+		/// <param name="location">
+		/// The location of the block to reset, either EEPROM or RAM.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		public async Task ResetConfigurations(
+			FeigBlockLocation location,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default)
+		{
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ResetConfigurations(Location: {1})",
+						mSettings.TransportSettings.PortName,
+						location
+					);
+				}
+			}
+			#endregion
+
+			Byte addr = 0x00;
+			addr |= (Byte)location;
+			addr |= (Byte)0x40;
+
+			mRequestBuffer[0] = addr;
+
+			var data = BufferSpan.From(mRequestBuffer, 0, 1);
+
+			await this.Execute(
+				FeigCommand.SetDefaultConfiguration, data, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ResetConfigurations()  =>  <done>",
+						mSettings.TransportSettings.PortName
+					);
+				}
+			}
+			#endregion
+		}
+
+		/// <summary>
+		/// Resets the specified configuration block to its defaults.
+		/// </summary>
+		/// 
+		/// <param name="block">
+		/// The configuration block to reset.</param>
+		/// <param name="location">
+		/// The location of the block to reset, either EEPROM or RAM.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// The block number must be between 0 and 63.</exception>
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		public async Task ResetConfiguration(
+			Int32 block,
+			FeigBlockLocation location,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default)
+		{
+			Verify.InRange(block, 0, 63, nameof(block));
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ResetConfiguration(Block: {1}, Location: {2})",
+						mSettings.TransportSettings.PortName,
+						block,
+						location
+					);
+				}
+			}
+			#endregion
+
+			Byte addr = 0x00;
+			addr |= (Byte)location;
+			addr |= (Byte)(block & 0x3F);
+
+			mRequestBuffer[0] = addr;
+
+			var data = BufferSpan.From(mRequestBuffer, 0, 1);
+
+			await this.Execute(
+				FeigCommand.SetDefaultConfiguration, data, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  ResetConfiguration()  =>  <done>",
+						mSettings.TransportSettings.PortName
 					);
 				}
 			}

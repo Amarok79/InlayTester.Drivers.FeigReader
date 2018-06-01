@@ -91,7 +91,7 @@ namespace InlayTester
 						//await reader.ResetRF()
 						//	.ConfigureAwait(false);
 
-						await reader.ReadConfiguration(1, false)
+						await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
 							.ConfigureAwait(false);
 
 						sw.Stop();
