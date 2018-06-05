@@ -39,7 +39,6 @@ namespace InlayTester.Drivers.Feig
 				.IsOnlyMadeOf(
 					nameof(FeigTransponderType.Unknown),
 					nameof(FeigTransponderType.CTx),
-					nameof(FeigTransponderType.EPC_Class1_Gen2),
 					nameof(FeigTransponderType.ICode1),
 					nameof(FeigTransponderType.ICodeEPC),
 					nameof(FeigTransponderType.Innovatron),
@@ -60,8 +59,6 @@ namespace InlayTester.Drivers.Feig
 				.IsEqualTo(0xFF);
 			Check.That((Byte)FeigTransponderType.CTx)
 				.IsEqualTo(0x11);
-			Check.That((Byte)FeigTransponderType.EPC_Class1_Gen2)
-				.IsEqualTo(0x84);
 			Check.That((Byte)FeigTransponderType.ICode1)
 				.IsEqualTo(0x00);
 			Check.That((Byte)FeigTransponderType.ICodeEPC)

@@ -85,6 +85,8 @@
     <Compile Include="Drivers.Feig\Test_FeigStatus.cs" />
     <Compile Include="Drivers.Feig\Test_FeigTransferResult.cs" />
     <Compile Include="Drivers.Feig\Test_FeigTransferStatus.cs" />
+    <Compile Include="Drivers.Feig\Test_FeigTransponder.cs" />
+    <Compile Include="Drivers.Feig\Test_FeigTransponderType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\InlayTester.Drivers.FeigReader.licenseheader">

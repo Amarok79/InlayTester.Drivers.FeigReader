@@ -82,36 +82,41 @@ namespace InlayTester
 					{
 						sw.Restart();
 
-						var info = await reader.GetSoftwareInfo()
+						var transponders = await reader.Inventory()
 							.ConfigureAwait(false);
 
-						var result = await reader.TestCommunication()
-							.ConfigureAwait(false);
+						Console.WriteLine(FeigTransponder.ToString(transponders));
 
-						if (!result)
-							Debugger.Launch();
+						//	var info = await reader.GetSoftwareInfo()
+						//		.ConfigureAwait(false);
 
-						await reader.ResetRF()
-							.ConfigureAwait(false);
+						//	var result = await reader.TestCommunication()
+						//		.ConfigureAwait(false);
 
-						BufferSpan cfg;
+						//	if (!result)
+						//		Debugger.Launch();
 
-						cfg = await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
-							.ConfigureAwait(false);
-						cfg = await reader.ReadConfiguration(1, FeigBlockLocation.EEPROM)
-							.ConfigureAwait(false);
+						//	await reader.ResetRF()
+						//		.ConfigureAwait(false);
 
-						cfg.Buffer[cfg.Offset + 0] = 0xCD;
+						//	BufferSpan cfg;
 
-						await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
-							.ConfigureAwait(false);
+						//	cfg = await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
+						//		.ConfigureAwait(false);
+						//	cfg = await reader.ReadConfiguration(1, FeigBlockLocation.EEPROM)
+						//		.ConfigureAwait(false);
 
-						await reader.ResetConfigurations(FeigBlockLocation.RAM)
-							.ConfigureAwait(false);
+						//	cfg.Buffer[cfg.Offset + 0] = 0xCD;
+
+						//	await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
+						//		.ConfigureAwait(false);
+
+						//	await reader.ResetConfigurations(FeigBlockLocation.RAM)
+						//		.ConfigureAwait(false);
 
 						sw.Stop();
 
-						File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
+						//	File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
 					}
 					catch (Exception ex)
 					{

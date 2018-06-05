@@ -87,11 +87,6 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		CTx = 0x11,
 
-		/// <summary>
-		/// 84h EPC class 1 Gen 2
-		/// </summary>
-		EPC_Class1_Gen2 = 0x084,
-
 
 		/// <summary>
 		/// FFh Unknown Transponder Type

@@ -1345,5 +1345,229 @@ namespace InlayTester.Drivers.Feig
 					.ContainsExactly(0x8D);
 			}
 		}
+
+
+		[TestFixture]
+		public class Inventory
+		{
+			[Test]
+			public void _Inventory_Parse_ISO14443A__1()
+			{
+				var data = BufferSpan.From(
+					0x00, 0xFF, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
+				);
+
+				var transponder = DefaultFeigReader._Inventory_Parse_ISO14443A(ref data);
+
+				Check.That(transponder.TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO14443A);
+				Check.That(transponder.Identifier.ToArray())
+					.ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse_ISO14443A__2()
+			{
+				var data = BufferSpan.From(
+					0x24, 0xFF, 0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
+				);
+
+				var transponder = DefaultFeigReader._Inventory_Parse_ISO14443A(ref data);
+
+				Check.That(transponder.TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO14443A);
+				Check.That(transponder.Identifier.ToArray())
+					.ContainsExactly(0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse_ISO14443B()
+			{
+				var data = BufferSpan.From(
+					0xFF, 0xAA, 0xBB, 0xCC, 0xDD, 0x11, 0x22, 0x33, 0x44, 0xDD
+				);
+
+				var transponder = DefaultFeigReader._Inventory_Parse_ISO14443B(ref data);
+
+				Check.That(transponder.TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO14443B);
+				Check.That(transponder.Identifier.ToArray())
+					.ContainsExactly(0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse_Jewel()
+			{
+				var data = BufferSpan.From(
+					0x00, 0x00, 0x01, 0x3C, 0x11, 0x22, 0x33, 0x44, 0xDD
+				);
+
+				var transponder = DefaultFeigReader._Inventory_Parse_Jewel(ref data);
+
+				Check.That(transponder.TransponderType)
+					.IsEqualTo(FeigTransponderType.Jewel);
+				Check.That(transponder.Identifier.ToArray())
+					.ContainsExactly(0x01, 0x3C, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse_SR176()
+			{
+				var data = BufferSpan.From(
+					0xFF, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0xDD
+				);
+
+				var transponder = DefaultFeigReader._Inventory_Parse_SR176(ref data);
+
+				Check.That(transponder.TransponderType)
+					.IsEqualTo(FeigTransponderType.SR176);
+				Check.That(transponder.Identifier.ToArray())
+					.ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse_SRIxx()
+			{
+				var data = BufferSpan.From(
+					0xFF, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0xDD
+				);
+
+				var transponder = DefaultFeigReader._Inventory_Parse_SRIxx(ref data);
+
+				Check.That(transponder.TransponderType)
+					.IsEqualTo(FeigTransponderType.SRIxx);
+				Check.That(transponder.Identifier.ToArray())
+					.ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse_ISO15693()
+			{
+				var data = BufferSpan.From(
+					0xFF, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
+				);
+
+				var transponder = DefaultFeigReader._Inventory_Parse_ISO15693(ref data);
+
+				Check.That(transponder.TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO15693);
+				Check.That(transponder.Identifier.ToArray())
+					.ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse_ISO18000_3M3()
+			{
+				var data = BufferSpan.From(
+					0xFF, 0x05, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
+				);
+
+				var transponder = DefaultFeigReader._Inventory_Parse_ISO18000_3M3(ref data);
+
+				Check.That(transponder.TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO18000_3M3);
+				Check.That(transponder.Identifier.ToArray())
+					.ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse()
+			{
+				var data = BufferSpan.From(
+					0x08,
+					0x04, 0x24, 0xFF, 0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11,   // ISO14443A
+					0x04, 0x00, 0xFF, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11,                     // ISO14443A
+					0x05, 0xFF, 0xAA, 0xBB, 0xCC, 0xDD, 0x11, 0x22, 0x33, 0x44,                     // ISO14443B
+					0x08, 0x00, 0x00, 0x01, 0x3C, 0x11, 0x22, 0x33, 0x44,                           // Jewel
+					0x0A, 0xFF, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,                     // SR176
+					0x0B, 0xFF, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,                     // SRIxx
+					0x03, 0xFF, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11,                     // ISO15693
+					0x09, 0xFF, 0x05, 0x55, 0x44, 0x33, 0x22, 0x11,                                 // ISO18000_3M3
+					0xDD
+				);
+
+				var transponders = DefaultFeigReader._Inventory_Parse(ref data);
+
+				Check.That(transponders[0].TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO14443A);
+				Check.That(transponders[0].Identifier.ToArray())
+					.ContainsExactly(0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(transponders[1].TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO14443A);
+				Check.That(transponders[1].Identifier.ToArray())
+					.ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(transponders[2].TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO14443B);
+				Check.That(transponders[2].Identifier.ToArray())
+					.ContainsExactly(0x44, 0x33, 0x22, 0x11);
+
+				Check.That(transponders[3].TransponderType)
+					.IsEqualTo(FeigTransponderType.Jewel);
+				Check.That(transponders[3].Identifier.ToArray())
+					.ContainsExactly(0x01, 0x3C, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(transponders[4].TransponderType)
+					.IsEqualTo(FeigTransponderType.SR176);
+				Check.That(transponders[4].Identifier.ToArray())
+					.ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(transponders[5].TransponderType)
+					.IsEqualTo(FeigTransponderType.SRIxx);
+				Check.That(transponders[5].Identifier.ToArray())
+					.ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(transponders[6].TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO15693);
+				Check.That(transponders[6].Identifier.ToArray())
+					.ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(transponders[7].TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO18000_3M3);
+				Check.That(transponders[7].Identifier.ToArray())
+					.ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(data.ToArray())
+					.ContainsExactly(0xDD);
+			}
+
+			[Test]
+			public void _Inventory_Parse_UnsupportedTransponderType()
+			{
+				var data = BufferSpan.From(
+					0x01,
+					0x06, 0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11,
+					0xDD
+				);
+
+				Check.ThatCode(() => DefaultFeigReader._Inventory_Parse(ref data))
+					.Throws<NotSupportedException>();
+			}
+		}
 	}
 }

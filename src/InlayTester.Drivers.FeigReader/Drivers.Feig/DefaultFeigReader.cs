@@ -46,6 +46,8 @@ namespace InlayTester.Drivers.Feig
 		private Int32 mTransferNo;
 
 
+		#region ++ Public Interface ++
+
 		public FeigReaderSettings Settings => mSettings;
 
 		public IFeigTransport Transport => mTransport;
@@ -63,6 +65,7 @@ namespace InlayTester.Drivers.Feig
 			mLog = logger;
 		}
 
+		#endregion
 
 		#region ++ IFeigReader Interface (Open, Close, Dispose) ++
 
@@ -251,7 +254,8 @@ namespace InlayTester.Drivers.Feig
 			if (result.Status == FeigTransferStatus.Success)
 			{
 				if (result.Response.Status == FeigStatus.OK ||
-					result.Response.Status == FeigStatus.NoTransponder)
+					result.Response.Status == FeigStatus.NoTransponder ||
+					result.Response.Status == FeigStatus.MoreData)
 				{
 					return result.Response;     // success
 				}
@@ -1021,6 +1025,215 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 			#endregion
+		}
+
+		/// <summary>
+		/// Reads the identifier data of all transponders inside the antenna field.
+		/// </summary>
+		/// 
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		public async Task<FeigTransponder[]> Inventory(
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default)
+		{
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  Inventory()",
+						mSettings.TransportSettings.PortName
+					);
+				}
+			}
+			#endregion
+
+			mRequestBuffer[0] = (Byte)FeigISOStandardCommand.Inventory;
+			mRequestBuffer[1] = 0x00;   // new inventory
+
+			var data = BufferSpan.From(mRequestBuffer, 0, 2);
+
+			var response = await this.Execute(
+				FeigCommand.ISOStandardHostCommand, data, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			var rspDat = response.Data;
+
+			FeigTransponder[] result;
+			if (response.Status == FeigStatus.NoTransponder)
+				result = Array.Empty<FeigTransponder>();
+			else
+				result = _Inventory_Parse(ref rspDat);
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  Inventory()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						result.Length == 0 ? "<none>" : FeigTransponder.ToString(result)
+					);
+				}
+			}
+			#endregion
+
+			return result;
+		}
+
+		internal static FeigTransponder[] _Inventory_Parse(ref BufferSpan data)
+		{
+			var count = data[0];
+			var transponders = new FeigTransponder[count];
+
+			data = data.Discard(1);
+
+			for (Int32 i = 0; i < count; i++)
+				transponders[i] = _Inventory_ParseSingle(ref data);
+
+			return transponders;
+		}
+
+		private static FeigTransponder _Inventory_ParseSingle(ref BufferSpan data)
+		{
+			var transponderType = (FeigTransponderType)(data[0] & 0x0F);
+			data = data.Discard(1);
+
+			switch (transponderType)
+			{
+				case FeigTransponderType.ISO14443A:
+					return _Inventory_Parse_ISO14443A(ref data);
+
+				case FeigTransponderType.ISO14443B:
+					return _Inventory_Parse_ISO14443B(ref data);
+
+				case FeigTransponderType.Jewel:
+					return _Inventory_Parse_Jewel(ref data);
+
+				case FeigTransponderType.SR176:
+					return _Inventory_Parse_SR176(ref data);
+
+				case FeigTransponderType.SRIxx:
+					return _Inventory_Parse_SRIxx(ref data);
+
+				case FeigTransponderType.ISO15693:
+					return _Inventory_Parse_ISO15693(ref data);
+
+				case FeigTransponderType.ISO18000_3M3:
+					return _Inventory_Parse_ISO18000_3M3(ref data);
+
+				default:
+					throw ExceptionFactory.NotSupportedException(
+						$"Decoding response for transponder type {transponderType} is not supported!"
+					);
+			}
+		}
+
+		internal static FeigTransponder _Inventory_Parse_ISO14443A(ref BufferSpan data)
+		{
+			var info = data[0];
+			var length = (info & 0x04) != 0 ? 10 : 7;
+			var identifier = data.Slice(2, length);
+
+			data = data.Discard(2 + length);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.ISO14443A,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_ISO14443B(ref BufferSpan data)
+		{
+			var identifier = data.Slice(5, 4);
+			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
+
+			data = data.Discard(9);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.ISO14443B,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_Jewel(ref BufferSpan data)
+		{
+			var identifier = data.Slice(2, 6);
+			Array.Reverse(identifier.Buffer, identifier.Offset + 2, 4);
+
+			data = data.Discard(8);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.Jewel,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_SR176(ref BufferSpan data)
+		{
+			var identifier = data.Slice(1, 8);
+			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
+
+			data = data.Discard(9);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.SR176,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_SRIxx(ref BufferSpan data)
+		{
+			var identifier = data.Slice(1, 8);
+			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
+
+			data = data.Discard(9);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.SRIxx,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_ISO15693(ref BufferSpan data)
+		{
+			var identifier = data.Slice(1, 8);
+
+			data = data.Discard(9);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.ISO15693,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_ISO18000_3M3(ref BufferSpan data)
+		{
+			var length = data[1];
+			var identifier = data.Slice(2, length);
+
+			data = data.Discard(2 + length);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.ISO18000_3M3,
+				Identifier = identifier,
+			};
 		}
 
 		#endregion
