@@ -37,6 +37,7 @@ namespace InlayTester.Drivers.Feig
 		{
 			Check.That(Enum.GetNames(typeof(FeigReaderType)))
 				.IsOnlyMadeOf(
+					nameof(FeigReaderType.Unknown),
 					nameof(FeigReaderType.ISC_DAT),
 					nameof(FeigReaderType.ISC_UMUX),
 					nameof(FeigReaderType.ISC_GPC),
@@ -85,6 +86,8 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void TestValues()
 		{
+			Check.That((Byte)FeigReaderType.Unknown)
+				.IsEqualTo(0);
 			Check.That((Byte)FeigReaderType.CPR40_0x_AxCx)
 				.IsEqualTo(83);
 		}

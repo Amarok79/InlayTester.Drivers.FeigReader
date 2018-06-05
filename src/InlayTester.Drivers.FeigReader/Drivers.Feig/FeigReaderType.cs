@@ -33,6 +33,12 @@ namespace InlayTester.Drivers.Feig
 	public enum FeigReaderType : Byte
 	{
 		/// <summary>
+		/// 0 Unknown
+		/// </summary>
+		Unknown = 0,
+
+
+		/// <summary>
 		/// 11 ISC.DAT 
 		/// </summary>
 		ISC_DAT = 11,

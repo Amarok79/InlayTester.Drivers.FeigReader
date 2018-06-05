@@ -30,49 +30,53 @@ using NUnit.Framework;
 namespace InlayTester.Drivers.Feig
 {
 	[TestFixture]
-	public class Test_FeigTransponderType
+	public class Test_FeigSoftwareInfo
 	{
 		[Test]
-		public void TestNames()
+		public void Construction_Defaults()
 		{
-			Check.That(Enum.GetNames(typeof(FeigTransponderType)))
-				.IsOnlyMadeOf(
-					nameof(FeigTransponderType.ICode1),
-					nameof(FeigTransponderType.ICodeEPC),
-					nameof(FeigTransponderType.ISO14443A),
-					nameof(FeigTransponderType.ISO14443B),
-					nameof(FeigTransponderType.ISO15693),
-					nameof(FeigTransponderType.ISO18000_3M3),
-					nameof(FeigTransponderType.Jewel),
-					nameof(FeigTransponderType.None),
-					nameof(FeigTransponderType.SR176),
-					nameof(FeigTransponderType.SRIx)
-				);
+			// act
+			var info = new FeigSoftwareInfo();
+
+			// assert
+			Check.That(info.FirmwareVersion)
+				.IsEqualTo(new Version(0, 0, 0));
+			Check.That(info.HardwareType)
+				.IsEqualTo(0x00);
+			Check.That(info.ReaderType)
+				.IsEqualTo(FeigReaderType.Unknown);
+			Check.That(info.SupportedTransponders)
+				.IsEqualTo(0x0000);
+
+			Check.That(info.ToString())
+				.IsEqualTo("FirmwareVersion: 0.0.0, HardwareType: 0x00, ReaderType: Unknown, SupportedTransponders: 0x0000");
 		}
 
 		[Test]
-		public void TestValues()
+		public void Construction_Copy()
 		{
-			Check.That((Int32)FeigTransponderType.None)
-				.IsEqualTo(0x0000);
-			Check.That((Int32)FeigTransponderType.ICode1)
-				.IsEqualTo(0x0001);
-			Check.That((Int32)FeigTransponderType.ISO15693)
-				.IsEqualTo(0x0008);
-			Check.That((Int32)FeigTransponderType.ISO14443A)
-				.IsEqualTo(0x0010);
-			Check.That((Int32)FeigTransponderType.ISO14443B)
-				.IsEqualTo(0x0020);
-			Check.That((Int32)FeigTransponderType.ICodeEPC)
-				.IsEqualTo(0x0040);
-			Check.That((Int32)FeigTransponderType.Jewel)
-				.IsEqualTo(0x0100);
-			Check.That((Int32)FeigTransponderType.ISO18000_3M3)
-				.IsEqualTo(0x0200);
-			Check.That((Int32)FeigTransponderType.SR176)
-				.IsEqualTo(0x0400);
-			Check.That((Int32)FeigTransponderType.SRIx)
-				.IsEqualTo(0x0800);
+			// act
+			var copy = new FeigSoftwareInfo {
+				FirmwareVersion = new Version(3, 4, 0),
+				HardwareType = 0x34,
+				ReaderType = FeigReaderType.CPR40_0x_AxCx,
+				SupportedTransponders = 0x1234,
+			};
+
+			var info = new FeigSoftwareInfo(copy);
+
+			// assert
+			Check.That(info.FirmwareVersion)
+				.IsEqualTo(new Version(3, 4, 0));
+			Check.That(info.HardwareType)
+				.IsEqualTo(0x34);
+			Check.That(info.ReaderType)
+				.IsEqualTo(FeigReaderType.CPR40_0x_AxCx);
+			Check.That(info.SupportedTransponders)
+				.IsEqualTo(0x1234);
+
+			Check.That(info.ToString())
+				.IsEqualTo("FirmwareVersion: 3.4.0, HardwareType: 0x34, ReaderType: CPR40_0x_AxCx, SupportedTransponders: 0x1234");
 		}
 	}
 }
