@@ -547,6 +547,10 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="cancellationToken">
 		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
 		/// 
+		/// <returns>
+		/// An object containing the parsed response data.
+		/// </returns>
+		/// 
 		/// <exception cref="ObjectDisposedException">
 		/// A method or property was called on an already disposed object.</exception>
 		/// <exception cref="InvalidOperationException">
@@ -559,7 +563,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		public async Task<(FeigSoftwareInfo Info, FeigResponse Response)> GetSoftwareInfo(
+		public async Task<FeigSoftwareInfo> GetSoftwareInfo(
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
@@ -602,7 +606,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			return (info, response);
+			return info;
 		}
 
 		/// <summary>
@@ -618,6 +622,10 @@ namespace InlayTester.Drivers.Feig
 		/// <param name="cancellationToken">
 		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
 		/// 
+		/// <returns>
+		/// The configuration data.
+		/// </returns>
+		/// 
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// The block number must be between 0 and 63.</exception>
 		/// <exception cref="ObjectDisposedException">
@@ -632,7 +640,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		public async Task<(BufferSpan Data, FeigResponse Response)> ReadConfiguration(
+		public async Task<BufferSpan> ReadConfiguration(
 			Int32 block,
 			FeigBlockLocation location,
 			TimeSpan? timeout = null,
@@ -678,7 +686,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			return (response.Data, response);
+			return response.Data;
 		}
 
 		/// <summary>
@@ -1035,6 +1043,11 @@ namespace InlayTester.Drivers.Feig
 		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
 		/// <param name="cancellationToken">
 		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <returns>
+		/// A tuple containing the decoded transponders and the received response.
+		/// </returns>
+		/// 
 		/// 
 		/// <exception cref="ObjectDisposedException">
 		/// A method or property was called on an already disposed object.</exception>

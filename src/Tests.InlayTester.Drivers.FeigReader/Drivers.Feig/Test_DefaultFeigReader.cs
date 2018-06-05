@@ -1111,7 +1111,7 @@ namespace InlayTester.Drivers.Feig
 				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
-				var result = await reader.GetSoftwareInfo();
+				var info = await reader.GetSoftwareInfo();
 
 				// assert
 				Check.That(request.Command)
@@ -1119,21 +1119,18 @@ namespace InlayTester.Drivers.Feig
 				Check.That(request.Data.ToArray())
 					.IsEmpty();
 
-				Check.That(result.Info.FirmwareVersion.Major)
+				Check.That(info.FirmwareVersion.Major)
 					.IsEqualTo(3);
-				Check.That(result.Info.FirmwareVersion.Minor)
+				Check.That(info.FirmwareVersion.Minor)
 					.IsEqualTo(3);
-				Check.That(result.Info.FirmwareVersion.Build)
+				Check.That(info.FirmwareVersion.Build)
 					.IsEqualTo(0);
-				Check.That(result.Info.HardwareType)
+				Check.That(info.HardwareType)
 					.IsEqualTo(0x44);
-				Check.That(result.Info.ReaderType)
+				Check.That(info.ReaderType)
 					.IsEqualTo(FeigReaderType.CPR40_0x_AxCx);
-				Check.That(result.Info.SupportedTransponders)
+				Check.That(info.SupportedTransponders)
 					.IsEqualTo(0x0D30);
-
-				Check.That(result.Response)
-					.IsSameReferenceAs(response);
 			}
 		}
 
@@ -1165,16 +1162,13 @@ namespace InlayTester.Drivers.Feig
 				var result = await reader.ReadConfiguration(3, FeigBlockLocation.EEPROM);
 
 				// assert
-				Check.That(result.Data.Count)
+				Check.That(result.Count)
 					.IsEqualTo(14);
 
 				Check.That(request.Command)
 					.IsEqualTo(FeigCommand.ReadConfiguration);
 				Check.That(request.Data.ToArray())
 					.ContainsExactly(0x83);
-
-				Check.That(result.Response)
-					.IsSameReferenceAs(response);
 			}
 		}
 
