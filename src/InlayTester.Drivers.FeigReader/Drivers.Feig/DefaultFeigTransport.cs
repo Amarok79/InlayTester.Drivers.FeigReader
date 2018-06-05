@@ -56,6 +56,9 @@ namespace InlayTester.Drivers.Feig
 
 		public DefaultFeigTransport(SerialTransportSettings settings, ILog logger)
 		{
+			Verify.NotNull(settings, nameof(settings));
+			Verify.NotNull(logger, nameof(logger));
+
 			mSettings = settings;
 			mLog = logger;
 
@@ -200,111 +203,126 @@ namespace InlayTester.Drivers.Feig
 			lock (mSyncThis)
 			{
 				if (mCompletionSource.Task.IsCompleted)
-				{
-					// ignore received data
-
-					#region (logging)
-					{
-						mLog.TraceFormat(CultureInfo.InvariantCulture,
-							"[{0}]  IGNORED   {1}",
-							mSettings.PortName,
-							e.Data
-						);
-					}
-					#endregion
-				}
+					_IgnoreReceivedData(e);
 				else
 				{
 					mReceiveBuffer = mReceiveBuffer.Append(e.Data);
 					var result = FeigResponse.TryParse(mReceiveBuffer, mProtocol);
 
 					if (result.Status == FeigParseStatus.MoreDataNeeded)
-					{
-						// wait for more data
-
-						#region (logging)
-						{
-							if (mLog.IsTraceEnabled)
-							{
-								mLog.TraceFormat(CultureInfo.InvariantCulture,
-									"[{0}]  PARSED    MoreDataNeeded;  ReceiveBuffer: {1}",
-									mSettings.PortName,
-									mReceiveBuffer
-								);
-							}
-						}
-						#endregion
-					}
+						_WaitForMoreData();
 					else
 					if (result.Status == FeigParseStatus.FrameError ||
 						result.Status == FeigParseStatus.ChecksumError)
-					{
-						// complete with error
-
-						#region (logging)
-						{
-							if (mLog.IsTraceEnabled)
-							{
-								mLog.TraceFormat(CultureInfo.InvariantCulture,
-									"[{0}]  PARSED    {1};  ReceiveBuffer: {2}",
-									mSettings.PortName,
-									result.Status,
-									mReceiveBuffer
-								);
-							}
-							if (mLog.IsInfoEnabled)
-							{
-								mLog.InfoFormat(CultureInfo.InvariantCulture,
-									"[{0}]  COMMERR",
-									mSettings.PortName
-								);
-							}
-						}
-						#endregion
-
-						mCompletionSource.TrySetResult(FeigTransferResult.CommunicationError(mRequest));
-					}
+						_CompleteWithError(result);
 					else
 					if (result.Response.Command != mRequest.Command)
-					{
-						// complete with error
-
-						#region (logging)
-						{
-							if (mLog.IsInfoEnabled)
-							{
-								mLog.InfoFormat(CultureInfo.InvariantCulture,
-									"[{0}]  UNEXPECT  {1}",
-									mSettings.PortName,
-									result.Response
-								);
-							}
-						}
-						#endregion
-
-						mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest, result.Response));
-					}
+						_CompleteWithUnexpectedResponse(result);
 					else
-					{
-						// complete with success
-
-						#region (logging)
-						{
-							if (mLog.IsInfoEnabled)
-							{
-								mLog.InfoFormat(CultureInfo.InvariantCulture,
-									"[{0}]  RECEIVED  {1}",
-									mSettings.PortName,
-									result.Response
-								);
-							}
-						}
-						#endregion
-
-						mCompletionSource.TrySetResult(FeigTransferResult.Success(mRequest, result.Response));
-					}
+						_CompleteWithSuccess(result);
 				}
 			}
+		}
+
+		private void _IgnoreReceivedData(TransportDataReceivedEventArgs e)
+		{
+			// ignore received data
+
+			#region (logging)
+			{
+				mLog.TraceFormat(CultureInfo.InvariantCulture,
+					"[{0}]  IGNORED   {1}",
+					mSettings.PortName,
+					e.Data
+				);
+			}
+			#endregion
+		}
+
+		private void _WaitForMoreData()
+		{
+			// wait for more data
+
+			#region (logging)
+
+			if (mLog.IsTraceEnabled)
+			{
+				mLog.TraceFormat(CultureInfo.InvariantCulture,
+					"[{0}]  PARSED    MoreDataNeeded;  ReceiveBuffer: {1}",
+					mSettings.PortName,
+					mReceiveBuffer
+				);
+			}
+
+			#endregion
+		}
+
+		private void _CompleteWithError(FeigParseResult result)
+		{
+			// complete with error
+
+			#region (logging)
+			{
+				if (mLog.IsTraceEnabled)
+				{
+					mLog.TraceFormat(CultureInfo.InvariantCulture,
+						"[{0}]  PARSED    {1};  ReceiveBuffer: {2}",
+						mSettings.PortName,
+						result.Status,
+						mReceiveBuffer
+					);
+				}
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  COMMERR",
+						mSettings.PortName
+					);
+				}
+			}
+			#endregion
+
+			mCompletionSource.TrySetResult(FeigTransferResult.CommunicationError(mRequest));
+		}
+
+		private void _CompleteWithUnexpectedResponse(FeigParseResult result)
+		{
+			// complete with error
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  UNEXPECT  {1}",
+						mSettings.PortName,
+						result.Response
+					);
+				}
+			}
+			#endregion
+
+			mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest, result.Response));
+		}
+
+		private void _CompleteWithSuccess(FeigParseResult result)
+		{
+			// complete with success
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  RECEIVED  {1}",
+						mSettings.PortName,
+						result.Response
+					);
+				}
+			}
+			#endregion
+
+			mCompletionSource.TrySetResult(FeigTransferResult.Success(mRequest, result.Response));
 		}
 	}
 }
