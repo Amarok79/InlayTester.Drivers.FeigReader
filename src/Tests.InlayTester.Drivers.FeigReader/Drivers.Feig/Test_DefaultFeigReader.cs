@@ -1087,6 +1087,54 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		[TestFixture]
+		public class GetSoftwareInfo
+		{
+			[Test]
+			public async Task Success()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var data = new Byte[] { 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30 };
+				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				var info = await reader.GetSoftwareInfo();
+
+				// assert
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.GetSoftwareVersion);
+				Check.That(request.Data.ToArray())
+					.IsEmpty();
+
+				Check.That(info.FirmwareVersion.Major)
+					.IsEqualTo(3);
+				Check.That(info.FirmwareVersion.Minor)
+					.IsEqualTo(3);
+				Check.That(info.FirmwareVersion.Build)
+					.IsEqualTo(0);
+				Check.That(info.HardwareType)
+					.IsEqualTo(0x44);
+				Check.That(info.ReaderType)
+					.IsEqualTo(FeigReaderType.CPR40_0x_AxCx);
+				Check.That(info.SupportedTransponders)
+					.IsEqualTo(0x0D30);
+			}
+		}
+
+		[TestFixture]
 		public class ReadConfiguration
 		{
 			[Test]

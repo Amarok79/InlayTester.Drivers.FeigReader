@@ -275,6 +275,31 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default);
 
+		/// <summary>
+		/// Gets information about the reader/module's software.
+		/// </summary>
+		/// 
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		Task<FeigSoftwareInfo> GetSoftwareInfo(
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
 
 		/// <summary>
 		/// Reads a configuration block (14 bytes) from the reader's RAM or EEPROM.

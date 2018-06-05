@@ -77,20 +77,22 @@ namespace InlayTester
 					if (i % 1000 == 0)
 						Console.WriteLine(i);
 
-					//if (i == 1000)
-					//	Console.ReadLine();
-					//if (i == 2000)
-					//	Console.ReadLine();
 
 					try
 					{
 						sw.Restart();
 
-						//var result = await reader.TestCommunication()
-						//	.ConfigureAwait(false);
+						var info = await reader.GetSoftwareInfo()
+							.ConfigureAwait(false);
 
-						//await reader.ResetRF()
-						//	.ConfigureAwait(false);
+						var result = await reader.TestCommunication()
+							.ConfigureAwait(false);
+
+						if (!result)
+							Debugger.Launch();
+
+						await reader.ResetRF()
+							.ConfigureAwait(false);
 
 						BufferSpan cfg;
 
@@ -104,10 +106,7 @@ namespace InlayTester
 						await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
 							.ConfigureAwait(false);
 
-						await reader.SaveConfiguration(1)
-							.ConfigureAwait(false);
-
-						await reader.ResetConfigurations(FeigBlockLocation.EEPROM)
+						await reader.ResetConfigurations(FeigBlockLocation.RAM)
 							.ConfigureAwait(false);
 
 						sw.Stop();
@@ -116,7 +115,7 @@ namespace InlayTester
 					}
 					catch (Exception ex)
 					{
-						Debugger.Break();
+						Debugger.Launch();
 					}
 				}
 			}

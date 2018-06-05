@@ -535,6 +535,73 @@ namespace InlayTester.Drivers.Feig
 		}
 
 		/// <summary>
+		/// Gets information about the reader/module's software.
+		/// </summary>
+		/// 
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		public async Task<FeigSoftwareInfo> GetSoftwareInfo(
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default)
+		{
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  GetSoftwareInfo()",
+						mSettings.TransportSettings.PortName
+					);
+				}
+			}
+			#endregion
+
+			var response = await this.Execute(
+				FeigCommand.GetSoftwareVersion, BufferSpan.Empty, timeout, cancellationToken)
+				.ConfigureAwait(false);
+
+			var info = new FeigSoftwareInfo {
+				FirmwareVersion = new Version(
+					response.Data[0],
+					response.Data[1],
+					response.Data[2]),
+				HardwareType = response.Data[3],
+				ReaderType = (FeigReaderType)response.Data[4],
+				SupportedTransponders = (response.Data[5] << 8 | response.Data[6])
+			};
+
+			#region (logging)
+			{
+				if (mLog.IsInfoEnabled)
+				{
+					mLog.InfoFormat(CultureInfo.InvariantCulture,
+						"[{0}]  GetSoftwareInfo()  =>  {{ {1} }}",
+						mSettings.TransportSettings.PortName,
+						info
+					);
+				}
+			}
+			#endregion
+
+			return info;
+		}
+
+		/// <summary>
 		/// Reads a configuration block (14 bytes) from the reader's RAM or EEPROM.
 		/// </summary>
 		/// 
