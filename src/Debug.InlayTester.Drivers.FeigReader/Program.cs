@@ -89,8 +89,8 @@ namespace InlayTester
 				//await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
 				//	.ConfigureAwait(false);
 
-				var data = await reader.Execute(FeigCommand.GetReaderInfo, BufferSpan.From(0x08))
-					.ConfigureAwait(false);
+				//var data = await reader.Execute(FeigCommand.GetReaderInfo, BufferSpan.From(0x08))
+				//	.ConfigureAwait(false);
 
 
 				for (Int32 i = 0; i < 1000000; i++)
@@ -103,10 +103,10 @@ namespace InlayTester
 					{
 						sw.Restart();
 
-						var transponders = await reader.Inventory()
+						var result = await reader.Inventory()
 							.ConfigureAwait(false);
 
-						Console.WriteLine(FeigTransponder.ToString(transponders));
+						Console.WriteLine(result.Response.Status + " " + FeigTransponder.ToString(result.Transponders));
 
 						//	var info = await reader.GetSoftwareInfo()
 						//		.ConfigureAwait(false);

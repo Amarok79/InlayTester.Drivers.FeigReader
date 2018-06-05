@@ -559,7 +559,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		public async Task<FeigSoftwareInfo> GetSoftwareInfo(
+		public async Task<(FeigSoftwareInfo Info, FeigResponse Response)> GetSoftwareInfo(
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
@@ -602,7 +602,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			return info;
+			return (info, response);
 		}
 
 		/// <summary>
@@ -632,7 +632,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		public async Task<BufferSpan> ReadConfiguration(
+		public async Task<(BufferSpan Data, FeigResponse Response)> ReadConfiguration(
 			Int32 block,
 			FeigBlockLocation location,
 			TimeSpan? timeout = null,
@@ -678,7 +678,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			return response.Data;
+			return (response.Data, response);
 		}
 
 		/// <summary>
@@ -1048,7 +1048,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		public async Task<FeigTransponder[]> Inventory(
+		public async Task<(FeigTransponder[] Transponders, FeigResponse Response)> Inventory(
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
@@ -1086,15 +1086,16 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  Inventory()  =>  {1}",
+						"[{0}]  Inventory()  =>  {1}; {2}",
 						mSettings.TransportSettings.PortName,
+						response.Status,
 						result.Length == 0 ? "<none>" : FeigTransponder.ToString(result)
 					);
 				}
 			}
 			#endregion
 
-			return result;
+			return (result, response);
 		}
 
 		internal static FeigTransponder[] _Inventory_Parse(ref BufferSpan data)

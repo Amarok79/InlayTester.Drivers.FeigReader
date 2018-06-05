@@ -1111,7 +1111,7 @@ namespace InlayTester.Drivers.Feig
 				var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
 				// act
-				var info = await reader.GetSoftwareInfo();
+				var result = await reader.GetSoftwareInfo();
 
 				// assert
 				Check.That(request.Command)
@@ -1119,18 +1119,21 @@ namespace InlayTester.Drivers.Feig
 				Check.That(request.Data.ToArray())
 					.IsEmpty();
 
-				Check.That(info.FirmwareVersion.Major)
+				Check.That(result.Info.FirmwareVersion.Major)
 					.IsEqualTo(3);
-				Check.That(info.FirmwareVersion.Minor)
+				Check.That(result.Info.FirmwareVersion.Minor)
 					.IsEqualTo(3);
-				Check.That(info.FirmwareVersion.Build)
+				Check.That(result.Info.FirmwareVersion.Build)
 					.IsEqualTo(0);
-				Check.That(info.HardwareType)
+				Check.That(result.Info.HardwareType)
 					.IsEqualTo(0x44);
-				Check.That(info.ReaderType)
+				Check.That(result.Info.ReaderType)
 					.IsEqualTo(FeigReaderType.CPR40_0x_AxCx);
-				Check.That(info.SupportedTransponders)
+				Check.That(result.Info.SupportedTransponders)
 					.IsEqualTo(0x0D30);
+
+				Check.That(result.Response)
+					.IsSameReferenceAs(response);
 			}
 		}
 
@@ -1162,13 +1165,16 @@ namespace InlayTester.Drivers.Feig
 				var result = await reader.ReadConfiguration(3, FeigBlockLocation.EEPROM);
 
 				// assert
-				Check.That(result.Count)
+				Check.That(result.Data.Count)
 					.IsEqualTo(14);
 
 				Check.That(request.Command)
 					.IsEqualTo(FeigCommand.ReadConfiguration);
 				Check.That(request.Data.ToArray())
 					.ContainsExactly(0x83);
+
+				Check.That(result.Response)
+					.IsSameReferenceAs(response);
 			}
 		}
 
@@ -1567,6 +1573,77 @@ namespace InlayTester.Drivers.Feig
 
 				Check.ThatCode(() => DefaultFeigReader._Inventory_Parse(ref data))
 					.Throws<NotSupportedException>();
+			}
+
+			[Test]
+			public async Task Success()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var data = new Byte[] { 0x01, 0x04, 0x00, 0xFF, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11 };
+				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				var result = await reader.Inventory();
+
+				// assert
+				Check.That(result.Transponders.Length)
+					.IsEqualTo(1);
+				Check.That(result.Transponders[0].TransponderType)
+					.IsEqualTo(FeigTransponderType.ISO14443A);
+				Check.That(result.Transponders[0].Identifier.ToArray())
+					.ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.ISOStandardHostCommand);
+				Check.That(request.Data.ToArray())
+					.ContainsExactly((Byte)FeigISOStandardCommand.Inventory, 0x00);
+			}
+
+			[Test]
+			public async Task NoTransponder()
+			{
+				// arrange
+				FeigRequest request = null;
+				TimeSpan timeout = TimeSpan.Zero;
+				CancellationToken cancellationToken = default;
+
+				var response = new FeigResponse { Status = FeigStatus.NoTransponder, Data = BufferSpan.Empty };
+
+				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
+
+				transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Advanced, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+					.Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>((r, p, t, c) => { request = r; timeout = t; cancellationToken = c; })
+					.Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+
+				var settings = new FeigReaderSettings();
+				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+				var reader = new DefaultFeigReader(settings, transport.Object, logger);
+
+				// act
+				var result = await reader.Inventory();
+
+				// assert
+				Check.That(result.Transponders.Length)
+					.IsEqualTo(0);
+
+				Check.That(request.Command)
+					.IsEqualTo(FeigCommand.ISOStandardHostCommand);
+				Check.That(request.Data.ToArray())
+					.ContainsExactly((Byte)FeigISOStandardCommand.Inventory, 0x00);
 			}
 		}
 	}
