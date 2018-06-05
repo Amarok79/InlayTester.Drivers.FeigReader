@@ -24,7 +24,6 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
 using InlayTester.Drivers.Feig;
 using InlayTester.Shared;
@@ -63,7 +62,7 @@ namespace InlayTester
 				},
 				Address = 255,
 				Protocol = FeigProtocol.Advanced,
-				Timeout = TimeSpan.FromMilliseconds(1000),
+				Timeout = TimeSpan.FromMilliseconds(1500),
 			};
 
 			using (IFeigReader reader = FeigReader.Create(settings, log))
@@ -71,6 +70,28 @@ namespace InlayTester
 				reader.Open();
 
 				var sw = new Stopwatch();
+
+				//await reader.ResetConfigurations(FeigBlockLocation.EEPROM)
+				//	.ConfigureAwait(false);
+
+				//await reader.ResetCPU()
+				//	.ConfigureAwait(false);
+
+				//var cfg = await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
+				//	.ConfigureAwait(false);
+				//cfg.Buffer[cfg.Offset + 7] = 10;    // TR-RESPONSE-TIME: 1 sec
+				//await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
+				//	.ConfigureAwait(false);
+
+				//var cfg = await reader.ReadConfiguration(5, FeigBlockLocation.RAM)
+				//	.ConfigureAwait(false);
+				//cfg.Buffer[cfg.Offset + 7] = 10;    // TR-RESPONSE-TIME: 1 sec
+				//await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
+				//	.ConfigureAwait(false);
+
+				var data = await reader.Execute(FeigCommand.GetReaderInfo, BufferSpan.From(0x08))
+					.ConfigureAwait(false);
+
 
 				for (Int32 i = 0; i < 1000000; i++)
 				{
