@@ -1184,7 +1184,7 @@ namespace InlayTester.Drivers.Feig
 
 		internal static FeigTransponder _Inventory_Parse_ISO14443B(ref BufferSpan data)
 		{
-			var identifier = data.Slice(5, 4);
+			var identifier = data.Slice(5, 4).Clone();
 			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
 
 			data = data.Discard(9);
@@ -1197,7 +1197,7 @@ namespace InlayTester.Drivers.Feig
 
 		internal static FeigTransponder _Inventory_Parse_Jewel(ref BufferSpan data)
 		{
-			var identifier = data.Slice(2, 6);
+			var identifier = data.Slice(2, 6).Clone();
 			Array.Reverse(identifier.Buffer, identifier.Offset + 2, 4);
 
 			data = data.Discard(8);
@@ -1210,7 +1210,7 @@ namespace InlayTester.Drivers.Feig
 
 		internal static FeigTransponder _Inventory_Parse_SR176(ref BufferSpan data)
 		{
-			var identifier = data.Slice(1, 8);
+			var identifier = data.Slice(1, 8).Clone();
 			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
 
 			data = data.Discard(9);
@@ -1223,7 +1223,7 @@ namespace InlayTester.Drivers.Feig
 
 		internal static FeigTransponder _Inventory_Parse_SRIxx(ref BufferSpan data)
 		{
-			var identifier = data.Slice(1, 8);
+			var identifier = data.Slice(1, 8).Clone();
 			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
 
 			data = data.Discard(9);
