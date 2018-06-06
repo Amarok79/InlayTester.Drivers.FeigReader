@@ -464,7 +464,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			await this.Execute(
+			var response = await this.Execute(
 				FeigCommand.CPUReset, BufferSpan.Empty, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
@@ -473,8 +473,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  ResetCPU()  =>  <done>",
-						mSettings.TransportSettings.PortName
+						"[{0}]  ResetCPU()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Status
 					);
 				}
 			}
@@ -521,7 +522,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			await this.Execute(
+			var response = await this.Execute(
 				FeigCommand.RFReset, BufferSpan.Empty, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
@@ -530,8 +531,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  ResetRF()  =>  <done>",
-						mSettings.TransportSettings.PortName
+						"[{0}]  ResetRF()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Status
 					);
 				}
 			}
@@ -598,8 +600,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  GetSoftwareInfo()  =>  {{ {1} }}",
+						"[{0}]  GetSoftwareInfo()  =>  {1}; {{ {2} }}",
 						mSettings.TransportSettings.PortName,
+						response.Status,
 						info
 					);
 				}
@@ -678,8 +681,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  ReadConfiguration()  =>  {1}",
+						"[{0}]  ReadConfiguration()  =>  {1}; {2}",
 						mSettings.TransportSettings.PortName,
+						response.Status,
 						response.Data
 					);
 				}
@@ -754,7 +758,7 @@ namespace InlayTester.Drivers.Feig
 
 			var cfgdata = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
 
-			await this.Execute(
+			var response = await this.Execute(
 				FeigCommand.WriteConfiguration, cfgdata, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
@@ -763,8 +767,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  WriteConfiguration()  =>  <done>",
-						mSettings.TransportSettings.PortName
+						"[{0}]  WriteConfiguration()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Status
 					);
 				}
 			}
@@ -812,7 +817,7 @@ namespace InlayTester.Drivers.Feig
 
 			var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-			await this.Execute(
+			var response = await this.Execute(
 				FeigCommand.SaveConfiguration, data, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
@@ -821,8 +826,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  SaveConfigurations()  =>  <done>",
-						mSettings.TransportSettings.PortName
+						"[{0}]  SaveConfigurations()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Status
 					);
 				}
 			}
@@ -878,7 +884,7 @@ namespace InlayTester.Drivers.Feig
 
 			var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-			await this.Execute(
+			var response = await this.Execute(
 				FeigCommand.SaveConfiguration, data, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
@@ -887,8 +893,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  SaveConfiguration()  =>  <done>",
-						mSettings.TransportSettings.PortName
+						"[{0}]  SaveConfiguration()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Status
 					);
 				}
 			}
@@ -944,7 +951,7 @@ namespace InlayTester.Drivers.Feig
 
 			var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-			await this.Execute(
+			var response = await this.Execute(
 				FeigCommand.SetDefaultConfiguration, data, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
@@ -953,8 +960,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  ResetConfigurations()  =>  <done>",
-						mSettings.TransportSettings.PortName
+						"[{0}]  ResetConfigurations()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Status
 					);
 				}
 			}
@@ -1018,7 +1026,7 @@ namespace InlayTester.Drivers.Feig
 
 			var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-			await this.Execute(
+			var response = await this.Execute(
 				FeigCommand.SetDefaultConfiguration, data, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
@@ -1027,8 +1035,9 @@ namespace InlayTester.Drivers.Feig
 				if (mLog.IsInfoEnabled)
 				{
 					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  ResetConfiguration()  =>  <done>",
-						mSettings.TransportSettings.PortName
+						"[{0}]  ResetConfiguration()  =>  {1}",
+						mSettings.TransportSettings.PortName,
+						response.Status
 					);
 				}
 			}
@@ -1102,7 +1111,7 @@ namespace InlayTester.Drivers.Feig
 						"[{0}]  Inventory()  =>  {1}; {2}",
 						mSettings.TransportSettings.PortName,
 						response.Status,
-						result.Length == 0 ? "<none>" : FeigTransponder.ToString(result)
+						FeigTransponder.ToString(result)
 					);
 				}
 			}
