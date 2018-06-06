@@ -24,9 +24,9 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using InlayTester.Drivers.Feig;
-using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 
 
@@ -77,20 +77,18 @@ namespace InlayTester
 				//await reader.ResetCPU()
 				//	.ConfigureAwait(false);
 
-				//var cfg = await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
-				//	.ConfigureAwait(false);
-				//cfg.Buffer[cfg.Offset + 7] = 10;    // TR-RESPONSE-TIME: 1 sec
-				//await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
-				//	.ConfigureAwait(false);
+				var cfg1 = await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
+					.ConfigureAwait(false);
+				cfg1.Buffer[cfg1.Offset + 7] = 10;    // TR-RESPONSE-TIME: 1 sec
+				await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg1)
+					.ConfigureAwait(false);
 
-				//var cfg = await reader.ReadConfiguration(5, FeigBlockLocation.RAM)
-				//	.ConfigureAwait(false);
-				//cfg.Buffer[cfg.Offset + 7] = 10;    // TR-RESPONSE-TIME: 1 sec
-				//await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg)
-				//	.ConfigureAwait(false);
-
-				//var data = await reader.Execute(FeigCommand.GetReaderInfo, BufferSpan.From(0x08))
-				//	.ConfigureAwait(false);
+				var cfg3 = await reader.ReadConfiguration(3, FeigBlockLocation.RAM)
+					.ConfigureAwait(false);
+				cfg3.Buffer[cfg3.Offset + 0] = 0x00;
+				cfg3.Buffer[cfg3.Offset + 1] = 0x10;
+				await reader.WriteConfiguration(3, FeigBlockLocation.RAM, cfg3)
+					.ConfigureAwait(false);
 
 
 				for (Int32 i = 0; i < 1000000; i++)
@@ -98,15 +96,33 @@ namespace InlayTester
 					if (i % 1000 == 0)
 						Console.WriteLine(i);
 
-
 					try
 					{
 						sw.Restart();
 
-						var result = await reader.Inventory()
-							.ConfigureAwait(false);
+						try
+						{
+							var result = await reader.Inventory()
+								.ConfigureAwait(false);
 
-						Console.WriteLine(result.Response.Status + " " + FeigTransponder.ToString(result.Transponders));
+							sw.Stop();
+
+							if (result.Response.Status != FeigStatus.OK)
+								Debugger.Launch();
+
+							Console.WriteLine(result.Response.Status + " " + FeigTransponder.ToString(result.Transponders));
+						}
+						catch (FeigException exception)
+						{
+							Console.WriteLine(exception.Response.Status);
+							Debugger.Launch();
+						}
+						catch (TimeoutException exception)
+						{
+							Console.WriteLine("TIMEOUT");
+							Debugger.Launch();
+						}
+
 
 						//	var info = await reader.GetSoftwareInfo()
 						//		.ConfigureAwait(false);
@@ -135,9 +151,7 @@ namespace InlayTester
 						//	await reader.ResetConfigurations(FeigBlockLocation.RAM)
 						//		.ConfigureAwait(false);
 
-						sw.Stop();
-
-						//	File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
+						File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
 					}
 					catch (Exception ex)
 					{
