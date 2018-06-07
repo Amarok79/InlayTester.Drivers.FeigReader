@@ -59,7 +59,7 @@ namespace InlayTester.Drivers.Feig
 			var copy = new FeigSoftwareInfo {
 				FirmwareVersion = new Version(3, 4, 0),
 				HardwareType = 0x34,
-				ReaderType = FeigReaderType.CPR40_0x_AxCx,
+				ReaderType = FeigReaderType.CPR40,
 				SupportedTransponders = 0x1234,
 			};
 
@@ -71,12 +71,12 @@ namespace InlayTester.Drivers.Feig
 			Check.That(info.HardwareType)
 				.IsEqualTo(0x34);
 			Check.That(info.ReaderType)
-				.IsEqualTo(FeigReaderType.CPR40_0x_AxCx);
+				.IsEqualTo(FeigReaderType.CPR40);
 			Check.That(info.SupportedTransponders)
 				.IsEqualTo(0x1234);
 
 			Check.That(info.ToString())
-				.IsEqualTo("FirmwareVersion: 3.4.0, HardwareType: 0x34, ReaderType: CPR40_0x_AxCx, SupportedTransponders: 0x1234");
+				.IsEqualTo("FirmwareVersion: 3.4.0, HardwareType: 0x34, ReaderType: CPR40, SupportedTransponders: 0x1234");
 		}
 	}
 }

@@ -1128,7 +1128,7 @@ namespace InlayTester.Drivers.Feig
 				Check.That(info.HardwareType)
 					.IsEqualTo(0x44);
 				Check.That(info.ReaderType)
-					.IsEqualTo(FeigReaderType.CPR40_0x_AxCx);
+					.IsEqualTo(FeigReaderType.CPR40);
 				Check.That(info.SupportedTransponders)
 					.IsEqualTo(0x0D30);
 			}

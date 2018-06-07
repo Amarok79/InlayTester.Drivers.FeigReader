@@ -37,49 +37,50 @@ namespace InlayTester.Drivers.Feig
 		{
 			Check.That(Enum.GetNames(typeof(FeigReaderType)))
 				.IsOnlyMadeOf(
-					nameof(FeigReaderType.Unknown),
-					nameof(FeigReaderType.ISC_DAT),
-					nameof(FeigReaderType.ISC_UMUX),
-					nameof(FeigReaderType.ISC_GPC),
-					nameof(FeigReaderType.RW40_30U),
-					nameof(FeigReaderType.ISC_M01),
-					nameof(FeigReaderType.ISC_M02),
-					nameof(FeigReaderType.ISC_M02M8),
+					nameof(FeigReaderType.CPR30),
+					nameof(FeigReaderType.CPR40),
+					nameof(FeigReaderType.CPR40U),
+					nameof(FeigReaderType.CPR44),
+					nameof(FeigReaderType.CPR46),
+					nameof(FeigReaderType.CPR47),
+					nameof(FeigReaderType.CPR50),
+					nameof(FeigReaderType.CPR52),
+					nameof(FeigReaderType.CPR_02),
+					nameof(FeigReaderType.CPR_04U),
+					nameof(FeigReaderType.CPR_M02),
 					nameof(FeigReaderType.ISC_LR100),
+					nameof(FeigReaderType.ISC_LR1002),
 					nameof(FeigReaderType.ISC_LR200),
 					nameof(FeigReaderType.ISC_LR2000),
-					nameof(FeigReaderType.ISC_LR2500B),
 					nameof(FeigReaderType.ISC_LR2500A),
-					nameof(FeigReaderType.ISC_LR1002),
-					nameof(FeigReaderType.ISC_MU02),
+					nameof(FeigReaderType.ISC_LR2500B),
+					nameof(FeigReaderType.ISC_LRU1000),
+					nameof(FeigReaderType.ISC_LRU1002),
+					nameof(FeigReaderType.ISC_LRU2000),
+					nameof(FeigReaderType.ISC_LRU3000),
+					nameof(FeigReaderType.ISC_M01),
+					nameof(FeigReaderType.ISC_M02),
+					nameof(FeigReaderType.ISC_M02_M8),
+					nameof(FeigReaderType.ISC_MR100),
+					nameof(FeigReaderType.ISC_MR100U),
+					nameof(FeigReaderType.ISC_MR101),
+					nameof(FeigReaderType.ISC_MR101U),
+					nameof(FeigReaderType.ISC_MR102),
+					nameof(FeigReaderType.ISC_MR200),
 					nameof(FeigReaderType.ISC_MRU102),
 					nameof(FeigReaderType.ISC_MRU200),
 					nameof(FeigReaderType.ISC_MRU200U),
+					nameof(FeigReaderType.ISC_MU02),
+					nameof(FeigReaderType.ISC_PRH100),
+					nameof(FeigReaderType.ISC_PRH100U),
 					nameof(FeigReaderType.ISC_PRH101),
 					nameof(FeigReaderType.ISC_PRH101U),
-					nameof(FeigReaderType.ISC_PRHD102),
 					nameof(FeigReaderType.ISC_PRH102),
-					nameof(FeigReaderType.ISC_PRH100U),
-					nameof(FeigReaderType.ISC_PRH100),
-					nameof(FeigReaderType.ISC_MR100U),
-					nameof(FeigReaderType.ISC_MR100_PR100),
-					nameof(FeigReaderType.ISC_MR200AE),
-					nameof(FeigReaderType.ISC_MR101A),
-					nameof(FeigReaderType.ISC_MR102),
-					nameof(FeigReaderType.ISC_MR101U),
-					nameof(FeigReaderType.CPR_M02),
-					nameof(FeigReaderType.CPR_02),
-					nameof(FeigReaderType.CPR40_30Ux),
-					nameof(FeigReaderType.CPR40_0x_AxCx),
-					nameof(FeigReaderType.CPR_M03),
-					nameof(FeigReaderType.CPR_03),
-					nameof(FeigReaderType.CPR30),
-					nameof(FeigReaderType.CPR_52),
-					nameof(FeigReaderType.CPR_04U),
-					nameof(FeigReaderType.ISC_LRU1000),
-					nameof(FeigReaderType.ISC_LRU2000),
-					nameof(FeigReaderType.ISC_LRU3000),
-					nameof(FeigReaderType.MAX50)
+					nameof(FeigReaderType.ISC_PRH200),
+					nameof(FeigReaderType.ISC_PRHD102),
+					nameof(FeigReaderType.MAX50),
+					nameof(FeigReaderType.MAXU1002),
+					nameof(FeigReaderType.Unknown)
 				);
 		}
 
@@ -88,7 +89,7 @@ namespace InlayTester.Drivers.Feig
 		{
 			Check.That((Byte)FeigReaderType.Unknown)
 				.IsEqualTo(0);
-			Check.That((Byte)FeigReaderType.CPR40_0x_AxCx)
+			Check.That((Byte)FeigReaderType.CPR40)
 				.IsEqualTo(83);
 		}
 	}
