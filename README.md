@@ -8,13 +8,29 @@ The library is compiled as *.NET Standard 2.0* library. Tests are performed with
 For development, you need *Visual Studio 2017* (v15.7 or later). For running the tests you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
 
-## Supported and tested Feig RFID reader/modules
+## Supported Feig RFID Reader/Modules
 
 In general, all Feig RFID reader/modules are supported that run Feig`s  standard or advanced protocol.
 
 Specifically, following readers/modules have been extensively tested:
 - CPR40.xx
 - ISC.M02
+
+
+## Supported RFID Transponders
+
+The provided `Inventory()` API supports following transponders:
+- ISO14443A
+- ISO14443B
+- ISO15693
+- ISO18000-3M3
+- Jewel
+- I-Code1
+- I-CodeEPC
+- I-CodeUID
+- SR176
+- SRIxx
+- EPC Class1 Gen2
 
 
 ## Documentation
