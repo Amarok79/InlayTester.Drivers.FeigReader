@@ -1161,6 +1161,18 @@ namespace InlayTester.Drivers.Feig
 				case FeigTransponderType.ISO18000_3M3:
 					return _Inventory_Parse_ISO18000_3M3(ref data);
 
+				case FeigTransponderType.EPC_Class1_Gen2:
+					return _Inventory_Parse_EPC_Class1_Gen2(ref data);
+
+				case FeigTransponderType.ICode1:
+					return _Inventory_Parse_ICode1(ref data);
+
+				case FeigTransponderType.ICodeEPC:
+					return _Inventory_Parse_ICodeEPC(ref data);
+
+				case FeigTransponderType.ICodeUID:
+					return _Inventory_Parse_ICodeUID(ref data);
+
 				default:
 					throw ExceptionFactory.NotSupportedException(
 						$"Decoding response for transponder type {transponderType} is not supported!"
@@ -1197,8 +1209,8 @@ namespace InlayTester.Drivers.Feig
 
 		internal static FeigTransponder _Inventory_Parse_Jewel(ref BufferSpan data)
 		{
-			var identifier = data.Slice(2, 6).Clone();
-			Array.Reverse(identifier.Buffer, identifier.Offset + 2, 4);
+			var identifier = data.Slice(4, 4).Clone();
+			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
 
 			data = data.Discard(8);
 
@@ -1255,6 +1267,55 @@ namespace InlayTester.Drivers.Feig
 
 			return new FeigTransponder {
 				TransponderType = FeigTransponderType.ISO18000_3M3,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_EPC_Class1_Gen2(ref BufferSpan data)
+		{
+			var length = data[1];
+			var identifier = data.Slice(2, length);
+
+			data = data.Discard(2 + length);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.EPC_Class1_Gen2,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_ICode1(ref BufferSpan data)
+		{
+			var identifier = data.Slice(1, 8);
+
+			data = data.Discard(9);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.ICode1,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_ICodeEPC(ref BufferSpan data)
+		{
+			var identifier = data.Slice(0, 8);
+
+			data = data.Discard(8);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.ICodeEPC,
+				Identifier = identifier,
+			};
+		}
+
+		internal static FeigTransponder _Inventory_Parse_ICodeUID(ref BufferSpan data)
+		{
+			var identifier = data.Slice(14, 5);
+
+			data = data.Discard(19);
+
+			return new FeigTransponder {
+				TransponderType = FeigTransponderType.ICodeUID,
 				Identifier = identifier,
 			};
 		}
