@@ -1135,7 +1135,7 @@ namespace InlayTester.Drivers.Feig
 
 		private static FeigTransponder _Inventory_ParseSingle(ref BufferSpan data)
 		{
-			var transponderType = (FeigTransponderType)(data[0] & 0x0F);
+			var transponderType = (FeigTransponderType)data[0];
 			data = data.Discard(1);
 
 			switch (transponderType)
