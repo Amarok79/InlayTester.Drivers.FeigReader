@@ -38,7 +38,7 @@
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <LangVersion>latest</LangVersion>
-    <CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Minimal.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <LangVersion>latest</LangVersion>
-    <CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Minimal.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

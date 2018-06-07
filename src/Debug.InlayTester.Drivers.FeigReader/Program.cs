@@ -117,7 +117,7 @@ namespace InlayTester
 							Console.WriteLine(exception.Response.Status);
 							Debugger.Launch();
 						}
-						catch (TimeoutException exception)
+						catch (TimeoutException)
 						{
 							Console.WriteLine("TIMEOUT");
 							Debugger.Launch();
@@ -153,7 +153,7 @@ namespace InlayTester
 
 						File.AppendAllText("d:\\test.txt", sw.ElapsedMilliseconds + "\r\n");
 					}
-					catch (Exception ex)
+					catch (Exception)
 					{
 						Debugger.Launch();
 					}
