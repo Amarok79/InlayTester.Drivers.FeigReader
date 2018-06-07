@@ -15,7 +15,7 @@
 		<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
 		<PackageIconUrl>https://amarok.blob.core.windows.net/public/inlaytester.ico</PackageIconUrl>
 		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-		<Version>1.0.0-alpha.1</Version>
+		<Version>1.0.0-alpha.2</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
