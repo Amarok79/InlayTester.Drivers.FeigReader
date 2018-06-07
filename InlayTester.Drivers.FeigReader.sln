@@ -9,13 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.InlayTester.Drivers.F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debug.InlayTester.Drivers.FeigReader", "src\Debug.InlayTester.Drivers.FeigReader\Debug.InlayTester.Drivers.FeigReader.csproj", "{73172515-3EE6-4FD6-8FC4-C770AA10A42B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{722C8712-B840-4E26-80B0-78A81702C1A3}"
-	ProjectSection(SolutionItems) = preProject
-		doc\CPR40 Protocol.pdf = doc\CPR40 Protocol.pdf
-		doc\CPR_M02 Protocol.pdf = doc\CPR_M02 Protocol.pdf
-		doc\H90701-3e-ID-B Firmware.pdf = doc\H90701-3e-ID-B Firmware.pdf
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
