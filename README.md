@@ -7,6 +7,8 @@ The library is compiled as *.NET Standard 2.0* library. Tests are performed with
 
 For development, you need *Visual Studio 2017* (v15.7 or later). For running the tests you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
+The library uses [Amarok79/InlayTester.Shared.Transports](https://github.com/Amarok79/InlayTester.Shared.Transports) and [Amarok79/InlayTester.Shared](https://github.com/Amarok79/InlayTester.Shared) under the hood, which again depends on the excellent [jcurl/SerialPortStream](https://github.com/jcurl/SerialPortStream) for serial communication.
+
 
 ## Supported Feig RFID Reader/Modules
 
