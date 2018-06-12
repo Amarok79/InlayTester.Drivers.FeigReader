@@ -967,8 +967,6 @@ namespace InlayTester.Drivers.Feig
 
 				Check.That(timeout)
 					.IsEqualTo(TimeSpan.FromMilliseconds(275));
-				Check.That(cancellationToken)
-					.IsEqualTo(default);
 			}
 
 			[Test]
@@ -1013,8 +1011,6 @@ namespace InlayTester.Drivers.Feig
 
 				Check.That(timeout)
 					.IsEqualTo(TimeSpan.FromMilliseconds(275));
-				Check.That(cancellationToken)
-					.IsEqualTo(default);
 			}
 		}
 
