@@ -54,7 +54,7 @@ namespace InlayTester.Drivers.Feig
 		internal ILog Logger => mLog;
 
 
-		public DefaultFeigTransport(SerialTransportSettings settings, ILog logger)
+		public DefaultFeigTransport(SerialTransportSettings settings, ILog logger, ITransportHooks hooks = null)
 		{
 			Verify.NotNull(settings, nameof(settings));
 			Verify.NotNull(logger, nameof(logger));
@@ -68,7 +68,10 @@ namespace InlayTester.Drivers.Feig
 			mReceiveBuffer = BufferSpan.From(new Byte[1024]);
 			mReceiveBuffer = mReceiveBuffer.Clear();
 
-			mTransport = Transport.Create(settings, logger);
+			mTransport = hooks != null
+				? Transport.Create(settings, logger, hooks)
+				: Transport.Create(settings, logger);
+
 			mTransport.Received += _HandleReceived;
 		}
 

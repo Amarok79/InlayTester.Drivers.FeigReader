@@ -26,7 +26,7 @@ using System;
 using Common.Logging;
 using Common.Logging.Simple;
 using InlayTester.Shared;
-
+using InlayTester.Shared.Transports;
 
 namespace InlayTester.Drivers.Feig
 {
@@ -60,6 +60,28 @@ namespace InlayTester.Drivers.Feig
 		/// 
 		/// <param name="settings">
 		/// The settings used to create the reader.</param>
+		/// <param name="hooks">
+		/// A hooks implementation being called for sent or received data.</param>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+		public static IFeigReader Create(FeigReaderSettings settings, ITransportHooks hooks)
+		{
+			Verify.NotNull(settings, nameof(settings));
+			Verify.NotNull(hooks, nameof(hooks));
+
+			var copy = new FeigReaderSettings(settings);
+			var logger = new NoOpLogger();
+			var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
+			return new DefaultFeigReader(copy, transport, logger);
+		}
+
+		/// <summary>
+		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
+		/// </summary>
+		/// 
+		/// <param name="settings">
+		/// The settings used to create the reader.</param>
 		/// <param name="logger">
 		/// The logger used to log operations of transport and reader.</param>
 		/// 
@@ -72,6 +94,30 @@ namespace InlayTester.Drivers.Feig
 
 			var copy = new FeigReaderSettings(settings);
 			var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
+			return new DefaultFeigReader(copy, transport, logger);
+		}
+
+		/// <summary>
+		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
+		/// </summary>
+		/// 
+		/// <param name="settings">
+		/// The settings used to create the reader.</param>
+		/// <param name="logger">
+		/// The logger used to log operations of transport and reader.</param>
+		/// <param name="hooks">
+		/// A hooks implementation being called for sent or received data.</param>
+		/// 
+		/// <exception cref="ArgumentNullException">
+		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+		public static IFeigReader Create(FeigReaderSettings settings, ILog logger, ITransportHooks hooks)
+		{
+			Verify.NotNull(settings, nameof(settings));
+			Verify.NotNull(logger, nameof(logger));
+			Verify.NotNull(hooks, nameof(hooks));
+
+			var copy = new FeigReaderSettings(settings);
+			var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
 			return new DefaultFeigReader(copy, transport, logger);
 		}
 	}
