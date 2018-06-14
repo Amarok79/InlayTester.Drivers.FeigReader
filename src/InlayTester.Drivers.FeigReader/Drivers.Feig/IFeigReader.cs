@@ -276,6 +276,35 @@ namespace InlayTester.Drivers.Feig
 			CancellationToken cancellationToken = default);
 
 		/// <summary>
+		/// Switches the RF-field of the Reader antenna on or off.
+		/// </summary>
+		/// 
+		/// <param name="flag">
+		/// A value indicating which RF field should switched on or off. Specify 0x00 to switch off all 
+		/// antennas and 0x01 to switch on the first antenna. Look up more information in the reader's manual.</param>
+		/// <param name="timeout">
+		/// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+		/// <param name="cancellationToken">
+		/// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+		/// 
+		/// <exception cref="ObjectDisposedException">
+		/// A method or property was called on an already disposed object.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// The transport has not been opened yet.</exception>
+		/// <exception cref="TimeoutException">
+		/// The operation '(request)' timed out after (timeout) ms.</exception>
+		/// <exception cref="OperationCanceledException">
+		/// The operation '(request)' has been canceled.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+		/// <exception cref="FeigException">
+		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+		Task SwitchRF(
+			Byte flag,
+			TimeSpan? timeout = null,
+			CancellationToken cancellationToken = default);
+
+		/// <summary>
 		/// Gets information about the reader/module's software.
 		/// </summary>
 		/// 

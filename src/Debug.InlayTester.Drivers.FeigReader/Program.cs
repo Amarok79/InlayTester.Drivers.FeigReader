@@ -71,6 +71,7 @@ namespace InlayTester
 
 				var sw = new Stopwatch();
 
+
 				//await reader.ResetConfigurations(FeigBlockLocation.EEPROM)
 				//	.ConfigureAwait(false);
 
@@ -102,15 +103,17 @@ namespace InlayTester
 
 						try
 						{
-							var result = await reader.Inventory()
+							await reader.SwitchRF(0x00)
+								.ConfigureAwait(false);
+							await reader.SwitchRF(0x01)
 								.ConfigureAwait(false);
 
 							sw.Stop();
 
-							if (result.Response.Status != FeigStatus.OK)
-								Debugger.Launch();
+							//if (result.Response.Status != FeigStatus.OK)
+							//	Debugger.Launch();
 
-							Console.WriteLine(result.Response.Status + " " + FeigTransponder.ToString(result.Transponders));
+							//Console.WriteLine(result.Response.Status + " " + FeigTransponder.ToString(result.Transponders));
 						}
 						catch (FeigException exception)
 						{
