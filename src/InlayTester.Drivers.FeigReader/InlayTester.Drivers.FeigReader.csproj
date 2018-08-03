@@ -40,7 +40,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Amarok.InlayTester.Shared" Version="1.5.0" />
-		<PackageReference Include="Amarok.InlayTester.Shared.Transports" Version="2.0.0" />
+		<PackageReference Include="Amarok.InlayTester.Shared.Transports" Version="2.0.1" />
 		<PackageReference Include="Common.Logging" Version="3.4.1" />
 	</ItemGroup>
 

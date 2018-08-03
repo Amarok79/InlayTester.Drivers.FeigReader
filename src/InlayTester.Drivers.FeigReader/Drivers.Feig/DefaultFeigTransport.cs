@@ -41,7 +41,6 @@ namespace InlayTester.Drivers.Feig
 		private readonly SerialTransportSettings mSettings;
 		private readonly ILog mLog;
 		private readonly ITransport mTransport;
-		private readonly IDisposable mReceiveSubscription;
 
 		// state
 		private FeigRequest mRequest;
@@ -73,7 +72,7 @@ namespace InlayTester.Drivers.Feig
 				? Transport.Create(settings, logger, hooks)
 				: Transport.Create(settings, logger);
 
-			mReceiveSubscription = mTransport.Received.Subscribe(x => _HandleReceived(x));
+			mTransport.Received.Subscribe(x => _HandleReceived(x));
 		}
 
 
@@ -91,7 +90,6 @@ namespace InlayTester.Drivers.Feig
 		public void Close()
 		{
 			mTransport.Close();
-			mReceiveSubscription.Dispose();
 		}
 
 		/// <summary>
