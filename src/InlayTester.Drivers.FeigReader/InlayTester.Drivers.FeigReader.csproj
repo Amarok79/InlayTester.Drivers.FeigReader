@@ -16,6 +16,8 @@
 		<PackageIconUrl>https://amarok.blob.core.windows.net/public/inlaytester.ico</PackageIconUrl>
 		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 		<Version>1.1.0</Version>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -35,6 +37,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Include="..\amarok.snk" Link="amarok.snk" />
 		<None Include="..\InlayTester.Drivers.FeigReader.licenseheader" Link="InlayTester.Drivers.FeigReader.licenseheader" />
 	</ItemGroup>
 

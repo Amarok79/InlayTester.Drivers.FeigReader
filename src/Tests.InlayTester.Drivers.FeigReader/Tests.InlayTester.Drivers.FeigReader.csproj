@@ -40,6 +40,12 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -89,6 +95,9 @@
     <Compile Include="Drivers.Feig\Test_FeigTransponderType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\amarok.snk">
+      <Link>amarok.snk</Link>
+    </None>
     <None Include="..\InlayTester.Drivers.FeigReader.licenseheader">
       <Link>InlayTester.Drivers.FeigReader.licenseheader</Link>
     </None>
