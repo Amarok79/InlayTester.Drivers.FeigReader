@@ -41,6 +41,7 @@ namespace InlayTester.Drivers.Feig
 		private readonly SerialTransportSettings mSettings;
 		private readonly ILog mLog;
 		private readonly ITransport mTransport;
+		private readonly IDisposable mReceiveSubscription;
 
 		// state
 		private FeigRequest mRequest;
@@ -72,7 +73,7 @@ namespace InlayTester.Drivers.Feig
 				? Transport.Create(settings, logger, hooks)
 				: Transport.Create(settings, logger);
 
-			mTransport.Received += _HandleReceived;
+			mReceiveSubscription = mTransport.Received.Subscribe(x => _HandleReceived(x));
 		}
 
 
@@ -90,6 +91,7 @@ namespace InlayTester.Drivers.Feig
 		public void Close()
 		{
 			mTransport.Close();
+			mReceiveSubscription.Dispose();
 		}
 
 		/// <summary>
@@ -123,8 +125,7 @@ namespace InlayTester.Drivers.Feig
 
 				// handle cancellation
 				var cancellationRegistration = cancellationToken.Register(
-					_completionSource =>
-					{
+					_completionSource => {
 						#region (logging)
 						{
 							if (mLog.IsInfoEnabled)
@@ -148,8 +149,7 @@ namespace InlayTester.Drivers.Feig
 				// handle timeout
 				var cts = new CancellationTokenSource(timeout);
 				var timeoutRegistration = cts.Token.Register(
-					_completionSource =>
-					{
+					_completionSource => {
 						#region (logging)
 						{
 							if (mLog.IsInfoEnabled)
@@ -172,8 +172,7 @@ namespace InlayTester.Drivers.Feig
 				);
 
 				// cleanup after completion
-				mCompletionSource.Task.ContinueWith(_ =>
-				{
+				mCompletionSource.Task.ContinueWith(_ => {
 					cancellationRegistration.Dispose();
 					timeoutRegistration.Dispose();
 				},
@@ -201,15 +200,15 @@ namespace InlayTester.Drivers.Feig
 			return mCompletionSource.Task;
 		}
 
-		private void _HandleReceived(Object sender, TransportDataReceivedEventArgs e)
+		private void _HandleReceived(BufferSpan data)
 		{
 			lock (mSyncThis)
 			{
 				if (mCompletionSource.Task.IsCompleted)
-					_IgnoreReceivedData(e);
+					_IgnoreReceivedData(data);
 				else
 				{
-					mReceiveBuffer = mReceiveBuffer.Append(e.Data);
+					mReceiveBuffer = mReceiveBuffer.Append(data);
 					var result = FeigResponse.TryParse(mReceiveBuffer, mProtocol);
 
 					if (result.Status == FeigParseStatus.MoreDataNeeded)
@@ -227,7 +226,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		private void _IgnoreReceivedData(TransportDataReceivedEventArgs e)
+		private void _IgnoreReceivedData(BufferSpan data)
 		{
 			// ignore received data
 
@@ -236,7 +235,7 @@ namespace InlayTester.Drivers.Feig
 				mLog.TraceFormat(CultureInfo.InvariantCulture,
 					"[{0}]  IGNORED   {1}",
 					mSettings.PortName,
-					e.Data
+					data
 				);
 			}
 			#endregion

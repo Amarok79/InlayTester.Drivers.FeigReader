@@ -112,10 +112,9 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received += (sender, e) =>
-					{
-						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
-						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+					transportB.Received.Subscribe(data => {
+						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
+						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
 							transportB.Send(BufferSpan.From(
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
@@ -125,7 +124,7 @@ namespace InlayTester.Drivers.Feig
 						{
 							Assert.Fail("Received unknown data");
 						}
-					};
+					});
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
@@ -171,10 +170,9 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received += (sender, e) =>
-					{
-						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
-						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+					transportB.Received.Subscribe(data => {
+						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
+						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
 							transportB.Send(BufferSpan.From(
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03));
@@ -188,7 +186,7 @@ namespace InlayTester.Drivers.Feig
 						{
 							Assert.Fail("Received unknown data");
 						}
-					};
+					});
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
@@ -234,10 +232,9 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received += (sender, e) =>
-					{
-						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
-						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+					transportB.Received.Subscribe(data => {
+						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
+						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
 							Thread.Sleep(500);
 
@@ -249,7 +246,7 @@ namespace InlayTester.Drivers.Feig
 						{
 							Assert.Fail("Received unknown data");
 						}
-					};
+					});
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
@@ -291,10 +288,9 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received += (sender, e) =>
-					{
-						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
-						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+					transportB.Received.Subscribe(data => {
+						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
+						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
 							Thread.Sleep(500);
 
@@ -306,7 +302,7 @@ namespace InlayTester.Drivers.Feig
 						{
 							Assert.Fail("Received unknown data");
 						}
-					};
+					});
 
 					var cts = new CancellationTokenSource();
 
@@ -354,10 +350,9 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received += (sender, e) =>
-					{
-						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
-						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+					transportB.Received.Subscribe(data => {
+						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
+						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
 							transportB.Send(BufferSpan.From(
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
@@ -367,7 +362,7 @@ namespace InlayTester.Drivers.Feig
 						{
 							Assert.Fail("Received unknown data");
 						}
-					};
+					});
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
@@ -407,10 +402,9 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received += (sender, e) =>
-					{
-						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
-						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+					transportB.Received.Subscribe(data => {
+						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
+						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
 							transportB.Send(BufferSpan.From(
 								0xFF, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
@@ -420,7 +414,7 @@ namespace InlayTester.Drivers.Feig
 						{
 							Assert.Fail("Received unknown data");
 						}
-					};
+					});
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
@@ -460,10 +454,9 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received += (sender, e) =>
-					{
-						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
-						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+					transportB.Received.Subscribe(data => {
+						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
+						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
 							transportB.Send(BufferSpan.From(
 								0x02, 0x00, 0x08, 0xff, 0x80, 0x81, 0x40, 0x3a,
@@ -475,7 +468,7 @@ namespace InlayTester.Drivers.Feig
 						{
 							Assert.Fail("Received unknown data");
 						}
-					};
+					});
 
 					var result = await transportA.Transfer(
 						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
@@ -519,10 +512,9 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received += (sender, e) =>
-					{
-						if (e.Data[0] == 0x02 && e.Data[1] == 0x00 && e.Data[2] == 0x07 && e.Data[3] == 0xff
-						 && e.Data[4] == 0x65 && e.Data[5] == 0x6e && e.Data[6] == 0x61)
+					transportB.Received.Subscribe(data => {
+						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
+						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
 							transportB.Send(BufferSpan.From(
 								0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03,
@@ -532,7 +524,7 @@ namespace InlayTester.Drivers.Feig
 						{
 							Assert.Fail("Received unknown data");
 						}
-					};
+					});
 
 					for (Int32 i = 0; i < 100; i++)
 					{
