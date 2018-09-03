@@ -806,6 +806,7 @@
     <Rule Id="S3962" Action="Warning" />
     <Rule Id="S3963" Action="Warning" />
     <Rule Id="S3967" Action="Warning" />
+    <Rule Id="S3973" Action="None" />
     <Rule Id="S3993" Action="Warning" />
     <Rule Id="S3994" Action="Warning" />
     <Rule Id="S3995" Action="Warning" />
