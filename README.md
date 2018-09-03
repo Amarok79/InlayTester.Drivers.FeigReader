@@ -5,14 +5,14 @@ This library is available as NuGet package:
 
 The library is compiled as *.NET Standard 2.0* library. Tests are performed with *.NET Framework 4.7.1* only. Currently, I have no plans to support other runtimes like .NET Core or older .NET Framework versions.
 
-For development, you need *Visual Studio 2017* (v15.7 or later). For running the tests you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
+For development, you need *Visual Studio 2017* (v15.7 or later). For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
 The library uses [Amarok79/InlayTester.Shared.Transports](https://github.com/Amarok79/InlayTester.Shared.Transports) and [Amarok79/InlayTester.Shared](https://github.com/Amarok79/InlayTester.Shared) under the hood, which again depends on the excellent [jcurl/SerialPortStream](https://github.com/jcurl/SerialPortStream) for serial communication.
 
 
 ## Supported Feig RFID Reader/Modules
 
-In general, all Feig RFID reader/modules are supported that run Feig`s  standard or advanced protocol.
+In general, all Feig RFID reader/modules are supported that run Feig `s standard or advanced protocol.
 
 Specifically, following readers/modules have been extensively tested:
 - CPR40.xx
@@ -75,7 +75,7 @@ So far, we only configured and created an instance of our reader in code. The sp
     }
 ````
 
-Just, don't forget to dispose the **IFeigReader** at the end.
+Don't forget to dispose the **IFeigReader** at the end.
 
 
 ### Transfer
@@ -138,7 +138,7 @@ Error handling seems a bit tedious. But, you won't need to do it yourself. **Tra
 
 ### Execute
 
-**Execute(..)** is one of those higher-level methods that does this result-code checking for you and that throws appropriate exceptions in certain error situations. On success, the method returns the received response.
+**Execute(..)** is one of those higher-level methods that does this result-code checking for you, and that throws appropriate exceptions in certain error situations. On success, the method returns the received response.
 
 ````cs
     var request = new FeigRequest {
@@ -153,7 +153,7 @@ Error handling seems a bit tedious. But, you won't need to do it yourself. **Tra
     var data = response.Data;
 ````
 
-In case of timeout, a **TimeoutException** is thrown. In case of cancellation an **OperationCanceledException**. Otherwise, if a communication error ocurred or the reader/module returned an error code, an exception of type **FeigException** is thrown. In all other cases, the received **FeigResponse** is returned.
+In case of timeout, a **TimeoutException** is thrown. In case of cancellation an **OperationCanceledException**. Otherwise, if a communication error occurred or the reader/module returned an error code, an exception of type **FeigException** is thrown. In all other cases, the received **FeigResponse** is returned.
 
 Regarding the previous code snippet. There exists another overload that allows you to write this in a much shorter way.
 
