@@ -1,3 +1,10 @@
+[![Build Status](https://dev.azure.com/amarok79/Amarok/_apis/build/status/InlayTester.Drivers.FeigReader?branchName=master)](https://dev.azure.com/amarok79/Amarok/_build/latest?definitionId=14&branchName=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Amarok79_InlayTester.Drivers.FeigReader&metric=alert_status)](https://sonarcloud.io/dashboard?id=Amarok79_InlayTester.Drivers.FeigReader)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Amarok79_InlayTester.Drivers.FeigReader&metric=coverage)](https://sonarcloud.io/dashboard?id=Amarok79_InlayTester.Drivers.FeigReader)
+[![NuGet](https://img.shields.io/nuget/v/Amarok.InlayTester.Drivers.FeigReader
+.svg?logo=)](https://www.nuget.org/packages/Amarok.InlayTester.Drivers.FeigReader
+/)
+
 ## Introduction
 
 This library is available as NuGet package:
