@@ -45,12 +45,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Amarok.InlayTester.Shared" Version="1.6.0" />
-		<PackageReference Include="Amarok.InlayTester.Shared.Transports" Version="2.1.0" />
+		<PackageReference Include="Amarok.InlayTester.Shared" Version="1.6.1" />
+		<PackageReference Include="Amarok.InlayTester.Shared.Transports" Version="2.1.1" />
 		<PackageReference Include="Common.Logging" Version="3.4.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
 	</ItemGroup>
 
 </Project>
