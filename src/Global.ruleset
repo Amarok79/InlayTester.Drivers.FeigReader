@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Global Rules" ToolsVersion="15.0">
   <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="ClrHeapAllocationAnalyzer" RuleNamespace="ClrHeapAllocationAnalyzer">
+    <Rule Id="HAA0101" Action="Info" />
+    <Rule Id="HAA0102" Action="Info" />
+    <Rule Id="HAA0201" Action="Info" />
+    <Rule Id="HAA0202" Action="Info" />
+    <Rule Id="HAA0301" Action="Info" />
+    <Rule Id="HAA0302" Action="None" />
+    <Rule Id="HAA0303" Action="Info" />
+    <Rule Id="HAA0401" Action="Info" />
+    <Rule Id="HAA0501" Action="None" />
+    <Rule Id="HAA0502" Action="None" />
+    <Rule Id="HAA0503" Action="None" />
+    <Rule Id="HAA0504" Action="None" />
+    <Rule Id="HAA0505" Action="None" />
+    <Rule Id="HAA0601" Action="Info" />
+    <Rule Id="HAA0602" Action="Info" />
+    <Rule Id="HAA0603" Action="Info" />
+  </Rules>
   <Rules AnalyzerId="DevExpress.CodeAnalysis.CSharp.Diagnostics" RuleNamespace="DevExpress.CodeAnalysis.CSharp.Diagnostics">
     <Rule Id="CRR0013" Action="None" />
     <Rule Id="CRR0014" Action="None" />
@@ -735,13 +753,14 @@
     <Rule Id="THR016" Action="None" />
   </Rules>
   <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
-    <Rule Id="S101" Action="None" />
     <Rule Id="S107" Action="Warning" />
     <Rule Id="S1109" Action="Warning" />
     <Rule Id="S113" Action="Warning" />
+    <Rule Id="S1134" Action="None" />
     <Rule Id="S1135" Action="Warning" />
     <Rule Id="S1145" Action="Warning" />
     <Rule Id="S1147" Action="Warning" />
+    <Rule Id="S1200" Action="Warning" />
     <Rule Id="S1226" Action="Warning" />
     <Rule Id="S1227" Action="Warning" />
     <Rule Id="S1244" Action="Warning" />
@@ -750,6 +769,7 @@
     <Rule Id="S1301" Action="Warning" />
     <Rule Id="S131" Action="Warning" />
     <Rule Id="S1313" Action="Warning" />
+    <Rule Id="S138" Action="Warning" />
     <Rule Id="S1449" Action="Warning" />
     <Rule Id="S1479" Action="Warning" />
     <Rule Id="S1659" Action="Warning" />
@@ -783,7 +803,6 @@
     <Rule Id="S3215" Action="Warning" />
     <Rule Id="S3216" Action="Warning" />
     <Rule Id="S3234" Action="Warning" />
-    <Rule Id="S3235" Action="Warning" />
     <Rule Id="S3242" Action="Warning" />
     <Rule Id="S3253" Action="Warning" />
     <Rule Id="S3257" Action="Warning" />
@@ -793,6 +812,7 @@
     <Rule Id="S3441" Action="Warning" />
     <Rule Id="S3532" Action="Warning" />
     <Rule Id="S3717" Action="Warning" />
+    <Rule Id="S3776" Action="Warning" />
     <Rule Id="S3872" Action="Warning" />
     <Rule Id="S3874" Action="Warning" />
     <Rule Id="S3876" Action="Warning" />

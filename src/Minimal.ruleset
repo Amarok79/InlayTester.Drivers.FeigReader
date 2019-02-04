@@ -1,6 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Global Rules" ToolsVersion="15.0">
+<RuleSet Name="Minimal Rules" ToolsVersion="15.0">
   <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="ClrHeapAllocationAnalyzer" RuleNamespace="ClrHeapAllocationAnalyzer">
+    <Rule Id="HAA0101" Action="None" />
+    <Rule Id="HAA0102" Action="None" />
+    <Rule Id="HAA0201" Action="None" />
+    <Rule Id="HAA0202" Action="None" />
+    <Rule Id="HAA0301" Action="None" />
+    <Rule Id="HAA0302" Action="None" />
+    <Rule Id="HAA0303" Action="None" />
+    <Rule Id="HAA0401" Action="None" />
+    <Rule Id="HAA0501" Action="None" />
+    <Rule Id="HAA0502" Action="None" />
+    <Rule Id="HAA0503" Action="None" />
+    <Rule Id="HAA0504" Action="None" />
+    <Rule Id="HAA0505" Action="None" />
+    <Rule Id="HAA0506" Action="None" />
+    <Rule Id="HAA0601" Action="None" />
+    <Rule Id="HAA0602" Action="None" />
+    <Rule Id="HAA0603" Action="None" />
+    <Rule Id="HeapAnalyzerReadonlyMethodGroupAllocationRule" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Darwin.Guidelines.Analyzers" RuleNamespace="Darwin.Guidelines.Analyzers">
+    <Rule Id="DW1005" Action="None" />
+    <Rule Id="DW1006" Action="None" />
+    <Rule Id="DW1007" Action="None" />
+    <Rule Id="DW1008" Action="None" />
+    <Rule Id="DW1009" Action="None" />
+    <Rule Id="DW1010" Action="None" />
+    <Rule Id="DW1011" Action="None" />
+    <Rule Id="DW1012" Action="None" />
+    <Rule Id="DW1014" Action="None" />
+    <Rule Id="DW1015" Action="None" />
+    <Rule Id="DW1016" Action="None" />
+    <Rule Id="DW1017" Action="None" />
+    <Rule Id="DW1018" Action="None" />
+    <Rule Id="DW1019" Action="None" />
+    <Rule Id="DW1020" Action="None" />
+    <Rule Id="DW1021" Action="None" />
+    <Rule Id="DW1022" Action="None" />
+    <Rule Id="DW1023" Action="None" />
+    <Rule Id="DW1024" Action="None" />
+    <Rule Id="DW1025" Action="None" />
+    <Rule Id="DW1026" Action="None" />
+    <Rule Id="DW1027" Action="None" />
+    <Rule Id="DW1028" Action="None" />
+    <Rule Id="DW1029" Action="None" />
+    <Rule Id="DW1030" Action="None" />
+    <Rule Id="DW1031" Action="None" />
+    <Rule Id="DW1032" Action="None" />
+    <Rule Id="DW1033" Action="None" />
+    <Rule Id="DW1034" Action="None" />
+    <Rule Id="DW1035" Action="None" />
+    <Rule Id="DW1036" Action="None" />
+    <Rule Id="DW1037" Action="None" />
+    <Rule Id="DW1038" Action="None" />
+    <Rule Id="DW1039" Action="None" />
+  </Rules>
   <Rules AnalyzerId="DevExpress.CodeAnalysis.CSharp.Diagnostics" RuleNamespace="DevExpress.CodeAnalysis.CSharp.Diagnostics">
     <Rule Id="CRR0001" Action="None" />
     <Rule Id="CRR0002" Action="None" />
@@ -28,7 +84,9 @@
     <Rule Id="CRR0024" Action="None" />
     <Rule Id="CRR0025" Action="None" />
     <Rule Id="CRR0026" Action="None" />
+    <Rule Id="CRR0027" Action="None" />
     <Rule Id="CRR0028" Action="None" />
+    <Rule Id="CRR0029" Action="None" />
     <Rule Id="CRR0030" Action="None" />
     <Rule Id="CRR0031" Action="None" />
     <Rule Id="CRR0033" Action="None" />
@@ -37,6 +95,7 @@
     <Rule Id="CRR0038" Action="None" />
     <Rule Id="CRR0039" Action="None" />
     <Rule Id="CRR0040" Action="None" />
+    <Rule Id="CRR0041" Action="None" />
     <Rule Id="CRRSP01" Action="None" />
     <Rule Id="CRRSP02" Action="None" />
     <Rule Id="CRRSP03" Action="None" />
@@ -770,6 +829,12 @@
     <Rule Id="COM008" Action="None" />
     <Rule Id="THR016" Action="None" />
   </Rules>
+  <Rules AnalyzerId="PostSharp.VisualStudio.Package.VS15.0" RuleNamespace="PostSharp.VisualStudio.Package.VS15.0">
+    <Rule Id="COM002" Action="None" />
+    <Rule Id="COM005" Action="None" />
+    <Rule Id="COM008" Action="None" />
+    <Rule Id="THR016" Action="None" />
+  </Rules>
   <Rules AnalyzerId="PostSharp.VisualStudio.SinceVS14.0" RuleNamespace="PostSharp.VisualStudio.SinceVS14.0">
     <Rule Id="COM002" Action="None" />
     <Rule Id="COM005" Action="None" />
@@ -842,6 +907,7 @@
     <Rule Id="S2292" Action="None" />
     <Rule Id="S2306" Action="None" />
     <Rule Id="S2326" Action="None" />
+    <Rule Id="S2327" Action="None" />
     <Rule Id="S2328" Action="None" />
     <Rule Id="S2344" Action="None" />
     <Rule Id="S2345" Action="None" />
@@ -853,6 +919,7 @@
     <Rule Id="S2386" Action="None" />
     <Rule Id="S2437" Action="None" />
     <Rule Id="S2486" Action="None" />
+    <Rule Id="S2551" Action="None" />
     <Rule Id="S2583" Action="None" />
     <Rule Id="S2589" Action="None" />
     <Rule Id="S2681" Action="None" />
@@ -895,6 +962,7 @@
     <Rule Id="S3263" Action="None" />
     <Rule Id="S3264" Action="None" />
     <Rule Id="S3265" Action="None" />
+    <Rule Id="S3330" Action="None" />
     <Rule Id="S3343" Action="None" />
     <Rule Id="S3346" Action="None" />
     <Rule Id="S3358" Action="None" />
@@ -947,9 +1015,11 @@
     <Rule Id="S3926" Action="None" />
     <Rule Id="S3927" Action="None" />
     <Rule Id="S3928" Action="None" />
+    <Rule Id="S3963" Action="None" />
     <Rule Id="S3966" Action="None" />
     <Rule Id="S3971" Action="None" />
     <Rule Id="S3972" Action="None" />
+    <Rule Id="S3973" Action="None" />
     <Rule Id="S3981" Action="None" />
     <Rule Id="S3984" Action="None" />
     <Rule Id="S3998" Action="None" />
@@ -958,6 +1028,8 @@
     <Rule Id="S4019" Action="None" />
     <Rule Id="S4035" Action="None" />
     <Rule Id="S4061" Action="None" />
+    <Rule Id="S4070" Action="None" />
+    <Rule Id="S4143" Action="None" />
     <Rule Id="S4144" Action="None" />
     <Rule Id="S4158" Action="None" />
     <Rule Id="S4159" Action="None" />
@@ -967,12 +1039,14 @@
     <Rule Id="S4214" Action="None" />
     <Rule Id="S4220" Action="None" />
     <Rule Id="S4260" Action="None" />
+    <Rule Id="S4275" Action="None" />
     <Rule Id="S4277" Action="None" />
     <Rule Id="S4426" Action="None" />
     <Rule Id="S4428" Action="None" />
     <Rule Id="S4433" Action="None" />
     <Rule Id="S4456" Action="None" />
     <Rule Id="S4457" Action="None" />
+    <Rule Id="S4524" Action="None" />
     <Rule Id="S4581" Action="None" />
     <Rule Id="S4586" Action="None" />
     <Rule Id="S818" Action="None" />
