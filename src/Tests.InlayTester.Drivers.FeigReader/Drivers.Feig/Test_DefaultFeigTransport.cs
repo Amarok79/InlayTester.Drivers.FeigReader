@@ -54,7 +54,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public void ReceivedDataIgnored()
 		{
 			var settingsA = new SerialTransportSettings() {
