@@ -53,7 +53,7 @@ namespace InlayTester.Drivers.Feig
 		public void StandardFrame()
 		{
 			// act
-			var req = new FeigRequest {
+			var req = new FeigRequest() {
 				Address = 0x12,
 				Command = FeigCommand.ReadConfiguration,
 				Data = BufferSpan.From(0x07),
@@ -84,7 +84,7 @@ namespace InlayTester.Drivers.Feig
 		public void StandardFrame_GetSoftwareVersion()
 		{
 			// act
-			var req = new FeigRequest {
+			var req = new FeigRequest() {
 				Command = FeigCommand.GetSoftwareVersion,
 			};
 
@@ -113,7 +113,7 @@ namespace InlayTester.Drivers.Feig
 		public void AdvancedFrame()
 		{
 			// act
-			var req = new FeigRequest {
+			var req = new FeigRequest() {
 				Address = 0x12,
 				Command = FeigCommand.ReadConfiguration,
 				Data = BufferSpan.From(0x07),
@@ -144,7 +144,7 @@ namespace InlayTester.Drivers.Feig
 		public void AdvancedFrame_GetSoftwareVersion()
 		{
 			// act
-			var req = new FeigRequest {
+			var req = new FeigRequest() {
 				Command = FeigCommand.GetSoftwareVersion,
 			};
 

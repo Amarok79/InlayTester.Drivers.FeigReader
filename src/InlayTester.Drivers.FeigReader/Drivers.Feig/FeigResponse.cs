@@ -118,7 +118,7 @@ namespace InlayTester.Drivers.Feig
 
 			var lenHigh = span[1];
 			var lenLow = span[2];
-			var frameLength = lenHigh << 8 | lenLow;
+			var frameLength = (lenHigh << 8) | lenLow;
 
 			if (span.Count < frameLength)
 				return FeigParseResult.MoreDataNeeded();
@@ -129,13 +129,13 @@ namespace InlayTester.Drivers.Feig
 
 			var crcLow = span[frameLength - 2];
 			var crcHigh = span[frameLength - 1];
-			var crc = crcHigh << 8 | crcLow;
+			var crc = (crcHigh << 8) | crcLow;
 
 			var calcCrc = FeigChecksum.Calculate(BufferSpan.From(span.Buffer, span.Offset, frameLength - 2));
 
 			var data = span.Slice(6, frameLength - 8);
 
-			var response = new FeigResponse {
+			var response = new FeigResponse() {
 				FrameLength = frameLength,
 				Address = address,
 				Command = (FeigCommand)command,
@@ -169,13 +169,13 @@ namespace InlayTester.Drivers.Feig
 
 			var crcLow = span[frameLength - 2];
 			var crcHigh = span[frameLength - 1];
-			var crc = crcHigh << 8 | crcLow;
+			var crc = (crcHigh << 8) | crcLow;
 
 			var calcCrc = FeigChecksum.Calculate(BufferSpan.From(span.Buffer, span.Offset, frameLength - 2));
 
 			var data = span.Slice(4, frameLength - 6);
 
-			var response = new FeigResponse {
+			var response = new FeigResponse() {
 				FrameLength = frameLength,
 				Address = address,
 				Command = (FeigCommand)command,

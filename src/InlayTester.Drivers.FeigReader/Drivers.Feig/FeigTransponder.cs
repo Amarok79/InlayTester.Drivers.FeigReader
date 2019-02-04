@@ -84,7 +84,7 @@ namespace InlayTester.Drivers.Feig
 
 				if (transponders != null)
 				{
-					Int32 i = 0;
+					var i = 0;
 					foreach (var item in transponders)
 					{
 						if (i++ > 0)

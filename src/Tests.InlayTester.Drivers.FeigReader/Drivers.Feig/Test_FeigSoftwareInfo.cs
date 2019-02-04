@@ -56,7 +56,7 @@ namespace InlayTester.Drivers.Feig
 		public void Construction_Copy()
 		{
 			// act
-			var copy = new FeigSoftwareInfo {
+			var copy = new FeigSoftwareInfo() {
 				FirmwareVersion = new Version(3, 4, 0),
 				HardwareType = 0x34,
 				ReaderType = FeigReaderType.CPR40,

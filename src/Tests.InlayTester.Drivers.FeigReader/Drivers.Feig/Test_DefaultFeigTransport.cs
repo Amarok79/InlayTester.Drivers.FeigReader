@@ -42,7 +42,7 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA")]
 		public void Open_Close_Dispose()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA"
 			};
 
@@ -57,14 +57,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public void ReceivedDataIgnored()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA"
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -91,14 +91,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Success_ReceivedResponse()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA"
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -127,7 +127,7 @@ namespace InlayTester.Drivers.Feig
 					});
 
 					var result = await transportA.Transfer(
-						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						new FeigRequest() { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
 						TimeSpan.FromMilliseconds(5000),
 						default);
@@ -149,14 +149,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Success_ReceivedResponse_MultiplePackets()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA"
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -189,7 +189,7 @@ namespace InlayTester.Drivers.Feig
 					});
 
 					var result = await transportA.Transfer(
-						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						new FeigRequest() { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
 						TimeSpan.FromMilliseconds(5000),
 						default);
@@ -211,14 +211,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Timeout()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA"
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -249,7 +249,7 @@ namespace InlayTester.Drivers.Feig
 					});
 
 					var result = await transportA.Transfer(
-						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						new FeigRequest() { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
 						TimeSpan.FromMilliseconds(100),
 						default);
@@ -267,14 +267,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Canceled()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA"
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -307,7 +307,7 @@ namespace InlayTester.Drivers.Feig
 					var cts = new CancellationTokenSource();
 
 					var task = transportA.Transfer(
-						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						new FeigRequest() { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
 						TimeSpan.FromMilliseconds(5000),
 						cts.Token);
@@ -329,14 +329,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task CommunicationError_ChecksumError()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA",
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -365,7 +365,7 @@ namespace InlayTester.Drivers.Feig
 					});
 
 					var result = await transportA.Transfer(
-						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						new FeigRequest() { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
 						TimeSpan.FromMilliseconds(5000),
 						default);
@@ -381,14 +381,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task CommunicationError_FrameError()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA",
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -417,7 +417,7 @@ namespace InlayTester.Drivers.Feig
 					});
 
 					var result = await transportA.Transfer(
-						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						new FeigRequest() { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
 						TimeSpan.FromMilliseconds(5000),
 						default);
@@ -433,14 +433,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task UnexpectedResponse()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA",
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -471,7 +471,7 @@ namespace InlayTester.Drivers.Feig
 					});
 
 					var result = await transportA.Transfer(
-						new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+						new FeigRequest() { Command = FeigCommand.GetSoftwareVersion },
 						FeigProtocol.Advanced,
 						TimeSpan.FromMilliseconds(5000),
 						default);
@@ -491,14 +491,14 @@ namespace InlayTester.Drivers.Feig
 		[Test, ExclusivelyUses("COMA", "COMB")]
 		public async Task Success_ReceivedResponse_MultipleTimes()
 		{
-			var settingsA = new SerialTransportSettings {
+			var settingsA = new SerialTransportSettings() {
 				PortName = "COMA"
 			};
 
 			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
-				var settings = new SerialTransportSettings {
+				var settings = new SerialTransportSettings() {
 					PortName = "COMB",
 					Baud = 38400,
 					DataBits = 8,
@@ -526,10 +526,10 @@ namespace InlayTester.Drivers.Feig
 						}
 					});
 
-					for (Int32 i = 0; i < 100; i++)
+					for (var i = 0; i < 100; i++)
 					{
 						var result = await transportA.Transfer(
-							new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+							new FeigRequest() { Command = FeigCommand.GetSoftwareVersion },
 							FeigProtocol.Advanced,
 							TimeSpan.FromMilliseconds(5000),
 							default);

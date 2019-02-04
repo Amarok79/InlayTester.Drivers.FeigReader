@@ -28,6 +28,7 @@ using Common.Logging.Simple;
 using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 
+
 namespace InlayTester.Drivers.Feig
 {
 	/// <summary>

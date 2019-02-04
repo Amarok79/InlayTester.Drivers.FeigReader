@@ -46,8 +46,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Success_For_FirstTime()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -61,8 +61,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -78,8 +78,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyOpen()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -96,8 +96,8 @@ namespace InlayTester.Drivers.Feig
 			[Test]
 			public void Exception_For_InvalidPortName()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "InvalidPortName" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "InvalidPortName" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -115,8 +115,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_NotOpen()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -130,8 +130,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_Open()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -147,8 +147,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -168,8 +168,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_NotOpen()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -183,8 +183,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_Open()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -200,8 +200,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Success_When_AlreadyDisposed()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -221,8 +221,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -230,7 +230,7 @@ namespace InlayTester.Drivers.Feig
 				{
 					reader.Dispose();
 
-					var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
+					var request = new FeigRequest() { Command = FeigCommand.GetSoftwareVersion };
 
 					Check.ThatAsyncCode(async () => await reader.Transfer(request, FeigProtocol.Advanced))
 						.Throws<ObjectDisposedException>();
@@ -241,14 +241,14 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_AllSpecified()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
 				};
 
-				var request = new FeigRequest {
+				var request = new FeigRequest() {
 					Command = FeigCommand.GetSoftwareVersion,
 					Address = 236,
 				};
@@ -277,14 +277,14 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_MinimumSpecified()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
 				};
 
-				var request = new FeigRequest {
+				var request = new FeigRequest() {
 					Command = FeigCommand.GetSoftwareVersion,
 					Address = 236,
 				};
@@ -313,8 +313,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -331,8 +331,8 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_AllSpecified()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
@@ -378,8 +378,8 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_MinimumSpecified()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
@@ -421,8 +421,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -430,7 +430,7 @@ namespace InlayTester.Drivers.Feig
 				{
 					reader.Dispose();
 
-					var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
+					var request = new FeigRequest() { Command = FeigCommand.GetSoftwareVersion };
 
 					Check.ThatAsyncCode(async () => await reader.Execute(request, FeigProtocol.Advanced))
 						.Throws<ObjectDisposedException>();
@@ -441,14 +441,14 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_AllSpecified()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
 				};
 
-				var request = new FeigRequest {
+				var request = new FeigRequest() {
 					Command = FeigCommand.GetSoftwareVersion,
 					Address = 236,
 				};
@@ -480,14 +480,14 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_MinimumSpecified()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
 				};
 
-				var request = new FeigRequest {
+				var request = new FeigRequest() {
 					Command = FeigCommand.GetSoftwareVersion,
 					Address = 236,
 				};
@@ -601,7 +601,7 @@ namespace InlayTester.Drivers.Feig
 			public void Success_NotOk()
 			{
 				var request = new FeigRequest();
-				var response = new FeigResponse { Status = FeigStatus.GeneralError };
+				var response = new FeigResponse() { Status = FeigStatus.GeneralError };
 
 				// arrange
 				var settings = new FeigReaderSettings();
@@ -625,7 +625,7 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_OK()
 			{
 				var request = new FeigRequest();
-				var response = new FeigResponse { Status = FeigStatus.OK };
+				var response = new FeigResponse() { Status = FeigStatus.OK };
 
 				// arrange
 				var settings = new FeigReaderSettings();
@@ -648,7 +648,7 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_NoTransponder()
 			{
 				var request = new FeigRequest();
-				var response = new FeigResponse { Status = FeigStatus.NoTransponder };
+				var response = new FeigResponse() { Status = FeigStatus.NoTransponder };
 
 				// arrange
 				var settings = new FeigReaderSettings();
@@ -674,8 +674,8 @@ namespace InlayTester.Drivers.Feig
 			[Test, ExclusivelyUses("COMA")]
 			public void Exception_When_AlreadyDisposed()
 			{
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 				};
 
 				var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -692,14 +692,14 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_AllSpecified()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
 				};
 
-				var request = new FeigRequest {
+				var request = new FeigRequest() {
 					Command = FeigCommand.GetSoftwareVersion,
 					Address = 236,
 				};
@@ -731,14 +731,14 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_MinimumSpecified()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
 				};
 
-				var request = new FeigRequest {
+				var request = new FeigRequest() {
 					Command = FeigCommand.GetSoftwareVersion,
 					Address = 236,
 				};
@@ -852,7 +852,7 @@ namespace InlayTester.Drivers.Feig
 			public void Success_NotOk()
 			{
 				var request = new FeigRequest();
-				var response = new FeigResponse { Status = FeigStatus.GeneralError };
+				var response = new FeigResponse() { Status = FeigStatus.GeneralError };
 
 				// arrange
 				var settings = new FeigReaderSettings();
@@ -876,7 +876,7 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_OK()
 			{
 				var request = new FeigRequest();
-				var response = new FeigResponse { Status = FeigStatus.OK };
+				var response = new FeigResponse() { Status = FeigStatus.OK };
 
 				// arrange
 				var settings = new FeigReaderSettings();
@@ -899,7 +899,7 @@ namespace InlayTester.Drivers.Feig
 			public async Task Success_NoTransponder()
 			{
 				var request = new FeigRequest();
-				var response = new FeigResponse { Status = FeigStatus.NoTransponder };
+				var response = new FeigResponse() { Status = FeigStatus.NoTransponder };
 
 				// arrange
 				var settings = new FeigReaderSettings();
@@ -927,8 +927,8 @@ namespace InlayTester.Drivers.Feig
 			public async Task True_For_ResponseOK()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
@@ -938,7 +938,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK };
+				var response = new FeigResponse() { Status = FeigStatus.OK };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -973,8 +973,8 @@ namespace InlayTester.Drivers.Feig
 			public async Task False_For_ResponseTimeout()
 			{
 				// arrange
-				var settings = new FeigReaderSettings {
-					TransportSettings = new SerialTransportSettings { PortName = "COMA" },
+				var settings = new FeigReaderSettings() {
+					TransportSettings = new SerialTransportSettings() { PortName = "COMA" },
 					Address = 123,
 					Protocol = FeigProtocol.Standard,
 					Timeout = TimeSpan.FromMilliseconds(275)
@@ -1025,7 +1025,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK };
+				var response = new FeigResponse() { Status = FeigStatus.OK };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1059,7 +1059,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK };
+				var response = new FeigResponse() { Status = FeigStatus.OK };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1093,7 +1093,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK };
+				var response = new FeigResponse() { Status = FeigStatus.OK };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1128,7 +1128,7 @@ namespace InlayTester.Drivers.Feig
 				CancellationToken cancellationToken = default;
 
 				var data = new Byte[] { 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30 };
-				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
+				var response = new FeigResponse() { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1176,7 +1176,7 @@ namespace InlayTester.Drivers.Feig
 				CancellationToken cancellationToken = default;
 
 				var data = new Byte[14];
-				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
+				var response = new FeigResponse() { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1213,7 +1213,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+				var response = new FeigResponse() { Status = FeigStatus.OK, Data = BufferSpan.Empty };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1251,7 +1251,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+				var response = new FeigResponse() { Status = FeigStatus.OK, Data = BufferSpan.Empty };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1285,7 +1285,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+				var response = new FeigResponse() { Status = FeigStatus.OK, Data = BufferSpan.Empty };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1319,7 +1319,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+				var response = new FeigResponse() { Status = FeigStatus.OK, Data = BufferSpan.Empty };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1353,7 +1353,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+				var response = new FeigResponse() { Status = FeigStatus.OK, Data = BufferSpan.Empty };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1707,7 +1707,7 @@ namespace InlayTester.Drivers.Feig
 				CancellationToken cancellationToken = default;
 
 				var data = new Byte[] { 0x01, 0x04, 0x00, 0xFF, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11 };
-				var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
+				var response = new FeigResponse() { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1744,7 +1744,7 @@ namespace InlayTester.Drivers.Feig
 				TimeSpan timeout = TimeSpan.Zero;
 				CancellationToken cancellationToken = default;
 
-				var response = new FeigResponse { Status = FeigStatus.NoTransponder, Data = BufferSpan.Empty };
+				var response = new FeigResponse() { Status = FeigStatus.NoTransponder, Data = BufferSpan.Empty };
 
 				var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 

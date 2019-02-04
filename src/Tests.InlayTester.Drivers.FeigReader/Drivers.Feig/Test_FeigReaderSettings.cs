@@ -67,8 +67,8 @@ namespace InlayTester.Drivers.Feig
 		public void Construction_Copy()
 		{
 			// act
-			var copy = new FeigReaderSettings {
-				TransportSettings = new SerialTransportSettings {
+			var copy = new FeigReaderSettings() {
+				TransportSettings = new SerialTransportSettings() {
 					PortName = "COM3",
 					Baud = 19200,
 					DataBits = 7,

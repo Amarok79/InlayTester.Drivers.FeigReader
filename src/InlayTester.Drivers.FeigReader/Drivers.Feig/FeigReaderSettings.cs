@@ -65,7 +65,7 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public FeigReaderSettings()
 		{
-			this.TransportSettings = new SerialTransportSettings {
+			this.TransportSettings = new SerialTransportSettings() {
 				PortName = "COM1",
 				Baud = 38400,
 				DataBits = 8,

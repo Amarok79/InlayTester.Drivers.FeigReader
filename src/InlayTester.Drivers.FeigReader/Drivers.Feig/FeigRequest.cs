@@ -97,13 +97,13 @@ namespace InlayTester.Drivers.Feig
 		private BufferSpan _ToStandardProtocolFrame()
 		{
 			Int32 frameLength = 5 + this.Data.Count;
-			Byte[] frame = new Byte[frameLength];
+			var frame = new Byte[frameLength];
 
 			frame[0] = (Byte)frameLength;
 			frame[1] = (Byte)this.Address;
 			frame[2] = (Byte)this.Command;
 
-			System.Buffer.BlockCopy(this.Data.Buffer, this.Data.Offset, frame, 3, this.Data.Count);
+			Buffer.BlockCopy(this.Data.Buffer, this.Data.Offset, frame, 3, this.Data.Count);
 
 			Int32 crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 
@@ -116,7 +116,7 @@ namespace InlayTester.Drivers.Feig
 		private BufferSpan _ToAdvancedProtocolFrame()
 		{
 			Int32 frameLength = 7 + this.Data.Count;
-			Byte[] frame = new Byte[frameLength];
+			var frame = new Byte[frameLength];
 
 			frame[0] = 0x02;
 			frame[1] = (Byte)(frameLength >> 8);
@@ -124,7 +124,7 @@ namespace InlayTester.Drivers.Feig
 			frame[3] = (Byte)this.Address;
 			frame[4] = (Byte)this.Command;
 
-			System.Buffer.BlockCopy(this.Data.Buffer, this.Data.Offset, frame, 5, this.Data.Count);
+			Buffer.BlockCopy(this.Data.Buffer, this.Data.Offset, frame, 5, this.Data.Count);
 
 			Int32 crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 

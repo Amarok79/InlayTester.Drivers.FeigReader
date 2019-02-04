@@ -22,6 +22,7 @@
  * SOFTWARE.
 */
 
+using System;
 using InlayTester.Shared;
 using NFluent;
 using NUnit.Framework;
@@ -49,7 +50,7 @@ namespace InlayTester.Drivers.Feig
 		[Test]
 		public void Construction()
 		{
-			var transponder = new FeigTransponder {
+			var transponder = new FeigTransponder() {
 				TransponderType = FeigTransponderType.ISO14443A,
 				Identifier = BufferSpan.From(0x11, 0x22, 0x33)
 			};
@@ -67,11 +68,11 @@ namespace InlayTester.Drivers.Feig
 		public void ToString_MultipleItems()
 		{
 			var transponders = new[] {
-				new FeigTransponder {
+				new FeigTransponder() {
 					TransponderType = FeigTransponderType.ISO14443A,
 					Identifier = BufferSpan.From(0x11, 0x22, 0x33)
 				},
-				new FeigTransponder {
+				new FeigTransponder() {
 					TransponderType = FeigTransponderType.Jewel,
 					Identifier = BufferSpan.From(0x44, 0x55)
 				},
@@ -85,7 +86,7 @@ namespace InlayTester.Drivers.Feig
 		public void ToString_SingleItems()
 		{
 			var transponders = new[] {
-				new FeigTransponder {
+				new FeigTransponder() {
 					TransponderType = FeigTransponderType.ISO14443A,
 					Identifier = BufferSpan.From(0x11, 0x22, 0x33)
 				},
@@ -102,14 +103,14 @@ namespace InlayTester.Drivers.Feig
 			};
 
 			Check.That(FeigTransponder.ToString(transponders))
-				.IsEqualTo("");
+				.IsEqualTo(String.Empty);
 		}
 
 		[Test]
 		public void ToString_Null()
 		{
 			Check.That(FeigTransponder.ToString(null))
-				.IsEqualTo("");
+				.IsEqualTo(String.Empty);
 		}
 	}
 }

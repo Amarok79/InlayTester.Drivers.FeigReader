@@ -196,7 +196,7 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			var request = new FeigRequest {
+			var request = new FeigRequest() {
 				Address = mSettings.Address,
 				Command = command,
 				Data = requestData,
@@ -344,7 +344,7 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			var request = new FeigRequest {
+			var request = new FeigRequest() {
 				Address = mSettings.Address,
 				Command = command,
 				Data = requestData,
@@ -648,14 +648,14 @@ namespace InlayTester.Drivers.Feig
 				FeigCommand.GetSoftwareVersion, BufferSpan.Empty, timeout, cancellationToken)
 				.ConfigureAwait(false);
 
-			var info = new FeigSoftwareInfo {
+			var info = new FeigSoftwareInfo() {
 				FirmwareVersion = new Version(
 					response.Data[0],
 					response.Data[1],
 					response.Data[2]),
 				HardwareType = response.Data[3],
 				ReaderType = (FeigReaderType)response.Data[4],
-				SupportedTransponders = (response.Data[5] << 8 | response.Data[6])
+				SupportedTransponders = (response.Data[5] << 8) | response.Data[6]
 			};
 
 			#region (logging)
@@ -728,7 +728,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			Byte addr = 0x00;
+			var addr = (Byte)0x00;
 			addr |= (Byte)location;
 			addr |= (Byte)(block & 0x3F);
 
@@ -812,7 +812,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			Byte addr = 0x00;
+			var addr = (Byte)0x00;
 			addr |= (Byte)location;
 			addr |= (Byte)(block & 0x3F);
 
@@ -1006,7 +1006,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			Byte addr = 0x00;
+			var addr = (Byte)0x00;
 			addr |= (Byte)location;
 			addr |= (Byte)0x40;
 
@@ -1081,7 +1081,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			Byte addr = 0x00;
+			var addr = (Byte)0x00;
 			addr |= (Byte)location;
 			addr |= (Byte)(block & 0x3F);
 
@@ -1190,7 +1190,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(1);
 
-			for (Int32 i = 0; i < count; i++)
+			for (var i = 0; i < count; i++)
 				transponders[i] = _Inventory_ParseSingle(ref data);
 
 			return transponders;
@@ -1251,7 +1251,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(2 + length);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.ISO14443A,
 				Identifier = identifier,
 			};
@@ -1264,7 +1264,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(9);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.ISO14443B,
 				Identifier = identifier,
 			};
@@ -1277,7 +1277,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(8);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.Jewel,
 				Identifier = identifier,
 			};
@@ -1290,7 +1290,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(9);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.SR176,
 				Identifier = identifier,
 			};
@@ -1303,7 +1303,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(9);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.SRIxx,
 				Identifier = identifier,
 			};
@@ -1315,7 +1315,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(9);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.ISO15693,
 				Identifier = identifier,
 			};
@@ -1328,7 +1328,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(2 + length);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.ISO18000_3M3,
 				Identifier = identifier,
 			};
@@ -1341,7 +1341,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(2 + length);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.EPC_Class1_Gen2,
 				Identifier = identifier,
 			};
@@ -1353,7 +1353,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(9);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.ICode1,
 				Identifier = identifier,
 			};
@@ -1365,7 +1365,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(8);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.ICodeEPC,
 				Identifier = identifier,
 			};
@@ -1377,7 +1377,7 @@ namespace InlayTester.Drivers.Feig
 
 			data = data.Discard(19);
 
-			return new FeigTransponder {
+			return new FeigTransponder() {
 				TransponderType = FeigTransponderType.ICodeUID,
 				Identifier = identifier,
 			};
