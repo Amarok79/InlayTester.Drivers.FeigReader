@@ -43,7 +43,7 @@ namespace InlayTester.Drivers.Feig
 		[TestFixture]
 		public class Open
 		{
-			[Test, ExclusivelyUses("COMA")]
+			[Test, ExclusivelyUses("COMA"), NUnit.Framework.Category("com0com")]
 			public void Success_For_FirstTime()
 			{
 				var settings = new FeigReaderSettings() {
@@ -75,7 +75,7 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, ExclusivelyUses("COMA")]
+			[Test, ExclusivelyUses("COMA"), NUnit.Framework.Category("com0com")]
 			public void Exception_When_AlreadyOpen()
 			{
 				var settings = new FeigReaderSettings() {
@@ -127,7 +127,7 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, ExclusivelyUses("COMA")]
+			[Test, ExclusivelyUses("COMA"), NUnit.Framework.Category("com0com")]
 			public void Success_When_Open()
 			{
 				var settings = new FeigReaderSettings() {
@@ -180,7 +180,7 @@ namespace InlayTester.Drivers.Feig
 				}
 			}
 
-			[Test, ExclusivelyUses("COMA")]
+			[Test, ExclusivelyUses("COMA"), NUnit.Framework.Category("com0com")]
 			public void Success_When_Open()
 			{
 				var settings = new FeigReaderSettings() {

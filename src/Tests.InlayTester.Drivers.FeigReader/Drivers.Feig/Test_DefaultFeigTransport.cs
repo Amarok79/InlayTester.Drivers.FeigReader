@@ -39,7 +39,7 @@ namespace InlayTester.Drivers.Feig
 	[TestFixture]
 	public class Test_DefaultFeigTransport
 	{
-		[Test, ExclusivelyUses("COMA")]
+		[Test, ExclusivelyUses("COMA"), NUnit.Framework.Category("com0com")]
 		public void Open_Close_Dispose()
 		{
 			var settingsA = new SerialTransportSettings() {
@@ -88,7 +88,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public async Task Success_ReceivedResponse()
 		{
 			var settingsA = new SerialTransportSettings() {
@@ -146,7 +146,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public async Task Success_ReceivedResponse_MultiplePackets()
 		{
 			var settingsA = new SerialTransportSettings() {
@@ -208,7 +208,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public async Task Timeout()
 		{
 			var settingsA = new SerialTransportSettings() {
@@ -264,7 +264,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public async Task Canceled()
 		{
 			var settingsA = new SerialTransportSettings() {
@@ -326,7 +326,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public async Task CommunicationError_ChecksumError()
 		{
 			var settingsA = new SerialTransportSettings() {
@@ -378,7 +378,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public async Task CommunicationError_FrameError()
 		{
 			var settingsA = new SerialTransportSettings() {
@@ -430,7 +430,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public async Task UnexpectedResponse()
 		{
 			var settingsA = new SerialTransportSettings() {
@@ -488,7 +488,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		[Test, ExclusivelyUses("COMA", "COMB")]
+		[Test, ExclusivelyUses("COMA", "COMB"), NUnit.Framework.Category("com0com")]
 		public async Task Success_ReceivedResponse_MultipleTimes()
 		{
 			var settingsA = new SerialTransportSettings() {
