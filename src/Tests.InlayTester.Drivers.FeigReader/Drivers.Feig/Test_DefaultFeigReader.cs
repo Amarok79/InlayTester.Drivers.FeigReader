@@ -1387,7 +1387,7 @@ namespace InlayTester.Drivers.Feig
 					0x00, 0xFF, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_ISO14443A(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_ISO14443A(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.ISO14443A);
@@ -1405,7 +1405,7 @@ namespace InlayTester.Drivers.Feig
 					0x24, 0xFF, 0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_ISO14443A(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_ISO14443A(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.ISO14443A);
@@ -1423,7 +1423,7 @@ namespace InlayTester.Drivers.Feig
 					0xFF, 0xAA, 0xBB, 0xCC, 0xDD, 0x11, 0x22, 0x33, 0x44, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_ISO14443B(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_ISO14443B(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.ISO14443B);
@@ -1441,7 +1441,7 @@ namespace InlayTester.Drivers.Feig
 					0x00, 0x00, 0x01, 0x3C, 0x11, 0x22, 0x33, 0x44, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_Jewel(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_Jewel(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.Jewel);
@@ -1459,7 +1459,7 @@ namespace InlayTester.Drivers.Feig
 					0xFF, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_SR176(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_SR176(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.SR176);
@@ -1477,7 +1477,7 @@ namespace InlayTester.Drivers.Feig
 					0xFF, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_SRIxx(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_SRIxx(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.SRIxx);
@@ -1495,7 +1495,7 @@ namespace InlayTester.Drivers.Feig
 					0xFF, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_ISO15693(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_ISO15693(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.ISO15693);
@@ -1513,7 +1513,7 @@ namespace InlayTester.Drivers.Feig
 					0xFF, 0x05, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_ISO18000_3M3(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_ISO18000_3M3(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.ISO18000_3M3);
@@ -1531,7 +1531,7 @@ namespace InlayTester.Drivers.Feig
 					0xFF, 0x05, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_EPC_Class1_Gen2(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_EPC_Class1_Gen2(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.EPC_Class1_Gen2);
@@ -1549,7 +1549,7 @@ namespace InlayTester.Drivers.Feig
 					0xFF, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_ICode1(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_ICode1(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.ICode1);
@@ -1567,7 +1567,7 @@ namespace InlayTester.Drivers.Feig
 					0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_ICodeEPC(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_ICodeEPC(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.ICodeEPC);
@@ -1587,7 +1587,7 @@ namespace InlayTester.Drivers.Feig
 					0xDD
 				);
 
-				var transponder = DefaultFeigReader._Inventory_Parse_ICodeUID(ref data);
+				var transponder = DefaultFeigReader.Inventory_Parse_ICodeUID(ref data);
 
 				Check.That(transponder.TransponderType)
 					.IsEqualTo(FeigTransponderType.ICodeUID);
@@ -1619,7 +1619,7 @@ namespace InlayTester.Drivers.Feig
 					0xDD
 				);
 
-				var transponders = DefaultFeigReader._Inventory_Parse(ref data);
+				var transponders = DefaultFeigReader.Inventory_Parse(ref data);
 
 				Check.That(transponders[0].TransponderType)
 					.IsEqualTo(FeigTransponderType.ISO14443A);
@@ -1694,7 +1694,7 @@ namespace InlayTester.Drivers.Feig
 					0xDD
 				);
 
-				Check.ThatCode(() => DefaultFeigReader._Inventory_Parse(ref data))
+				Check.ThatCode(() => DefaultFeigReader.Inventory_Parse(ref data))
 					.Throws<NotSupportedException>();
 			}
 

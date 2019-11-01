@@ -4,7 +4,7 @@
 		<ProjectGuid>{B229D79C-2CC1-435C-844F-1CFAD60A51BB}</ProjectGuid>
 		<TargetFramework>net471</TargetFramework>
 		<RootNamespace>InlayTester</RootNamespace>
-		<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
+		<CodeAnalysisRuleSet>..\Minimal.ruleset</CodeAnalysisRuleSet>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
 		<DelaySign>false</DelaySign>

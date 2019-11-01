@@ -788,7 +788,7 @@ namespace InlayTester.Drivers.Feig
 		/// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
 		/// <exception cref="FeigException">
 		/// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-		public async Task WriteConfiguration(
+		public Task WriteConfiguration(
 			Int32 block,
 			FeigBlockLocation location,
 			BufferSpan data,
@@ -800,46 +800,52 @@ namespace InlayTester.Drivers.Feig
 			if (data.Count != 14)
 				throw new ArgumentException("Exactly 14 bytes must be specified as configuration data.", nameof(data));
 
-			#region (logging)
+			return writeConfiguration();
+
+
+			async Task writeConfiguration()
 			{
-				if (mLog.IsInfoEnabled)
+				#region (logging)
 				{
-					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  WriteConfiguration(Block: {1}, Location: {2}, Data: {3})",
-						mSettings.TransportSettings.PortName,
-						block,
-						location,
-						data
-					);
+					if (mLog.IsInfoEnabled)
+					{
+						mLog.InfoFormat(CultureInfo.InvariantCulture,
+							"[{0}]  WriteConfiguration(Block: {1}, Location: {2}, Data: {3})",
+							mSettings.TransportSettings.PortName,
+							block,
+							location,
+							data
+						);
+					}
 				}
-			}
-			#endregion
+				#endregion
 
-			var addr = (Byte)0x00;
-			addr |= (Byte)location;
-			addr |= (Byte)(block & 0x3F);
+				var addr = (Byte)0x00;
+				addr |= (Byte)location;
+				addr |= (Byte)(block & 0x3F);
 
-			mRequestBuffer[0] = addr;
-			Buffer.BlockCopy(data.Buffer, data.Offset, mRequestBuffer, 1, data.Count);
+				mRequestBuffer[0] = addr;
+				Buffer.BlockCopy(data.Buffer, data.Offset, mRequestBuffer, 1, data.Count);
 
-			var cfgdata = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
+				var cfgdata = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
 
-			var response = await this.Execute(
-				FeigCommand.WriteConfiguration, cfgdata, timeout, cancellationToken)
-				.ConfigureAwait(false);
+				var response = await this.Execute(
+					FeigCommand.WriteConfiguration, cfgdata, timeout, cancellationToken)
+					.ConfigureAwait(false);
 
-			#region (logging)
-			{
-				if (mLog.IsInfoEnabled)
+				#region (logging)
 				{
-					mLog.InfoFormat(CultureInfo.InvariantCulture,
-						"[{0}]  WriteConfiguration()  =>  {1}",
-						mSettings.TransportSettings.PortName,
-						response.Status
-					);
+					if (mLog.IsInfoEnabled)
+					{
+						mLog.InfoFormat(CultureInfo.InvariantCulture,
+							"[{0}]  WriteConfiguration()  =>  {1}",
+							mSettings.TransportSettings.PortName,
+							response.Status
+						);
+					}
 				}
+				#endregion
 			}
-			#endregion
 		}
 
 		/// <summary>
@@ -1167,7 +1173,7 @@ namespace InlayTester.Drivers.Feig
 			if (response.Status == FeigStatus.NoTransponder)
 				result = Array.Empty<FeigTransponder>();
 			else
-				result = _Inventory_Parse(ref rspDat);
+				result = Inventory_Parse(ref rspDat);
 
 			#region (logging)
 			{
@@ -1186,7 +1192,7 @@ namespace InlayTester.Drivers.Feig
 			return (result, response);
 		}
 
-		internal static FeigTransponder[] _Inventory_Parse(ref BufferSpan data)
+		internal static FeigTransponder[] Inventory_Parse(ref BufferSpan data)
 		{
 			var count = data[0];
 			var transponders = new FeigTransponder[count];
@@ -1194,12 +1200,12 @@ namespace InlayTester.Drivers.Feig
 			data = data.Discard(1);
 
 			for (var i = 0; i < count; i++)
-				transponders[i] = _Inventory_ParseSingle(ref data);
+				transponders[i] = Inventory_ParseSingle(ref data);
 
 			return transponders;
 		}
 
-		private static FeigTransponder _Inventory_ParseSingle(ref BufferSpan data)
+		private static FeigTransponder Inventory_ParseSingle(ref BufferSpan data)
 		{
 			var transponderType = (FeigTransponderType)data[0];
 			data = data.Discard(1);
@@ -1207,37 +1213,37 @@ namespace InlayTester.Drivers.Feig
 			switch (transponderType)
 			{
 				case FeigTransponderType.ISO14443A:
-					return _Inventory_Parse_ISO14443A(ref data);
+					return Inventory_Parse_ISO14443A(ref data);
 
 				case FeigTransponderType.ISO14443B:
-					return _Inventory_Parse_ISO14443B(ref data);
+					return Inventory_Parse_ISO14443B(ref data);
 
 				case FeigTransponderType.Jewel:
-					return _Inventory_Parse_Jewel(ref data);
+					return Inventory_Parse_Jewel(ref data);
 
 				case FeigTransponderType.SR176:
-					return _Inventory_Parse_SR176(ref data);
+					return Inventory_Parse_SR176(ref data);
 
 				case FeigTransponderType.SRIxx:
-					return _Inventory_Parse_SRIxx(ref data);
+					return Inventory_Parse_SRIxx(ref data);
 
 				case FeigTransponderType.ISO15693:
-					return _Inventory_Parse_ISO15693(ref data);
+					return Inventory_Parse_ISO15693(ref data);
 
 				case FeigTransponderType.ISO18000_3M3:
-					return _Inventory_Parse_ISO18000_3M3(ref data);
+					return Inventory_Parse_ISO18000_3M3(ref data);
 
 				case FeigTransponderType.EPC_Class1_Gen2:
-					return _Inventory_Parse_EPC_Class1_Gen2(ref data);
+					return Inventory_Parse_EPC_Class1_Gen2(ref data);
 
 				case FeigTransponderType.ICode1:
-					return _Inventory_Parse_ICode1(ref data);
+					return Inventory_Parse_ICode1(ref data);
 
 				case FeigTransponderType.ICodeEPC:
-					return _Inventory_Parse_ICodeEPC(ref data);
+					return Inventory_Parse_ICodeEPC(ref data);
 
 				case FeigTransponderType.ICodeUID:
-					return _Inventory_Parse_ICodeUID(ref data);
+					return Inventory_Parse_ICodeUID(ref data);
 
 				default:
 					throw new NotSupportedException(
@@ -1246,7 +1252,7 @@ namespace InlayTester.Drivers.Feig
 			}
 		}
 
-		internal static FeigTransponder _Inventory_Parse_ISO14443A(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_ISO14443A(ref BufferSpan data)
 		{
 			var info = data[0];
 			var length = (info & 0x04) != 0 ? 10 : 7;
@@ -1260,7 +1266,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_ISO14443B(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_ISO14443B(ref BufferSpan data)
 		{
 			var identifier = data.Slice(5, 4).Clone();
 			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
@@ -1273,7 +1279,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_Jewel(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_Jewel(ref BufferSpan data)
 		{
 			var identifier = data.Slice(4, 4).Clone();
 			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
@@ -1286,7 +1292,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_SR176(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_SR176(ref BufferSpan data)
 		{
 			var identifier = data.Slice(1, 8).Clone();
 			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
@@ -1299,7 +1305,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_SRIxx(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_SRIxx(ref BufferSpan data)
 		{
 			var identifier = data.Slice(1, 8).Clone();
 			Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
@@ -1312,7 +1318,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_ISO15693(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_ISO15693(ref BufferSpan data)
 		{
 			var identifier = data.Slice(1, 8);
 
@@ -1324,7 +1330,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_ISO18000_3M3(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_ISO18000_3M3(ref BufferSpan data)
 		{
 			var length = data[1];
 			var identifier = data.Slice(2, length);
@@ -1337,7 +1343,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_EPC_Class1_Gen2(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_EPC_Class1_Gen2(ref BufferSpan data)
 		{
 			var length = data[1];
 			var identifier = data.Slice(2, length);
@@ -1350,7 +1356,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_ICode1(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_ICode1(ref BufferSpan data)
 		{
 			var identifier = data.Slice(1, 8);
 
@@ -1362,7 +1368,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_ICodeEPC(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_ICodeEPC(ref BufferSpan data)
 		{
 			var identifier = data.Slice(0, 8);
 
@@ -1374,7 +1380,7 @@ namespace InlayTester.Drivers.Feig
 			};
 		}
 
-		internal static FeigTransponder _Inventory_Parse_ICodeUID(ref BufferSpan data)
+		internal static FeigTransponder Inventory_Parse_ICodeUID(ref BufferSpan data)
 		{
 			var identifier = data.Slice(14, 5);
 
