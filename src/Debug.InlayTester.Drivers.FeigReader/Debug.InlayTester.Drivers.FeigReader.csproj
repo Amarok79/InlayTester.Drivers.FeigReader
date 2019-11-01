@@ -1,71 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<ProjectGuid>{73172515-3EE6-4FD6-8FC4-C770AA10A42B}</ProjectGuid>
-		<TargetFramework>netstandard2.0</TargetFramework>
+		<ProjectGuid>{B229D79C-2CC1-435C-844F-1CFAD60A51BB}</ProjectGuid>
+		<TargetFramework>net471</TargetFramework>
 		<RootNamespace>InlayTester</RootNamespace>
-		<Version>3.0.0</Version>
-		<Authors>Olaf Kober</Authors>
-		<Company>&lt;none&gt;</Company>
-		<Description>A library to abstract (serial) communication to increase testability. Part of Inlay Tester software application.</Description>
-		<Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</RepositoryUrl>
-		<PackageIcon>inlaytester.png</PackageIcon>
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageTags></PackageTags>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
 		<DelaySign>false</DelaySign>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<IncludeSymbols>true</IncludeSymbols>
-		<IncludeSource>true</IncludeSource>
-		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<OutputPath>..\..\bin\lib\</OutputPath>
-		<DocumentationFile>..\..\bin\lib\InlayTester.Shared.Transports.xml</DocumentationFile>
+		<OutputPath>..\..\bin\dbgapp\</OutputPath>
 		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 		<LangVersion>latest</LangVersion>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-		<NoWarn>1701;1702;NU5105</NoWarn>
+		<NoWarn>1701;1702</NoWarn>
 		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
 		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<OutputPath>..\..\bin\lib\</OutputPath>
-		<DocumentationFile>..\..\bin\lib\InlayTester.Shared.Transports.xml</DocumentationFile>
+		<OutputPath>..\..\bin\dbgapp\</OutputPath>
 		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 		<LangVersion>latest</LangVersion>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningsAsErrors />
-		<NoWarn>1701;1702;NU5105</NoWarn>
+		<NoWarn>1701;1702</NoWarn>
 		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
 		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\amarok.snk" Link="amarok.snk" />
-		<None Include="..\InlayTester.Shared.Transports.licenseheader" Link="InlayTester.Shared.Transports.licenseheader" />
-		<None Include="..\inlaytester.png" Pack="true" PackagePath="\" />
+		<None Include="..\InlayTester.Drivers.FeigReader.licenseheader" Link="InlayTester.Drivers.FeigReader.licenseheader" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Amarok.Events" Version="1.2.1" />
-		<PackageReference Include="Amarok.Shared" Version="1.0.0" />
 		<PackageReference Include="Common.Logging" Version="3.4.1" />
-		<PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
-		<PackageReference Include="SerialPortStream" Version="2.2.0" />
+		<PackageReference Include="Common.Logging.NLog444" Version="3.4.1" />
+		<PackageReference Include="NLog" Version="4.6.7" />
 	</ItemGroup>
+
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
+	  <ProjectReference Include="..\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj" />
 	</ItemGroup>
 
 </Project>
