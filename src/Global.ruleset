@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Global Rules" ToolsVersion="15.0">
+<RuleSet Name="Global Rules" ToolsVersion="16.0">
   <IncludeAll Action="Warning" />
   <Rules AnalyzerId="ClrHeapAllocationAnalyzer" RuleNamespace="ClrHeapAllocationAnalyzer">
     <Rule Id="HAA0101" Action="Info" />
@@ -14,7 +14,6 @@
     <Rule Id="HAA0502" Action="None" />
     <Rule Id="HAA0503" Action="None" />
     <Rule Id="HAA0504" Action="None" />
-    <Rule Id="HAA0505" Action="None" />
     <Rule Id="HAA0601" Action="Info" />
     <Rule Id="HAA0602" Action="Info" />
     <Rule Id="HAA0603" Action="Info" />
@@ -755,11 +754,12 @@
   <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
     <Rule Id="S107" Action="Warning" />
     <Rule Id="S1109" Action="Warning" />
+    <Rule Id="S1128" Action="None" />
     <Rule Id="S113" Action="Warning" />
-    <Rule Id="S1134" Action="None" />
     <Rule Id="S1135" Action="Warning" />
     <Rule Id="S1145" Action="Warning" />
     <Rule Id="S1147" Action="Warning" />
+    <Rule Id="S1199" Action="None" />
     <Rule Id="S1200" Action="Warning" />
     <Rule Id="S1226" Action="Warning" />
     <Rule Id="S1227" Action="Warning" />
@@ -769,9 +769,11 @@
     <Rule Id="S1301" Action="Warning" />
     <Rule Id="S131" Action="Warning" />
     <Rule Id="S1313" Action="Warning" />
+    <Rule Id="S134" Action="Warning" />
     <Rule Id="S138" Action="Warning" />
     <Rule Id="S1449" Action="Warning" />
     <Rule Id="S1479" Action="Warning" />
+    <Rule Id="S1541" Action="Warning" />
     <Rule Id="S1659" Action="Warning" />
     <Rule Id="S1694" Action="Warning" />
     <Rule Id="S1696" Action="Warning" />
@@ -826,7 +828,6 @@
     <Rule Id="S3962" Action="Warning" />
     <Rule Id="S3963" Action="Warning" />
     <Rule Id="S3967" Action="Warning" />
-    <Rule Id="S3973" Action="None" />
     <Rule Id="S3993" Action="Warning" />
     <Rule Id="S3994" Action="Warning" />
     <Rule Id="S3995" Action="Warning" />

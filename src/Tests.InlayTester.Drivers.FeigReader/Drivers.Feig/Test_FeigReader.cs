@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -137,7 +137,7 @@ namespace InlayTester.Drivers.Feig
 			{
 				// act
 				var settings = new FeigReaderSettings();
-				var logger = new ConsoleOutLogger("A", LogLevel.Info, false, false, false, "G");
+				var logger = new DebugOutLogger("A", LogLevel.Info, false, false, false, "G");
 				var reader = FeigReader.Create(settings, logger);
 
 				// assert
@@ -149,7 +149,7 @@ namespace InlayTester.Drivers.Feig
 				Check.That(readerImpl.Settings)
 					.Not.IsSameReferenceAs(settings);
 				Check.That(readerImpl.Logger)
-					.IsInstanceOf<ConsoleOutLogger>();
+					.IsInstanceOf<DebugOutLogger>();
 				Check.That(readerImpl.Transport)
 					.IsInstanceOf<DefaultFeigTransport>();
 
@@ -158,7 +158,7 @@ namespace InlayTester.Drivers.Feig
 				Check.That(transportImpl.Settings)
 					.Not.IsSameReferenceAs(settings.TransportSettings);
 				Check.That(transportImpl.Logger)
-					.IsInstanceOf<ConsoleOutLogger>()
+					.IsInstanceOf<DebugOutLogger>()
 					.And
 					.IsSameReferenceAs(readerImpl.Logger);
 			}
@@ -187,7 +187,7 @@ namespace InlayTester.Drivers.Feig
 				// act
 				var hooks = new Mock<ITransportHooks>();
 				var settings = new FeigReaderSettings();
-				var logger = new ConsoleOutLogger("A", LogLevel.Info, false, false, false, "G");
+				var logger = new DebugOutLogger("A", LogLevel.Info, false, false, false, "G");
 				var reader = FeigReader.Create(settings, logger, hooks.Object);
 
 				// assert
@@ -199,7 +199,7 @@ namespace InlayTester.Drivers.Feig
 				Check.That(readerImpl.Settings)
 					.Not.IsSameReferenceAs(settings);
 				Check.That(readerImpl.Logger)
-					.IsInstanceOf<ConsoleOutLogger>();
+					.IsInstanceOf<DebugOutLogger>();
 				Check.That(readerImpl.Transport)
 					.IsInstanceOf<DefaultFeigTransport>();
 
@@ -208,7 +208,7 @@ namespace InlayTester.Drivers.Feig
 				Check.That(transportImpl.Settings)
 					.Not.IsSameReferenceAs(settings.TransportSettings);
 				Check.That(transportImpl.Logger)
-					.IsInstanceOf<ConsoleOutLogger>()
+					.IsInstanceOf<DebugOutLogger>()
 					.And
 					.IsSameReferenceAs(readerImpl.Logger);
 			}

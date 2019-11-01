@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,8 @@
 using System;
 using System.Globalization;
 using System.Text;
-using InlayTester.Shared;
+using Amarok.Contracts;
+using Amarok.Shared;
 
 
 namespace InlayTester.Drivers.Feig
@@ -91,7 +92,7 @@ namespace InlayTester.Drivers.Feig
 
 			try
 			{
-				sb = StringBuilderPool.Alloc();
+				sb = StringBuilderPool.Rent();
 
 				sb.Append("FirmwareVersion: ");
 				sb.Append(this.FirmwareVersion);

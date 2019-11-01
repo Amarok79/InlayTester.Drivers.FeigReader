@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Minimal Rules" ToolsVersion="15.0">
+<RuleSet Name="Global Rules" ToolsVersion="16.0">
   <IncludeAll Action="Warning" />
   <Rules AnalyzerId="ClrHeapAllocationAnalyzer" RuleNamespace="ClrHeapAllocationAnalyzer">
     <Rule Id="HAA0101" Action="None" />
@@ -84,7 +84,6 @@
     <Rule Id="CRR0024" Action="None" />
     <Rule Id="CRR0025" Action="None" />
     <Rule Id="CRR0026" Action="None" />
-    <Rule Id="CRR0027" Action="None" />
     <Rule Id="CRR0028" Action="None" />
     <Rule Id="CRR0029" Action="None" />
     <Rule Id="CRR0030" Action="None" />
@@ -815,6 +814,9 @@
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0015" Action="None" />
+    <Rule Id="IDE0058" Action="None" />
+    <Rule Id="IDE1006" Action="None" />
+    <Rule Id="IDE1006WithoutSuggestion" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.VisualBasic.Features" RuleNamespace="Microsoft.CodeAnalysis.VisualBasic.Features">
     <Rule Id="IDE0001" Action="None" />
@@ -830,8 +832,6 @@
     <Rule Id="THR016" Action="None" />
   </Rules>
   <Rules AnalyzerId="PostSharp.VisualStudio.Package.VS15.0" RuleNamespace="PostSharp.VisualStudio.Package.VS15.0">
-    <Rule Id="COM002" Action="None" />
-    <Rule Id="COM005" Action="None" />
     <Rule Id="COM008" Action="None" />
     <Rule Id="THR016" Action="None" />
   </Rules>
@@ -926,6 +926,7 @@
     <Rule Id="S2688" Action="None" />
     <Rule Id="S2692" Action="None" />
     <Rule Id="S2696" Action="None" />
+    <Rule Id="S2699" Action="None" />
     <Rule Id="S2737" Action="None" />
     <Rule Id="S2743" Action="None" />
     <Rule Id="S2757" Action="None" />
@@ -997,7 +998,6 @@
     <Rule Id="S3626" Action="None" />
     <Rule Id="S3649" Action="None" />
     <Rule Id="S3655" Action="None" />
-    <Rule Id="S3693" Action="None" />
     <Rule Id="S3869" Action="None" />
     <Rule Id="S3871" Action="None" />
     <Rule Id="S3875" Action="None" />
@@ -1029,6 +1029,7 @@
     <Rule Id="S4035" Action="None" />
     <Rule Id="S4061" Action="None" />
     <Rule Id="S4070" Action="None" />
+    <Rule Id="S4136" Action="None" />
     <Rule Id="S4143" Action="None" />
     <Rule Id="S4144" Action="None" />
     <Rule Id="S4158" Action="None" />

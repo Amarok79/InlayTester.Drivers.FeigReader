@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,9 +25,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Amarok.Shared;
 using Common.Logging;
 using Common.Logging.Simple;
-using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 using NCrunch.Framework;
 using NFluent;
@@ -46,7 +46,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				transportA.Open();
@@ -61,7 +61,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -95,7 +95,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -112,7 +112,8 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received.Subscribe(data => {
+					transportB.Received.Subscribe(data =>
+					{
 						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
 						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
@@ -153,7 +154,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -170,7 +171,8 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received.Subscribe(data => {
+					transportB.Received.Subscribe(data =>
+					{
 						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
 						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
@@ -215,7 +217,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -232,7 +234,8 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received.Subscribe(data => {
+					transportB.Received.Subscribe(data =>
+					{
 						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
 						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
@@ -271,7 +274,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -288,7 +291,8 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received.Subscribe(data => {
+					transportB.Received.Subscribe(data =>
+					{
 						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
 						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
@@ -333,7 +337,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA",
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -350,7 +354,8 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received.Subscribe(data => {
+					transportB.Received.Subscribe(data =>
+					{
 						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
 						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
@@ -385,7 +390,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA",
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -402,7 +407,8 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received.Subscribe(data => {
+					transportB.Received.Subscribe(data =>
+					{
 						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
 						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
@@ -437,7 +443,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA",
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -454,7 +460,8 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received.Subscribe(data => {
+					transportB.Received.Subscribe(data =>
+					{
 						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
 						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{
@@ -495,7 +502,7 @@ namespace InlayTester.Drivers.Feig
 				PortName = "COMA"
 			};
 
-			var logger = new ConsoleOutLogger("Test", LogLevel.All, true, false, false, "G");
+			var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
 			using (var transportA = new DefaultFeigTransport(settingsA, logger))
 			{
 				var settings = new SerialTransportSettings() {
@@ -512,7 +519,8 @@ namespace InlayTester.Drivers.Feig
 					transportA.Open();
 					transportB.Open();
 
-					transportB.Received.Subscribe(data => {
+					transportB.Received.Subscribe(data =>
+					{
 						if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff
 						 && data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
 						{

@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,9 +23,9 @@
 */
 
 using System;
+using Amarok.Contracts;
 using Common.Logging;
 using Common.Logging.Simple;
-using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 
 

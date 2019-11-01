@@ -1,96 +1,71 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
 	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 		<ProjectGuid>{73172515-3EE6-4FD6-8FC4-C770AA10A42B}</ProjectGuid>
-		<OutputType>Exe</OutputType>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<RootNamespace>InlayTester</RootNamespace>
-		<AssemblyName>Debug.InlayTester.Drivers.FeigReader</AssemblyName>
-		<TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-		<FileAlignment>512</FileAlignment>
-		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-		<PublishUrl>publish\</PublishUrl>
-		<Install>true</Install>
-		<InstallFrom>Disk</InstallFrom>
-		<UpdateEnabled>false</UpdateEnabled>
-		<UpdateMode>Foreground</UpdateMode>
-		<UpdateInterval>7</UpdateInterval>
-		<UpdateIntervalUnits>Days</UpdateIntervalUnits>
-		<UpdatePeriodically>false</UpdatePeriodically>
-		<UpdateRequired>false</UpdateRequired>
-		<MapFileExtensions>true</MapFileExtensions>
-		<ApplicationRevision>0</ApplicationRevision>
-		<ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-		<IsWebBootstrapper>false</IsWebBootstrapper>
-		<UseApplicationTrust>false</UseApplicationTrust>
-		<BootstrapperEnabled>true</BootstrapperEnabled>
+		<Version>3.0.0</Version>
+		<Authors>Olaf Kober</Authors>
+		<Company>&lt;none&gt;</Company>
+		<Description>A library to abstract (serial) communication to increase testability. Part of Inlay Tester software application.</Description>
+		<Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Amarok79/InlayTester.Shared.Transports</RepositoryUrl>
+		<PackageIcon>inlaytester.png</PackageIcon>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<CodeAnalysisRuleSet>..\Global.ruleset</CodeAnalysisRuleSet>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageTags></PackageTags>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
+		<DelaySign>false</DelaySign>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<IncludeSymbols>true</IncludeSymbols>
+		<IncludeSource>true</IncludeSource>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<Optimize>false</Optimize>
-		<OutputPath>..\..\bin\dbgapp\</OutputPath>
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>..\..\bin\lib\</OutputPath>
+		<DocumentationFile>..\..\bin\lib\InlayTester.Shared.Transports.xml</DocumentationFile>
 		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 		<LangVersion>latest</LangVersion>
-		<CodeAnalysisRuleSet>..\Minimal.ruleset</CodeAnalysisRuleSet>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<NoWarn>1701;1702;NU5105</NoWarn>
+		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<DebugType>pdbonly</DebugType>
-		<Optimize>true</Optimize>
-		<OutputPath>..\..\bin\dbgapp\</OutputPath>
-		<DefineConstants>TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>..\..\bin\lib\</OutputPath>
+		<DocumentationFile>..\..\bin\lib\InlayTester.Shared.Transports.xml</DocumentationFile>
 		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 		<LangVersion>latest</LangVersion>
-		<CodeAnalysisRuleSet>..\Minimal.ruleset</CodeAnalysisRuleSet>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningsAsErrors />
+		<NoWarn>1701;1702;NU5105</NoWarn>
+		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
 	</PropertyGroup>
+
 	<ItemGroup>
-		<Reference Include="System" />
-		<Reference Include="System.Core" />
-		<Reference Include="Microsoft.CSharp" />
+		<None Include="..\amarok.snk" Link="amarok.snk" />
+		<None Include="..\InlayTester.Shared.Transports.licenseheader" Link="InlayTester.Shared.Transports.licenseheader" />
+		<None Include="..\inlaytester.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Amarok.Events" Version="1.2.1" />
+		<PackageReference Include="Amarok.Shared" Version="1.0.0" />
+		<PackageReference Include="Common.Logging" Version="3.4.1" />
+		<PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
+		<PackageReference Include="SerialPortStream" Version="2.2.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Include="Program.cs" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
 	</ItemGroup>
-	<ItemGroup>
-		<None Include="..\InlayTester.Drivers.FeigReader.licenseheader">
-			<Link>InlayTester.Drivers.FeigReader.licenseheader</Link>
-		</None>
-		<None Include="App.config" />
-		<None Include="NLog.config">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-	<ItemGroup>
-		<BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
-			<Visible>False</Visible>
-			<ProductName>Microsoft .NET Framework 4.7.1 %28x86 and x64%29</ProductName>
-			<Install>true</Install>
-		</BootstrapperPackage>
-		<BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-			<Visible>False</Visible>
-			<ProductName>.NET Framework 3.5 SP1</ProductName>
-			<Install>false</Install>
-		</BootstrapperPackage>
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj">
-			<Project>{d9834205-826d-4cb9-b34d-9cfaf4c064b1}</Project>
-			<Name>InlayTester.Drivers.FeigReader</Name>
-		</ProjectReference>
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Common.Logging.NLog4412">
-			<Version>3.4.1</Version>
-		</PackageReference>
-	</ItemGroup>
-	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

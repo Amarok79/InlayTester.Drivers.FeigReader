@@ -1,0 +1,87 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '$(solution)'
+    feedsToUse: 'select'
+
+- task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  inputs:
+    SonarCloud: Sonar
+    organization: 'amarok79-github'
+    projectKey: 'InlayTester.Drivers.FeigReaderTransports'
+    projectName: 'InlayTester.Drivers.FeigReader'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: 'bin\tests\net471\Tests*.dll'
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testFiltercriteria: 'TestCategory!=com0com'
+    codeCoverageEnabled: true
+    testRunTitle: '.NET Framework 4.7.1'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: 'bin\tests\net48\Tests*.dll'
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testFiltercriteria: 'TestCategory!=com0com'
+    codeCoverageEnabled: true
+    testRunTitle: '.NET Framework 4.8'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/Tests.InlayTester.Drivers.FeigReader.csproj'
+    arguments: '--no-restore --no-build --collect:"Code Coverage" --framework:"netcoreapp2.1" --filter:"TestCategory!=com0com"'
+    testRunTitle: '.NET Core 2.1'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/Tests.InlayTester.Drivers.FeigReader'
+    arguments: '--no-restore --no-build --collect:"Code Coverage" --framework:"netcoreapp3.0" --filter:"TestCategory!=com0com"'
+    testRunTitle: '.NET Core 3.0'
+
+- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+
+- task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'bin\lib'
+    Contents: '*.nupkg'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    OverWrite: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

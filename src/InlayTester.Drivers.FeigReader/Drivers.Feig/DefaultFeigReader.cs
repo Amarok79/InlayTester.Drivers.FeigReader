@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,8 +27,9 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Amarok.Contracts;
+using Amarok.Shared;
 using Common.Logging;
-using InlayTester.Shared;
 
 
 namespace InlayTester.Drivers.Feig
@@ -306,7 +307,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			else
 			{
-				throw ExceptionFactory.NotSupportedException("Unexpected FeigTransferStatus '{0}'!", result.Status);
+				throw new NotSupportedException($"Unexpected FeigTransferStatus '{result.Status}'!");
 			}
 		}
 
@@ -712,7 +713,7 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			Verify.InRange(block, 0, 63, nameof(block));
+			Verify.IsInRange(block, 0, 63, nameof(block));
 
 			#region (logging)
 			{
@@ -794,8 +795,10 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			Verify.InRange(block, 0, 63, nameof(block));
-			Verify.That(data.Count == 14, nameof(data), "Exactly 14 bytes must be specified as configuration data.");
+			Verify.IsInRange(block, 0, 63, nameof(block));
+
+			if (data.Count != 14)
+				throw new ArgumentException("Exactly 14 bytes must be specified as configuration data.", nameof(data));
 
 			#region (logging)
 			{
@@ -928,7 +931,7 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			Verify.InRange(block, 0, 63, nameof(block));
+			Verify.IsInRange(block, 0, 63, nameof(block));
 
 			#region (logging)
 			{
@@ -1065,7 +1068,7 @@ namespace InlayTester.Drivers.Feig
 			TimeSpan? timeout = null,
 			CancellationToken cancellationToken = default)
 		{
-			Verify.InRange(block, 0, 63, nameof(block));
+			Verify.IsInRange(block, 0, 63, nameof(block));
 
 			#region (logging)
 			{
@@ -1237,7 +1240,7 @@ namespace InlayTester.Drivers.Feig
 					return _Inventory_Parse_ICodeUID(ref data);
 
 				default:
-					throw ExceptionFactory.NotSupportedException(
+					throw new NotSupportedException(
 						$"Decoding response for transponder type {transponderType} is not supported!"
 					);
 			}

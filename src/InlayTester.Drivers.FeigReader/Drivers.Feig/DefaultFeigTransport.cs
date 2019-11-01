@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,8 +26,9 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Amarok.Contracts;
+using Amarok.Shared;
 using Common.Logging;
-using InlayTester.Shared;
 using InlayTester.Shared.Transports;
 
 
@@ -123,7 +124,8 @@ namespace InlayTester.Drivers.Feig
 
 				// handle cancellation
 				var cancellationRegistration = cancellationToken.Register(
-					_completionSource => {
+					_completionSource =>
+					{
 						#region (logging)
 						{
 							if (mLog.IsInfoEnabled)
@@ -147,7 +149,8 @@ namespace InlayTester.Drivers.Feig
 				// handle timeout
 				var cts = new CancellationTokenSource(timeout);
 				var timeoutRegistration = cts.Token.Register(
-					_completionSource => {
+					_completionSource =>
+					{
 						#region (logging)
 						{
 							if (mLog.IsInfoEnabled)
@@ -170,7 +173,8 @@ namespace InlayTester.Drivers.Feig
 				);
 
 				// cleanup after completion
-				mCompletionSource.Task.ContinueWith(_ => {
+				mCompletionSource.Task.ContinueWith(_ =>
+				{
 					cancellationRegistration.Dispose();
 					timeoutRegistration.Dispose();
 				},

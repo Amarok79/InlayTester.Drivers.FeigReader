@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2018, Olaf Kober
+ * Copyright (c) 2019, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,7 +24,7 @@
 
 using System;
 using System.Text;
-using InlayTester.Shared;
+using Amarok.Shared;
 
 
 namespace InlayTester.Drivers.Feig
@@ -62,7 +62,7 @@ namespace InlayTester.Drivers.Feig
 
 			try
 			{
-				sb = StringBuilderPool.Alloc();
+				sb = StringBuilderPool.Rent();
 
 				sb.Append("Address: ");
 				sb.Append(this.Address);
@@ -90,7 +90,7 @@ namespace InlayTester.Drivers.Feig
 			else if (protocol == FeigProtocol.Advanced)
 				return _ToAdvancedProtocolFrame();
 			else
-				throw ExceptionFactory.NotSupportedException("Protocol {0} not supported!", protocol);
+				throw new NotSupportedException($"Protocol {protocol} not supported!");
 		}
 
 
