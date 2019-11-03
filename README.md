@@ -1,18 +1,18 @@
-[![Build Status](https://dev.azure.com/amarok79/Amarok/_apis/build/status/InlayTester.Drivers.FeigReader?branchName=master)](https://dev.azure.com/amarok79/Amarok/_build/latest?definitionId=14&branchName=master)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Amarok79_InlayTester.Drivers.FeigReader&metric=alert_status)](https://sonarcloud.io/dashboard?id=Amarok79_InlayTester.Drivers.FeigReader)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Amarok79_InlayTester.Drivers.FeigReader&metric=coverage)](https://sonarcloud.io/dashboard?id=Amarok79_InlayTester.Drivers.FeigReader)
-[![NuGet](https://img.shields.io/nuget/v/Amarok.InlayTester.Drivers.FeigReader.svg?logo=)](https://www.nuget.org/packages/Amarok.InlayTester.Drivers.FeigReader/)
+[![Build Status](https://dev.azure.com/amarok79/Amarok/_apis/build/status/InlayTester.Drivers.FeigReader?branchName=master)](https://dev.azure.com/amarok79/Amarok/_build/latest?definitionId=24&branchName=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=InlayTester.Drivers.FeigReader&metric=alert_status)](https://sonarcloud.io/dashboard?id=InlayTester.Drivers.FeigReader)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=InlayTester.Drivers.FeigReader&metric=coverage)](https://sonarcloud.io/dashboard?id=InlayTester.Drivers.FeigReader)
+[![NuGet](https://img.shields.io/nuget/v/InlayTester.Drivers.FeigReader.svg?logo=)](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
 
 ## Introduction
 
 This library is available as NuGet package:
 [Amarok.InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/Amarok.InlayTester.Drivers.FeigReader/)
 
-The library is compiled as *.NET Standard 2.0* library. Tests are performed with *.NET Framework 4.7.1* only. Currently, I have no plans to support other runtimes like .NET Core or older .NET Framework versions.
+The library is compiled as *.NET Standard 2.0* library. Tests are generally performed with *.NET Framework 4.7.1*, *.NET Framework 4.8*, *.NET Core 2.1* and *.NET Core 3.0*.
 
-For development, you need *Visual Studio 2017* (v15.7 or later). For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
+For development, you need *Visual Studio 2019*. For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
-The library uses [Amarok79/InlayTester.Shared.Transports](https://github.com/Amarok79/InlayTester.Shared.Transports) and [Amarok79/InlayTester.Shared](https://github.com/Amarok79/InlayTester.Shared) under the hood, which again depends on the excellent [jcurl/SerialPortStream](https://github.com/jcurl/SerialPortStream) for serial communication.
+The library uses [Amarok79/InlayTester.Shared.Transports](https://github.com/Amarok79/InlayTester.Shared.Transports) under the hood, which again depends on the excellent [jcurl/SerialPortStream](https://github.com/jcurl/SerialPortStream) for serial communication.
 
 
 ## Supported Feig RFID Reader/Modules
