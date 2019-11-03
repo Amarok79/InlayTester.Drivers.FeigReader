@@ -26,6 +26,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Common.Logging;
+using Common.Logging.Configuration;
+using Common.Logging.NLog;
 using InlayTester.Drivers.Feig;
 using InlayTester.Shared.Transports;
 
@@ -36,23 +39,23 @@ namespace InlayTester
 	{
 		public static async Task Main()
 		{
-			var config = new Common.Logging.Configuration.LogConfiguration {
-				FactoryAdapter = new Common.Logging.Configuration.FactoryAdapterConfiguration {
-					Type = typeof(Common.Logging.NLog.NLogLoggerFactoryAdapter).AssemblyQualifiedName,
-					Arguments = new Common.Logging.Configuration.NameValueCollection {
+			var config = new LogConfiguration() {
+				FactoryAdapter = new FactoryAdapterConfiguration() {
+					Type = typeof(NLogLoggerFactoryAdapter).AssemblyQualifiedName,
+					Arguments = new NameValueCollection() {
 						{ "configType", "FILE" },
 						{ "configFile", "./nlog.config" }
 					}
 				}
 			};
 
-			Common.Logging.LogManager.Configure(config);
+			LogManager.Configure(config);
 
-			var log = Common.Logging.LogManager.GetLogger("Feig");
+			var log = LogManager.GetLogger("Feig");
 			//var log = new NoOpLogger();
 
-			var settings = new FeigReaderSettings {
-				TransportSettings = new SerialTransportSettings {
+			var settings = new FeigReaderSettings() {
+				TransportSettings = new SerialTransportSettings() {
 					PortName = "COM3",
 					Baud = 38400,
 					DataBits = 8,

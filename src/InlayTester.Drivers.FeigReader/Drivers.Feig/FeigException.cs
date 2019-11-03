@@ -35,12 +35,12 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Gets the request sent to the reader, if available, otherwise null.
 		/// </summary>
-		public FeigRequest Request { get; }
+		public FeigRequest? Request { get; }
 
 		/// <summary>
 		/// Gets the response received from the reader, if available, otherwise null.
 		/// </summary>
-		public FeigResponse Response { get; }
+		public FeigResponse? Response { get; }
 
 
 		/// <summary>
@@ -51,7 +51,7 @@ namespace InlayTester.Drivers.Feig
 		/// The request sent to the reader, if available, otherwise null.</param>
 		/// <param name="response">
 		/// The response received from the reader, if available, otherwise null.</param>
-		public FeigException(FeigRequest request, FeigResponse response)
+		public FeigException(FeigRequest? request, FeigResponse? response)
 		{
 			this.Request = request;
 			this.Response = response;
@@ -74,7 +74,7 @@ namespace InlayTester.Drivers.Feig
 		/// The request sent to the reader, if available, otherwise null.</param>
 		/// <param name="response">
 		/// The response received from the reader, if available, otherwise null.</param>
-		public FeigException(String message, FeigRequest request, FeigResponse response)
+		public FeigException(String message, FeigRequest? request, FeigResponse? response)
 			: base(message)
 		{
 			this.Request = request;

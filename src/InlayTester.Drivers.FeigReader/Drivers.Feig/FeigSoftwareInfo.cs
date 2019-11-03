@@ -88,7 +88,7 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public override String ToString()
 		{
-			StringBuilder sb = null;
+			StringBuilder? sb = null;
 
 			try
 			{

@@ -51,7 +51,7 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public override String ToString()
 		{
-			StringBuilder sb = null;
+			StringBuilder? sb = null;
 
 			try
 			{
@@ -76,7 +76,7 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public static String ToString(IEnumerable<FeigTransponder> transponders)
 		{
-			StringBuilder sb = null;
+			StringBuilder? sb = null;
 
 			try
 			{

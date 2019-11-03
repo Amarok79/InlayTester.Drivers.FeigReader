@@ -43,10 +43,10 @@ namespace InlayTester.Drivers.Feig
 		/// <summary>
 		/// Gets the parsed response, if available, otherwise null.
 		/// </summary>
-		public FeigResponse Response { get; }
+		public FeigResponse? Response { get; }
 
 
-		private FeigParseResult(FeigParseStatus status, FeigResponse response)
+		private FeigParseResult(FeigParseStatus status, FeigResponse? response)
 		{
 			this.Status = status;
 			this.Response = response;
@@ -58,7 +58,7 @@ namespace InlayTester.Drivers.Feig
 		/// </summary>
 		public override String ToString()
 		{
-			StringBuilder sb = null;
+			StringBuilder? sb = null;
 
 			try
 			{

@@ -254,9 +254,9 @@ namespace InlayTester.Drivers.Feig
 
 			if (result.Status == FeigTransferStatus.Success)
 			{
-				if (result.Response.Status == FeigStatus.OK ||
-					result.Response.Status == FeigStatus.NoTransponder ||
-					result.Response.Status == FeigStatus.MoreData)
+				if (result!.Response!.Status == FeigStatus.OK ||
+					result!.Response!.Status == FeigStatus.NoTransponder ||
+					result!.Response!.Status == FeigStatus.MoreData)
 				{
 					return result.Response;     // success
 				}
@@ -1200,12 +1200,12 @@ namespace InlayTester.Drivers.Feig
 			data = data.Discard(1);
 
 			for (var i = 0; i < count; i++)
-				transponders[i] = Inventory_ParseSingle(ref data);
+				transponders[i] = _Inventory_ParseSingle(ref data);
 
 			return transponders;
 		}
 
-		private static FeigTransponder Inventory_ParseSingle(ref BufferSpan data)
+		private static FeigTransponder _Inventory_ParseSingle(ref BufferSpan data)
 		{
 			var transponderType = (FeigTransponderType)data[0];
 			data = data.Discard(1);

@@ -44,7 +44,7 @@ namespace InlayTester.Drivers.Feig
 		private readonly ITransport mTransport;
 
 		// state
-		private FeigRequest mRequest;
+		private FeigRequest? mRequest;
 		private FeigProtocol mProtocol;
 		private BufferSpan mReceiveBuffer;
 		private TaskCompletionSource<FeigTransferResult> mCompletionSource;
@@ -55,7 +55,7 @@ namespace InlayTester.Drivers.Feig
 		internal ILog Logger => mLog;
 
 
-		public DefaultFeigTransport(SerialTransportSettings settings, ILog logger, ITransportHooks hooks = null)
+		public DefaultFeigTransport(SerialTransportSettings settings, ILog logger, ITransportHooks? hooks = null)
 		{
 			Verify.NotNull(settings, nameof(settings));
 			Verify.NotNull(logger, nameof(logger));
@@ -220,7 +220,7 @@ namespace InlayTester.Drivers.Feig
 						result.Status == FeigParseStatus.ChecksumError)
 						_CompleteWithError(result);
 					else
-					if (result.Response.Command != mRequest.Command)
+					if (result!.Response!.Command != mRequest!.Command)
 						_CompleteWithUnexpectedResponse(result);
 					else
 						_CompleteWithSuccess(result);
@@ -286,7 +286,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			mCompletionSource.TrySetResult(FeigTransferResult.CommunicationError(mRequest));
+			mCompletionSource.TrySetResult(FeigTransferResult.CommunicationError(mRequest!));
 		}
 
 		private void _CompleteWithUnexpectedResponse(FeigParseResult result)
@@ -306,7 +306,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest, result.Response));
+			mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest!, result.Response!));
 		}
 
 		private void _CompleteWithSuccess(FeigParseResult result)
@@ -326,7 +326,7 @@ namespace InlayTester.Drivers.Feig
 			}
 			#endregion
 
-			mCompletionSource.TrySetResult(FeigTransferResult.Success(mRequest, result.Response));
+			mCompletionSource.TrySetResult(FeigTransferResult.Success(mRequest!, result.Response!));
 		}
 	}
 }
