@@ -23,7 +23,7 @@ steps:
   inputs:
     SonarCloud: Sonar
     organization: 'amarok79-github'
-    projectKey: 'InlayTester.Drivers.FeigReaderTransports'
+    projectKey: 'InlayTester.Drivers.FeigReader'
     projectName: 'InlayTester.Drivers.FeigReader'
 
 - task: VSBuild@1
