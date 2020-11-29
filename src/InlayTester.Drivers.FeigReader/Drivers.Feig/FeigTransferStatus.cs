@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,39 +20,38 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
-
+ */
 
 namespace InlayTester.Drivers.Feig
 {
-	/// <summary>
-	/// This enumeration lists possible transfer statuses.
-	/// </summary>
-	public enum FeigTransferStatus
-	{
-		/// <summary>
-		/// The transfer completed successful. A response has been received.
-		/// </summary>
-		Success = 0,
+    /// <summary>
+    /// This enumeration lists possible transfer statuses.
+    /// </summary>
+    public enum FeigTransferStatus
+    {
+        /// <summary>
+        /// The transfer completed successful. A response has been received.
+        /// </summary>
+        Success = 0,
 
-		/// <summary>
-		/// The transfer has been canceled. No response has been received.
-		/// </summary>
-		Canceled = 1,
+        /// <summary>
+        /// The transfer has been canceled. No response has been received.
+        /// </summary>
+        Canceled = 1,
 
-		/// <summary>
-		/// The transfer has timed out. No response has been received.
-		/// </summary>
-		Timeout = -1,
+        /// <summary>
+        /// The transfer has timed out. No response has been received.
+        /// </summary>
+        Timeout = -1,
 
-		/// <summary>
-		/// The transfer failed, because the received response cannot be decoded.
-		/// </summary>
-		CommunicationError = -2,
+        /// <summary>
+        /// The transfer failed, because the received response cannot be decoded.
+        /// </summary>
+        CommunicationError = -2,
 
-		/// <summary>
-		/// The transfer failed, because an unexpected response has been received.
-		/// </summary>
-		UnexpectedResponse = -3,
-	}
+        /// <summary>
+        /// The transfer failed, because an unexpected response has been received.
+        /// </summary>
+        UnexpectedResponse = -3,
+    }
 }

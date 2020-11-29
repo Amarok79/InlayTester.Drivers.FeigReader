@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 using System.Threading;
@@ -29,26 +29,26 @@ using System.Threading.Tasks;
 
 namespace InlayTester.Drivers.Feig
 {
-	internal interface IFeigTransport :
-		IDisposable
-	{
-		/// <summary>
-		/// Opens the transport.
-		/// </summary>
-		void Open();
+    internal interface IFeigTransport : IDisposable
+    {
+        /// <summary>
+        /// Opens the transport.
+        /// </summary>
+        void Open();
 
-		/// <summary>
-		/// Closes the transport.
-		/// </summary>
-		void Close();
+        /// <summary>
+        /// Closes the transport.
+        /// </summary>
+        void Close();
 
-		/// <summary>
-		/// Performs a transfer by sending a request and waiting for a response or timeout.
-		/// </summary>
-		Task<FeigTransferResult> Transfer(
-			FeigRequest request,
-			FeigProtocol protocol,
-			TimeSpan timeout,
-			CancellationToken cancellationToken);
-	}
+        /// <summary>
+        /// Performs a transfer by sending a request and waiting for a response or timeout.
+        /// </summary>
+        Task<FeigTransferResult> Transfer(
+            FeigRequest request,
+            FeigProtocol protocol,
+            TimeSpan timeout,
+            CancellationToken cancellationToken
+        );
+    }
 }

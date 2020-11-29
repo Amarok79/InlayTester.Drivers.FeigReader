@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,34 +20,33 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
-
+ */
 
 namespace InlayTester.Drivers.Feig
 {
-	/// <summary>
-	/// This enumeration lists possible parse statuses.
-	/// </summary>
-	public enum FeigParseStatus
-	{
-		/// <summary>
-		/// A response has been successfully parsed.
-		/// </summary>
-		Success = 0,
+    /// <summary>
+    /// This enumeration lists possible parse statuses.
+    /// </summary>
+    public enum FeigParseStatus
+    {
+        /// <summary>
+        /// A response has been successfully parsed.
+        /// </summary>
+        Success = 0,
 
-		/// <summary>
-		/// More data is needed for an entire frame.
-		/// </summary>
-		MoreDataNeeded = 1,
+        /// <summary>
+        /// More data is needed for an entire frame.
+        /// </summary>
+        MoreDataNeeded = 1,
 
-		/// <summary>
-		/// A checksum error has been detected.
-		/// </summary>
-		ChecksumError = -1,
+        /// <summary>
+        /// A checksum error has been detected.
+        /// </summary>
+        ChecksumError = -1,
 
-		/// <summary>
-		/// An error in the protocol frame has been detected.
-		/// </summary>
-		FrameError = -2,
-	}
+        /// <summary>
+        /// An error in the protocol frame has been detected.
+        /// </summary>
+        FrameError = -2,
+    }
 }

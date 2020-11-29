@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,26 +20,26 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 
 
 namespace InlayTester.Drivers.Feig
 {
-	/// <summary>
-	/// This enumeration lists possible block locations.
-	/// </summary>
-	public enum FeigBlockLocation : Byte
-	{
-		/// <summary>
-		/// The configuration block is located in the RFID reader/module's RAM.
-		/// </summary>
-		RAM = 0x00,
+    /// <summary>
+    /// This enumeration lists possible block locations.
+    /// </summary>
+    public enum FeigBlockLocation : Byte
+    {
+        /// <summary>
+        /// The configuration block is located in the RFID reader/module's RAM.
+        /// </summary>
+        RAM = 0x00,
 
-		/// <summary>
-		/// The configuration block is located in the RFID reader/module's EEPROM.
-		/// </summary>
-		EEPROM = 0x80,
-	}
+        /// <summary>
+        /// The configuration block is located in the RFID reader/module's EEPROM.
+        /// </summary>
+        EEPROM = 0x80,
+    }
 }

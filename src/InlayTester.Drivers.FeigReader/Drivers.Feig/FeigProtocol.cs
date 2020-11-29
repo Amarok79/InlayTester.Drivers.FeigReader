@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,24 +20,23 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
-
+ */
 
 namespace InlayTester.Drivers.Feig
 {
-	/// <summary>
-	/// This enumeration lists supported protocols.
-	/// </summary>
-	public enum FeigProtocol
-	{
-		/// <summary>
-		/// Standard Frame Protocol
-		/// </summary>
-		Standard = 0,
+    /// <summary>
+    /// This enumeration lists supported protocols.
+    /// </summary>
+    public enum FeigProtocol
+    {
+        /// <summary>
+        /// Standard Frame Protocol
+        /// </summary>
+        Standard = 0,
 
-		/// <summary>
-		/// Advanced Frame Protocol
-		/// </summary>
-		Advanced = 1,
-	}
+        /// <summary>
+        /// Advanced Frame Protocol
+        /// </summary>
+        Advanced = 1,
+    }
 }

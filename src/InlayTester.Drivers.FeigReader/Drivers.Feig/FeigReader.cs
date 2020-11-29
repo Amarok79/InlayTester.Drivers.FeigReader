@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 using Amarok.Contracts;
@@ -31,95 +31,99 @@ using InlayTester.Shared.Transports;
 
 namespace InlayTester.Drivers.Feig
 {
-	/// <summary>
-	/// This class provides methods for creating <see cref="IFeigReader"/>.
-	/// </summary>
-	public static class FeigReader
-	{
-		/// <summary>
-		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
-		/// </summary>
-		/// 
-		/// <param name="settings">
-		/// The settings used to create the reader.</param>
-		/// 
-		/// <exception cref="ArgumentNullException">
-		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-		public static IFeigReader Create(FeigReaderSettings settings)
-		{
-			Verify.NotNull(settings, nameof(settings));
+    /// <summary>
+    /// This class provides methods for creating <see cref="IFeigReader"/>.
+    /// </summary>
+    public static class FeigReader
+    {
+        /// <summary>
+        /// Creates a <see cref="IFeigReader"/> based on the supplied settings.
+        /// </summary>
+        /// 
+        /// <param name="settings">
+        /// The settings used to create the reader.</param>
+        /// 
+        /// <exception cref="ArgumentNullException">
+        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        public static IFeigReader Create(FeigReaderSettings settings)
+        {
+            Verify.NotNull(settings, nameof(settings));
 
-			var copy = new FeigReaderSettings(settings);
-			var logger = new NoOpLogger();
-			var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
-			return new DefaultFeigReader(copy, transport, logger);
-		}
+            var copy      = new FeigReaderSettings(settings);
+            var logger    = new NoOpLogger();
+            var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
 
-		/// <summary>
-		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
-		/// </summary>
-		/// 
-		/// <param name="settings">
-		/// The settings used to create the reader.</param>
-		/// <param name="hooks">
-		/// A hooks implementation being called for sent or received data.</param>
-		/// 
-		/// <exception cref="ArgumentNullException">
-		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-		public static IFeigReader Create(FeigReaderSettings settings, ITransportHooks hooks)
-		{
-			Verify.NotNull(settings, nameof(settings));
-			Verify.NotNull(hooks, nameof(hooks));
+            return new DefaultFeigReader(copy, transport, logger);
+        }
 
-			var copy = new FeigReaderSettings(settings);
-			var logger = new NoOpLogger();
-			var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
-			return new DefaultFeigReader(copy, transport, logger);
-		}
+        /// <summary>
+        /// Creates a <see cref="IFeigReader"/> based on the supplied settings.
+        /// </summary>
+        /// 
+        /// <param name="settings">
+        /// The settings used to create the reader.</param>
+        /// <param name="hooks">
+        /// A hooks implementation being called for sent or received data.</param>
+        /// 
+        /// <exception cref="ArgumentNullException">
+        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        public static IFeigReader Create(FeigReaderSettings settings, ITransportHooks hooks)
+        {
+            Verify.NotNull(settings, nameof(settings));
+            Verify.NotNull(hooks, nameof(hooks));
 
-		/// <summary>
-		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
-		/// </summary>
-		/// 
-		/// <param name="settings">
-		/// The settings used to create the reader.</param>
-		/// <param name="logger">
-		/// The logger used to log operations of transport and reader.</param>
-		/// 
-		/// <exception cref="ArgumentNullException">
-		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-		public static IFeigReader Create(FeigReaderSettings settings, ILog logger)
-		{
-			Verify.NotNull(settings, nameof(settings));
-			Verify.NotNull(logger, nameof(logger));
+            var copy      = new FeigReaderSettings(settings);
+            var logger    = new NoOpLogger();
+            var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
 
-			var copy = new FeigReaderSettings(settings);
-			var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
-			return new DefaultFeigReader(copy, transport, logger);
-		}
+            return new DefaultFeigReader(copy, transport, logger);
+        }
 
-		/// <summary>
-		/// Creates a <see cref="IFeigReader"/> based on the supplied settings.
-		/// </summary>
-		/// 
-		/// <param name="settings">
-		/// The settings used to create the reader.</param>
-		/// <param name="logger">
-		/// The logger used to log operations of transport and reader.</param>
-		/// <param name="hooks">
-		/// A hooks implementation being called for sent or received data.</param>
-		/// 
-		/// <exception cref="ArgumentNullException">
-		/// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-		public static IFeigReader Create(FeigReaderSettings settings, ILog logger, ITransportHooks hooks)
-		{
-			Verify.NotNull(settings, nameof(settings));
-			Verify.NotNull(logger, nameof(logger));
-			Verify.NotNull(hooks, nameof(hooks));
+        /// <summary>
+        /// Creates a <see cref="IFeigReader"/> based on the supplied settings.
+        /// </summary>
+        /// 
+        /// <param name="settings">
+        /// The settings used to create the reader.</param>
+        /// <param name="logger">
+        /// The logger used to log operations of transport and reader.</param>
+        /// 
+        /// <exception cref="ArgumentNullException">
+        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        public static IFeigReader Create(FeigReaderSettings settings, ILog logger)
+        {
+            Verify.NotNull(settings, nameof(settings));
+            Verify.NotNull(logger, nameof(logger));
 
-			var copy = new FeigReaderSettings(settings);
-			var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
-			return new DefaultFeigReader(copy, transport, logger);
-		}
-	}
+            var copy      = new FeigReaderSettings(settings);
+            var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
+
+            return new DefaultFeigReader(copy, transport, logger);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="IFeigReader"/> based on the supplied settings.
+        /// </summary>
+        /// 
+        /// <param name="settings">
+        /// The settings used to create the reader.</param>
+        /// <param name="logger">
+        /// The logger used to log operations of transport and reader.</param>
+        /// <param name="hooks">
+        /// A hooks implementation being called for sent or received data.</param>
+        /// 
+        /// <exception cref="ArgumentNullException">
+        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        public static IFeigReader Create(FeigReaderSettings settings, ILog logger, ITransportHooks hooks)
+        {
+            Verify.NotNull(settings, nameof(settings));
+            Verify.NotNull(logger, nameof(logger));
+            Verify.NotNull(hooks, nameof(hooks));
+
+            var copy      = new FeigReaderSettings(settings);
+            var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
+
+            return new DefaultFeigReader(copy, transport, logger);
+        }
+    }
 }
