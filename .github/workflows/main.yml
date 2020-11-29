@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Prepare
+
+      - name: Install .NET Core 2.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.1.x
+
+      - name: Install .NET Core 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+
+      - name: Install .NET 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Install Stryker
+        run: dotnet tool install --global dotnet-stryker
+
+      - name: Get sources
+        uses: actions/checkout@v2
+
+      # Build and Test
+
+      - name: Restore packages
+        run: dotnet restore
+
+      - name: Build Debug
+        run: dotnet build --configuration Debug
+
+      - name: Run tests
+        run: dotnet test --no-build --collect "Code Coverage" --filter TestCategory!=com0com
+
+      # Run Mutation Tests
+
+      - name: Run mutation tests
+        run: dotnet stryker
+
+      - name: Upload Stryker Output
+        uses: actions/upload-artifact@v2
+        with:
+          name: mutation-tests
+          path: "**/mutation-report.html"
+          if-no-files-found: error
+
+      # Build and Publish (Release)
+
+      - name: Build Release
+        run: dotnet build --configuration Release
+
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuget
+          path: bin/lib/*.nupkg
+          if-no-files-found: error
