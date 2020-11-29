@@ -28,8 +28,8 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
-      - name: Install Stryker
-        run: dotnet tool install --global dotnet-stryker
+      #- name: Install Stryker
+      #  run: dotnet tool install --global dotnet-stryker
 
       - name: Get sources
         uses: actions/checkout@v2
@@ -47,15 +47,15 @@ jobs:
 
       # Run Mutation Tests
 
-      - name: Run mutation tests
-        run: dotnet stryker
+      #- name: Run mutation tests
+      #  run: dotnet stryker
 
-      - name: Upload Stryker Output
-        uses: actions/upload-artifact@v2
-        with:
-          name: mutation-tests
-          path: "**/mutation-report.html"
-          if-no-files-found: error
+      #- name: Upload Stryker Output
+      #  uses: actions/upload-artifact@v2
+      #  with:
+      #    name: mutation-tests
+      #    path: "**/mutation-report.html"
+      #    if-no-files-found: error
 
       # Build and Publish (Release)
 
