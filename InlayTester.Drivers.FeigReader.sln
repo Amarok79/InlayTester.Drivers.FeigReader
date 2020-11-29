@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InlayTester.Drivers.FeigReader", "src\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj", "{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InlayTester.Drivers.FeigReader", "src\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj", "{B3B58DAC-1657-405F-B660-73ADF8D1BFF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.InlayTester.Drivers.FeigReader", "src\Tests.InlayTester.Drivers.FeigReader\Tests.InlayTester.Drivers.FeigReader.csproj", "{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Debug.InlayTester.Drivers.FeigReader", "src\Debug.InlayTester.Drivers.FeigReader\Debug.InlayTester.Drivers.FeigReader.csproj", "{73172515-3EE6-4FD6-8FC4-C770AA10A42B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Debug.InlayTester.Drivers.FeigReader", "src\Debug.InlayTester.Drivers.FeigReader\Debug.InlayTester.Drivers.FeigReader.csproj", "{B229D79C-2CC1-435C-844F-1CFAD60A51BB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9D870D1-6BCA-4EF0-8FBB-7C7D4F64BC82}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		src\amarok.snk = src\amarok.snk
-		azure-pipelines.yml = azure-pipelines.yml
-		src\Global.ruleset = src\Global.ruleset
 		src\InlayTester.Drivers.FeigReader.licenseheader = src\InlayTester.Drivers.FeigReader.licenseheader
-		src\Minimal.ruleset = src\Minimal.ruleset
+		LICENSE = LICENSE
+		.github\workflows\main.yml = .github\workflows\main.yml
+		README.md = README.md
+		stryker-config.json = stryker-config.json
 	EndProjectSection
 EndProject
 Global
@@ -24,18 +26,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64458AB9-6DE1-4444-B4D4-59BE8C6D5D59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3B58DAC-1657-405F-B660-73ADF8D1BFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3B58DAC-1657-405F-B660-73ADF8D1BFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3B58DAC-1657-405F-B660-73ADF8D1BFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3B58DAC-1657-405F-B660-73ADF8D1BFF6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{310CB3B1-0954-4CE7-BBCF-AAA5A11DEC86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73172515-3EE6-4FD6-8FC4-C770AA10A42B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73172515-3EE6-4FD6-8FC4-C770AA10A42B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73172515-3EE6-4FD6-8FC4-C770AA10A42B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73172515-3EE6-4FD6-8FC4-C770AA10A42B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B229D79C-2CC1-435C-844F-1CFAD60A51BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B229D79C-2CC1-435C-844F-1CFAD60A51BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B229D79C-2CC1-435C-844F-1CFAD60A51BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B229D79C-2CC1-435C-844F-1CFAD60A51BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

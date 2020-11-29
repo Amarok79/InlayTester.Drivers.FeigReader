@@ -1,14 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<ProjectGuid>{B229D79C-2CC1-435C-844F-1CFAD60A51BB}</ProjectGuid>
 		<TargetFramework>net471</TargetFramework>
 		<RootNamespace>InlayTester</RootNamespace>
-		<CodeAnalysisRuleSet>..\Minimal.ruleset</CodeAnalysisRuleSet>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
 		<DelaySign>false</DelaySign>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -17,7 +16,7 @@
 		<LangVersion>latest</LangVersion>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<NoWarn>1701;1702</NoWarn>
-		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
 		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
 	</PropertyGroup>
 
@@ -40,11 +39,11 @@
 	<ItemGroup>
 		<PackageReference Include="Common.Logging" Version="3.4.1" />
 		<PackageReference Include="Common.Logging.NLog444" Version="3.4.1" />
-		<PackageReference Include="NLog" Version="4.6.7" />
+		<PackageReference Include="NLog" Version="4.7.5" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj" />
+		<ProjectReference Include="..\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj" />
 	</ItemGroup>
 
 </Project>
