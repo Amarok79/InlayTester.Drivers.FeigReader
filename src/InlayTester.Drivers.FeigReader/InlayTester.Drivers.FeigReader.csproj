@@ -4,7 +4,7 @@
 		<ProjectGuid>{B3B58DAC-1657-405F-B660-73ADF8D1BFF6}</ProjectGuid>
 		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
 		<RootNamespace>InlayTester</RootNamespace>
-		<Version>3.1.0</Version>
+		<Version>3.0.0</Version>
 		<Authors>Olaf Kober</Authors>
 		<Company>&lt;none&gt;</Company>
 		<Description>A shared library with a (serial) driver for communicating with RFID readers/modules from FEIG Electronic.</Description>
