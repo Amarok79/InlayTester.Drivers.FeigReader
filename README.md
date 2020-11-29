@@ -4,7 +4,7 @@
 ## Introduction
 
 This library is available as NuGet package:
-[Amarok.InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/Amarok.InlayTester.Drivers.FeigReader/)
+[InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
 
 The package provides strong-named binaries for .NET Standard 2.0 and .NET 5.0. Tests are performed with .NET Framework 4.8, .NET Core 2.1, .NET Core 3.1, and .NET 5.0.
 
