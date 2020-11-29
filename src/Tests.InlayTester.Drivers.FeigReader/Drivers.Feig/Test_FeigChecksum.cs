@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 using System.Text;
@@ -31,32 +31,27 @@ using NUnit.Framework;
 
 namespace InlayTester.Drivers.Feig
 {
-	[TestFixture]
-	public class Test_FeigChecksum
-	{
-		[Test]
-		public void UseCase()
-		{
-			var buffer = new Byte[] {
-				0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
-				0x53, 0x0D, 0x30
-			};
+    [TestFixture]
+    public class Test_FeigChecksum
+    {
+        [Test]
+        public void UseCase()
+        {
+            var buffer = new Byte[] { 0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30 };
 
-			var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
+            var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
 
-			Check.That(crc)
-				.IsEqualTo(0x0933);
-		}
+            Check.That(crc).IsEqualTo(0x0933);
+        }
 
-		[Test]
-		public void UseCase_123456789()
-		{
-			var buffer = Encoding.UTF8.GetBytes("123456789");
+        [Test]
+        public void UseCase_123456789()
+        {
+            Byte[] buffer = Encoding.UTF8.GetBytes("123456789");
 
-			var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
+            var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
 
-			Check.That(crc)
-				.IsEqualTo(0x6F91);
-		}
-	}
+            Check.That(crc).IsEqualTo(0x6F91);
+        }
+    }
 }

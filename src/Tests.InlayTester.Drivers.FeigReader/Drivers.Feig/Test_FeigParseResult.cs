@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 using NFluent;
@@ -29,94 +29,86 @@ using NUnit.Framework;
 
 namespace InlayTester.Drivers.Feig
 {
-	public class Test_FeigParseResult
-	{
-		[TestFixture]
-		public class Success
-		{
-			[Test]
-			public void Success_With_Response()
-			{
-				// act
-				var response = new FeigResponse();
-				var result = FeigParseResult.Success(response);
+    public class Test_FeigParseResult
+    {
+        [TestFixture]
+        public class Success
+        {
+            [Test]
+            public void Success_With_Response()
+            {
+                // act
+                var response = new FeigResponse();
+                var result   = FeigParseResult.Success(response);
 
-				// assert
-				Check.That(result.Status)
-					.IsEqualTo(FeigParseStatus.Success);
-				Check.That(result.Response)
-					.IsSameReferenceAs(response);
+                // assert
+                Check.That(result.Status).IsEqualTo(FeigParseStatus.Success);
+                Check.That(result.Response).IsSameReferenceAs(response);
 
-				Check.That(result.ToString())
-					.IsEqualTo("Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
-			}
+                Check.That(result.ToString())
+                     .IsEqualTo("Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+            }
 
-			[Test]
-			public void Exception_With_NullResponse()
-			{
-				Check.ThatCode(() => FeigParseResult.Success(null))
-					.Throws<ArgumentNullException>();
-			}
-		}
+            [Test]
+            public void Exception_With_NullResponse()
+            {
+                Check.ThatCode(() => FeigParseResult.Success(null)).Throws<ArgumentNullException>();
+            }
+        }
 
-		[TestFixture]
-		public class MoreDataNeeded
-		{
-			[Test]
-			public void Success()
-			{
-				// act
-				var result = FeigParseResult.MoreDataNeeded();
+        [TestFixture]
+        public class MoreDataNeeded
+        {
+            [Test]
+            public void Success()
+            {
+                // act
+                var result = FeigParseResult.MoreDataNeeded();
 
-				// assert
-				Check.That(result.Status)
-					.IsEqualTo(FeigParseStatus.MoreDataNeeded);
-				Check.That(result.Response)
-					.IsNull();
+                // assert
+                Check.That(result.Status).IsEqualTo(FeigParseStatus.MoreDataNeeded);
+                Check.That(result.Response).IsNull();
 
-				Check.That(result.ToString())
-					.IsEqualTo("Status: MoreDataNeeded, Response: { <null> }");
-			}
-		}
+                Check.That(result.ToString()).IsEqualTo("Status: MoreDataNeeded, Response: { <null> }");
+            }
+        }
 
-		[TestFixture]
-		public class ChecksumError
-		{
-			[Test]
-			public void Success()
-			{
-				// act
-				var response = new FeigResponse();
-				var result = FeigParseResult.ChecksumError(response);
+        [TestFixture]
+        public class ChecksumError
+        {
+            [Test]
+            public void Success()
+            {
+                // act
+                var response = new FeigResponse();
+                var result   = FeigParseResult.ChecksumError(response);
 
-				// assert
-				Check.That(result.Status)
-					.IsEqualTo(FeigParseStatus.ChecksumError);
-				Check.That(result.Response)
-					.IsSameReferenceAs(response);
-				Check.That(result.ToString())
-					.IsEqualTo("Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
-			}
-		}
+                // assert
+                Check.That(result.Status).IsEqualTo(FeigParseStatus.ChecksumError);
+                Check.That(result.Response).IsSameReferenceAs(response);
 
-		[TestFixture]
-		public class FrameError
-		{
-			[Test]
-			public void Success()
-			{
-				// act
-				var result = FeigParseResult.FrameError();
+                Check.That(result.ToString())
+                     .IsEqualTo(
+                          "Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
+                      );
+            }
+        }
 
-				// assert
-				Check.That(result.Status)
-					.IsEqualTo(FeigParseStatus.FrameError);
-				Check.That(result.Response)
-					.IsNull();
+        [TestFixture]
+        public class FrameError
+        {
+            [Test]
+            public void Success()
+            {
+                // act
+                var result = FeigParseResult.FrameError();
 
-				Check.That(result.ToString())
-					.IsEqualTo("Status: FrameError, Response: { <null> }");
-			}
-		}
-	}
+                // assert
+                Check.That(result.Status).IsEqualTo(FeigParseStatus.FrameError);
+                Check.That(result.Response).IsNull();
+
+                Check.That(result.ToString()).IsEqualTo("Status: FrameError, Response: { <null> }");
+            }
+        }
+    }
 }

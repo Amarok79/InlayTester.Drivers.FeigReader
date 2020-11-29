@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 using NFluent;
@@ -29,35 +29,30 @@ using NUnit.Framework;
 
 namespace InlayTester.Drivers.Feig
 {
-	[TestFixture]
-	public class Test_FeigISOStandardCommandCommand
-	{
-		[Test]
-		public void TestNames()
-		{
-			Check.That(Enum.GetNames(typeof(FeigISOStandardCommand)))
-				.IsOnlyMadeOf(
-					nameof(FeigISOStandardCommand.None),
-					nameof(FeigISOStandardCommand.Inventory),
-					nameof(FeigISOStandardCommand.ReadMultipleBlocks),
-					nameof(FeigISOStandardCommand.WriteMultipleBlocks),
-					nameof(FeigISOStandardCommand.Select)
-				);
-		}
+    [TestFixture]
+    public class Test_FeigISOStandardCommandCommand
+    {
+        [Test]
+        public void TestNames()
+        {
+            Check.That(Enum.GetNames(typeof(FeigISOStandardCommand)))
+                 .IsOnlyMadeOf(
+                      nameof(FeigISOStandardCommand.None),
+                      nameof(FeigISOStandardCommand.Inventory),
+                      nameof(FeigISOStandardCommand.ReadMultipleBlocks),
+                      nameof(FeigISOStandardCommand.WriteMultipleBlocks),
+                      nameof(FeigISOStandardCommand.Select)
+                  );
+        }
 
-		[Test]
-		public void TestValues()
-		{
-			Check.That((Byte)FeigISOStandardCommand.None)
-				.IsEqualTo(0x00);
-			Check.That((Byte)FeigISOStandardCommand.Inventory)
-				.IsEqualTo(0x01);
-			Check.That((Byte)FeigISOStandardCommand.ReadMultipleBlocks)
-				.IsEqualTo(0x23);
-			Check.That((Byte)FeigISOStandardCommand.WriteMultipleBlocks)
-				.IsEqualTo(0x24);
-			Check.That((Byte)FeigISOStandardCommand.Select)
-				.IsEqualTo(0x25);
-		}
-	}
+        [Test]
+        public void TestValues()
+        {
+            Check.That((Byte) FeigISOStandardCommand.None).IsEqualTo(0x00);
+            Check.That((Byte) FeigISOStandardCommand.Inventory).IsEqualTo(0x01);
+            Check.That((Byte) FeigISOStandardCommand.ReadMultipleBlocks).IsEqualTo(0x23);
+            Check.That((Byte) FeigISOStandardCommand.WriteMultipleBlocks).IsEqualTo(0x24);
+            Check.That((Byte) FeigISOStandardCommand.Select).IsEqualTo(0x25);
+        }
+    }
 }

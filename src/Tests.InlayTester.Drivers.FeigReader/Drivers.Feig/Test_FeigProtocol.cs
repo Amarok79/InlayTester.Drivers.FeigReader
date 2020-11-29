@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 using NFluent;
@@ -29,26 +29,21 @@ using NUnit.Framework;
 
 namespace InlayTester.Drivers.Feig
 {
-	[TestFixture]
-	public class Test_FeigProtocol
-	{
-		[Test]
-		public void TestNames()
-		{
-			Check.That(Enum.GetNames(typeof(FeigProtocol)))
-				.IsOnlyMadeOf(
-					nameof(FeigProtocol.Standard),
-					nameof(FeigProtocol.Advanced)
-				);
-		}
+    [TestFixture]
+    public class Test_FeigProtocol
+    {
+        [Test]
+        public void TestNames()
+        {
+            Check.That(Enum.GetNames(typeof(FeigProtocol)))
+                 .IsOnlyMadeOf(nameof(FeigProtocol.Standard), nameof(FeigProtocol.Advanced));
+        }
 
-		[Test]
-		public void TestValues()
-		{
-			Check.That((Int32)FeigProtocol.Standard)
-				.IsEqualTo(0);
-			Check.That((Int32)FeigProtocol.Advanced)
-				.IsEqualTo(1);
-		}
-	}
+        [Test]
+        public void TestValues()
+        {
+            Check.That((Int32) FeigProtocol.Standard).IsEqualTo(0);
+            Check.That((Int32) FeigProtocol.Advanced).IsEqualTo(1);
+        }
+    }
 }

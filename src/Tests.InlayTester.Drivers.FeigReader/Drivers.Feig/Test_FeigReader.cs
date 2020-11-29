@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 using Common.Logging;
@@ -33,206 +33,176 @@ using NUnit.Framework;
 
 namespace InlayTester.Drivers.Feig
 {
-	public class Test_FeigReader
-	{
-		[TestFixture]
-		public class Create_Settings
-		{
-			[Test]
-			public void Success()
-			{
-				// act
-				var settings = new FeigReaderSettings();
-				var reader = FeigReader.Create(settings);
+    public class Test_FeigReader
+    {
+        [TestFixture]
+        public class Create_Settings
+        {
+            [Test]
+            public void Success()
+            {
+                // act
+                var settings = new FeigReaderSettings();
+                var reader   = FeigReader.Create(settings);
 
-				// assert
-				Check.That(reader)
-					.IsInstanceOf<DefaultFeigReader>();
+                // assert
+                Check.That(reader).IsInstanceOf<DefaultFeigReader>();
 
-				var readerImpl = (DefaultFeigReader)reader;
+                var readerImpl = (DefaultFeigReader) reader;
 
-				Check.That(readerImpl.Settings)
-					.Not.IsSameReferenceAs(settings);
-				Check.That(readerImpl.Logger)
-					.IsInstanceOf<NoOpLogger>();
-				Check.That(readerImpl.Transport)
-					.IsInstanceOf<DefaultFeigTransport>();
+                Check.That(readerImpl.Settings).Not.IsSameReferenceAs(settings);
+                Check.That(readerImpl.Logger).IsInstanceOf<NoOpLogger>();
+                Check.That(readerImpl.Transport).IsInstanceOf<DefaultFeigTransport>();
 
-				var transportImpl = (DefaultFeigTransport)readerImpl.Transport;
+                var transportImpl = (DefaultFeigTransport) readerImpl.Transport;
 
-				Check.That(transportImpl.Settings)
-					.Not.IsSameReferenceAs(settings.TransportSettings);
-				Check.That(transportImpl.Logger)
-					.IsInstanceOf<NoOpLogger>()
-					.And
-					.IsSameReferenceAs(readerImpl.Logger);
-			}
+                Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
+                Check.That(transportImpl.Logger).IsInstanceOf<NoOpLogger>().And.IsSameReferenceAs(readerImpl.Logger);
+            }
 
-			[Test]
-			public void Exception_For_NullSettings()
-			{
-				Check.ThatCode(() => FeigReader.Create(null))
-					.Throws<ArgumentNullException>();
-			}
-		}
+            [Test]
+            public void Exception_For_NullSettings()
+            {
+                Check.ThatCode(() => FeigReader.Create(null)).Throws<ArgumentNullException>();
+            }
+        }
 
-		[TestFixture]
-		public class Create_SettingsHooks
-		{
-			[Test]
-			public void Success()
-			{
-				// act
-				var hooks = new Mock<ITransportHooks>();
-				var settings = new FeigReaderSettings();
-				var reader = FeigReader.Create(settings, hooks.Object);
+        [TestFixture]
+        public class Create_SettingsHooks
+        {
+            [Test]
+            public void Success()
+            {
+                // act
+                var hooks    = new Mock<ITransportHooks>();
+                var settings = new FeigReaderSettings();
+                var reader   = FeigReader.Create(settings, hooks.Object);
 
-				// assert
-				Check.That(reader)
-					.IsInstanceOf<DefaultFeigReader>();
+                // assert
+                Check.That(reader).IsInstanceOf<DefaultFeigReader>();
 
-				var readerImpl = (DefaultFeigReader)reader;
+                var readerImpl = (DefaultFeigReader) reader;
 
-				Check.That(readerImpl.Settings)
-					.Not.IsSameReferenceAs(settings);
-				Check.That(readerImpl.Logger)
-					.IsInstanceOf<NoOpLogger>();
-				Check.That(readerImpl.Transport)
-					.IsInstanceOf<DefaultFeigTransport>();
+                Check.That(readerImpl.Settings).Not.IsSameReferenceAs(settings);
+                Check.That(readerImpl.Logger).IsInstanceOf<NoOpLogger>();
+                Check.That(readerImpl.Transport).IsInstanceOf<DefaultFeigTransport>();
 
-				var transportImpl = (DefaultFeigTransport)readerImpl.Transport;
+                var transportImpl = (DefaultFeigTransport) readerImpl.Transport;
 
-				Check.That(transportImpl.Settings)
-					.Not.IsSameReferenceAs(settings.TransportSettings);
-				Check.That(transportImpl.Logger)
-					.IsInstanceOf<NoOpLogger>()
-					.And
-					.IsSameReferenceAs(readerImpl.Logger);
-			}
+                Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
+                Check.That(transportImpl.Logger).IsInstanceOf<NoOpLogger>().And.IsSameReferenceAs(readerImpl.Logger);
+            }
 
-			[Test]
-			public void Exception_For_NullSettings()
-			{
-				var hooks = new Mock<ITransportHooks>();
+            [Test]
+            public void Exception_For_NullSettings()
+            {
+                var hooks = new Mock<ITransportHooks>();
 
-				Check.ThatCode(() => FeigReader.Create(null, hooks.Object))
-					.Throws<ArgumentNullException>();
-			}
+                Check.ThatCode(() => FeigReader.Create(null, hooks.Object)).Throws<ArgumentNullException>();
+            }
 
-			[Test]
-			public void Exception_For_NullHooks()
-			{
-				var settings = new FeigReaderSettings();
+            [Test]
+            public void Exception_For_NullHooks()
+            {
+                var settings = new FeigReaderSettings();
 
-				Check.ThatCode(() => FeigReader.Create(settings, (ITransportHooks)null))
-					.Throws<ArgumentNullException>();
-			}
-		}
+                Check.ThatCode(() => FeigReader.Create(settings, (ITransportHooks) null))
+                     .Throws<ArgumentNullException>();
+            }
+        }
 
-		[TestFixture]
-		public class Create_SettingsLogger
-		{
-			[Test]
-			public void Success()
-			{
-				// act
-				var settings = new FeigReaderSettings();
-				var logger = new DebugOutLogger("A", LogLevel.Info, false, false, false, "G");
-				var reader = FeigReader.Create(settings, logger);
+        [TestFixture]
+        public class Create_SettingsLogger
+        {
+            [Test]
+            public void Success()
+            {
+                // act
+                var settings = new FeigReaderSettings();
+                var logger   = new DebugOutLogger("A", LogLevel.Info, false, false, false, "G");
+                var reader   = FeigReader.Create(settings, logger);
 
-				// assert
-				Check.That(reader)
-					.IsInstanceOf<DefaultFeigReader>();
+                // assert
+                Check.That(reader).IsInstanceOf<DefaultFeigReader>();
 
-				var readerImpl = (DefaultFeigReader)reader;
+                var readerImpl = (DefaultFeigReader) reader;
 
-				Check.That(readerImpl.Settings)
-					.Not.IsSameReferenceAs(settings);
-				Check.That(readerImpl.Logger)
-					.IsInstanceOf<DebugOutLogger>();
-				Check.That(readerImpl.Transport)
-					.IsInstanceOf<DefaultFeigTransport>();
+                Check.That(readerImpl.Settings).Not.IsSameReferenceAs(settings);
+                Check.That(readerImpl.Logger).IsInstanceOf<DebugOutLogger>();
+                Check.That(readerImpl.Transport).IsInstanceOf<DefaultFeigTransport>();
 
-				var transportImpl = (DefaultFeigTransport)readerImpl.Transport;
+                var transportImpl = (DefaultFeigTransport) readerImpl.Transport;
 
-				Check.That(transportImpl.Settings)
-					.Not.IsSameReferenceAs(settings.TransportSettings);
-				Check.That(transportImpl.Logger)
-					.IsInstanceOf<DebugOutLogger>()
-					.And
-					.IsSameReferenceAs(readerImpl.Logger);
-			}
+                Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
 
-			[Test]
-			public void Exception_For_NullSettings()
-			{
-				Check.ThatCode(() => FeigReader.Create(null, new NoOpLogger()))
-					.Throws<ArgumentNullException>();
-			}
+                Check.That(transportImpl.Logger)
+                     .IsInstanceOf<DebugOutLogger>()
+                     .And.IsSameReferenceAs(readerImpl.Logger);
+            }
 
-			[Test]
-			public void Exception_For_NullLogger()
-			{
-				Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), (ILog)null))
-					.Throws<ArgumentNullException>();
-			}
-		}
+            [Test]
+            public void Exception_For_NullSettings()
+            {
+                Check.ThatCode(() => FeigReader.Create(null, new NoOpLogger())).Throws<ArgumentNullException>();
+            }
 
-		[TestFixture]
-		public class Create_SettingsLoggerHooks
-		{
-			[Test]
-			public void Success()
-			{
-				// act
-				var hooks = new Mock<ITransportHooks>();
-				var settings = new FeigReaderSettings();
-				var logger = new DebugOutLogger("A", LogLevel.Info, false, false, false, "G");
-				var reader = FeigReader.Create(settings, logger, hooks.Object);
+            [Test]
+            public void Exception_For_NullLogger()
+            {
+                Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), (ILog) null))
+                     .Throws<ArgumentNullException>();
+            }
+        }
 
-				// assert
-				Check.That(reader)
-					.IsInstanceOf<DefaultFeigReader>();
+        [TestFixture]
+        public class Create_SettingsLoggerHooks
+        {
+            [Test]
+            public void Success()
+            {
+                // act
+                var hooks    = new Mock<ITransportHooks>();
+                var settings = new FeigReaderSettings();
+                var logger   = new DebugOutLogger("A", LogLevel.Info, false, false, false, "G");
+                var reader   = FeigReader.Create(settings, logger, hooks.Object);
 
-				var readerImpl = (DefaultFeigReader)reader;
+                // assert
+                Check.That(reader).IsInstanceOf<DefaultFeigReader>();
 
-				Check.That(readerImpl.Settings)
-					.Not.IsSameReferenceAs(settings);
-				Check.That(readerImpl.Logger)
-					.IsInstanceOf<DebugOutLogger>();
-				Check.That(readerImpl.Transport)
-					.IsInstanceOf<DefaultFeigTransport>();
+                var readerImpl = (DefaultFeigReader) reader;
 
-				var transportImpl = (DefaultFeigTransport)readerImpl.Transport;
+                Check.That(readerImpl.Settings).Not.IsSameReferenceAs(settings);
+                Check.That(readerImpl.Logger).IsInstanceOf<DebugOutLogger>();
+                Check.That(readerImpl.Transport).IsInstanceOf<DefaultFeigTransport>();
 
-				Check.That(transportImpl.Settings)
-					.Not.IsSameReferenceAs(settings.TransportSettings);
-				Check.That(transportImpl.Logger)
-					.IsInstanceOf<DebugOutLogger>()
-					.And
-					.IsSameReferenceAs(readerImpl.Logger);
-			}
+                var transportImpl = (DefaultFeigTransport) readerImpl.Transport;
 
-			[Test]
-			public void Exception_For_NullSettings()
-			{
-				Check.ThatCode(() => FeigReader.Create(null, new NoOpLogger()))
-					.Throws<ArgumentNullException>();
-			}
+                Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
 
-			[Test]
-			public void Exception_For_NullLogger()
-			{
-				Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), (ILog)null))
-					.Throws<ArgumentNullException>();
-			}
+                Check.That(transportImpl.Logger)
+                     .IsInstanceOf<DebugOutLogger>()
+                     .And.IsSameReferenceAs(readerImpl.Logger);
+            }
 
-			[Test]
-			public void Exception_For_NullHooks()
-			{
-				Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), new NoOpLogger(), null))
-					.Throws<ArgumentNullException>();
-			}
-		}
-	}
+            [Test]
+            public void Exception_For_NullSettings()
+            {
+                Check.ThatCode(() => FeigReader.Create(null, new NoOpLogger())).Throws<ArgumentNullException>();
+            }
+
+            [Test]
+            public void Exception_For_NullLogger()
+            {
+                Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), (ILog) null))
+                     .Throws<ArgumentNullException>();
+            }
+
+            [Test]
+            public void Exception_For_NullHooks()
+            {
+                Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), new NoOpLogger(), null))
+                     .Throws<ArgumentNullException>();
+            }
+        }
+    }
 }

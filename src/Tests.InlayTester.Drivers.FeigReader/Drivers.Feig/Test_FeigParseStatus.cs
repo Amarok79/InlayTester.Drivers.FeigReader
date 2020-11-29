@@ -1,6 +1,6 @@
 ﻿/* MIT License
  * 
- * Copyright (c) 2019, Olaf Kober
+ * Copyright (c) 2020, Olaf Kober
  * https://github.com/Amarok79/InlayTester.Drivers.FeigReader
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 using System;
 using NFluent;
@@ -29,32 +29,28 @@ using NUnit.Framework;
 
 namespace InlayTester.Drivers.Feig
 {
-	[TestFixture]
-	public class Test_FeigParseStatus
-	{
-		[Test]
-		public void TestNames()
-		{
-			Check.That(Enum.GetNames(typeof(FeigParseStatus)))
-				.IsOnlyMadeOf(
-					nameof(FeigParseStatus.Success),
-					nameof(FeigParseStatus.MoreDataNeeded),
-					nameof(FeigParseStatus.ChecksumError),
-					nameof(FeigParseStatus.FrameError)
-				);
-		}
+    [TestFixture]
+    public class Test_FeigParseStatus
+    {
+        [Test]
+        public void TestNames()
+        {
+            Check.That(Enum.GetNames(typeof(FeigParseStatus)))
+                 .IsOnlyMadeOf(
+                      nameof(FeigParseStatus.Success),
+                      nameof(FeigParseStatus.MoreDataNeeded),
+                      nameof(FeigParseStatus.ChecksumError),
+                      nameof(FeigParseStatus.FrameError)
+                  );
+        }
 
-		[Test]
-		public void TestValues()
-		{
-			Check.That((Int32)FeigParseStatus.Success)
-				.IsEqualTo(0);
-			Check.That((Int32)FeigParseStatus.MoreDataNeeded)
-				.IsEqualTo(1);
-			Check.That((Int32)FeigParseStatus.ChecksumError)
-				.IsEqualTo(-1);
-			Check.That((Int32)FeigParseStatus.FrameError)
-				.IsEqualTo(-2);
-		}
-	}
+        [Test]
+        public void TestValues()
+        {
+            Check.That((Int32) FeigParseStatus.Success).IsEqualTo(0);
+            Check.That((Int32) FeigParseStatus.MoreDataNeeded).IsEqualTo(1);
+            Check.That((Int32) FeigParseStatus.ChecksumError).IsEqualTo(-1);
+            Check.That((Int32) FeigParseStatus.FrameError).IsEqualTo(-2);
+        }
+    }
 }
