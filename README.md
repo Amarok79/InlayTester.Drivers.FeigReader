@@ -1,6 +1,4 @@
-[![Build Status](https://dev.azure.com/amarok79/Amarok/_apis/build/status/InlayTester.Drivers.FeigReader?branchName=master)](https://dev.azure.com/amarok79/Amarok/_build/latest?definitionId=24&branchName=master)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=InlayTester.Drivers.FeigReader&metric=alert_status)](https://sonarcloud.io/dashboard?id=InlayTester.Drivers.FeigReader)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=InlayTester.Drivers.FeigReader&metric=coverage)](https://sonarcloud.io/dashboard?id=InlayTester.Drivers.FeigReader)
+![CI](https://github.com/Amarok79/InlayTester.Drivers.FeigReader/workflows/CI/badge.svg)
 [![NuGet](https://img.shields.io/nuget/v/InlayTester.Drivers.FeigReader.svg?logo=)](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
 
 ## Introduction
@@ -8,7 +6,7 @@
 This library is available as NuGet package:
 [Amarok.InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/Amarok.InlayTester.Drivers.FeigReader/)
 
-The library is compiled as *.NET Standard 2.0* library. Tests are generally performed with *.NET Framework 4.7.1*, *.NET Framework 4.8*, *.NET Core 2.1* and *.NET Core 3.0*.
+The package provides strong-named binaries for .NET Standard 2.0 and .NET 5.0. Tests are performed with .NET Framework 4.8, .NET Core 2.1, .NET Core 3.1, and .NET 5.0.
 
 For development, you need *Visual Studio 2019*. For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
