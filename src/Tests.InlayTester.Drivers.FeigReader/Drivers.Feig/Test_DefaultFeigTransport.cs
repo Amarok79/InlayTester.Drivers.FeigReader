@@ -171,7 +171,7 @@ namespace InlayTester.Drivers.Feig
                     Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                     Check.That(result.Response.Data.ToArray())
-                         .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                       .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
                 }
             }
         }
@@ -233,7 +233,7 @@ namespace InlayTester.Drivers.Feig
                     Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                     Check.That(result.Response.Data.ToArray())
-                         .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                       .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
                 }
             }
         }
@@ -690,7 +690,7 @@ namespace InlayTester.Drivers.Feig
                         Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                         Check.That(result.Response.Data.ToArray())
-                             .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                           .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
                     }
                 }
             }

@@ -107,7 +107,7 @@ namespace InlayTester.Drivers.Feig
                 var settings = new FeigReaderSettings();
 
                 Check.ThatCode(() => FeigReader.Create(settings, (ITransportHooks) null))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
         }
 
@@ -136,8 +136,8 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
 
                 Check.That(transportImpl.Logger)
-                     .IsInstanceOf<DebugOutLogger>()
-                     .And.IsSameReferenceAs(readerImpl.Logger);
+                   .IsInstanceOf<DebugOutLogger>()
+                   .And.IsSameReferenceAs(readerImpl.Logger);
             }
 
             [Test]
@@ -150,7 +150,7 @@ namespace InlayTester.Drivers.Feig
             public void Exception_For_NullLogger()
             {
                 Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), (ILog) null))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
         }
 
@@ -180,8 +180,8 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
 
                 Check.That(transportImpl.Logger)
-                     .IsInstanceOf<DebugOutLogger>()
-                     .And.IsSameReferenceAs(readerImpl.Logger);
+                   .IsInstanceOf<DebugOutLogger>()
+                   .And.IsSameReferenceAs(readerImpl.Logger);
             }
 
             [Test]
@@ -194,14 +194,14 @@ namespace InlayTester.Drivers.Feig
             public void Exception_For_NullLogger()
             {
                 Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), (ILog) null))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
 
             [Test]
             public void Exception_For_NullHooks()
             {
                 Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), new NoOpLogger(), null))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
         }
     }

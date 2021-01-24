@@ -70,7 +70,7 @@ namespace InlayTester.Drivers.Feig
             };
 
             Check.That(FeigTransponder.ToString(transponders))
-                 .IsEqualTo("{ Type: ISO14443A, ID: 11-22-33 }, { Type: Jewel, ID: 44-55 }");
+               .IsEqualTo("{ Type: ISO14443A, ID: 11-22-33 }, { Type: Jewel, ID: 44-55 }");
         }
 
         [Test]

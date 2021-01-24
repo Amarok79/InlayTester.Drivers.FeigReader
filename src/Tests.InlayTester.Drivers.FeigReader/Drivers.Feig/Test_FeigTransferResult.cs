@@ -48,23 +48,23 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response).IsSameReferenceAs(response);
 
                 Check.That(result.ToString())
-                     .IsEqualTo(
-                          "Status: Success, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
-                      );
+                   .IsEqualTo(
+                        "Status: Success, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
+                    );
             }
 
             [Test]
             public void Exception_With_NullRequest()
             {
                 Check.ThatCode(() => FeigTransferResult.Success(null, new FeigResponse()))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
 
             [Test]
             public void Exception_With_NullResponse()
             {
                 Check.ThatCode(() => FeigTransferResult.Success(new FeigRequest(), null))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
         }
 
@@ -84,9 +84,9 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response).IsNull();
 
                 Check.That(result.ToString())
-                     .IsEqualTo(
-                          "Status: Canceled, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
-                      );
+                   .IsEqualTo(
+                        "Status: Canceled, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
+                    );
             }
 
             [Test]
@@ -112,9 +112,9 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response).IsNull();
 
                 Check.That(result.ToString())
-                     .IsEqualTo(
-                          "Status: Timeout, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
-                      );
+                   .IsEqualTo(
+                        "Status: Timeout, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
+                    );
             }
 
             [Test]
@@ -140,9 +140,9 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response).IsNull();
 
                 Check.That(result.ToString())
-                     .IsEqualTo(
-                          "Status: CommunicationError, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
-                      );
+                   .IsEqualTo(
+                        "Status: CommunicationError, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
+                    );
             }
 
             [Test]
@@ -169,23 +169,23 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response).IsSameReferenceAs(response);
 
                 Check.That(result.ToString())
-                     .IsEqualTo(
-                          "Status: UnexpectedResponse, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
-                      );
+                   .IsEqualTo(
+                        "Status: UnexpectedResponse, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
+                    );
             }
 
             [Test]
             public void Exception_With_NullRequest()
             {
                 Check.ThatCode(() => FeigTransferResult.UnexpectedResponse(null, new FeigResponse()))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
 
             [Test]
             public void Exception_With_NullResponse()
             {
                 Check.ThatCode(() => FeigTransferResult.UnexpectedResponse(new FeigRequest(), null))
-                     .Throws<ArgumentNullException>();
+                   .Throws<ArgumentNullException>();
             }
         }
     }

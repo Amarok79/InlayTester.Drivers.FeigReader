@@ -232,7 +232,7 @@ namespace InlayTester.Drivers.Feig
                     var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
 
                     Check.ThatAsyncCode(async () => await reader.Transfer(request, FeigProtocol.Advanced))
-                         .Throws<ObjectDisposedException>();
+                       .Throws<ObjectDisposedException>();
                 }
             }
 
@@ -257,7 +257,7 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -287,9 +287,9 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default)
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default)
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -322,7 +322,7 @@ namespace InlayTester.Drivers.Feig
                     reader.Dispose();
 
                     Check.ThatAsyncCode(async () => await reader.Transfer(FeigCommand.BaudRateDetection))
-                         .Throws<ObjectDisposedException>();
+                       .Throws<ObjectDisposedException>();
                 }
             }
 
@@ -347,20 +347,15 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Standard,
-                                  It.IsAny<TimeSpan>(),
-                                  cts.Token
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request = r;
-                                  timeout = t;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, It.IsAny<TimeSpan>(), cts.Token)
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request = r;
+                            timeout = t;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -399,20 +394,20 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Standard,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request = r;
-                                  timeout = t;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Standard,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request = r;
+                            timeout = t;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -448,7 +443,7 @@ namespace InlayTester.Drivers.Feig
                     var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
 
                     Check.ThatAsyncCode(async () => await reader.Execute(request, FeigProtocol.Advanced))
-                         .Throws<ObjectDisposedException>();
+                       .Throws<ObjectDisposedException>();
                 }
             }
 
@@ -473,7 +468,7 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -505,9 +500,9 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default)
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default)
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -534,14 +529,14 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -560,14 +555,14 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -586,22 +581,22 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
                 Check.ThatAsyncCode(async () => await reader.Execute(request))
-                     .Throws<FeigException>()
-                     .WithProperty(x => x.Request, request);
+                   .Throws<FeigException>()
+                   .WithProperty(x => x.Request, request);
             }
 
             [Test]
@@ -615,23 +610,23 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.UnexpectedResponse(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.UnexpectedResponse(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
                 Check.ThatAsyncCode(async () => await reader.Execute(request))
-                     .Throws<FeigException>()
-                     .WithProperty(x => x.Request, request)
-                     .And.WithProperty(x => x.Response, response);
+                   .Throws<FeigException>()
+                   .WithProperty(x => x.Request, request)
+                   .And.WithProperty(x => x.Response, response);
             }
 
             [Test]
@@ -645,23 +640,23 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
                 Check.ThatAsyncCode(async () => await reader.Execute(request))
-                     .Throws<FeigException>()
-                     .WithProperty(x => x.Request, request)
-                     .And.WithProperty(x => x.Response, response);
+                   .Throws<FeigException>()
+                   .WithProperty(x => x.Request, request)
+                   .And.WithProperty(x => x.Response, response);
             }
 
             [Test]
@@ -675,14 +670,14 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -704,14 +699,14 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -740,7 +735,7 @@ namespace InlayTester.Drivers.Feig
                     reader.Dispose();
 
                     Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
-                         .Throws<ObjectDisposedException>();
+                       .Throws<ObjectDisposedException>();
                 }
             }
 
@@ -765,7 +760,7 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, timeout, cts.Token))
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -800,14 +795,14 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Standard,
-                                  TimeSpan.FromMilliseconds(275),
-                                  default
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Standard,
+                            TimeSpan.FromMilliseconds(275),
+                            default
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -839,21 +834,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
                 Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
-                     .Throws<TimeoutException>();
+                   .Throws<TimeoutException>();
             }
 
             [Test]
@@ -866,21 +861,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
                 Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
-                     .Throws<OperationCanceledException>();
+                   .Throws<OperationCanceledException>();
             }
 
             [Test]
@@ -893,22 +888,22 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
                 Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
-                     .Throws<FeigException>()
-                     .WithProperty(x => x.Request, request);
+                   .Throws<FeigException>()
+                   .WithProperty(x => x.Request, request);
             }
 
             [Test]
@@ -922,23 +917,23 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.UnexpectedResponse(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.UnexpectedResponse(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
                 Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.BaudRateDetection))
-                     .Throws<FeigException>()
-                     .WithProperty(x => x.Request, request)
-                     .And.WithProperty(x => x.Response, response);
+                   .Throws<FeigException>()
+                   .WithProperty(x => x.Request, request)
+                   .And.WithProperty(x => x.Response, response);
             }
 
             [Test]
@@ -952,23 +947,23 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
                 Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
-                     .Throws<FeigException>()
-                     .WithProperty(x => x.Request, request)
-                     .And.WithProperty(x => x.Response, response);
+                   .Throws<FeigException>()
+                   .WithProperty(x => x.Request, request)
+                   .And.WithProperty(x => x.Response, response);
             }
 
             [Test]
@@ -982,14 +977,14 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -1011,14 +1006,14 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  It.IsAny<FeigProtocol>(),
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            It.IsAny<FeigProtocol>(),
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -1054,21 +1049,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Standard,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Standard,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -1105,21 +1100,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Standard,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Timeout(request)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Standard,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Timeout(request)));
 
                 var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
@@ -1155,21 +1150,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1200,21 +1195,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1245,21 +1240,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1291,21 +1286,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1344,21 +1339,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1391,21 +1386,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1422,23 +1417,23 @@ namespace InlayTester.Drivers.Feig
                 Check.That(request.Command).IsEqualTo(FeigCommand.WriteConfiguration);
 
                 Check.That(request.Data.ToArray())
-                     .ContainsExactly(
-                          0x83,
-                          0x11,
-                          0x22,
-                          0x33,
-                          0x44,
-                          0x55,
-                          0x66,
-                          0x77,
-                          0x88,
-                          0x99,
-                          0xAA,
-                          0xBB,
-                          0xCC,
-                          0xDD,
-                          0xEE
-                      );
+                   .ContainsExactly(
+                        0x83,
+                        0x11,
+                        0x22,
+                        0x33,
+                        0x44,
+                        0x55,
+                        0x66,
+                        0x77,
+                        0x88,
+                        0x99,
+                        0xAA,
+                        0xBB,
+                        0xCC,
+                        0xDD,
+                        0xEE
+                    );
             }
         }
 
@@ -1458,21 +1453,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1503,21 +1498,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1548,21 +1543,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1593,21 +1588,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -1663,7 +1658,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
                 Check.That(transponder.Identifier.ToArray())
-                     .ContainsExactly(0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(data.ToArray()).ContainsExactly(0xDD);
             }
@@ -1704,7 +1699,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.SR176);
 
                 Check.That(transponder.Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(data.ToArray()).ContainsExactly(0xDD);
             }
@@ -1719,7 +1714,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.SRIxx);
 
                 Check.That(transponder.Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(data.ToArray()).ContainsExactly(0xDD);
             }
@@ -1734,7 +1729,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO15693);
 
                 Check.That(transponder.Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(data.ToArray()).ContainsExactly(0xDD);
             }
@@ -1775,7 +1770,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ICode1);
 
                 Check.That(transponder.Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(data.ToArray()).ContainsExactly(0xDD);
             }
@@ -1790,7 +1785,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ICodeEPC);
 
                 Check.That(transponder.Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(data.ToArray()).ContainsExactly(0xDD);
             }
@@ -1969,12 +1964,12 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponders[0].TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
                 Check.That(transponders[0].Identifier.ToArray())
-                     .ContainsExactly(0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0xAA, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(transponders[1].TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
                 Check.That(transponders[1].Identifier.ToArray())
-                     .ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(transponders[2].TransponderType).IsEqualTo(FeigTransponderType.ISO14443B);
                 Check.That(transponders[2].Identifier.ToArray()).ContainsExactly(0x44, 0x33, 0x22, 0x11);
@@ -1985,17 +1980,17 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponders[4].TransponderType).IsEqualTo(FeigTransponderType.SR176);
 
                 Check.That(transponders[4].Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(transponders[5].TransponderType).IsEqualTo(FeigTransponderType.SRIxx);
 
                 Check.That(transponders[5].Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(transponders[6].TransponderType).IsEqualTo(FeigTransponderType.ISO15693);
 
                 Check.That(transponders[6].Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(transponders[7].TransponderType).IsEqualTo(FeigTransponderType.ISO18000_3M3);
                 Check.That(transponders[7].Identifier.ToArray()).ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
@@ -2006,12 +2001,12 @@ namespace InlayTester.Drivers.Feig
                 Check.That(transponders[9].TransponderType).IsEqualTo(FeigTransponderType.ICodeEPC);
 
                 Check.That(transponders[9].Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(transponders[10].TransponderType).IsEqualTo(FeigTransponderType.ICode1);
 
                 Check.That(transponders[10].Identifier.ToArray())
-                     .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(transponders[11].TransponderType).IsEqualTo(FeigTransponderType.ICodeUID);
                 Check.That(transponders[11].Identifier.ToArray()).ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
@@ -2055,21 +2050,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
@@ -2083,7 +2078,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Transponders[0].TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
                 Check.That(result.Transponders[0].Identifier.ToArray())
-                     .ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+                   .ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
                 Check.That(request.Command).IsEqualTo(FeigCommand.ISOStandardHostCommand);
                 Check.That(request.Data.ToArray()).ContainsExactly((Byte) FeigISOStandardCommand.Inventory, 0x00);
@@ -2102,21 +2097,21 @@ namespace InlayTester.Drivers.Feig
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
                 transport.Setup(
-                              x => x.Transfer(
-                                  It.IsAny<FeigRequest>(),
-                                  FeigProtocol.Advanced,
-                                  It.IsAny<TimeSpan>(),
-                                  It.IsAny<CancellationToken>()
-                              )
-                          )
-                         .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
-                              (r, p, t, c) => {
-                                  request           = r;
-                                  timeout           = t;
-                                  cancellationToken = c;
-                              }
-                          )
-                         .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
+                        x => x.Transfer(
+                            It.IsAny<FeigRequest>(),
+                            FeigProtocol.Advanced,
+                            It.IsAny<TimeSpan>(),
+                            It.IsAny<CancellationToken>()
+                        )
+                    )
+                   .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
+                        (r, p, t, c) => {
+                            request           = r;
+                            timeout           = t;
+                            cancellationToken = c;
+                        }
+                    )
+                   .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
                 var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");

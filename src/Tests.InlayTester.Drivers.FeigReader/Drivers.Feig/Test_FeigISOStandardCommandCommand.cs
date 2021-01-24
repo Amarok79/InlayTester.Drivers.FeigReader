@@ -36,13 +36,13 @@ namespace InlayTester.Drivers.Feig
         public void TestNames()
         {
             Check.That(Enum.GetNames(typeof(FeigISOStandardCommand)))
-                 .IsOnlyMadeOf(
-                      nameof(FeigISOStandardCommand.None),
-                      nameof(FeigISOStandardCommand.Inventory),
-                      nameof(FeigISOStandardCommand.ReadMultipleBlocks),
-                      nameof(FeigISOStandardCommand.WriteMultipleBlocks),
-                      nameof(FeigISOStandardCommand.Select)
-                  );
+               .IsOnlyMadeOf(
+                    nameof(FeigISOStandardCommand.None),
+                    nameof(FeigISOStandardCommand.Inventory),
+                    nameof(FeigISOStandardCommand.ReadMultipleBlocks),
+                    nameof(FeigISOStandardCommand.WriteMultipleBlocks),
+                    nameof(FeigISOStandardCommand.Select)
+                );
         }
 
         [Test]

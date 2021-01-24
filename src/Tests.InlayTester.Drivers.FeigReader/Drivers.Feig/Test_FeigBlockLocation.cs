@@ -36,7 +36,7 @@ namespace InlayTester.Drivers.Feig
         public void TestNames()
         {
             Check.That(Enum.GetNames(typeof(FeigBlockLocation)))
-                 .IsOnlyMadeOf(nameof(FeigBlockLocation.RAM), nameof(FeigBlockLocation.EEPROM));
+               .IsOnlyMadeOf(nameof(FeigBlockLocation.RAM), nameof(FeigBlockLocation.EEPROM));
         }
 
         [Test]

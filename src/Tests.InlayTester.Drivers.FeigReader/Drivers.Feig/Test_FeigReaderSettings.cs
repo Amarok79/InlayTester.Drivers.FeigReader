@@ -51,9 +51,9 @@ namespace InlayTester.Drivers.Feig
             Check.That(settings.Protocol).IsEqualTo(FeigProtocol.Advanced);
 
             Check.That(settings.ToString())
-                 .IsEqualTo(
-                      "Transport: 'COM1,38400,8,Even,One,None', Address: 255, Timeout: 1000 ms, Protocol: Advanced"
-                  );
+               .IsEqualTo(
+                    "Transport: 'COM1,38400,8,Even,One,None', Address: 255, Timeout: 1000 ms, Protocol: Advanced"
+                );
         }
 
         [Test]
@@ -88,9 +88,9 @@ namespace InlayTester.Drivers.Feig
             Check.That(settings.Protocol).IsEqualTo(FeigProtocol.Standard);
 
             Check.That(settings.ToString())
-                 .IsEqualTo(
-                      "Transport: 'COM3,19200,7,Mark,Two,RequestToSendXOnXOff', Address: 123, Timeout: 500 ms, Protocol: Standard"
-                  );
+               .IsEqualTo(
+                    "Transport: 'COM3,19200,7,Mark,Two,RequestToSendXOnXOff', Address: 123, Timeout: 500 ms, Protocol: Standard"
+                );
         }
     }
 }

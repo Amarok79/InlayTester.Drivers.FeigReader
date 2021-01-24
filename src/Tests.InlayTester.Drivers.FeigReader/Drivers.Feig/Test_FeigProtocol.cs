@@ -36,7 +36,7 @@ namespace InlayTester.Drivers.Feig
         public void TestNames()
         {
             Check.That(Enum.GetNames(typeof(FeigProtocol)))
-                 .IsOnlyMadeOf(nameof(FeigProtocol.Standard), nameof(FeigProtocol.Advanced));
+               .IsOnlyMadeOf(nameof(FeigProtocol.Standard), nameof(FeigProtocol.Advanced));
         }
 
         [Test]

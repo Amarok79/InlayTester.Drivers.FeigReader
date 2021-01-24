@@ -36,28 +36,28 @@ namespace InlayTester.Drivers.Feig
         public void TestNames()
         {
             Check.That(Enum.GetNames(typeof(FeigCommand)))
-                 .IsOnlyMadeOf(
-                      nameof(FeigCommand.None),
-                      nameof(FeigCommand.BaudRateDetection),
-                      nameof(FeigCommand.StartFlashLoader),
-                      nameof(FeigCommand.CPUReset),
-                      nameof(FeigCommand.GetSoftwareVersion),
-                      nameof(FeigCommand.GetReaderInfo),
-                      nameof(FeigCommand.RFReset),
-                      nameof(FeigCommand.RFOutputOnOff),
-                      nameof(FeigCommand.SetOutput),
-                      nameof(FeigCommand.ReaderLogin),
-                      nameof(FeigCommand.ReadConfiguration),
-                      nameof(FeigCommand.WriteConfiguration),
-                      nameof(FeigCommand.SaveConfiguration),
-                      nameof(FeigCommand.SetDefaultConfiguration),
-                      nameof(FeigCommand.WriteMifareReaderKeys),
-                      nameof(FeigCommand.ISOStandardHostCommand),
-                      nameof(FeigCommand.ISO14443SpecialHostCommand),
-                      nameof(FeigCommand.ISO14443ATransparentCommand),
-                      nameof(FeigCommand.ISO14443BTransparentCommand),
-                      nameof(FeigCommand.CommandQueue)
-                  );
+               .IsOnlyMadeOf(
+                    nameof(FeigCommand.None),
+                    nameof(FeigCommand.BaudRateDetection),
+                    nameof(FeigCommand.StartFlashLoader),
+                    nameof(FeigCommand.CPUReset),
+                    nameof(FeigCommand.GetSoftwareVersion),
+                    nameof(FeigCommand.GetReaderInfo),
+                    nameof(FeigCommand.RFReset),
+                    nameof(FeigCommand.RFOutputOnOff),
+                    nameof(FeigCommand.SetOutput),
+                    nameof(FeigCommand.ReaderLogin),
+                    nameof(FeigCommand.ReadConfiguration),
+                    nameof(FeigCommand.WriteConfiguration),
+                    nameof(FeigCommand.SaveConfiguration),
+                    nameof(FeigCommand.SetDefaultConfiguration),
+                    nameof(FeigCommand.WriteMifareReaderKeys),
+                    nameof(FeigCommand.ISOStandardHostCommand),
+                    nameof(FeigCommand.ISO14443SpecialHostCommand),
+                    nameof(FeigCommand.ISO14443ATransparentCommand),
+                    nameof(FeigCommand.ISO14443BTransparentCommand),
+                    nameof(FeigCommand.CommandQueue)
+                );
         }
 
         [Test]

@@ -36,12 +36,12 @@ namespace InlayTester.Drivers.Feig
         public void TestNames()
         {
             Check.That(Enum.GetNames(typeof(FeigParseStatus)))
-                 .IsOnlyMadeOf(
-                      nameof(FeigParseStatus.Success),
-                      nameof(FeigParseStatus.MoreDataNeeded),
-                      nameof(FeigParseStatus.ChecksumError),
-                      nameof(FeigParseStatus.FrameError)
-                  );
+               .IsOnlyMadeOf(
+                    nameof(FeigParseStatus.Success),
+                    nameof(FeigParseStatus.MoreDataNeeded),
+                    nameof(FeigParseStatus.ChecksumError),
+                    nameof(FeigParseStatus.FrameError)
+                );
         }
 
         [Test]

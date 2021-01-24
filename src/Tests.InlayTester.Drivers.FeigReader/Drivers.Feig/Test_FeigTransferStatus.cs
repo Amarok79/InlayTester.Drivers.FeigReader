@@ -36,13 +36,13 @@ namespace InlayTester.Drivers.Feig
         public void TestNames()
         {
             Check.That(Enum.GetNames(typeof(FeigTransferStatus)))
-                 .IsOnlyMadeOf(
-                      nameof(FeigTransferStatus.Success),
-                      nameof(FeigTransferStatus.Canceled),
-                      nameof(FeigTransferStatus.Timeout),
-                      nameof(FeigTransferStatus.CommunicationError),
-                      nameof(FeigTransferStatus.UnexpectedResponse)
-                  );
+               .IsOnlyMadeOf(
+                    nameof(FeigTransferStatus.Success),
+                    nameof(FeigTransferStatus.Canceled),
+                    nameof(FeigTransferStatus.Timeout),
+                    nameof(FeigTransferStatus.CommunicationError),
+                    nameof(FeigTransferStatus.UnexpectedResponse)
+                );
         }
 
         [Test]

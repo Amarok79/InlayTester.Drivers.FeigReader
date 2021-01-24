@@ -45,9 +45,9 @@ namespace InlayTester.Drivers.Feig
             Check.That(info.SupportedTransponders).IsEqualTo(0x0000);
 
             Check.That(info.ToString())
-                 .IsEqualTo(
-                      "FirmwareVersion: 0.0.0, HardwareType: 0x00, ReaderType: Unknown, SupportedTransponders: 0x0000"
-                  );
+               .IsEqualTo(
+                    "FirmwareVersion: 0.0.0, HardwareType: 0x00, ReaderType: Unknown, SupportedTransponders: 0x0000"
+                );
         }
 
         [Test]
@@ -70,9 +70,9 @@ namespace InlayTester.Drivers.Feig
             Check.That(info.SupportedTransponders).IsEqualTo(0x1234);
 
             Check.That(info.ToString())
-                 .IsEqualTo(
-                      "FirmwareVersion: 3.4.0, HardwareType: 0x34, ReaderType: CPR40, SupportedTransponders: 0x1234"
-                  );
+               .IsEqualTo(
+                    "FirmwareVersion: 3.4.0, HardwareType: 0x34, ReaderType: CPR40, SupportedTransponders: 0x1234"
+                );
         }
     }
 }

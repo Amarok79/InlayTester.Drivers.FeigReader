@@ -36,30 +36,30 @@ namespace InlayTester.Drivers.Feig
         public void TestNames()
         {
             Check.That(Enum.GetNames(typeof(FeigTransponderType)))
-                 .IsOnlyMadeOf(
-                      nameof(FeigTransponderType.ICode1),
-                      nameof(FeigTransponderType.TagIt),
-                      nameof(FeigTransponderType.ISO15693),
-                      nameof(FeigTransponderType.ISO14443A),
-                      nameof(FeigTransponderType.ISO14443B),
-                      nameof(FeigTransponderType.ICodeEPC),
-                      nameof(FeigTransponderType.ICodeUID),
-                      nameof(FeigTransponderType.Jewel),
-                      nameof(FeigTransponderType.ISO18000_3M3),
-                      nameof(FeigTransponderType.SR176),
-                      nameof(FeigTransponderType.SRIxx),
-                      nameof(FeigTransponderType.MCRFxxx),
-                      nameof(FeigTransponderType.FeliCa),
-                      nameof(FeigTransponderType.Innovatron),
-                      nameof(FeigTransponderType.ASK_CTx),
-                      nameof(FeigTransponderType.ISO18000_6A),
-                      nameof(FeigTransponderType.ISO18000_6B),
-                      nameof(FeigTransponderType.EM4222),
-                      nameof(FeigTransponderType.EPC_Class1_Gen2),
-                      nameof(FeigTransponderType.EPC_Class0),
-                      nameof(FeigTransponderType.EPC_Class1_Gen1),
-                      nameof(FeigTransponderType.Unknown)
-                  );
+               .IsOnlyMadeOf(
+                    nameof(FeigTransponderType.ICode1),
+                    nameof(FeigTransponderType.TagIt),
+                    nameof(FeigTransponderType.ISO15693),
+                    nameof(FeigTransponderType.ISO14443A),
+                    nameof(FeigTransponderType.ISO14443B),
+                    nameof(FeigTransponderType.ICodeEPC),
+                    nameof(FeigTransponderType.ICodeUID),
+                    nameof(FeigTransponderType.Jewel),
+                    nameof(FeigTransponderType.ISO18000_3M3),
+                    nameof(FeigTransponderType.SR176),
+                    nameof(FeigTransponderType.SRIxx),
+                    nameof(FeigTransponderType.MCRFxxx),
+                    nameof(FeigTransponderType.FeliCa),
+                    nameof(FeigTransponderType.Innovatron),
+                    nameof(FeigTransponderType.ASK_CTx),
+                    nameof(FeigTransponderType.ISO18000_6A),
+                    nameof(FeigTransponderType.ISO18000_6B),
+                    nameof(FeigTransponderType.EM4222),
+                    nameof(FeigTransponderType.EPC_Class1_Gen2),
+                    nameof(FeigTransponderType.EPC_Class0),
+                    nameof(FeigTransponderType.EPC_Class1_Gen1),
+                    nameof(FeigTransponderType.Unknown)
+                );
         }
 
         [Test]

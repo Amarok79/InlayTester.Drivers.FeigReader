@@ -57,7 +57,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
                 Check.That(result.Response.ToString())
-                     .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                   .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
             }
 
             [Test]
@@ -126,7 +126,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
                 Check.That(result.Response.ToString())
-                     .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                   .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
             }
 
             [Test]
@@ -153,7 +153,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
                 Check.That(result.Response.ToString())
-                     .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                   .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
             }
 
             [Test]
@@ -199,7 +199,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
                 Check.That(result.Response.ToString())
-                     .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                   .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
             }
 
             [Test]
@@ -270,7 +270,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
                 Check.That(result.Response.ToString())
-                     .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                   .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
             }
 
             [Test]
@@ -297,7 +297,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
                 Check.That(result.Response.ToString())
-                     .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                   .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
             }
 
             [Test]

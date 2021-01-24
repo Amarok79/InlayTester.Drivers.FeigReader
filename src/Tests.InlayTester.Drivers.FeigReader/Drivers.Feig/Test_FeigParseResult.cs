@@ -46,7 +46,7 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response).IsSameReferenceAs(response);
 
                 Check.That(result.ToString())
-                     .IsEqualTo("Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+                   .IsEqualTo("Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
             }
 
             [Test]
@@ -88,9 +88,9 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response).IsSameReferenceAs(response);
 
                 Check.That(result.ToString())
-                     .IsEqualTo(
-                          "Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
-                      );
+                   .IsEqualTo(
+                        "Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
+                    );
             }
         }
 

@@ -217,7 +217,7 @@ namespace InlayTester.Drivers.Feig
                     if (result.Status == FeigParseStatus.MoreDataNeeded)
                         _WaitForMoreData();
                     else if (result.Status == FeigParseStatus.FrameError ||
-                             result.Status == FeigParseStatus.ChecksumError)
+                        result.Status == FeigParseStatus.ChecksumError)
                         _CompleteWithError(result);
                     else if (result!.Response!.Command != mRequest!.Command)
                         _CompleteWithUnexpectedResponse(result);
