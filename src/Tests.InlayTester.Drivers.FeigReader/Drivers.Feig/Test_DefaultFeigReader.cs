@@ -30,6 +30,7 @@ using Amarok.Shared;
 using InlayTester.Shared.Transports;
 using Microsoft.Extensions.Logging;
 using Moq;
+using NCrunch.Framework;
 using NFluent;
 using NUnit.Framework;
 
@@ -41,7 +42,7 @@ namespace InlayTester.Drivers.Feig
         [TestFixture]
         public class Open
         {
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void Success_For_FirstTime()
             {
                 var settings = new FeigReaderSettings {
@@ -85,7 +86,7 @@ namespace InlayTester.Drivers.Feig
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void Exception_When_AlreadyOpen()
             {
                 var settings = new FeigReaderSettings {
@@ -154,7 +155,7 @@ namespace InlayTester.Drivers.Feig
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void Success_When_Open()
             {
                 var settings = new FeigReaderSettings {
@@ -225,7 +226,7 @@ namespace InlayTester.Drivers.Feig
                 }
             }
 
-            [Test, Category("com0com")]
+            [Test, NUnit.Framework.Category("com0com"), Serial]
             public void Success_When_Open()
             {
                 var settings = new FeigReaderSettings {

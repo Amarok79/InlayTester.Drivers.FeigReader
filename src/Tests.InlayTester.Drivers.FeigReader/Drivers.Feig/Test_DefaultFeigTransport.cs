@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Amarok.Shared;
 using InlayTester.Shared.Transports;
 using Microsoft.Extensions.Logging;
+using NCrunch.Framework;
 using NFluent;
 using NUnit.Framework;
 
@@ -37,7 +38,7 @@ namespace InlayTester.Drivers.Feig
     [TestFixture]
     public class Test_DefaultFeigTransport
     {
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public void Open_Close_Dispose()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -57,7 +58,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public void ReceivedDataIgnored()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -111,7 +112,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Success_ReceivedResponse()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -201,7 +202,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Success_ReceivedResponse_MultiplePackets()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -298,7 +299,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Timeout()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -379,7 +380,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Canceled()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -466,7 +467,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task CommunicationError_ChecksumError()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -543,7 +544,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task CommunicationError_FrameError()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -620,7 +621,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task UnexpectedResponse()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
@@ -707,7 +708,7 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Success_ReceivedResponse_MultipleTimes()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
