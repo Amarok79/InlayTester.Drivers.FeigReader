@@ -27,9 +27,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Amarok.Shared;
-using Common.Logging;
-using Common.Logging.Simple;
 using InlayTester.Shared.Transports;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NFluent;
 using NUnit.Framework;
@@ -49,7 +48,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -64,7 +69,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -81,7 +92,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -98,7 +115,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "InvalidPortName" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -117,7 +140,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -132,7 +161,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -149,7 +184,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -170,7 +211,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -185,7 +232,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -202,7 +255,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -223,7 +282,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -259,7 +324,14 @@ namespace InlayTester.Drivers.Feig
                 transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -291,7 +363,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -315,7 +394,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -357,7 +442,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -409,7 +501,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -434,7 +533,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -470,7 +575,14 @@ namespace InlayTester.Drivers.Feig
                 transport.Setup(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token))
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -504,7 +616,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -538,7 +657,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -564,7 +690,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -590,7 +723,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -619,7 +759,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.UnexpectedResponse(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -649,7 +796,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -679,7 +833,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -708,7 +869,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -728,7 +896,13 @@ namespace InlayTester.Drivers.Feig
                     TransportSettings = new SerialTransportSettings { PortName = "COMA" },
                 };
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
 
                 using (var reader = FeigReader.Create(settings, logger))
                 {
@@ -762,7 +936,14 @@ namespace InlayTester.Drivers.Feig
                 transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, timeout, cts.Token))
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -804,7 +985,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -843,7 +1031,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Timeout(request)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -870,7 +1065,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Canceled(request)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -897,7 +1099,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.CommunicationError(request)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -926,7 +1135,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.UnexpectedResponse(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -956,7 +1172,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -986,7 +1209,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1015,7 +1245,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1065,7 +1302,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1116,7 +1360,14 @@ namespace InlayTester.Drivers.Feig
                     )
                    .Returns(() => Task.FromResult(FeigTransferResult.Timeout(request)));
 
-                var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1167,7 +1418,15 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1212,7 +1471,15 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1257,7 +1524,15 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1303,7 +1578,15 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1356,7 +1639,15 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
+
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1403,7 +1694,13 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1470,7 +1767,13 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1515,7 +1818,13 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1560,7 +1869,13 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -1605,7 +1920,13 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -2067,7 +2388,13 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
@@ -2114,7 +2441,13 @@ namespace InlayTester.Drivers.Feig
                    .Returns(() => Task.FromResult(FeigTransferResult.Success(request, response)));
 
                 var settings = new FeigReaderSettings();
-                var logger   = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+                var logger = LoggerFactory.Create(
+                        builder => {
+                            builder.SetMinimumLevel(LogLevel.Trace);
+                            builder.AddSimpleConsole();
+                        }
+                    )
+                   .CreateLogger("Test");
                 var reader   = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act

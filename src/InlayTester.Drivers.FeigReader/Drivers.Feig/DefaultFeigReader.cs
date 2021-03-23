@@ -29,7 +29,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Amarok.Contracts;
 using Amarok.Shared;
-using Common.Logging;
+using Microsoft.Extensions.Logging;
 
 
 namespace InlayTester.Drivers.Feig
@@ -39,7 +39,7 @@ namespace InlayTester.Drivers.Feig
         // data
         private readonly FeigReaderSettings mSettings;
         private readonly IFeigTransport mTransport;
-        private readonly ILog mLog;
+        private readonly ILogger mLogger;
         private readonly Byte[] mRequestBuffer = new Byte[256];
 
         // state
@@ -52,17 +52,17 @@ namespace InlayTester.Drivers.Feig
 
         public IFeigTransport Transport => mTransport;
 
-        public ILog Logger => mLog;
+        public ILogger Logger => mLogger;
 
 
         /// <summary>
         /// Initializes a new instance.
         /// </summary>
-        public DefaultFeigReader(FeigReaderSettings settings, IFeigTransport transport, ILog logger)
+        public DefaultFeigReader(FeigReaderSettings settings, IFeigTransport transport, ILogger logger)
         {
             mSettings  = settings;
             mTransport = transport;
-            mLog       = logger;
+            mLogger       = logger;
         }
 
         #endregion
@@ -148,10 +148,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  TRANSFER  #{1}",
                         mSettings.TransportSettings.PortName,
                         mTransferNo
@@ -370,10 +369,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  TestCommunication()",
                         mSettings.TransportSettings.PortName
                     );
@@ -393,10 +391,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  TestCommunication()  =>  {1}",
                         mSettings.TransportSettings.PortName,
                         flag
@@ -437,10 +434,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ResetCPU()",
                         mSettings.TransportSettings.PortName
                     );
@@ -455,10 +451,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ResetCPU()  =>  {1}",
                         mSettings.TransportSettings.PortName,
                         response.Status
@@ -498,10 +493,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ResetRF()",
                         mSettings.TransportSettings.PortName
                     );
@@ -516,10 +510,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ResetRF()  =>  {1}",
                         mSettings.TransportSettings.PortName,
                         response.Status
@@ -559,10 +552,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  SwitchRF(0x{1})",
                         mSettings.TransportSettings.PortName,
                         flag.ToHex()
@@ -581,10 +573,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  SwitchRF()  =>  {1}",
                         mSettings.TransportSettings.PortName,
                         response.Status
@@ -628,10 +619,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  GetSoftwareInfo()",
                         mSettings.TransportSettings.PortName
                     );
@@ -653,10 +643,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  GetSoftwareInfo()  =>  {1}; {{ {2} }}",
                         mSettings.TransportSettings.PortName,
                         response.Status,
@@ -713,10 +702,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ReadConfiguration(Block: {1}, Location: {2})",
                         mSettings.TransportSettings.PortName,
                         block,
@@ -740,10 +728,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ReadConfiguration()  =>  {1}; {2}",
                         mSettings.TransportSettings.PortName,
                         response.Status,
@@ -809,10 +796,9 @@ namespace InlayTester.Drivers.Feig
                 #region (logging)
 
                 {
-                    if (mLog.IsInfoEnabled)
+                    if (mLogger.IsEnabled(LogLevel.Information))
                     {
-                        mLog.InfoFormat(
-                            CultureInfo.InvariantCulture,
+                        mLogger.LogInformation(
                             "[{0}]  WriteConfiguration(Block: {1}, Location: {2}, Data: {3})",
                             mSettings.TransportSettings.PortName,
                             block,
@@ -839,10 +825,9 @@ namespace InlayTester.Drivers.Feig
                 #region (logging)
 
                 {
-                    if (mLog.IsInfoEnabled)
+                    if (mLogger.IsEnabled(LogLevel.Information))
                     {
-                        mLog.InfoFormat(
-                            CultureInfo.InvariantCulture,
+                        mLogger.LogInformation(
                             "[{0}]  WriteConfiguration()  =>  {1}",
                             mSettings.TransportSettings.PortName,
                             response.Status
@@ -880,10 +865,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  SaveConfigurations()",
                         mSettings.TransportSettings.PortName
                     );
@@ -902,10 +886,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  SaveConfigurations()  =>  {1}",
                         mSettings.TransportSettings.PortName,
                         response.Status
@@ -952,10 +935,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  SaveConfiguration(Block: {1})",
                         mSettings.TransportSettings.PortName,
                         block
@@ -975,10 +957,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  SaveConfiguration()  =>  {1}",
                         mSettings.TransportSettings.PortName,
                         response.Status
@@ -1021,10 +1002,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ResetConfigurations(Location: {1})",
                         mSettings.TransportSettings.PortName,
                         location
@@ -1048,10 +1028,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ResetConfigurations()  =>  {1}",
                         mSettings.TransportSettings.PortName,
                         response.Status
@@ -1101,10 +1080,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ResetConfiguration(Block: {1}, Location: {2})",
                         mSettings.TransportSettings.PortName,
                         block,
@@ -1129,10 +1107,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  ResetConfiguration()  =>  {1}",
                         mSettings.TransportSettings.PortName,
                         response.Status
@@ -1177,10 +1154,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  Inventory()",
                         mSettings.TransportSettings.PortName
                     );
@@ -1206,10 +1182,9 @@ namespace InlayTester.Drivers.Feig
             #region (logging)
 
             {
-                if (mLog.IsInfoEnabled)
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
+                    mLogger.LogInformation(
                         "[{0}]  Inventory()  =>  {1}; {2}",
                         mSettings.TransportSettings.PortName,
                         response.Status,

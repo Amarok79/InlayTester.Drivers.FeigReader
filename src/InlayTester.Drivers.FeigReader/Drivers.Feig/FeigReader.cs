@@ -24,9 +24,9 @@
 
 using System;
 using Amarok.Contracts;
-using Common.Logging;
-using Common.Logging.Simple;
 using InlayTester.Shared.Transports;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 
 namespace InlayTester.Drivers.Feig
@@ -50,7 +50,7 @@ namespace InlayTester.Drivers.Feig
             Verify.NotNull(settings, nameof(settings));
 
             var copy      = new FeigReaderSettings(settings);
-            var logger    = new NoOpLogger();
+            var logger    = NullLogger.Instance;
             var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
 
             return new DefaultFeigReader(copy, transport, logger);
@@ -73,7 +73,7 @@ namespace InlayTester.Drivers.Feig
             Verify.NotNull(hooks, nameof(hooks));
 
             var copy      = new FeigReaderSettings(settings);
-            var logger    = new NoOpLogger();
+            var logger    = NullLogger.Instance;
             var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
 
             return new DefaultFeigReader(copy, transport, logger);
@@ -90,7 +90,7 @@ namespace InlayTester.Drivers.Feig
         /// 
         /// <exception cref="ArgumentNullException">
         /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-        public static IFeigReader Create(FeigReaderSettings settings, ILog logger)
+        public static IFeigReader Create(FeigReaderSettings settings, ILogger logger)
         {
             Verify.NotNull(settings, nameof(settings));
             Verify.NotNull(logger, nameof(logger));
@@ -114,7 +114,7 @@ namespace InlayTester.Drivers.Feig
         /// 
         /// <exception cref="ArgumentNullException">
         /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
-        public static IFeigReader Create(FeigReaderSettings settings, ILog logger, ITransportHooks hooks)
+        public static IFeigReader Create(FeigReaderSettings settings, ILogger logger, ITransportHooks hooks)
         {
             Verify.NotNull(settings, nameof(settings));
             Verify.NotNull(logger, nameof(logger));
