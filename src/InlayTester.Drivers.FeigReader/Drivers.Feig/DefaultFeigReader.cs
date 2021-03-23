@@ -146,12 +146,8 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation("[{0}]  TRANSFER  #{1}", mSettings.TransportSettings.PortName, mTransferNo);
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  TRANSFER  #{1}", mSettings.TransportSettings.PortName, mTransferNo);
 
             #endregion
 
@@ -363,12 +359,8 @@ namespace InlayTester.Drivers.Feig
         {
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation("[{0}]  TestCommunication()", mSettings.TransportSettings.PortName);
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  TestCommunication()", mSettings.TransportSettings.PortName);
 
             #endregion
 
@@ -382,15 +374,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  TestCommunication()  =>  {1}",
-                        mSettings.TransportSettings.PortName,
-                        flag
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  TestCommunication()  =>  {1}",
+                    mSettings.TransportSettings.PortName,
+                    flag
+                );
             }
 
             #endregion
@@ -421,16 +411,12 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        public async Task ResetCPU(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
+        public async Task ResetCpu(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation("[{0}]  ResetCPU()", mSettings.TransportSettings.PortName);
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  ResetCPU()", mSettings.TransportSettings.PortName);
 
             #endregion
 
@@ -439,15 +425,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  ResetCPU()  =>  {1}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  ResetCPU()  =>  {1}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status
+                );
             }
 
             #endregion
@@ -477,16 +461,12 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        public async Task ResetRF(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
+        public async Task ResetRf(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation("[{0}]  ResetRF()", mSettings.TransportSettings.PortName);
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  ResetRF()", mSettings.TransportSettings.PortName);
 
             #endregion
 
@@ -495,15 +475,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  ResetRF()  =>  {1}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  ResetRF()  =>  {1}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status
+                );
             }
 
             #endregion
@@ -533,20 +511,12 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        public async Task SwitchRF(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
+        public async Task SwitchRf(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  SwitchRF(0x{1})",
-                        mSettings.TransportSettings.PortName,
-                        flag.ToHex()
-                    );
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  SwitchRF(0x{1})", mSettings.TransportSettings.PortName, flag.ToHex());
 
             #endregion
 
@@ -558,15 +528,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  SwitchRF()  =>  {1}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  SwitchRF()  =>  {1}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status
+                );
             }
 
             #endregion
@@ -604,12 +572,8 @@ namespace InlayTester.Drivers.Feig
         {
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation("[{0}]  GetSoftwareInfo()", mSettings.TransportSettings.PortName);
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  GetSoftwareInfo()", mSettings.TransportSettings.PortName);
 
             #endregion
 
@@ -625,16 +589,14 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  GetSoftwareInfo()  =>  {1}; {{ {2} }}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status,
-                        info
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  GetSoftwareInfo()  =>  {1}; {{ {2} }}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status,
+                    info
+                );
             }
 
             #endregion
@@ -684,16 +646,14 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  ReadConfiguration(Block: {1}, Location: {2})",
-                        mSettings.TransportSettings.PortName,
-                        block,
-                        location
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  ReadConfiguration(Block: {1}, Location: {2})",
+                    mSettings.TransportSettings.PortName,
+                    block,
+                    location
+                );
             }
 
             #endregion
@@ -710,16 +670,14 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  ReadConfiguration()  =>  {1}; {2}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status,
-                        response.Data
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  ReadConfiguration()  =>  {1}; {2}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status,
+                    response.Data
+                );
             }
 
             #endregion
@@ -778,17 +736,15 @@ namespace InlayTester.Drivers.Feig
             {
                 #region (logging)
 
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    if (mLogger.IsEnabled(LogLevel.Information))
-                    {
-                        mLogger.LogInformation(
-                            "[{0}]  WriteConfiguration(Block: {1}, Location: {2}, Data: {3})",
-                            mSettings.TransportSettings.PortName,
-                            block,
-                            location,
-                            data
-                        );
-                    }
+                    mLogger.LogInformation(
+                        "[{0}]  WriteConfiguration(Block: {1}, Location: {2}, Data: {3})",
+                        mSettings.TransportSettings.PortName,
+                        block,
+                        location,
+                        data
+                    );
                 }
 
                 #endregion
@@ -814,15 +770,13 @@ namespace InlayTester.Drivers.Feig
 
                 #region (logging)
 
+                if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    if (mLogger.IsEnabled(LogLevel.Information))
-                    {
-                        mLogger.LogInformation(
-                            "[{0}]  WriteConfiguration()  =>  {1}",
-                            mSettings.TransportSettings.PortName,
-                            response.Status
-                        );
-                    }
+                    mLogger.LogInformation(
+                        "[{0}]  WriteConfiguration()  =>  {1}",
+                        mSettings.TransportSettings.PortName,
+                        response.Status
+                    );
                 }
 
                 #endregion
@@ -854,12 +808,8 @@ namespace InlayTester.Drivers.Feig
         {
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation("[{0}]  SaveConfigurations()", mSettings.TransportSettings.PortName);
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  SaveConfigurations()", mSettings.TransportSettings.PortName);
 
             #endregion
 
@@ -872,15 +822,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  SaveConfigurations()  =>  {1}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  SaveConfigurations()  =>  {1}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status
+                );
             }
 
             #endregion
@@ -921,15 +869,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  SaveConfiguration(Block: {1})",
-                        mSettings.TransportSettings.PortName,
-                        block
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  SaveConfiguration(Block: {1})",
+                    mSettings.TransportSettings.PortName,
+                    block
+                );
             }
 
             #endregion
@@ -943,15 +889,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  SaveConfiguration()  =>  {1}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  SaveConfiguration()  =>  {1}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status
+                );
             }
 
             #endregion
@@ -988,15 +932,13 @@ namespace InlayTester.Drivers.Feig
         {
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  ResetConfigurations(Location: {1})",
-                        mSettings.TransportSettings.PortName,
-                        location
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  ResetConfigurations(Location: {1})",
+                    mSettings.TransportSettings.PortName,
+                    location
+                );
             }
 
             #endregion
@@ -1014,15 +956,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  ResetConfigurations()  =>  {1}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  ResetConfigurations()  =>  {1}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status
+                );
             }
 
             #endregion
@@ -1066,16 +1006,14 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  ResetConfiguration(Block: {1}, Location: {2})",
-                        mSettings.TransportSettings.PortName,
-                        block,
-                        location
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  ResetConfiguration(Block: {1}, Location: {2})",
+                    mSettings.TransportSettings.PortName,
+                    block,
+                    location
+                );
             }
 
             #endregion
@@ -1093,15 +1031,13 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  ResetConfiguration()  =>  {1}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  ResetConfiguration()  =>  {1}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status
+                );
             }
 
             #endregion
@@ -1140,12 +1076,8 @@ namespace InlayTester.Drivers.Feig
         {
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation("[{0}]  Inventory()", mSettings.TransportSettings.PortName);
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  Inventory()", mSettings.TransportSettings.PortName);
 
             #endregion
 
@@ -1165,16 +1097,14 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Information))
             {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                {
-                    mLogger.LogInformation(
-                        "[{0}]  Inventory()  =>  {1}; {2}",
-                        mSettings.TransportSettings.PortName,
-                        response.Status,
-                        FeigTransponder.ToString(result)
-                    );
-                }
+                mLogger.LogInformation(
+                    "[{0}]  Inventory()  =>  {1}; {2}",
+                    mSettings.TransportSettings.PortName,
+                    response.Status,
+                    FeigTransponder.ToString(result)
+                );
             }
 
             #endregion

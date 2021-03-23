@@ -36,7 +36,7 @@ namespace InlayTester.Drivers.Feig
     internal sealed class DefaultFeigTransport : IFeigTransport
     {
         // data
-        private readonly Object mSyncThis = new Object();
+        private readonly Object mSyncThis = new();
         private readonly SerialTransportSettings mSettings;
         private readonly ILogger mLogger;
         private readonly ITransport mTransport;
@@ -124,10 +124,8 @@ namespace InlayTester.Drivers.Feig
                     completionSource => {
                         #region (logging)
 
-                        {
-                            if (mLogger.IsEnabled(LogLevel.Information))
-                                mLogger.LogInformation("[{0}]  CANCELED", mSettings.PortName);
-                        }
+                        if (mLogger.IsEnabled(LogLevel.Information))
+                            mLogger.LogInformation("[{0}]  CANCELED", mSettings.PortName);
 
                         #endregion
 
@@ -146,15 +144,13 @@ namespace InlayTester.Drivers.Feig
                     completionSource => {
                         #region (logging)
 
+                        if (mLogger.IsEnabled(LogLevel.Information))
                         {
-                            if (mLogger.IsEnabled(LogLevel.Information))
-                            {
-                                mLogger.LogInformation(
-                                    "[{0}]  TIMEOUT   {1} ms",
-                                    mSettings.PortName,
-                                    timeout.TotalMilliseconds
-                                );
-                            }
+                            mLogger.LogInformation(
+                                "[{0}]  TIMEOUT   {1} ms",
+                                mSettings.PortName,
+                                timeout.TotalMilliseconds
+                            );
                         }
 
                         #endregion
@@ -180,10 +176,8 @@ namespace InlayTester.Drivers.Feig
 
                 #region (logging)
 
-                {
-                    if (mLogger.IsEnabled(LogLevel.Information))
-                        mLogger.LogInformation("[{0}]  SENT      {1}", mSettings.PortName, mRequest);
-                }
+                if (mLogger.IsEnabled(LogLevel.Information))
+                    mLogger.LogInformation("[{0}]  SENT      {1}", mSettings.PortName, mRequest);
 
                 #endregion
 
@@ -224,9 +218,7 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
-            {
-                mLogger.LogTrace("[{0}]  IGNORED   {1}", mSettings.PortName, data);
-            }
+            mLogger.LogTrace("[{0}]  IGNORED   {1}", mSettings.PortName, data);
 
             #endregion
         }
@@ -255,20 +247,18 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Trace))
             {
-                if (mLogger.IsEnabled(LogLevel.Trace))
-                {
-                    mLogger.LogTrace(
-                        "[{0}]  PARSED    {1};  ReceiveBuffer: {2}",
-                        mSettings.PortName,
-                        result.Status,
-                        mReceiveBuffer
-                    );
-                }
-
-                if (mLogger.IsEnabled(LogLevel.Trace))
-                    mLogger.LogTrace("[{0}]  COMMERR", mSettings.PortName);
+                mLogger.LogTrace(
+                    "[{0}]  PARSED    {1};  ReceiveBuffer: {2}",
+                    mSettings.PortName,
+                    result.Status,
+                    mReceiveBuffer
+                );
             }
+
+            if (mLogger.IsEnabled(LogLevel.Trace))
+                mLogger.LogTrace("[{0}]  COMMERR", mSettings.PortName);
 
             #endregion
 
@@ -281,10 +271,8 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                    mLogger.LogInformation("[{0}]  UNEXPECT  {1}", mSettings.PortName, result.Response);
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  UNEXPECT  {1}", mSettings.PortName, result.Response);
 
             #endregion
 
@@ -297,10 +285,8 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
-            {
-                if (mLogger.IsEnabled(LogLevel.Information))
-                    mLogger.LogInformation("[{0}]  RECEIVED  {1}", mSettings.PortName, result.Response);
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  RECEIVED  {1}", mSettings.PortName, result.Response);
 
             #endregion
 

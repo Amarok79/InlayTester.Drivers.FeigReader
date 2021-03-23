@@ -1430,7 +1430,7 @@ namespace InlayTester.Drivers.Feig
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
-                await reader.ResetCPU();
+                await reader.ResetCpu();
 
                 // assert
                 Check.That(request.Command).IsEqualTo(FeigCommand.CPUReset);
@@ -1483,7 +1483,7 @@ namespace InlayTester.Drivers.Feig
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
-                await reader.ResetRF();
+                await reader.ResetRf();
 
                 // assert
                 Check.That(request.Command).IsEqualTo(FeigCommand.RFReset);
@@ -1536,7 +1536,7 @@ namespace InlayTester.Drivers.Feig
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
-                await reader.SwitchRF(0x23);
+                await reader.SwitchRf(0x23);
 
                 // assert
                 Check.That(request.Command).IsEqualTo(FeigCommand.RFOutputOnOff);

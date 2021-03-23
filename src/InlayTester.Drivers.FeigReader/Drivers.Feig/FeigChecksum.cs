@@ -43,7 +43,7 @@ namespace InlayTester.Drivers.Feig
         // http://reveng.sourceforge.net/crc-catalogue/all.htm
 
         // static data
-        private static readonly CrcCalculator sCalculator = new CrcCalculator(
+        private static readonly CrcCalculator sCalculator = new(
             16,
             0x1021,
             true,
