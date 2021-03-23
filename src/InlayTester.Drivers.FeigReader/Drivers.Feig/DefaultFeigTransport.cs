@@ -182,9 +182,7 @@ namespace InlayTester.Drivers.Feig
 
                 {
                     if (mLogger.IsEnabled(LogLevel.Information))
-                    {
                         mLogger.LogInformation("[{0}]  SENT      {1}", mSettings.PortName, mRequest);
-                    }
                 }
 
                 #endregion
@@ -285,9 +283,7 @@ namespace InlayTester.Drivers.Feig
 
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
-                {
                     mLogger.LogInformation("[{0}]  UNEXPECT  {1}", mSettings.PortName, result.Response);
-                }
             }
 
             #endregion
@@ -303,9 +299,7 @@ namespace InlayTester.Drivers.Feig
 
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
-                {
                     mLogger.LogInformation("[{0}]  RECEIVED  {1}", mSettings.PortName, result.Response);
-                }
             }
 
             #endregion

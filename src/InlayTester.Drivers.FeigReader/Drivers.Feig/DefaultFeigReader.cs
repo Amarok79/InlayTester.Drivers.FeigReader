@@ -23,7 +23,6 @@
  */
 
 using System;
-using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,7 +61,7 @@ namespace InlayTester.Drivers.Feig
         {
             mSettings  = settings;
             mTransport = transport;
-            mLogger       = logger;
+            mLogger    = logger;
         }
 
         #endregion
@@ -150,11 +149,7 @@ namespace InlayTester.Drivers.Feig
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLogger.LogInformation(
-                        "[{0}]  TRANSFER  #{1}",
-                        mSettings.TransportSettings.PortName,
-                        mTransferNo
-                    );
+                    mLogger.LogInformation("[{0}]  TRANSFER  #{1}", mSettings.TransportSettings.PortName, mTransferNo);
                 }
             }
 
@@ -371,10 +366,7 @@ namespace InlayTester.Drivers.Feig
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLogger.LogInformation(
-                        "[{0}]  TestCommunication()",
-                        mSettings.TransportSettings.PortName
-                    );
+                    mLogger.LogInformation("[{0}]  TestCommunication()", mSettings.TransportSettings.PortName);
                 }
             }
 
@@ -436,10 +428,7 @@ namespace InlayTester.Drivers.Feig
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLogger.LogInformation(
-                        "[{0}]  ResetCPU()",
-                        mSettings.TransportSettings.PortName
-                    );
+                    mLogger.LogInformation("[{0}]  ResetCPU()", mSettings.TransportSettings.PortName);
                 }
             }
 
@@ -495,10 +484,7 @@ namespace InlayTester.Drivers.Feig
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLogger.LogInformation(
-                        "[{0}]  ResetRF()",
-                        mSettings.TransportSettings.PortName
-                    );
+                    mLogger.LogInformation("[{0}]  ResetRF()", mSettings.TransportSettings.PortName);
                 }
             }
 
@@ -621,10 +607,7 @@ namespace InlayTester.Drivers.Feig
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLogger.LogInformation(
-                        "[{0}]  GetSoftwareInfo()",
-                        mSettings.TransportSettings.PortName
-                    );
+                    mLogger.LogInformation("[{0}]  GetSoftwareInfo()", mSettings.TransportSettings.PortName);
                 }
             }
 
@@ -815,7 +798,14 @@ namespace InlayTester.Drivers.Feig
                 addr |= (Byte) ( block & 0x3F );
 
                 mRequestBuffer[0] = addr;
-                Buffer.BlockCopy(data.Buffer, data.Offset, mRequestBuffer, 1, data.Count);
+
+                Buffer.BlockCopy(
+                    data.Buffer,
+                    data.Offset,
+                    mRequestBuffer,
+                    1,
+                    data.Count
+                );
 
                 var cfgdata = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
 
@@ -867,10 +857,7 @@ namespace InlayTester.Drivers.Feig
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLogger.LogInformation(
-                        "[{0}]  SaveConfigurations()",
-                        mSettings.TransportSettings.PortName
-                    );
+                    mLogger.LogInformation("[{0}]  SaveConfigurations()", mSettings.TransportSettings.PortName);
                 }
             }
 
@@ -1156,10 +1143,7 @@ namespace InlayTester.Drivers.Feig
             {
                 if (mLogger.IsEnabled(LogLevel.Information))
                 {
-                    mLogger.LogInformation(
-                        "[{0}]  Inventory()",
-                        mSettings.TransportSettings.PortName
-                    );
+                    mLogger.LogInformation("[{0}]  Inventory()", mSettings.TransportSettings.PortName);
                 }
             }
 

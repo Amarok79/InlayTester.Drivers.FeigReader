@@ -104,7 +104,13 @@ namespace InlayTester.Drivers.Feig
             frame[1] = Address;
             frame[2] = (Byte) Command;
 
-            Buffer.BlockCopy(Data.Buffer, Data.Offset, frame, 3, Data.Count);
+            Buffer.BlockCopy(
+                Data.Buffer,
+                Data.Offset,
+                frame,
+                3,
+                Data.Count
+            );
 
             var crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 
@@ -125,7 +131,13 @@ namespace InlayTester.Drivers.Feig
             frame[3] = Address;
             frame[4] = (Byte) Command;
 
-            Buffer.BlockCopy(Data.Buffer, Data.Offset, frame, 5, Data.Count);
+            Buffer.BlockCopy(
+                Data.Buffer,
+                Data.Offset,
+                frame,
+                5,
+                Data.Count
+            );
 
             var crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 

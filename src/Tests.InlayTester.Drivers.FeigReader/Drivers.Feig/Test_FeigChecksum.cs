@@ -37,7 +37,19 @@ namespace InlayTester.Drivers.Feig
         [Test]
         public void UseCase()
         {
-            var buffer = new Byte[] { 0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30 };
+            var buffer = new Byte[] {
+                0x0D,
+                0x00,
+                0x65,
+                0x00,
+                0x03,
+                0x03,
+                0x00,
+                0x44,
+                0x53,
+                0x0D,
+                0x30,
+            };
 
             var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
 
@@ -47,7 +59,7 @@ namespace InlayTester.Drivers.Feig
         [Test]
         public void UseCase_123456789()
         {
-            Byte[] buffer = Encoding.UTF8.GetBytes("123456789");
+            var buffer = Encoding.UTF8.GetBytes("123456789");
 
             var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
 

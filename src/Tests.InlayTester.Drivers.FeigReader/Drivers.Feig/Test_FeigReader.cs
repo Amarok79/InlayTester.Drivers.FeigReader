@@ -57,7 +57,10 @@ namespace InlayTester.Drivers.Feig
                 var transportImpl = (DefaultFeigTransport) readerImpl.Transport;
 
                 Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
-                Check.That(transportImpl.Logger).IsEqualTo(NullLogger.Instance).And.IsSameReferenceAs(readerImpl.Logger);
+
+                Check.That(transportImpl.Logger)
+                   .IsEqualTo(NullLogger.Instance)
+                   .And.IsSameReferenceAs(readerImpl.Logger);
             }
 
             [Test]
@@ -90,7 +93,10 @@ namespace InlayTester.Drivers.Feig
                 var transportImpl = (DefaultFeigTransport) readerImpl.Transport;
 
                 Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
-                Check.That(transportImpl.Logger).IsEqualTo(NullLogger.Instance).And.IsSameReferenceAs(readerImpl.Logger);
+
+                Check.That(transportImpl.Logger)
+                   .IsEqualTo(NullLogger.Instance)
+                   .And.IsSameReferenceAs(readerImpl.Logger);
             }
 
             [Test]
@@ -119,6 +125,7 @@ namespace InlayTester.Drivers.Feig
             {
                 // act
                 var settings = new FeigReaderSettings();
+
                 var logger = LoggerFactory.Create(
                         builder => {
                             builder.SetMinimumLevel(LogLevel.Trace);
@@ -126,7 +133,8 @@ namespace InlayTester.Drivers.Feig
                         }
                     )
                    .CreateLogger("Test");
-                var reader   = FeigReader.Create(settings, logger);
+
+                var reader = FeigReader.Create(settings, logger);
 
                 // assert
                 Check.That(reader).IsInstanceOf<DefaultFeigReader>();
@@ -134,16 +142,14 @@ namespace InlayTester.Drivers.Feig
                 var readerImpl = (DefaultFeigReader) reader;
 
                 Check.That(readerImpl.Settings).Not.IsSameReferenceAs(settings);
-                Check.That(readerImpl.Logger).IsEqualTo(NullLogger.Instance);
+                Check.That(readerImpl.Logger).IsSameReferenceAs(logger);
                 Check.That(readerImpl.Transport).IsInstanceOf<DefaultFeigTransport>();
 
                 var transportImpl = (DefaultFeigTransport) readerImpl.Transport;
 
                 Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
 
-                Check.That(transportImpl.Logger)
-                   .IsEqualTo(NullLogger.Instance)
-                   .And.IsSameReferenceAs(readerImpl.Logger);
+                Check.That(transportImpl.Logger).IsSameReferenceAs(logger).And.IsSameReferenceAs(readerImpl.Logger);
             }
 
             [Test]
@@ -177,7 +183,8 @@ namespace InlayTester.Drivers.Feig
                         }
                     )
                    .CreateLogger("Test");
-                var reader   = FeigReader.Create(settings, logger, hooks.Object);
+
+                var reader = FeigReader.Create(settings, logger, hooks.Object);
 
                 // assert
                 Check.That(reader).IsInstanceOf<DefaultFeigReader>();
@@ -185,16 +192,14 @@ namespace InlayTester.Drivers.Feig
                 var readerImpl = (DefaultFeigReader) reader;
 
                 Check.That(readerImpl.Settings).Not.IsSameReferenceAs(settings);
-                Check.That(readerImpl.Logger).IsEqualTo(NullLogger.Instance);
+                Check.That(readerImpl.Logger).IsSameReferenceAs(logger);
                 Check.That(readerImpl.Transport).IsInstanceOf<DefaultFeigTransport>();
 
                 var transportImpl = (DefaultFeigTransport) readerImpl.Transport;
 
                 Check.That(transportImpl.Settings).Not.IsSameReferenceAs(settings.TransportSettings);
 
-                Check.That(transportImpl.Logger)
-                   .IsEqualTo(NullLogger.Instance)
-                   .And.IsSameReferenceAs(readerImpl.Logger);
+                Check.That(transportImpl.Logger).IsSameReferenceAs(logger).And.IsSameReferenceAs(readerImpl.Logger);
             }
 
             [Test]
