@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+#pragma warning disable S3925 // "ISerializable" should be implemented correctly
+
 using System;
 
 

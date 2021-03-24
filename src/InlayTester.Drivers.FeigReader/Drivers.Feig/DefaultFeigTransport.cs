@@ -23,13 +23,12 @@
  */
 
 using System;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Amarok.Contracts;
 using Amarok.Shared;
-using Common.Logging;
 using InlayTester.Shared.Transports;
+using Microsoft.Extensions.Logging;
 
 
 namespace InlayTester.Drivers.Feig
@@ -37,9 +36,9 @@ namespace InlayTester.Drivers.Feig
     internal sealed class DefaultFeigTransport : IFeigTransport
     {
         // data
-        private readonly Object mSyncThis = new Object();
+        private readonly Object mSyncThis = new();
         private readonly SerialTransportSettings mSettings;
-        private readonly ILog mLog;
+        private readonly ILogger mLogger;
         private readonly ITransport mTransport;
 
         // state
@@ -51,16 +50,16 @@ namespace InlayTester.Drivers.Feig
 
         internal SerialTransportSettings Settings => mSettings;
 
-        internal ILog Logger => mLog;
+        internal ILogger Logger => mLogger;
 
 
-        public DefaultFeigTransport(SerialTransportSettings settings, ILog logger, ITransportHooks? hooks = null)
+        public DefaultFeigTransport(SerialTransportSettings settings, ILogger logger, ITransportHooks? hooks = null)
         {
             Verify.NotNull(settings, nameof(settings));
             Verify.NotNull(logger, nameof(logger));
 
             mSettings = settings;
-            mLog      = logger;
+            mLogger   = logger;
 
             mCompletionSource = new TaskCompletionSource<FeigTransferResult>();
             mCompletionSource.SetCanceled();
@@ -125,10 +124,8 @@ namespace InlayTester.Drivers.Feig
                     completionSource => {
                         #region (logging)
 
-                        {
-                            if (mLog.IsInfoEnabled)
-                                mLog.InfoFormat(CultureInfo.InvariantCulture, "[{0}]  CANCELED", mSettings.PortName);
-                        }
+                        if (mLogger.IsEnabled(LogLevel.Information))
+                            mLogger.LogInformation("[{0}]  CANCELED", mSettings.PortName);
 
                         #endregion
 
@@ -147,16 +144,13 @@ namespace InlayTester.Drivers.Feig
                     completionSource => {
                         #region (logging)
 
+                        if (mLogger.IsEnabled(LogLevel.Information))
                         {
-                            if (mLog.IsInfoEnabled)
-                            {
-                                mLog.InfoFormat(
-                                    CultureInfo.InvariantCulture,
-                                    "[{0}]  TIMEOUT   {1} ms",
-                                    mSettings.PortName,
-                                    timeout.TotalMilliseconds
-                                );
-                            }
+                            mLogger.LogInformation(
+                                "[{0}]  TIMEOUT   {1} ms",
+                                mSettings.PortName,
+                                timeout.TotalMilliseconds
+                            );
                         }
 
                         #endregion
@@ -182,17 +176,8 @@ namespace InlayTester.Drivers.Feig
 
                 #region (logging)
 
-                {
-                    if (mLog.IsInfoEnabled)
-                    {
-                        mLog.InfoFormat(
-                            CultureInfo.InvariantCulture,
-                            "[{0}]  SENT      {1}",
-                            mSettings.PortName,
-                            mRequest
-                        );
-                    }
-                }
+                if (mLogger.IsEnabled(LogLevel.Information))
+                    mLogger.LogInformation("[{0}]  SENT      {1}", mSettings.PortName, mRequest);
 
                 #endregion
 
@@ -233,9 +218,7 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
-            {
-                mLog.TraceFormat(CultureInfo.InvariantCulture, "[{0}]  IGNORED   {1}", mSettings.PortName, data);
-            }
+            mLogger.LogTrace("[{0}]  IGNORED   {1}", mSettings.PortName, data);
 
             #endregion
         }
@@ -246,10 +229,9 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
-            if (mLog.IsTraceEnabled)
+            if (mLogger.IsEnabled(LogLevel.Trace))
             {
-                mLog.TraceFormat(
-                    CultureInfo.InvariantCulture,
+                mLogger.LogTrace(
                     "[{0}]  PARSED    MoreDataNeeded;  ReceiveBuffer: {1}",
                     mSettings.PortName,
                     mReceiveBuffer
@@ -265,21 +247,18 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
+            if (mLogger.IsEnabled(LogLevel.Trace))
             {
-                if (mLog.IsTraceEnabled)
-                {
-                    mLog.TraceFormat(
-                        CultureInfo.InvariantCulture,
-                        "[{0}]  PARSED    {1};  ReceiveBuffer: {2}",
-                        mSettings.PortName,
-                        result.Status,
-                        mReceiveBuffer
-                    );
-                }
-
-                if (mLog.IsInfoEnabled)
-                    mLog.InfoFormat(CultureInfo.InvariantCulture, "[{0}]  COMMERR", mSettings.PortName);
+                mLogger.LogTrace(
+                    "[{0}]  PARSED    {1};  ReceiveBuffer: {2}",
+                    mSettings.PortName,
+                    result.Status,
+                    mReceiveBuffer
+                );
             }
+
+            if (mLogger.IsEnabled(LogLevel.Trace))
+                mLogger.LogTrace("[{0}]  COMMERR", mSettings.PortName);
 
             #endregion
 
@@ -292,17 +271,8 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
-            {
-                if (mLog.IsInfoEnabled)
-                {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
-                        "[{0}]  UNEXPECT  {1}",
-                        mSettings.PortName,
-                        result.Response
-                    );
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  UNEXPECT  {1}", mSettings.PortName, result.Response);
 
             #endregion
 
@@ -315,17 +285,8 @@ namespace InlayTester.Drivers.Feig
 
             #region (logging)
 
-            {
-                if (mLog.IsInfoEnabled)
-                {
-                    mLog.InfoFormat(
-                        CultureInfo.InvariantCulture,
-                        "[{0}]  RECEIVED  {1}",
-                        mSettings.PortName,
-                        result.Response
-                    );
-                }
-            }
+            if (mLogger.IsEnabled(LogLevel.Information))
+                mLogger.LogInformation("[{0}]  RECEIVED  {1}", mSettings.PortName, result.Response);
 
             #endregion
 

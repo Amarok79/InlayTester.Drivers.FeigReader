@@ -25,13 +25,17 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<IncludeSource>true</IncludeSource>
 		<Nullable>enable</Nullable>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup>
 		<OutputPath>..\..\bin\lib\</OutputPath>
 		<DocumentationFile>..\..\bin\lib\InlayTester.Drivers.FeigReader.xml</DocumentationFile>
 		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
 		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<NoWarn>1701;1702</NoWarn>
 		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
@@ -39,10 +43,6 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<OutputPath>..\..\bin\lib\</OutputPath>
-		<DocumentationFile>..\..\bin\lib\InlayTester.Drivers.FeigReader.xml</DocumentationFile>
-		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-		<LangVersion>latest</LangVersion>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningsAsErrors />
 		<NoWarn>1701;1702</NoWarn>
@@ -57,12 +57,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Amarok.Contracts" Version="3.1.2" />
-		<PackageReference Include="InlayTester.Shared.Transports" Version="4.1.0" />
-		<PackageReference Include="Common.Logging" Version="3.4.1" />
-	</ItemGroup>
-	<ItemGroup>
+		<PackageReference Include="Amarok.Contracts" Version="3.1.3" />
+		<PackageReference Include="InlayTester.Shared.Transports" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="8.20.0.28934">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 </Project>

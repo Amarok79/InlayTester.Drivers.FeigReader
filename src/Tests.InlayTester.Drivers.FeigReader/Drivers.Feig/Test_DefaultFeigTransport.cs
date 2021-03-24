@@ -26,9 +26,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Amarok.Shared;
-using Common.Logging;
-using Common.Logging.Simple;
 using InlayTester.Shared.Transports;
+using Microsoft.Extensions.Logging;
+using NCrunch.Framework;
 using NFluent;
 using NUnit.Framework;
 
@@ -38,12 +38,18 @@ namespace InlayTester.Drivers.Feig
     [TestFixture]
     public class Test_DefaultFeigTransport
     {
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public void Open_Close_Dispose()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -52,12 +58,18 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public void ReceivedDataIgnored()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -100,12 +112,18 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Success_ReceivedResponse()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -171,17 +189,31 @@ namespace InlayTester.Drivers.Feig
                     Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                     Check.That(result.Response.Data.ToArray())
-                       .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                   .ContainsExactly(
+                        0x03,
+                        0x03,
+                        0x00,
+                        0x44,
+                        0x53,
+                        0x0d,
+                        0x30
+                    );
                 }
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Success_ReceivedResponse_MultiplePackets()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -209,11 +241,32 @@ namespace InlayTester.Drivers.Feig
                                 data[5] == 0x6e &&
                                 data[6] == 0x61)
                             {
-                                transportB.Send(BufferSpan.From(0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03));
+                                transportB.Send(
+                                    BufferSpan.From(
+                                        0x02,
+                                        0x00,
+                                        0x0f,
+                                        0x00,
+                                        0x65,
+                                        0x00,
+                                        0x03,
+                                        0x03
+                                    )
+                                );
 
                                 Thread.Sleep(100);
 
-                                transportB.Send(BufferSpan.From(0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
+                                transportB.Send(
+                                    BufferSpan.From(
+                                        0x00,
+                                        0x44,
+                                        0x53,
+                                        0x0d,
+                                        0x30,
+                                        0x74,
+                                        0x69
+                                    )
+                                );
                             }
                             else
                                 Assert.Fail("Received unknown data");
@@ -233,17 +286,31 @@ namespace InlayTester.Drivers.Feig
                     Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                     Check.That(result.Response.Data.ToArray())
-                       .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                   .ContainsExactly(
+                        0x03,
+                        0x03,
+                        0x00,
+                        0x44,
+                        0x53,
+                        0x0d,
+                        0x30
+                    );
                 }
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Timeout()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -313,12 +380,18 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Canceled()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -394,12 +467,18 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task CommunicationError_ChecksumError()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -465,12 +544,18 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task CommunicationError_FrameError()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -536,12 +621,18 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task UnexpectedResponse()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -617,12 +708,18 @@ namespace InlayTester.Drivers.Feig
             }
         }
 
-        [Test, Category("com0com")]
+        [Test, NUnit.Framework.Category("com0com"), Serial]
         public async Task Success_ReceivedResponse_MultipleTimes()
         {
             var settingsA = new SerialTransportSettings { PortName = "COMA" };
 
-            var logger = new DebugOutLogger("Test", LogLevel.All, true, false, false, "G");
+            var logger = LoggerFactory.Create(
+                    builder => {
+                        builder.SetMinimumLevel(LogLevel.Trace);
+                        builder.AddSimpleConsole();
+                    }
+                )
+               .CreateLogger("Test");
 
             using (var transportA = new DefaultFeigTransport(settingsA, logger))
             {
@@ -690,7 +787,15 @@ namespace InlayTester.Drivers.Feig
                         Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                         Check.That(result.Response.Data.ToArray())
-                           .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                       .ContainsExactly(
+                            0x03,
+                            0x03,
+                            0x00,
+                            0x44,
+                            0x53,
+                            0x0d,
+                            0x30
+                        );
                     }
                 }
             }

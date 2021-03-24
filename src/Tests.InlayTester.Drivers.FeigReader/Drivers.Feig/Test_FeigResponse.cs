@@ -39,7 +39,21 @@ namespace InlayTester.Drivers.Feig
             public void StandardResponse_GetSoftwareVersion()
             {
                 // act
-                var data = new Byte[] { 0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30, 0x33, 0x09 };
+                var data = new Byte[] {
+                    0x0D,
+                    0x00,
+                    0x65,
+                    0x00,
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30,
+                    0x33,
+                    0x09,
+                };
 
                 var span = BufferSpan.From(data, 0, data.Length);
 
@@ -53,7 +67,18 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Address).IsEqualTo(0x00);
                 Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
                 Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
-                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+
+                Check.That(result.Response.Data.ToArray())
+               .ContainsExactly(
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30
+                );
+
                 Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
                 Check.That(result.Response.ToString())
@@ -122,7 +147,18 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Address).IsEqualTo(0x00);
                 Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
                 Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
-                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+
+                Check.That(result.Response.Data.ToArray())
+               .ContainsExactly(
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30
+                );
+
                 Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
                 Check.That(result.Response.ToString())
@@ -134,7 +170,19 @@ namespace InlayTester.Drivers.Feig
             {
                 // act
                 var data = new Byte[] {
-                    0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30, 0x33, /*0x09*/ 0x08,
+                    0x0D,
+                    0x00,
+                    0x65,
+                    0x00,
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30,
+                    0x33, /*0x09*/
+                    0x08,
                 };
 
                 var span = BufferSpan.From(data, 0, data.Length);
@@ -149,7 +197,18 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Address).IsEqualTo(0x00);
                 Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
                 Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
-                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+
+                Check.That(result.Response.Data.ToArray())
+               .ContainsExactly(
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30
+                );
+
                 Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
                 Check.That(result.Response.ToString())
@@ -162,7 +221,19 @@ namespace InlayTester.Drivers.Feig
                 // act
                 var data = new Byte[] {
                     /*0x0D,*/
-                    0x03, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30, 0x33, 0x08,
+                    0x03,
+                    0x00,
+                    0x65,
+                    0x00,
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30,
+                    0x33,
+                    0x08,
                 };
 
                 var span = BufferSpan.From(data, 0, data.Length);
@@ -180,7 +251,21 @@ namespace InlayTester.Drivers.Feig
             {
                 // act
                 var data = new Byte[] {
-                    0x02, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, 0x69,
+                    0x02,
+                    0x00,
+                    0x0F,
+                    0x00,
+                    0x65,
+                    0x00,
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30,
+                    0x74,
+                    0x69,
                 };
 
                 var span = BufferSpan.From(data, 0, data.Length);
@@ -195,7 +280,18 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Address).IsEqualTo(0x00);
                 Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
                 Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
-                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+
+                Check.That(result.Response.Data.ToArray())
+               .ContainsExactly(
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30
+                );
+
                 Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
                 Check.That(result.Response.ToString())
@@ -266,7 +362,18 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Address).IsEqualTo(0x00);
                 Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
                 Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
-                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+
+                Check.That(result.Response.Data.ToArray())
+               .ContainsExactly(
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30
+                );
+
                 Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
                 Check.That(result.Response.ToString())
@@ -278,7 +385,21 @@ namespace InlayTester.Drivers.Feig
             {
                 // act
                 var data = new Byte[] {
-                    0x02, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, /*0x69*/ 0x68,
+                    0x02,
+                    0x00,
+                    0x0F,
+                    0x00,
+                    0x65,
+                    0x00,
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30,
+                    0x74, /*0x69*/
+                    0x68,
                 };
 
                 var span = BufferSpan.From(data, 0, data.Length);
@@ -293,7 +414,18 @@ namespace InlayTester.Drivers.Feig
                 Check.That(result.Response.Address).IsEqualTo(0x00);
                 Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
                 Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
-                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+
+                Check.That(result.Response.Data.ToArray())
+               .ContainsExactly(
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30
+                );
+
                 Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
                 Check.That(result.Response.ToString())
@@ -306,7 +438,21 @@ namespace InlayTester.Drivers.Feig
                 // act
                 var data = new Byte[] {
                     /*0x02*/
-                    0xFF, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, 0x68,
+                    0xFF,
+                    0x00,
+                    0x0F,
+                    0x00,
+                    0x65,
+                    0x00,
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0D,
+                    0x30,
+                    0x74,
+                    0x68,
                 };
 
                 var span = BufferSpan.From(data, 0, data.Length);
