@@ -7,12 +7,69 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  #sonarcloud:
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Install .NET 5.0
+  #      uses: actions/setup-dotnet@v1
+  #      with:
+  #        dotnet-version: 5.0.x
+
+  #    - name: Checkout Sources
+  #      uses: actions/checkout@v2
+  #      with:
+  #        fetch-depth: 0
+
+  #    - name: SonarScanner for .NET 5
+  #      uses: highbyte/sonarscan-dotnet@2.0
+  #      with:
+  #        sonarProjectKey: Amarok79_InlayTester.Drivers.FeigReader
+  #        sonarProjectName: InlayTester.Drivers.FeigReader
+  #        sonarOrganization: amarok79-github
+  #        dotnetBuildArguments: --configuration Debug --framework net5.0
+  #        dotnetTestArguments: --configuration Debug --framework net5.0 --filter TestCategory!=com0com --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+  #        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
+  #      env:
+  #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  #stryker:
+  #  runs-on: windows-latest
+  #  steps:
+  #    - name: Install .NET Core 2.1
+  #      uses: actions/setup-dotnet@v1
+  #      with:
+  #        dotnet-version: 2.1.x
+
+  #    - name: Install .NET Core 3.1
+  #      uses: actions/setup-dotnet@v1
+  #      with:
+  #        dotnet-version: 3.1.x
+
+  #    - name: Install .NET 5.0
+  #      uses: actions/setup-dotnet@v1
+  #      with:
+  #        dotnet-version: 5.0.x
+
+  #    - name: Install Stryker
+  #      run: dotnet tool install --global dotnet-stryker
+
+  #    - name: Checkout sources
+  #      uses: actions/checkout@v2
+
+  #    - name: Run mutation tests
+  #      run: dotnet stryker
+
+  #    - name: Upload Stryker Output
+  #      uses: actions/upload-artifact@v2
+  #      with:
+  #        name: mutation-tests
+  #        path: "**/mutation-report.html"
+  #        if-no-files-found: error
+
+  buildtest:
     runs-on: windows-latest
-
     steps:
-      # Prepare
-
       - name: Install .NET Core 2.1
         uses: actions/setup-dotnet@v1
         with:
@@ -28,13 +85,8 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
-      #- name: Install Stryker
-      #  run: dotnet tool install --global dotnet-stryker
-
-      - name: Get sources
+      - name: Checkout sources
         uses: actions/checkout@v2
-
-      # Build and Test
 
       - name: Restore packages
         run: dotnet restore
@@ -45,19 +97,29 @@ jobs:
       - name: Run tests
         run: dotnet test --no-build --collect "Code Coverage" --filter TestCategory!=com0com
 
-      # Run Mutation Tests
+  buildrelease:
+    runs-on: windows-latest
+    steps:
+      - name: Install .NET Core 2.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.1.x
 
-      #- name: Run mutation tests
-      #  run: dotnet stryker
+      - name: Install .NET Core 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
 
-      #- name: Upload Stryker Output
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #    name: mutation-tests
-      #    path: "**/mutation-report.html"
-      #    if-no-files-found: error
+      - name: Install .NET 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
 
-      # Build and Publish (Release)
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Restore packages
+        run: dotnet restore
 
       - name: Build Release
         run: dotnet build --configuration Release
