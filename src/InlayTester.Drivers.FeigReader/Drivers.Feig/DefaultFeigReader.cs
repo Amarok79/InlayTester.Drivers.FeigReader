@@ -411,7 +411,7 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        public async Task ResetCpu(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
+        public async Task ResetCPU(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
 
@@ -461,7 +461,7 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        public async Task ResetRf(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
+        public async Task ResetRF(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
 
@@ -511,7 +511,7 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        public async Task SwitchRf(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
+        public async Task SwitchRF(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
 

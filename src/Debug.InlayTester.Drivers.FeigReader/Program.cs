@@ -100,8 +100,8 @@ namespace InlayTester
 
                         try
                         {
-                            await reader.SwitchRf(0x00).ConfigureAwait(false);
-                            await reader.SwitchRf(0x01).ConfigureAwait(false);
+                            await reader.SwitchRF(0x00).ConfigureAwait(false);
+                            await reader.SwitchRF(0x01).ConfigureAwait(false);
 
                             sw.Stop();
 

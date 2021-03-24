@@ -244,7 +244,7 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        Task ResetCpu(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
+        Task ResetCPU(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders which 
@@ -270,7 +270,7 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        Task ResetRf(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
+        Task ResetRF(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Switches the RF-field of the Reader antenna on or off.
@@ -296,7 +296,7 @@ namespace InlayTester.Drivers.Feig
         /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
         /// <exception cref="FeigException">
         /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
-        Task SwitchRf(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default);
+        Task SwitchRF(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets information about the reader/module's software.
