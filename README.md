@@ -1,7 +1,7 @@
 ![CI](https://github.com/Amarok79/InlayTester.Drivers.FeigReader/workflows/CI/badge.svg)
 [![NuGet](https://img.shields.io/nuget/v/InlayTester.Drivers.FeigReader.svg?logo=)](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
 
-## Introduction
+# Introduction
 
 This library is available as NuGet package:
 [InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
@@ -13,7 +13,7 @@ For development, you need *Visual Studio 2019*. For running the tests, you need 
 The library uses [Amarok79/InlayTester.Shared.Transports](https://github.com/Amarok79/InlayTester.Shared.Transports) under the hood, which again depends on the excellent [jcurl/SerialPortStream](https://github.com/jcurl/SerialPortStream) for serial communication.
 
 
-## Supported Feig RFID Reader/Modules
+# Supported Feig RFID Reader/Modules
 
 In general, all Feig RFID reader/modules are supported that run Feig `s standard or advanced protocol.
 
@@ -22,7 +22,7 @@ Specifically, following readers/modules have been extensively tested:
 - ISC.M02
 
 
-## Supported RFID Transponders
+# Supported RFID Transponders
 
 The provided `Inventory()` API supports following transponders:
 - ISO14443A
@@ -38,7 +38,7 @@ The provided `Inventory()` API supports following transponders:
 - EPC Class1 Gen2
 
 
-## Documentation
+# Documentation
 
 ### Create, Open, Close
 
