@@ -32,17 +32,17 @@ namespace InlayTester.Drivers.Feig
     internal interface IFeigTransport : IDisposable
     {
         /// <summary>
-        /// Opens the transport.
+        ///     Opens the transport.
         /// </summary>
         void Open();
 
         /// <summary>
-        /// Closes the transport.
+        ///     Closes the transport.
         /// </summary>
         void Close();
 
         /// <summary>
-        /// Performs a transfer by sending a request and waiting for a response or timeout.
+        ///     Performs a transfer by sending a request and waiting for a response or timeout.
         /// </summary>
         Task<FeigTransferResult> Transfer(
             FeigRequest request,

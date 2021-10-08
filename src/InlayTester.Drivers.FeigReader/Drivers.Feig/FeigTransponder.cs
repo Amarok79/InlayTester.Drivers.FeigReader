@@ -31,23 +31,23 @@ using Amarok.Shared;
 namespace InlayTester.Drivers.Feig
 {
     /// <summary>
-    /// This type represents a RFID transponder consisting of type and identifier.
+    ///     This type represents a RFID transponder consisting of type and identifier.
     /// </summary>
     public sealed class FeigTransponder
     {
         /// <summary>
-        /// The type of the transponder.
+        ///     The type of the transponder.
         /// </summary>
         public FeigTransponderType TransponderType { get; set; } = FeigTransponderType.Unknown;
 
         /// <summary>
-        /// The identifier of the transponder.
+        ///     The identifier of the transponder.
         /// </summary>
         public BufferSpan Identifier { get; set; }
 
 
         /// <summary>
-        /// Returns a string that represents the current instance.
+        ///     Returns a string that represents the current instance.
         /// </summary>
         public override String ToString()
         {
@@ -72,7 +72,7 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Returns a string representation for the given transponders.
+        ///     Returns a string representation for the given transponders.
         /// </summary>
         public static String ToString(IEnumerable<FeigTransponder> transponders)
         {

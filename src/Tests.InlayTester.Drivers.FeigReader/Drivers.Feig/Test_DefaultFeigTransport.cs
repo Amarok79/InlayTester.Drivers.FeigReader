@@ -448,7 +448,7 @@ namespace InlayTester.Drivers.Feig
 
                     var cts = new CancellationTokenSource();
 
-                    Task<FeigTransferResult> task = transportA.Transfer(
+                    var task = transportA.Transfer(
                         new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
                         FeigProtocol.Advanced,
                         TimeSpan.FromMilliseconds(5000),

@@ -313,7 +313,10 @@ namespace InlayTester.Drivers.Feig
                     Timeout           = TimeSpan.FromMilliseconds(275),
                 };
 
-                var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion, Address = 236 };
+                var request = new FeigRequest {
+                    Command = FeigCommand.GetSoftwareVersion,
+                    Address = 236,
+                };
 
                 var response = new FeigResponse();
 
@@ -353,7 +356,10 @@ namespace InlayTester.Drivers.Feig
                     Timeout           = TimeSpan.FromMilliseconds(275),
                 };
 
-                var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion, Address = 236 };
+                var request = new FeigRequest {
+                    Command = FeigCommand.GetSoftwareVersion,
+                    Address = 236,
+                };
 
                 var response = new FeigResponse();
 
@@ -564,7 +570,10 @@ namespace InlayTester.Drivers.Feig
                     Timeout           = TimeSpan.FromMilliseconds(275),
                 };
 
-                var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion, Address = 236 };
+                var request = new FeigRequest {
+                    Command = FeigCommand.GetSoftwareVersion,
+                    Address = 236,
+                };
 
                 var response = new FeigResponse();
 
@@ -606,7 +615,10 @@ namespace InlayTester.Drivers.Feig
                     Timeout           = TimeSpan.FromMilliseconds(275),
                 };
 
-                var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion, Address = 236 };
+                var request = new FeigRequest {
+                    Command = FeigCommand.GetSoftwareVersion,
+                    Address = 236,
+                };
 
                 var response = new FeigResponse();
 
@@ -925,7 +937,10 @@ namespace InlayTester.Drivers.Feig
                     Timeout           = TimeSpan.FromMilliseconds(275),
                 };
 
-                var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion, Address = 236 };
+                var request = new FeigRequest {
+                    Command = FeigCommand.GetSoftwareVersion,
+                    Address = 236,
+                };
 
                 var response = new FeigResponse();
 
@@ -970,7 +985,10 @@ namespace InlayTester.Drivers.Feig
                     Timeout           = TimeSpan.FromMilliseconds(275),
                 };
 
-                var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion, Address = 236 };
+                var request = new FeigRequest {
+                    Command = FeigCommand.GetSoftwareVersion,
+                    Address = 236,
+                };
 
                 var response = new FeigResponse();
 
@@ -1556,8 +1574,12 @@ namespace InlayTester.Drivers.Feig
                 var               timeout           = TimeSpan.Zero;
                 CancellationToken cancellationToken = default;
 
-                var data     = new Byte[] { 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30 };
-                var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
+                var data = new Byte[] { 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30 };
+
+                var response = new FeigResponse {
+                    Status = FeigStatus.OK,
+                    Data   = BufferSpan.From(data),
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1617,8 +1639,12 @@ namespace InlayTester.Drivers.Feig
                 var               timeout           = TimeSpan.Zero;
                 CancellationToken cancellationToken = default;
 
-                var data     = new Byte[14];
-                var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
+                var data = new Byte[14];
+
+                var response = new FeigResponse {
+                    Status = FeigStatus.OK,
+                    Data   = BufferSpan.From(data),
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1673,7 +1699,10 @@ namespace InlayTester.Drivers.Feig
                 var               timeout           = TimeSpan.Zero;
                 CancellationToken cancellationToken = default;
 
-                var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+                var response = new FeigResponse {
+                    Status = FeigStatus.OK,
+                    Data   = BufferSpan.Empty,
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1763,7 +1792,10 @@ namespace InlayTester.Drivers.Feig
                 var               timeout           = TimeSpan.Zero;
                 CancellationToken cancellationToken = default;
 
-                var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+                var response = new FeigResponse {
+                    Status = FeigStatus.OK,
+                    Data   = BufferSpan.Empty,
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1816,7 +1848,10 @@ namespace InlayTester.Drivers.Feig
                 var               timeout           = TimeSpan.Zero;
                 CancellationToken cancellationToken = default;
 
-                var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+                var response = new FeigResponse {
+                    Status = FeigStatus.OK,
+                    Data   = BufferSpan.Empty,
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1869,7 +1904,10 @@ namespace InlayTester.Drivers.Feig
                 var               timeout           = TimeSpan.Zero;
                 CancellationToken cancellationToken = default;
 
-                var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+                var response = new FeigResponse {
+                    Status = FeigStatus.OK,
+                    Data   = BufferSpan.Empty,
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -1922,7 +1960,10 @@ namespace InlayTester.Drivers.Feig
                 var               timeout           = TimeSpan.Zero;
                 CancellationToken cancellationToken = default;
 
-                var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.Empty };
+                var response = new FeigResponse {
+                    Status = FeigStatus.OK,
+                    Data   = BufferSpan.Empty,
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -2500,7 +2541,7 @@ namespace InlayTester.Drivers.Feig
                     0xDD
                 );
 
-                FeigTransponder[] transponders = DefaultFeigReader.Inventory_Parse(ref data);
+                var transponders = DefaultFeigReader.Inventory_Parse(ref data);
 
                 Check.That(transponders[0].TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
@@ -2687,7 +2728,10 @@ namespace InlayTester.Drivers.Feig
                     0x11,
                 };
 
-                var response = new FeigResponse { Status = FeigStatus.OK, Data = BufferSpan.From(data) };
+                var response = new FeigResponse {
+                    Status = FeigStatus.OK,
+                    Data   = BufferSpan.From(data),
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -2721,7 +2765,7 @@ namespace InlayTester.Drivers.Feig
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
-                (FeigTransponder[] Transponders, FeigResponse Response) result = await reader.Inventory();
+                var result = await reader.Inventory();
 
                 // assert
                 Check.That(result.Transponders.Length).IsEqualTo(1);
@@ -2750,7 +2794,10 @@ namespace InlayTester.Drivers.Feig
                 var               timeout           = TimeSpan.Zero;
                 CancellationToken cancellationToken = default;
 
-                var response = new FeigResponse { Status = FeigStatus.NoTransponder, Data = BufferSpan.Empty };
+                var response = new FeigResponse {
+                    Status = FeigStatus.NoTransponder,
+                    Data   = BufferSpan.Empty,
+                };
 
                 var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -2784,7 +2831,7 @@ namespace InlayTester.Drivers.Feig
                 var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
                 // act
-                (FeigTransponder[] Transponders, FeigResponse Response) result = await reader.Inventory();
+                var result = await reader.Inventory();
 
                 // assert
                 Check.That(result.Transponders.Length).IsEqualTo(0);

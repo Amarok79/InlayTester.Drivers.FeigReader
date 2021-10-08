@@ -30,7 +30,7 @@ using InlayTester.Shared;
 namespace InlayTester.Drivers.Feig
 {
     /// <summary>
-    /// This type provides methods for calculating a CRC as used by Feig RFID readers.
+    ///     This type provides methods for calculating a CRC as used by Feig RFID readers.
     /// </summary>
     public static class FeigChecksum
     {
@@ -55,7 +55,7 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Calculates the CRC for the given data.
+        ///     Calculates the CRC for the given data.
         /// </summary>
         public static Int32 Calculate(in BufferSpan data)
         {

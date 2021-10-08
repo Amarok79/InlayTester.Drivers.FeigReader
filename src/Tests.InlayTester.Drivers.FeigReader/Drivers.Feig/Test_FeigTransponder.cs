@@ -48,7 +48,8 @@ namespace InlayTester.Drivers.Feig
         public void Construction()
         {
             var transponder = new FeigTransponder {
-                TransponderType = FeigTransponderType.ISO14443A, Identifier = BufferSpan.From(0x11, 0x22, 0x33),
+                TransponderType = FeigTransponderType.ISO14443A,
+                Identifier      = BufferSpan.From(0x11, 0x22, 0x33),
             };
 
             Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
@@ -62,10 +63,13 @@ namespace InlayTester.Drivers.Feig
         {
             var transponders = new[] {
                 new FeigTransponder {
-                    TransponderType = FeigTransponderType.ISO14443A, Identifier = BufferSpan.From(0x11, 0x22, 0x33),
+                    TransponderType = FeigTransponderType.ISO14443A,
+                    Identifier =
+                        BufferSpan.From(0x11, 0x22, 0x33),
                 },
                 new FeigTransponder {
-                    TransponderType = FeigTransponderType.Jewel, Identifier = BufferSpan.From(0x44, 0x55),
+                    TransponderType = FeigTransponderType.Jewel,
+                    Identifier      = BufferSpan.From(0x44, 0x55),
                 },
             };
 
@@ -78,7 +82,9 @@ namespace InlayTester.Drivers.Feig
         {
             var transponders = new[] {
                 new FeigTransponder {
-                    TransponderType = FeigTransponderType.ISO14443A, Identifier = BufferSpan.From(0x11, 0x22, 0x33),
+                    TransponderType = FeigTransponderType.ISO14443A,
+                    Identifier =
+                        BufferSpan.From(0x11, 0x22, 0x33),
                 },
             };
 
@@ -88,7 +94,7 @@ namespace InlayTester.Drivers.Feig
         [Test]
         public void ToString_NoItems()
         {
-            FeigTransponder[] transponders = Array.Empty<FeigTransponder>();
+            var transponders = Array.Empty<FeigTransponder>();
 
             Check.That(FeigTransponder.ToString(transponders)).IsEqualTo(String.Empty);
         }

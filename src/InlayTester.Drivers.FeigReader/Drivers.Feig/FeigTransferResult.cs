@@ -31,22 +31,22 @@ using Amarok.Shared;
 namespace InlayTester.Drivers.Feig
 {
     /// <summary>
-    /// This type represents the result of a transfer operation.
+    ///     This type represents the result of a transfer operation.
     /// </summary>
     public readonly struct FeigTransferResult
     {
         /// <summary>
-        /// Gets the status of the transfer operation.
+        ///     Gets the status of the transfer operation.
         /// </summary>
         public FeigTransferStatus Status { get; }
 
         /// <summary>
-        /// Gets the request of this transfer operation.
+        ///     Gets the request of this transfer operation.
         /// </summary>
         public FeigRequest Request { get; }
 
         /// <summary>
-        /// Gets the parsed response, if available, otherwise null.
+        ///     Gets the parsed response, if available, otherwise null.
         /// </summary>
         public FeigResponse? Response { get; }
 
@@ -60,7 +60,7 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Returns a string that represents the current instance.
+        ///     Returns a string that represents the current instance.
         /// </summary>
         public override String ToString()
         {
@@ -88,11 +88,12 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Returns a result indicating a successfully transfer operation.
+        ///     Returns a result indicating a successfully transfer operation.
         /// </summary>
         /// 
         /// <exception cref="ArgumentNullException">
-        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        ///     A null reference was passed to a method that did not accept it as a valid argument.
+        /// </exception>
         public static FeigTransferResult Success(FeigRequest request, FeigResponse response)
         {
             Verify.NotNull(request, nameof(request));
@@ -102,11 +103,12 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Returns a result indicating that the transfer operation has been canceled.
+        ///     Returns a result indicating that the transfer operation has been canceled.
         /// </summary>
         /// 
         /// <exception cref="ArgumentNullException">
-        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        ///     A null reference was passed to a method that did not accept it as a valid argument.
+        /// </exception>
         public static FeigTransferResult Canceled(FeigRequest request)
         {
             Verify.NotNull(request, nameof(request));
@@ -115,11 +117,12 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Returns a result indicating that the transfer operation has timed out.
+        ///     Returns a result indicating that the transfer operation has timed out.
         /// </summary>
         /// 
         /// <exception cref="ArgumentNullException">
-        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        ///     A null reference was passed to a method that did not accept it as a valid argument.
+        /// </exception>
         public static FeigTransferResult Timeout(FeigRequest request)
         {
             Verify.NotNull(request, nameof(request));
@@ -128,11 +131,12 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Returns a result indicating that the transfer operation failed due to a communication error.
+        ///     Returns a result indicating that the transfer operation failed due to a communication error.
         /// </summary>
         /// 
         /// <exception cref="ArgumentNullException">
-        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        ///     A null reference was passed to a method that did not accept it as a valid argument.
+        /// </exception>
         public static FeigTransferResult CommunicationError(FeigRequest request)
         {
             Verify.NotNull(request, nameof(request));
@@ -141,12 +145,13 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Returns a result indicating that the transfer operation failed because an unexpected response 
-        /// has been received.
+        ///     Returns a result indicating that the transfer operation failed because an unexpected response
+        ///     has been received.
         /// </summary>
         /// 
         /// <exception cref="ArgumentNullException">
-        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        ///     A null reference was passed to a method that did not accept it as a valid argument.
+        /// </exception>
         public static FeigTransferResult UnexpectedResponse(FeigRequest request, FeigResponse response)
         {
             Verify.NotNull(request, nameof(request));

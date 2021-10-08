@@ -55,7 +55,7 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Initializes a new instance.
+        ///     Initializes a new instance.
         /// </summary>
         public DefaultFeigReader(FeigReaderSettings settings, IFeigTransport transport, ILogger logger)
         {
@@ -69,37 +69,40 @@ namespace InlayTester.Drivers.Feig
         #region ++ IFeigReader Interface (Open, Close, Dispose) ++
 
         /// <summary>
-        /// Opens the transport (serial connection) to the Feig RFID reader.
-        /// 
-        /// The transport can be opened and closed multiple times.
+        ///     Opens the transport (serial connection) to the Feig RFID reader. The transport can be opened
+        ///     and closed multiple times.
         /// </summary>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has already been opened before.</exception>
+        ///     The transport has already been opened before.
+        /// </exception>
         /// <exception cref="IOException">
-        /// The transport settings seem to be invalid.</exception>
+        ///     The transport settings seem to be invalid.
+        /// </exception>
         public void Open()
         {
             mTransport.Open();
         }
 
         /// <summary>
-        /// Closes the transport (serial connection) to the Feig RFID reader.
-        /// 
-        /// The transport can be opened and closed multiple times.
+        ///     Closes the transport (serial connection) to the Feig RFID reader. The transport can be opened
+        ///     and closed multiple times.
         /// </summary>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         public void Close()
         {
             mTransport.Close();
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+        ///     resources.
         /// </summary>
         public void Dispose()
         {
@@ -111,30 +114,37 @@ namespace InlayTester.Drivers.Feig
         #region ++ IFeigReader Interface (Transfer) ++
 
         /// <summary>
-        /// Performs a transfer operation by sending a request to the reader/module and then waits for 
-        /// a corresponding response from the reader/module or for timeout, whatever comes first.
-        /// 
-        /// This method doesn't throw exceptions for timeout or failed transfer operations. Instead, a 
-        /// result object providing detailed information about the transfer operation is returned.
+        ///     Performs a transfer operation by sending a request to the reader/module and then waits for a
+        ///     corresponding response from the reader/module or for timeout, whatever comes first. This method
+        ///     doesn't throw exceptions for timeout or failed transfer operations. Instead, a result object
+        ///     providing detailed information about the transfer operation is returned.
         /// </summary>
         /// 
         /// <param name="request">
-        /// The request to send to the reader.</param>
+        ///     The request to send to the reader.
+        /// </param>
         /// <param name="protocol">
-        /// (Optional) The protocol to use in communication with the reader. If not specified, the global setting is used.</param>
+        ///     (Optional) The protocol to use in communication with the reader. If not specified, the global
+        ///     setting is used.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <returns>
-        /// An object describing the outcome of the transfer operation.
+        ///     An object describing the outcome of the transfer operation.
         /// </returns>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         public Task<FeigTransferResult> Transfer(
             FeigRequest request,
             FeigProtocol? protocol = null,
@@ -160,30 +170,36 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Performs a transfer operation by sending a request to the reader/module and then waits for 
-        /// a corresponding response from the reader/module or for timeout, whatever comes first.
-        /// 
-        /// This method doesn't throw exceptions for timeout or failed transfer operations. Instead, a 
-        /// result object providing detailed information about the transfer operation is returned.
+        ///     Performs a transfer operation by sending a request to the reader/module and then waits for a
+        ///     corresponding response from the reader/module or for timeout, whatever comes first. This method
+        ///     doesn't throw exceptions for timeout or failed transfer operations. Instead, a result object
+        ///     providing detailed information about the transfer operation is returned.
         /// </summary>
         /// 
         /// <param name="command">
-        /// The command to execute with this transfer operation.</param>
+        ///     The command to execute with this transfer operation.
+        /// </param>
         /// <param name="requestData">
-        /// (Optional) The data associated with the command that should be sent to the reader.</param>
+        ///     (Optional) The data associated with the command that should be sent to the reader.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <returns>
-        /// An object describing the outcome of the transfer operation.
+        ///     An object describing the outcome of the transfer operation.
         /// </returns>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         public Task<FeigTransferResult> Transfer(
             FeigCommand command,
             in BufferSpan requestData = default,
@@ -191,7 +207,11 @@ namespace InlayTester.Drivers.Feig
             CancellationToken cancellationToken = default
         )
         {
-            var request = new FeigRequest { Address = mSettings.Address, Command = command, Data = requestData };
+            var request = new FeigRequest {
+                Address = mSettings.Address,
+                Command = command,
+                Data    = requestData,
+            };
 
             return Transfer(request, mSettings.Protocol, timeout, cancellationToken);
         }
@@ -201,33 +221,45 @@ namespace InlayTester.Drivers.Feig
         #region ++ IFeigReader Interface (Execute) ++
 
         /// <summary>
-        /// Executes the supplied command by sending a request to the reader/module and then waits for 
-        /// a corresponding response from the reader/module or for timeout, whatever comes first.
-        /// 
-        /// This methods throws appropriate exceptions for timeout, cancellation or failed operations.
+        ///     Executes the supplied command by sending a request to the reader/module and then waits for a
+        ///     corresponding response from the reader/module or for timeout, whatever comes first. This
+        ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
         /// </summary>
         /// 
         /// <param name="request">
-        /// The request to send to the reader.</param>
+        ///     The request to send to the reader.
+        /// </param>
         /// <param name="protocol">
-        /// (Optional) The protocol to use in communication with the reader. If not specified, the global setting is used.</param>
+        ///     (Optional) The protocol to use in communication with the reader. If not specified, the global
+        ///     setting is used.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this operation. If not specified, the global timeout is used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the operation.
+        /// </param>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task<FeigResponse> Execute(
             FeigRequest request,
             FeigProtocol? protocol = null,
@@ -287,33 +319,45 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Executes the supplied command by sending a request to the reader/module and then waits for 
-        /// a corresponding response from the reader/module or for timeout, whatever comes first.
-        /// 
-        /// This methods throws appropriate exceptions for timeout, cancellation or failed operations.
+        ///     Executes the supplied command by sending a request to the reader/module and then waits for a
+        ///     corresponding response from the reader/module or for timeout, whatever comes first. This
+        ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
         /// </summary>
         /// 
         /// <param name="command">
-        /// The command to execute with this transfer operation.</param>
+        ///     The command to execute with this transfer operation.
+        /// </param>
         /// <param name="requestData">
-        /// (Optional) The data associated with the command that should be sent to the reader.</param>
+        ///     (Optional) The data associated with the command that should be sent to the reader.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public Task<FeigResponse> Execute(
             FeigCommand command,
             in BufferSpan requestData = default,
@@ -321,7 +365,11 @@ namespace InlayTester.Drivers.Feig
             CancellationToken cancellationToken = default
         )
         {
-            var request = new FeigRequest { Address = mSettings.Address, Command = command, Data = requestData };
+            var request = new FeigRequest {
+                Address = mSettings.Address,
+                Command = command,
+                Data    = requestData,
+            };
 
             return Execute(request, mSettings.Protocol, timeout, cancellationToken);
         }
@@ -331,27 +379,30 @@ namespace InlayTester.Drivers.Feig
         #region ++ IFeigReader Interface (Common Commands) ++
 
         /// <summary>
-        /// Tests whether communication to RFID reader is working.
-        /// 
-        /// This method sends a 'Baud Rate Detection' command request to the reader to determine whether 
-        /// communication is working.
-        /// 
-        /// This method doesn't throw exceptions for communication errors.
+        ///     Tests whether communication to RFID reader is working. This method sends a 'Baud Rate
+        ///     Detection' command request to the reader to determine whether communication is working. This
+        ///     method doesn't throw exceptions for communication errors.
         /// </summary>
         /// 
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <returns>
-        /// True, if the communication test succeeded; otherwise False. In case of cancellation, False is returned.
+        ///     True, if the communication test succeeded; otherwise False. In case of cancellation, False is
+        ///     returned.
         /// </returns>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         public async Task<Boolean> TestCommunication(
             TimeSpan? timeout = null,
             CancellationToken cancellationToken = default
@@ -389,28 +440,37 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Resets the CPU on the reader.
-        /// 
-        /// The RF-field will be switched off during a CPU reset.
+        ///     Resets the CPU on the reader. The RF-field will be switched off during a CPU reset.
         /// </summary>
         /// 
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task ResetCPU(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
@@ -438,29 +498,39 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders which 
-        /// are within the antenna field of the reader will be reset to their base setting.
-        /// 
-        /// After a RF Reset a transponder which is located within the field has to be re-selected.
+        ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders
+        ///     which are within the antenna field of the reader will be reset to their base setting. After a
+        ///     RF Reset a transponder which is located within the field has to be re-selected.
         /// </summary>
         /// 
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task ResetRF(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
@@ -488,29 +558,42 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Switches the RF-field of the Reader antenna on or off.
+        ///     Switches the RF-field of the Reader antenna on or off.
         /// </summary>
         /// 
         /// <param name="flag">
-        /// A value indicating which RF field should switched on or off. Specify 0x00 to switch off all 
-        /// antennas and 0x01 to switch on the first antenna. Look up more information in the reader's manual.</param>
+        ///     A value indicating which RF field should switched on or off. Specify 0x00 to switch off all
+        ///     antennas and 0x01 to switch on the first antenna. Look up more information in the reader's
+        ///     manual.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task SwitchRF(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
@@ -541,30 +624,41 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Gets information about the reader/module's software.
+        ///     Gets information about the reader/module's software.
         /// </summary>
         /// 
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <returns>
-        /// An object containing the parsed response data.
+        ///     An object containing the parsed response data.
         /// </returns>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task<FeigSoftwareInfo> GetSoftwareInfo(
             TimeSpan? timeout = null,
             CancellationToken cancellationToken = default
@@ -605,36 +699,50 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Reads a configuration block (14 bytes) from the reader's RAM or EEPROM.
+        ///     Reads a configuration block (14 bytes) from the reader's RAM or EEPROM.
         /// </summary>
         /// 
         /// <param name="block">
-        /// The configuration block to read.</param>
+        ///     The configuration block to read.
+        /// </param>
         /// <param name="location">
-        /// The location of the block to read from, either EEPROM or RAM.</param>
+        ///     The location of the block to read from, either EEPROM or RAM.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <returns>
-        /// The configuration data.
+        ///     The configuration data.
         /// </returns>
         /// 
         /// <exception cref="ArgumentOutOfRangeException">
-        /// The block number must be between 0 and 63.</exception>
+        ///     The block number must be between 0 and 63.
+        /// </exception>
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task<BufferSpan> ReadConfiguration(
             Int32 block,
             FeigBlockLocation location,
@@ -686,36 +794,52 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Writes a configuration block (14 bytes) to the reader's RAM or EEPROM.
+        ///     Writes a configuration block (14 bytes) to the reader's RAM or EEPROM.
         /// </summary>
         /// 
         /// <param name="block">
-        /// The configuration block to write.</param>
+        ///     The configuration block to write.
+        /// </param>
         /// <param name="location">
-        /// The location of the block to write to, either EEPROM or RAM.</param>
+        ///     The location of the block to write to, either EEPROM or RAM.
+        /// </param>
         /// <param name="data">
-        /// The data of the configuration block; must be exactly 14 bytes.</param>
+        ///     The data of the configuration block; must be exactly 14 bytes.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ArgumentOutOfRangeException">
-        /// The block number must be between 0 and 63.</exception>
+        ///     The block number must be between 0 and 63.
+        /// </exception>
         /// <exception cref="ArgumentException">
-        /// Exactly 14 bytes must be specified as configuration data.</exception>
+        ///     Exactly 14 bytes must be specified as configuration data.
+        /// </exception>
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public Task WriteConfiguration(
             Int32 block,
             FeigBlockLocation location,
@@ -784,26 +908,37 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Saves all configuration blocks currently in the reader's RAM to EEPROM.
+        ///     Saves all configuration blocks currently in the reader's RAM to EEPROM.
         /// </summary>
         /// 
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task SaveConfigurations(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
         {
             #region (logging)
@@ -835,30 +970,43 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Saves the specified configuration block currently in the reader's RAM to EEPROM.
+        ///     Saves the specified configuration block currently in the reader's RAM to EEPROM.
         /// </summary>
         /// 
         /// <param name="block">
-        /// The configuration block to save.</param>
+        ///     The configuration block to save.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ArgumentOutOfRangeException">
-        /// The block number must be between 0 and 63.</exception>
+        ///     The block number must be between 0 and 63.
+        /// </exception>
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task SaveConfiguration(
             Int32 block,
             TimeSpan? timeout = null,
@@ -902,28 +1050,40 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Resets all configuration blocks to their defaults.
+        ///     Resets all configuration blocks to their defaults.
         /// </summary>
         /// 
         /// <param name="location">
-        /// The location of the block to reset, either EEPROM or RAM.</param>
+        ///     The location of the block to reset, either EEPROM or RAM.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task ResetConfigurations(
             FeigBlockLocation location,
             TimeSpan? timeout = null,
@@ -969,32 +1129,46 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Resets the specified configuration block to its defaults.
+        ///     Resets the specified configuration block to its defaults.
         /// </summary>
         /// 
         /// <param name="block">
-        /// The configuration block to reset.</param>
+        ///     The configuration block to reset.
+        /// </param>
         /// <param name="location">
-        /// The location of the block to reset, either EEPROM or RAM.</param>
+        ///     The location of the block to reset, either EEPROM or RAM.
+        /// </param>
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <exception cref="ArgumentOutOfRangeException">
-        /// The block number must be between 0 and 63.</exception>
+        ///     The block number must be between 0 and 63.
+        /// </exception>
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task ResetConfiguration(
             Int32 block,
             FeigBlockLocation location,
@@ -1044,31 +1218,41 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Reads the identifier data of all transponders inside the antenna field.
+        ///     Reads the identifier data of all transponders inside the antenna field.
         /// </summary>
         /// 
         /// <param name="timeout">
-        /// (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.</param>
+        ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+        ///     used.
+        /// </param>
         /// <param name="cancellationToken">
-        /// (Optional) A cancellation token that can be used to cancel the transfer operation.</param>
+        ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
+        /// </param>
         /// 
         /// <returns>
-        /// A tuple containing the decoded transponders and the received response.
+        ///     A tuple containing the decoded transponders and the received response.
         /// </returns>
         /// 
-        /// 
         /// <exception cref="ObjectDisposedException">
-        /// A method or property was called on an already disposed object.</exception>
+        ///     A method or property was called on an already disposed object.
+        /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// The transport has not been opened yet.</exception>
+        ///     The transport has not been opened yet.
+        /// </exception>
         /// <exception cref="TimeoutException">
-        /// The operation '(request)' timed out after (timeout) ms.</exception>
+        ///     The operation '(request)' timed out after (timeout) ms.
+        /// </exception>
         /// <exception cref="OperationCanceledException">
-        /// The operation '(request)' has been canceled.</exception>
+        ///     The operation '(request)' has been canceled.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because of a communication error. Received corrupted '(response)'.</exception>
+        ///     The operation '(request)' failed because of a communication error. Received corrupted
+        ///     '(response)'.
+        /// </exception>
         /// <exception cref="FeigException">
-        /// The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.</exception>
+        ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+        ///     '(response)'.
+        /// </exception>
         public async Task<(FeigTransponder[] Transponders, FeigResponse Response)> Inventory(
             TimeSpan? timeout = null,
             CancellationToken cancellationToken = default
@@ -1091,7 +1275,7 @@ namespace InlayTester.Drivers.Feig
 
             var rspDat = response.Data;
 
-            FeigTransponder[]? result = response.Status == FeigStatus.NoTransponder
+            var result = response.Status == FeigStatus.NoTransponder
                 ? Array.Empty<FeigTransponder>()
                 : Inventory_Parse(ref rspDat);
 
@@ -1156,7 +1340,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(2 + length);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.ISO14443A, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.ISO14443A,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_ISO14443B(ref BufferSpan data)
@@ -1166,7 +1353,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(9);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.ISO14443B, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.ISO14443B,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_Jewel(ref BufferSpan data)
@@ -1176,7 +1366,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(8);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.Jewel, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.Jewel,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_SR176(ref BufferSpan data)
@@ -1186,7 +1379,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(9);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.SR176, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.SR176,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_SRIxx(ref BufferSpan data)
@@ -1196,7 +1392,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(9);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.SRIxx, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.SRIxx,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_ISO15693(ref BufferSpan data)
@@ -1205,7 +1404,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(9);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.ISO15693, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.ISO15693,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_ISO18000_3M3(ref BufferSpan data)
@@ -1215,7 +1417,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(2 + length);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.ISO18000_3M3, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.ISO18000_3M3,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_EPC_Class1_Gen2(ref BufferSpan data)
@@ -1226,7 +1431,8 @@ namespace InlayTester.Drivers.Feig
             data = data.Discard(2 + length);
 
             return new FeigTransponder {
-                TransponderType = FeigTransponderType.EPC_Class1_Gen2, Identifier = identifier,
+                TransponderType = FeigTransponderType.EPC_Class1_Gen2,
+                Identifier      = identifier,
             };
         }
 
@@ -1236,7 +1442,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(9);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.ICode1, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.ICode1,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_ICodeEPC(ref BufferSpan data)
@@ -1245,7 +1454,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(8);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.ICodeEPC, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.ICodeEPC,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_ICodeUID(ref BufferSpan data)
@@ -1254,7 +1466,10 @@ namespace InlayTester.Drivers.Feig
 
             data = data.Discard(19);
 
-            return new FeigTransponder { TransponderType = FeigTransponderType.ICodeUID, Identifier = identifier };
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.ICodeUID,
+                Identifier      = identifier,
+            };
         }
 
         #endregion

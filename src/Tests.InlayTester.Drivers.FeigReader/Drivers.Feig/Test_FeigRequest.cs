@@ -50,7 +50,9 @@ namespace InlayTester.Drivers.Feig
         {
             // act
             var req = new FeigRequest {
-                Address = 0x12, Command = FeigCommand.ReadConfiguration, Data = BufferSpan.From(0x07),
+                Address = 0x12,
+                Command = FeigCommand.ReadConfiguration,
+                Data    = BufferSpan.From(0x07),
             };
 
             // assert
@@ -107,7 +109,9 @@ namespace InlayTester.Drivers.Feig
         {
             // act
             var req = new FeigRequest {
-                Address = 0x12, Command = FeigCommand.ReadConfiguration, Data = BufferSpan.From(0x07),
+                Address = 0x12,
+                Command = FeigCommand.ReadConfiguration,
+                Data    = BufferSpan.From(0x07),
             };
 
             // assert

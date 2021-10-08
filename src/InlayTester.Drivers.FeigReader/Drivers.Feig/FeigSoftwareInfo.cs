@@ -32,33 +32,33 @@ using Amarok.Shared;
 namespace InlayTester.Drivers.Feig
 {
     /// <summary>
-    /// This type contains information about a Feig reader/module software.
+    ///     This type contains information about a Feig reader/module software.
     /// </summary>
     public sealed class FeigSoftwareInfo
     {
         /// <summary>
-        /// The firmware version.
+        ///     The firmware version.
         /// </summary>
         public Version FirmwareVersion { get; set; }
 
         /// <summary>
-        /// The hardware type.
+        ///     The hardware type.
         /// </summary>
         public Byte HardwareType { get; set; }
 
         /// <summary>
-        /// The reader type.
+        ///     The reader type.
         /// </summary>
         public FeigReaderType ReaderType { get; set; }
 
         /// <summary>
-        /// The transponders supported by the firmware.
+        ///     The transponders supported by the firmware.
         /// </summary>
         public Int32 SupportedTransponders { get; set; }
 
 
         /// <summary>
-        /// Initializes a new instance.
+        ///     Initializes a new instance.
         /// </summary>
         public FeigSoftwareInfo()
         {
@@ -67,11 +67,12 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Initializes a new instance.
+        ///     Initializes a new instance.
         /// </summary>
         /// 
         /// <exception cref="ArgumentNullException">
-        /// A null reference was passed to a method that did not accept it as a valid argument.</exception>
+        ///     A null reference was passed to a method that did not accept it as a valid argument.
+        /// </exception>
         public FeigSoftwareInfo(FeigSoftwareInfo info)
         {
             Verify.NotNull(info, nameof(info));
@@ -84,7 +85,7 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Returns a string that represents the current instance.
+        ///     Returns a string that represents the current instance.
         /// </summary>
         public override String ToString()
         {

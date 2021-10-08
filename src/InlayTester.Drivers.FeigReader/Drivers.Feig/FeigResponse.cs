@@ -30,43 +30,43 @@ using Amarok.Shared;
 namespace InlayTester.Drivers.Feig
 {
     /// <summary>
-    /// This type represents a single response.
+    ///     This type represents a single response.
     /// </summary>
     public sealed class FeigResponse
     {
         /// <summary>
-        /// The length of the response frame.
+        ///     The length of the response frame.
         /// </summary>
         public Int32 FrameLength { get; set; }
 
         /// <summary>
-        /// The address of the device.
+        ///     The address of the device.
         /// </summary>
         public Byte Address { get; set; }
 
         /// <summary>
-        /// The command the reader performed.
+        ///     The command the reader performed.
         /// </summary>
         public FeigCommand Command { get; set; }
 
         /// <summary>
-        /// The status of the command.
+        ///     The status of the command.
         /// </summary>
         public FeigStatus Status { get; set; }
 
         /// <summary>
-        /// The response data for the command.
+        ///     The response data for the command.
         /// </summary>
         public BufferSpan Data { get; set; }
 
         /// <summary>
-        /// The checksum of the response frame.
+        ///     The checksum of the response frame.
         /// </summary>
         public Int32 Crc { get; set; }
 
 
         /// <summary>
-        /// Returns a string that represents the current instance.
+        ///     Returns a string that represents the current instance.
         /// </summary>
         public override String ToString()
         {
@@ -95,7 +95,7 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Attempts to parse a response from the given data.
+        ///     Attempts to parse a response from the given data.
         /// </summary>
         public static FeigParseResult TryParse(in BufferSpan span, FeigProtocol protocol)
         {

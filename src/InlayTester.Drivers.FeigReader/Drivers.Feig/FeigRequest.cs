@@ -30,31 +30,29 @@ using Amarok.Shared;
 namespace InlayTester.Drivers.Feig
 {
     /// <summary>
-    /// This type represents a single request.
+    ///     This type represents a single request.
     /// </summary>
     public sealed class FeigRequest
     {
         /// <summary>
-        /// The address of the device. The reader can be addressed via address 255 at any time. 
-        /// Defaults to 255.
+        ///     The address of the device. The reader can be addressed via address 255 at any time. Defaults to
+        ///     255.
         /// </summary>
         public Byte Address { get; set; } = 0xFF;
 
         /// <summary>
-        /// The command the reader should perform.
-        /// Defaults to <see cref="FeigCommand.None"/>.
+        ///     The command the reader should perform. Defaults to <see cref="FeigCommand.None"/>.
         /// </summary>
         public FeigCommand Command { get; set; } = FeigCommand.None;
 
         /// <summary>
-        /// The request data for the command.
-        /// Defaults to empty data.
+        ///     The request data for the command. Defaults to empty data.
         /// </summary>
         public BufferSpan Data { get; set; } = BufferSpan.Empty;
 
 
         /// <summary>
-        /// Returns a string that represents the current instance.
+        ///     Returns a string that represents the current instance.
         /// </summary>
         public override String ToString()
         {
@@ -81,7 +79,7 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Formats the request into its byte representation.
+        ///     Formats the request into its byte representation.
         /// </summary>
         public BufferSpan ToBufferSpan(FeigProtocol protocol = FeigProtocol.Standard)
         {

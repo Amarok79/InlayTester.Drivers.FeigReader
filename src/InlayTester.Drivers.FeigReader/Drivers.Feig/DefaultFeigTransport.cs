@@ -74,7 +74,7 @@ namespace InlayTester.Drivers.Feig
 
 
         /// <summary>
-        /// Opens the transport.
+        ///     Opens the transport.
         /// </summary>
         public void Open()
         {
@@ -82,7 +82,7 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Closes the transport.
+        ///     Closes the transport.
         /// </summary>
         public void Close()
         {
@@ -90,7 +90,8 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+        ///     resources.
         /// </summary>
         public void Dispose()
         {
@@ -98,7 +99,7 @@ namespace InlayTester.Drivers.Feig
         }
 
         /// <summary>
-        /// Performs a transfer by sending a request and waiting for a response or timeout.
+        ///     Performs a transfer by sending a request and waiting for a response or timeout.
         /// </summary>
         public Task<FeigTransferResult> Transfer(
             FeigRequest request,

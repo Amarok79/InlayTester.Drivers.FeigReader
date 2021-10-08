@@ -30,7 +30,7 @@ using Amarok.Shared;
 namespace InlayTester.Shared
 {
     /// <summary>
-    /// This class implements a CRC calculator that is configurable.
+    ///     This class implements a CRC calculator that is configurable.
     /// </summary>
     internal sealed class CrcCalculator
     {
@@ -53,23 +53,30 @@ namespace InlayTester.Shared
         #region ++ Public Interface ++
 
         /// <summary>
-        /// Initializes a new instance.
+        ///     Initializes a new instance.
         /// </summary>
         /// 
         /// <param name="order">
-        /// The CRC polynom order, counted without the leading '1' bit. A value between 1 and 32.</param>
+        ///     The CRC polynom order, counted without the leading '1' bit. A value between 1 and 32.
+        /// </param>
         /// <param name="polynom">
-        /// Polynom without leading '1' bit.</param>
+        ///     Polynom without leading '1' bit.
+        /// </param>
         /// <param name="isDirect">
-        /// true = direct, no augmented zero bits</param>
+        ///     true = direct, no augmented zero bits
+        /// </param>
         /// <param name="crcInit">
-        /// The initial CRC value belonging to that algorithm.</param>
+        ///     The initial CRC value belonging to that algorithm.
+        /// </param>
         /// <param name="crcXor">
-        /// The final XOR value.</param>
+        ///     The final XOR value.
+        /// </param>
         /// <param name="reflectInput">
-        /// Specifies if a data byte is reflected before processing (UART) or not.</param>
+        ///     Specifies if a data byte is reflected before processing (UART) or not.
+        /// </param>
         /// <param name="reflectOutput">
-        /// Specifies if the CRC will be reflected before XOR.</param>
+        ///     Specifies if the CRC will be reflected before XOR.
+        /// </param>
         public CrcCalculator(
             Int32 order,
             Int32 polynom,
@@ -94,11 +101,12 @@ namespace InlayTester.Shared
         }
 
         /// <summary>
-        /// Calculates the CRC value for the given buffer.
+        ///     Calculates the CRC value for the given buffer.
         /// </summary>
         /// 
         /// <returns>
-        /// The calculated checksum for the supplied buffer fragment.</returns>
+        ///     The calculated checksum for the supplied buffer fragment.
+        /// </returns>
         public Int32 Calculate(in BufferSpan data)
         {
             return (Int32) _Calculate(data.Buffer, data.Offset, data.Count);
