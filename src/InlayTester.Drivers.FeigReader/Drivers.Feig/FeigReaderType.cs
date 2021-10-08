@@ -252,5 +252,10 @@ namespace InlayTester.Drivers.Feig
         ///     111  CPR47
         /// </summary>
         CPR47 = 111,
+
+        /// <summary>
+        ///     114  CPR74
+        /// </summary>
+        CPR74 = 114,
     }
 }

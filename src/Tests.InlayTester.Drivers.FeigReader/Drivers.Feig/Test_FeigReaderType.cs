@@ -45,6 +45,7 @@ namespace InlayTester.Drivers.Feig
                     nameof(FeigReaderType.CPR47),
                     nameof(FeigReaderType.CPR50),
                     nameof(FeigReaderType.CPR52),
+                    nameof(FeigReaderType.CPR74),
                     nameof(FeigReaderType.CPR_02),
                     nameof(FeigReaderType.CPR_04U),
                     nameof(FeigReaderType.CPR_M02),
@@ -89,6 +90,7 @@ namespace InlayTester.Drivers.Feig
         {
             Check.That((Byte) FeigReaderType.Unknown).IsEqualTo(0);
             Check.That((Byte) FeigReaderType.CPR40).IsEqualTo(83);
+            Check.That((Byte) FeigReaderType.CPR74).IsEqualTo(114);
         }
     }
 }
