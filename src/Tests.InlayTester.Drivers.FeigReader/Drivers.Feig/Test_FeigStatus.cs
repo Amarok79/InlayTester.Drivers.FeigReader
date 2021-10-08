@@ -44,6 +44,7 @@ namespace InlayTester.Drivers.Feig
                     nameof(FeigStatus.AddressError),
                     nameof(FeigStatus.WrongTransponderType),
                     nameof(FeigStatus.AuthenticationError),
+                    nameof(FeigStatus.CollisionError),
                     nameof(FeigStatus.GeneralError),
                     nameof(FeigStatus.EEPROMFailure),
                     nameof(FeigStatus.ParameterRangeError),
@@ -84,6 +85,7 @@ namespace InlayTester.Drivers.Feig
             Check.That((Byte) FeigStatus.AddressError).IsEqualTo(0x04);
             Check.That((Byte) FeigStatus.WrongTransponderType).IsEqualTo(0x05);
             Check.That((Byte) FeigStatus.AuthenticationError).IsEqualTo(0x08);
+            Check.That((Byte) FeigStatus.CollisionError).IsEqualTo(0x0B);
             Check.That((Byte) FeigStatus.GeneralError).IsEqualTo(0x0E);
             Check.That((Byte) FeigStatus.EEPROMFailure).IsEqualTo(0x10);
             Check.That((Byte) FeigStatus.ParameterRangeError).IsEqualTo(0x11);
