@@ -2108,6 +2108,47 @@ namespace InlayTester.Drivers.Feig
             }
 
             [Test]
+            public void Inventory_Parse_Innovatron()
+            {
+                var data = BufferSpan.From(
+                    0x11,
+                    0x22,
+                    0x33,
+                    0x44,
+                    0x55,
+                    0x66,
+                    0x77,
+                    0x88,
+                    0xAA, // VERLOG
+                    0xBB, // CONFIG
+                    0x04, // ATR-LEN
+                    0xCC,
+                    0xDD,
+                    0xEE,
+                    0xFF,
+                    0x13
+                );
+
+                var transponder = DefaultFeigReader.Inventory_Parse_Innovatron(ref data);
+
+                Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.Innovatron);
+
+                Check.That(transponder.Identifier.ToArray())
+               .ContainsExactly(
+                    0x11,
+                    0x22,
+                    0x33,
+                    0x44,
+                    0x55,
+                    0x66,
+                    0x77,
+                    0x88
+                );
+
+                Check.That(data.ToArray()).ContainsExactly(0x13);
+            }
+
+            [Test]
             public void Inventory_Parse_Jewel()
             {
                 var data = BufferSpan.From(

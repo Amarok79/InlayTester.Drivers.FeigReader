@@ -1317,9 +1317,11 @@ namespace InlayTester.Drivers.Feig
             return transponderType switch {
                 FeigTransponderType.ISO14443A       => Inventory_Parse_ISO14443A(ref data),
                 FeigTransponderType.ISO14443B       => Inventory_Parse_ISO14443B(ref data),
+                FeigTransponderType.Innovatron      => Inventory_Parse_Innovatron(ref data),
                 FeigTransponderType.Jewel           => Inventory_Parse_Jewel(ref data),
                 FeigTransponderType.SR176           => Inventory_Parse_SR176(ref data),
                 FeigTransponderType.SRIxx           => Inventory_Parse_SRIxx(ref data),
+                FeigTransponderType.FeliCa          => Inventory_Parse_FeliCa(ref data),
                 FeigTransponderType.ISO15693        => Inventory_Parse_ISO15693(ref data),
                 FeigTransponderType.ISO18000_3M3    => Inventory_Parse_ISO18000_3M3(ref data),
                 FeigTransponderType.EPC_Class1_Gen2 => Inventory_Parse_EPC_Class1_Gen2(ref data),
@@ -1355,6 +1357,19 @@ namespace InlayTester.Drivers.Feig
 
             return new FeigTransponder {
                 TransponderType = FeigTransponderType.ISO14443B,
+                Identifier      = identifier,
+            };
+        }
+
+        internal static FeigTransponder Inventory_Parse_Innovatron(ref BufferSpan data)
+        {
+            var identifier = data.Slice(0, 8).Clone();
+            var length     = data[10];
+
+            data = data.Discard(11 + length);
+
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.Innovatron,
                 Identifier      = identifier,
             };
         }
@@ -1396,6 +1411,12 @@ namespace InlayTester.Drivers.Feig
                 TransponderType = FeigTransponderType.SRIxx,
                 Identifier      = identifier,
             };
+        }
+
+        internal static FeigTransponder Inventory_Parse_FeliCa(ref BufferSpan data)
+        {
+            // TODO
+            return null;
         }
 
         internal static FeigTransponder Inventory_Parse_ISO15693(ref BufferSpan data)
