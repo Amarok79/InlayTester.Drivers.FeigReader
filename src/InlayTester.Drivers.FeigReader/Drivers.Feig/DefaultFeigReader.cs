@@ -1415,8 +1415,14 @@ namespace InlayTester.Drivers.Feig
 
         internal static FeigTransponder Inventory_Parse_FeliCa(ref BufferSpan data)
         {
-            // TODO
-            return null;
+            var identifier = data.Slice(1, 8).Clone();
+
+            data = data.Discard(17);
+
+            return new FeigTransponder {
+                TransponderType = FeigTransponderType.FeliCa,
+                Identifier      = identifier,
+            };
         }
 
         internal static FeigTransponder Inventory_Parse_ISO15693(ref BufferSpan data)

@@ -2242,6 +2242,49 @@ namespace InlayTester.Drivers.Feig
             }
 
             [Test]
+            public void Inventory_Parse_FeliCa()
+            {
+                var data = BufferSpan.From(
+                    0xFF, // LENGTH
+                    0x11,
+                    0x22,
+                    0x33,
+                    0x44,
+                    0x55,
+                    0x66,
+                    0x77,
+                    0x88,
+                    0xAA,
+                    0xBB,
+                    0xCC,
+                    0xDD,
+                    0xEE,
+                    0xFF,
+                    0xAB,
+                    0xAC,
+                    0x13
+                );
+
+                var transponder = DefaultFeigReader.Inventory_Parse_FeliCa(ref data);
+
+                Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.FeliCa);
+
+                Check.That(transponder.Identifier.ToArray())
+               .ContainsExactly(
+                    0x11,
+                    0x22,
+                    0x33,
+                    0x44,
+                    0x55,
+                    0x66,
+                    0x77,
+                    0x88
+                );
+
+                Check.That(data.ToArray()).ContainsExactly(0x13);
+            }
+
+            [Test]
             public void Inventory_Parse_ISO15693()
             {
                 var data = BufferSpan.From(
