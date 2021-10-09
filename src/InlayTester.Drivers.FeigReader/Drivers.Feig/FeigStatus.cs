@@ -68,6 +68,11 @@ namespace InlayTester.Drivers.Feig
         AuthenticationError = 0x08,
 
         /// <summary>
+        ///     0Bh Collision Error
+        /// </summary>
+        CollisionError = 0x0B,
+
+        /// <summary>
         ///     0Eh General Error
         /// </summary>
         GeneralError = 0x0E,

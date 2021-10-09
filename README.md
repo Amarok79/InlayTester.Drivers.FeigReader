@@ -19,6 +19,7 @@ In general, all Feig RFID reader/modules are supported that run Feig `s standard
 
 Specifically, following readers/modules have been extensively tested:
 - CPR40.xx
+- CPR74.xx
 - ISC.M02
 
 
@@ -36,6 +37,8 @@ The provided `Inventory()` API supports following transponders:
 - SR176
 - SRIxx
 - EPC Class1 Gen2
+- Innovatron
+- FeliCa
 
 
 # Documentation
