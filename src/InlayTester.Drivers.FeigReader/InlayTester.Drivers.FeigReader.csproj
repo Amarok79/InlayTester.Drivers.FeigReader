@@ -1,70 +1,66 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<ProjectGuid>{B3B58DAC-1657-405F-B660-73ADF8D1BFF6}</ProjectGuid>
-		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
-		<RootNamespace>InlayTester</RootNamespace>
-		<Version>4.1.0</Version>
-		<Authors>Olaf Kober</Authors>
-		<Company>&lt;none&gt;</Company>
-		<Description>A shared library with a (serial) driver for communicating with RFID readers/modules from FEIG Electronic.</Description>
-		<Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/Amarok79/InlayTester.Drivers.FeigReader</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/Amarok79/InlayTester.Drivers.FeigReader</RepositoryUrl>
-		<PackageIcon>inlaytester.png</PackageIcon>
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageTags></PackageTags>
-		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
-		<DelaySign>false</DelaySign>
-		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
-		<IncludeSymbols>true</IncludeSymbols>
-		<IncludeSource>true</IncludeSource>
-		<Nullable>enable</Nullable>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-	</PropertyGroup>
+    <PropertyGroup>
+        <Version>4.2.0</Version>
+        <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
+        <RootNamespace>InlayTester</RootNamespace>
+        <Authors>Olaf Kober</Authors>
+        <Company>&lt;none&gt;</Company>
+        <Description>A shared library with a (serial) driver for communicating with RFID readers/modules from FEIG Electronic.</Description>
+        <Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
+        <DelaySign>false</DelaySign>
+        <Nullable>enable</Nullable>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <Deterministic>true</Deterministic>
+    </PropertyGroup>
 
-	<PropertyGroup>
-		<OutputPath>..\..\bin\lib\</OutputPath>
-		<DocumentationFile>..\..\bin\lib\InlayTester.Drivers.FeigReader.xml</DocumentationFile>
-		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
+    <PropertyGroup>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/Amarok79/InlayTester.Drivers.FeigReader</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Amarok79/InlayTester.Drivers.FeigReader</RepositoryUrl>
+        <PackageIcon>inlaytester.png</PackageIcon>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageTags></PackageTags>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-		<NoWarn>1701;1702</NoWarn>
-		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-	</PropertyGroup>
+    <PropertyGroup>
+        <OutputPath>..\..\bin\lib\</OutputPath>
+        <DocumentationFile>..\..\bin\lib\InlayTester.Drivers.FeigReader.xml</DocumentationFile>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsAsErrors />
-		<NoWarn>1701;1702</NoWarn>
-		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-	</PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <NoWarn>1701;1702</NoWarn>
+        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+        <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<None Include="..\amarok.snk" Link="amarok.snk" />
-		<None Include="..\InlayTester.Drivers.FeigReader.licenseheader" Link="InlayTester.Drivers.FeigReader.licenseheader" />
-		<None Include="..\inlaytester.png" Pack="true" PackagePath="\" />
-	</ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsAsErrors />
+        <NoWarn>1701;1702</NoWarn>
+        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+        <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Amarok.Contracts" Version="3.1.3" />
-		<PackageReference Include="InlayTester.Shared.Transports" Version="5.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="8.20.0.28934">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
+    <ItemGroup>
+        <None Include="..\amarok.snk" Link="amarok.snk" />
+        <None Include="..\inlaytester.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Amarok.Contracts" Version="4.0.0" />
+        <PackageReference Include="InlayTester.Shared.Transports" Version="5.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+
+    </ItemGroup>
 
 </Project>

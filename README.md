@@ -6,9 +6,9 @@
 This library is available as NuGet package:
 [InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
 
-The package provides strong-named binaries for .NET Standard 2.0 and .NET 5.0. Tests are performed with .NET Framework 4.8, .NET Core 2.1, .NET Core 3.1, and .NET 5.0.
+The package provides strong-named binaries for .NET Standard 2.0, .NET 5.0, and .NET 6.0. Tests are performed with .NET Framework 4.8, .NET Core 3.1, .NET 5.0, and .NET 6.0.
 
-For development, you need *Visual Studio 2019*. For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
+For development, you need *Visual Studio 2022*. For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
 The library uses [Amarok79/InlayTester.Shared.Transports](https://github.com/Amarok79/InlayTester.Shared.Transports) under the hood, which again depends on the excellent [jcurl/SerialPortStream](https://github.com/jcurl/SerialPortStream) for serial communication.
 
