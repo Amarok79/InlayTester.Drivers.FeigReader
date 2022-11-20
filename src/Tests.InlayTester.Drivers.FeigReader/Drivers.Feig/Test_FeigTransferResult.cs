@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -17,19 +17,16 @@ public class Test_FeigTransferResult
         public void Success_With_Response()
         {
             // act
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse();
-            var result   = FeigTransferResult.Success(request, response);
+            var result = FeigTransferResult.Success(request, response);
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigTransferStatus.Success);
+            Check.That(result.Status).IsEqualTo(FeigTransferStatus.Success);
 
-            Check.That(result.Request)
-               .IsSameReferenceAs(request);
+            Check.That(result.Request).IsSameReferenceAs(request);
 
-            Check.That(result.Response)
-               .IsSameReferenceAs(response);
+            Check.That(result.Response).IsSameReferenceAs(response);
 
             Check.That(result.ToString())
                .IsEqualTo(
@@ -40,15 +37,13 @@ public class Test_FeigTransferResult
         [Test]
         public void Exception_With_NullRequest()
         {
-            Check.ThatCode(() => FeigTransferResult.Success(null, new FeigResponse()))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => FeigTransferResult.Success(null, new FeigResponse())).Throws<ArgumentNullException>();
         }
 
         [Test]
         public void Exception_With_NullResponse()
         {
-            Check.ThatCode(() => FeigTransferResult.Success(new FeigRequest(), null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => FeigTransferResult.Success(new FeigRequest(), null)).Throws<ArgumentNullException>();
         }
     }
 
@@ -60,17 +55,14 @@ public class Test_FeigTransferResult
         {
             // act
             var request = new FeigRequest();
-            var result  = FeigTransferResult.Canceled(request);
+            var result = FeigTransferResult.Canceled(request);
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigTransferStatus.Canceled);
+            Check.That(result.Status).IsEqualTo(FeigTransferStatus.Canceled);
 
-            Check.That(result.Request)
-               .IsSameReferenceAs(request);
+            Check.That(result.Request).IsSameReferenceAs(request);
 
-            Check.That(result.Response)
-               .IsNull();
+            Check.That(result.Response).IsNull();
 
             Check.That(result.ToString())
                .IsEqualTo(
@@ -81,8 +73,7 @@ public class Test_FeigTransferResult
         [Test]
         public void Exception_With_NullRequest()
         {
-            Check.ThatCode(() => FeigTransferResult.Canceled(null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => FeigTransferResult.Canceled(null)).Throws<ArgumentNullException>();
         }
     }
 
@@ -94,17 +85,14 @@ public class Test_FeigTransferResult
         {
             // act
             var request = new FeigRequest();
-            var result  = FeigTransferResult.Timeout(request);
+            var result = FeigTransferResult.Timeout(request);
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigTransferStatus.Timeout);
+            Check.That(result.Status).IsEqualTo(FeigTransferStatus.Timeout);
 
-            Check.That(result.Request)
-               .IsSameReferenceAs(request);
+            Check.That(result.Request).IsSameReferenceAs(request);
 
-            Check.That(result.Response)
-               .IsNull();
+            Check.That(result.Response).IsNull();
 
             Check.That(result.ToString())
                .IsEqualTo(
@@ -115,8 +103,7 @@ public class Test_FeigTransferResult
         [Test]
         public void Exception_With_NullRequest()
         {
-            Check.ThatCode(() => FeigTransferResult.Timeout(null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => FeigTransferResult.Timeout(null)).Throws<ArgumentNullException>();
         }
     }
 
@@ -128,17 +115,14 @@ public class Test_FeigTransferResult
         {
             // act
             var request = new FeigRequest();
-            var result  = FeigTransferResult.CommunicationError(request);
+            var result = FeigTransferResult.CommunicationError(request);
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigTransferStatus.CommunicationError);
+            Check.That(result.Status).IsEqualTo(FeigTransferStatus.CommunicationError);
 
-            Check.That(result.Request)
-               .IsSameReferenceAs(request);
+            Check.That(result.Request).IsSameReferenceAs(request);
 
-            Check.That(result.Response)
-               .IsNull();
+            Check.That(result.Response).IsNull();
 
             Check.That(result.ToString())
                .IsEqualTo(
@@ -149,8 +133,7 @@ public class Test_FeigTransferResult
         [Test]
         public void Exception_With_NullRequest()
         {
-            Check.ThatCode(() => FeigTransferResult.CommunicationError(null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => FeigTransferResult.CommunicationError(null)).Throws<ArgumentNullException>();
         }
     }
 
@@ -161,19 +144,16 @@ public class Test_FeigTransferResult
         public void Success()
         {
             // act
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse();
-            var result   = FeigTransferResult.UnexpectedResponse(request, response);
+            var result = FeigTransferResult.UnexpectedResponse(request, response);
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigTransferStatus.UnexpectedResponse);
+            Check.That(result.Status).IsEqualTo(FeigTransferStatus.UnexpectedResponse);
 
-            Check.That(result.Request)
-               .IsSameReferenceAs(request);
+            Check.That(result.Request).IsSameReferenceAs(request);
 
-            Check.That(result.Response)
-               .IsSameReferenceAs(response);
+            Check.That(result.Response).IsSameReferenceAs(response);
 
             Check.That(result.ToString())
                .IsEqualTo(

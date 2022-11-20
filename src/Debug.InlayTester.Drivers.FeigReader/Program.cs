@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Diagnostics;
@@ -33,16 +33,16 @@ public static class Program
 
         var settings = new FeigReaderSettings {
             TransportSettings = new SerialTransportSettings {
-                PortName  = "COM3",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COM3",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             },
-            Address  = 255,
+            Address = 255,
             Protocol = FeigProtocol.Advanced,
-            Timeout  = TimeSpan.FromMilliseconds(1500),
+            Timeout = TimeSpan.FromMilliseconds(1500),
         };
 
         using (var reader = FeigReader.Create(settings, log))
@@ -58,22 +58,18 @@ public static class Program
             //await reader.ResetCPU()
             //	.ConfigureAwait(false);
 
-            var cfg1 = await reader.ReadConfiguration(1, FeigBlockLocation.RAM)
-               .ConfigureAwait(false);
+            var cfg1 = await reader.ReadConfiguration(1, FeigBlockLocation.RAM).ConfigureAwait(false);
 
             cfg1.Buffer[cfg1.Offset + 7] = 10; // TR-RESPONSE-TIME: 1 sec
 
-            await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg1)
-               .ConfigureAwait(false);
+            await reader.WriteConfiguration(1, FeigBlockLocation.RAM, cfg1).ConfigureAwait(false);
 
-            var cfg3 = await reader.ReadConfiguration(3, FeigBlockLocation.RAM)
-               .ConfigureAwait(false);
+            var cfg3 = await reader.ReadConfiguration(3, FeigBlockLocation.RAM).ConfigureAwait(false);
 
             cfg3.Buffer[cfg3.Offset + 0] = 0x00;
             cfg3.Buffer[cfg3.Offset + 1] = 0x10;
 
-            await reader.WriteConfiguration(3, FeigBlockLocation.RAM, cfg3)
-               .ConfigureAwait(false);
+            await reader.WriteConfiguration(3, FeigBlockLocation.RAM, cfg3).ConfigureAwait(false);
 
 
             for (var i = 0; i < 1000000; i++)
@@ -89,11 +85,9 @@ public static class Program
 
                     try
                     {
-                        await reader.SwitchRF(0x00)
-                           .ConfigureAwait(false);
+                        await reader.SwitchRF(0x00).ConfigureAwait(false);
 
-                        await reader.SwitchRF(0x01)
-                           .ConfigureAwait(false);
+                        await reader.SwitchRF(0x01).ConfigureAwait(false);
 
                         sw.Stop();
 

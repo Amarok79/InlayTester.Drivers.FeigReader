@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.IO;
@@ -38,9 +38,9 @@ internal sealed class DefaultFeigReader : IFeigReader
     /// </summary>
     public DefaultFeigReader(FeigReaderSettings settings, IFeigTransport transport, ILogger logger)
     {
-        mSettings  = settings;
+        mSettings = settings;
         mTransport = transport;
-        mLogger    = logger;
+        mLogger = logger;
     }
 
     #endregion
@@ -137,11 +137,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  TRANSFER  #{1}",
-                mSettings.TransportSettings.PortName,
-                mTransferNo
-            );
+            mLogger.LogInformation("[{0}]  TRANSFER  #{1}", mSettings.TransportSettings.PortName, mTransferNo);
         }
 
         #endregion
@@ -195,7 +191,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         var request = new FeigRequest {
             Address = mSettings.Address,
             Command = command,
-            Data    = requestData,
+            Data = requestData,
         };
 
         return Transfer(request, mSettings.Protocol, timeout, cancellationToken);
@@ -252,8 +248,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         CancellationToken cancellationToken = default
     )
     {
-        var result = await Transfer(request, protocol, timeout, cancellationToken)
-           .ConfigureAwait(false);
+        var result = await Transfer(request, protocol, timeout, cancellationToken).ConfigureAwait(false);
 
         if (result.Status == FeigTransferStatus.Success)
         {
@@ -358,7 +353,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         var request = new FeigRequest {
             Address = mSettings.Address,
             Command = command,
-            Data    = requestData,
+            Data = requestData,
         };
 
         return Execute(request, mSettings.Protocol, timeout, cancellationToken);
@@ -402,10 +397,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  TestCommunication()",
-                mSettings.TransportSettings.PortName
-            );
+            mLogger.LogInformation("[{0}]  TestCommunication()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
@@ -422,11 +414,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  TestCommunication()  =>  {1}",
-                mSettings.TransportSettings.PortName,
-                flag
-            );
+            mLogger.LogInformation("[{0}]  TestCommunication()  =>  {1}", mSettings.TransportSettings.PortName, flag);
         }
 
         #endregion
@@ -466,10 +454,7 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
     ///     '(response)'.
     /// </exception>
-    public async Task ResetCPU(
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    )
+    public async Task ResetCPU(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
     {
         #region (logging)
 
@@ -480,23 +465,14 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         #endregion
 
-        var response = await Execute(
-                FeigCommand.CPUReset,
-                BufferSpan.Empty,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.CPUReset, BufferSpan.Empty, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  ResetCPU()  =>  {1}",
-                mSettings.TransportSettings.PortName,
-                response.Status
-            );
+            mLogger.LogInformation("[{0}]  ResetCPU()  =>  {1}", mSettings.TransportSettings.PortName, response.Status);
         }
 
         #endregion
@@ -536,10 +512,7 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
     ///     '(response)'.
     /// </exception>
-    public async Task ResetRF(
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    )
+    public async Task ResetRF(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
     {
         #region (logging)
 
@@ -550,23 +523,14 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         #endregion
 
-        var response = await Execute(
-                FeigCommand.RFReset,
-                BufferSpan.Empty,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.RFReset, BufferSpan.Empty, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  ResetRF()  =>  {1}",
-                mSettings.TransportSettings.PortName,
-                response.Status
-            );
+            mLogger.LogInformation("[{0}]  ResetRF()  =>  {1}", mSettings.TransportSettings.PortName, response.Status);
         }
 
         #endregion
@@ -609,21 +573,13 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
     ///     '(response)'.
     /// </exception>
-    public async Task SwitchRF(
-        Byte flag,
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    )
+    public async Task SwitchRF(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
     {
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  SwitchRF(0x{1})",
-                mSettings.TransportSettings.PortName,
-                flag.ToHex()
-            );
+            mLogger.LogInformation("[{0}]  SwitchRF(0x{1})", mSettings.TransportSettings.PortName, flag.ToHex());
         }
 
         #endregion
@@ -631,18 +587,13 @@ internal sealed class DefaultFeigReader : IFeigReader
         mRequestBuffer[0] = flag;
         var data = BufferSpan.From(mRequestBuffer, 1);
 
-        var response = await Execute(FeigCommand.RFOutputOnOff, data, timeout, cancellationToken)
-           .ConfigureAwait(false);
+        var response = await Execute(FeigCommand.RFOutputOnOff, data, timeout, cancellationToken).ConfigureAwait(false);
 
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  SwitchRF()  =>  {1}",
-                mSettings.TransportSettings.PortName,
-                response.Status
-            );
+            mLogger.LogInformation("[{0}]  SwitchRF()  =>  {1}", mSettings.TransportSettings.PortName, response.Status);
         }
 
         #endregion
@@ -693,26 +644,18 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  GetSoftwareInfo()",
-                mSettings.TransportSettings.PortName
-            );
+            mLogger.LogInformation("[{0}]  GetSoftwareInfo()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
 
-        var response = await Execute(
-                FeigCommand.GetSoftwareVersion,
-                BufferSpan.Empty,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.GetSoftwareVersion, BufferSpan.Empty, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         var info = new FeigSoftwareInfo {
             FirmwareVersion = new Version(response.Data[0], response.Data[1], response.Data[2]),
             HardwareType = response.Data[3],
-            ReaderType = (FeigReaderType) response.Data[4],
+            ReaderType = (FeigReaderType)response.Data[4],
             SupportedTransponders = ( response.Data[5] << 8 ) | response.Data[6],
         };
 
@@ -801,19 +744,14 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         #endregion
 
-        var addr = (Byte) 0x00;
-        addr |= (Byte) location;
-        addr |= (Byte) ( block & 0x3F );
+        var addr = (Byte)0x00;
+        addr |= (Byte)location;
+        addr |= (Byte)( block & 0x3F );
 
         mRequestBuffer[0] = addr;
         var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-        var response = await Execute(
-                FeigCommand.ReadConfiguration,
-                data,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.ReadConfiguration, data, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         #region (logging)
@@ -892,10 +830,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (data.Count != 14)
         {
-            throw new ArgumentException(
-                "Exactly 14 bytes must be specified as configuration data.",
-                nameof(data)
-            );
+            throw new ArgumentException("Exactly 14 bytes must be specified as configuration data.", nameof(data));
         }
 
         return writeConfiguration();
@@ -918,9 +853,9 @@ internal sealed class DefaultFeigReader : IFeigReader
 
             #endregion
 
-            var addr = (Byte) 0x00;
-            addr |= (Byte) location;
-            addr |= (Byte) ( block & 0x3F );
+            var addr = (Byte)0x00;
+            addr |= (Byte)location;
+            addr |= (Byte)( block & 0x3F );
 
             mRequestBuffer[0] = addr;
 
@@ -928,12 +863,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
             var cfgdata = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
 
-            var response = await Execute(
-                    FeigCommand.WriteConfiguration,
-                    cfgdata,
-                    timeout,
-                    cancellationToken
-                )
+            var response = await Execute(FeigCommand.WriteConfiguration, cfgdata, timeout, cancellationToken)
                .ConfigureAwait(false);
 
             #region (logging)
@@ -983,19 +913,13 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
     ///     '(response)'.
     /// </exception>
-    public async Task SaveConfigurations(
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    )
+    public async Task SaveConfigurations(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
     {
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  SaveConfigurations()",
-                mSettings.TransportSettings.PortName
-            );
+            mLogger.LogInformation("[{0}]  SaveConfigurations()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
@@ -1004,12 +928,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-        var response = await Execute(
-                FeigCommand.SaveConfiguration,
-                data,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.SaveConfiguration, data, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         #region (logging)
@@ -1076,25 +995,16 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation(
-                "[{0}]  SaveConfiguration(Block: {1})",
-                mSettings.TransportSettings.PortName,
-                block
-            );
+            mLogger.LogInformation("[{0}]  SaveConfiguration(Block: {1})", mSettings.TransportSettings.PortName, block);
         }
 
         #endregion
 
-        mRequestBuffer[0] = (Byte) ( block & 0x3F );
+        mRequestBuffer[0] = (Byte)( block & 0x3F );
 
         var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-        var response = await Execute(
-                FeigCommand.SaveConfiguration,
-                data,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.SaveConfiguration, data, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         #region (logging)
@@ -1165,20 +1075,15 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         #endregion
 
-        var addr = (Byte) 0x00;
-        addr |= (Byte) location;
+        var addr = (Byte)0x00;
+        addr |= (Byte)location;
         addr |= 0x40;
 
         mRequestBuffer[0] = addr;
 
         var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-        var response = await Execute(
-                FeigCommand.SetDefaultConfiguration,
-                data,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.SetDefaultConfiguration, data, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         #region (logging)
@@ -1259,20 +1164,15 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         #endregion
 
-        var addr = (Byte) 0x00;
-        addr |= (Byte) location;
-        addr |= (Byte) ( block & 0x3F );
+        var addr = (Byte)0x00;
+        addr |= (Byte)location;
+        addr |= (Byte)( block & 0x3F );
 
         mRequestBuffer[0] = addr;
 
         var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
-        var response = await Execute(
-                FeigCommand.SetDefaultConfiguration,
-                data,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.SetDefaultConfiguration, data, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         #region (logging)
@@ -1339,17 +1239,12 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         #endregion
 
-        mRequestBuffer[0] = (Byte) FeigISOStandardCommand.Inventory;
+        mRequestBuffer[0] = (Byte)FeigISOStandardCommand.Inventory;
         mRequestBuffer[1] = 0x00; // new inventory
 
         var data = BufferSpan.From(mRequestBuffer, 0, 2);
 
-        var response = await Execute(
-                FeigCommand.ISOStandardHostCommand,
-                data,
-                timeout,
-                cancellationToken
-            )
+        var response = await Execute(FeigCommand.ISOStandardHostCommand, data, timeout, cancellationToken)
            .ConfigureAwait(false);
 
         var rspDat = response.Data;
@@ -1377,7 +1272,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     internal static FeigTransponder[] Inventory_Parse(ref BufferSpan data)
     {
-        var count        = data[0];
+        var count = data[0];
         var transponders = new FeigTransponder[count];
 
         data = data.Discard(1);
@@ -1392,7 +1287,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     private static FeigTransponder _Inventory_ParseSingle(ref BufferSpan data)
     {
-        var transponderType = (FeigTransponderType) data[0];
+        var transponderType = (FeigTransponderType)data[0];
         data = data.Discard(1);
 
         return transponderType switch {
@@ -1417,22 +1312,21 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     internal static FeigTransponder Inventory_Parse_ISO14443A(ref BufferSpan data)
     {
-        var info       = data[0];
-        var length     = ( info & 0x04 ) != 0 ? 10 : 7;
+        var info = data[0];
+        var length = ( info & 0x04 ) != 0 ? 10 : 7;
         var identifier = data.Slice(2, length);
 
         data = data.Discard(2 + length);
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.ISO14443A,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
     internal static FeigTransponder Inventory_Parse_ISO14443B(ref BufferSpan data)
     {
-        var identifier = data.Slice(5, 4)
-           .Clone();
+        var identifier = data.Slice(5, 4).Clone();
 
         Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
 
@@ -1440,14 +1334,13 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.ISO14443B,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
     internal static FeigTransponder Inventory_Parse_Innovatron(ref BufferSpan data)
     {
-        var identifier = data.Slice(0, 8)
-           .Clone();
+        var identifier = data.Slice(0, 8).Clone();
 
         var length = data[10];
 
@@ -1455,14 +1348,13 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.Innovatron,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
     internal static FeigTransponder Inventory_Parse_Jewel(ref BufferSpan data)
     {
-        var identifier = data.Slice(4, 4)
-           .Clone();
+        var identifier = data.Slice(4, 4).Clone();
 
         Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
 
@@ -1470,14 +1362,13 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.Jewel,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
     internal static FeigTransponder Inventory_Parse_SR176(ref BufferSpan data)
     {
-        var identifier = data.Slice(1, 8)
-           .Clone();
+        var identifier = data.Slice(1, 8).Clone();
 
         Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
 
@@ -1485,14 +1376,13 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.SR176,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
     internal static FeigTransponder Inventory_Parse_SRIxx(ref BufferSpan data)
     {
-        var identifier = data.Slice(1, 8)
-           .Clone();
+        var identifier = data.Slice(1, 8).Clone();
 
         Array.Reverse(identifier.Buffer, identifier.Offset, identifier.Count);
 
@@ -1500,20 +1390,19 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.SRIxx,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
     internal static FeigTransponder Inventory_Parse_FeliCa(ref BufferSpan data)
     {
-        var identifier = data.Slice(1, 8)
-           .Clone();
+        var identifier = data.Slice(1, 8).Clone();
 
         data = data.Discard(17);
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.FeliCa,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
@@ -1525,33 +1414,33 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.ISO15693,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
     internal static FeigTransponder Inventory_Parse_ISO18000_3M3(ref BufferSpan data)
     {
-        var length     = data[1];
+        var length = data[1];
         var identifier = data.Slice(2, length);
 
         data = data.Discard(2 + length);
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.ISO18000_3M3,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
     internal static FeigTransponder Inventory_Parse_EPC_Class1_Gen2(ref BufferSpan data)
     {
-        var length     = data[1];
+        var length = data[1];
         var identifier = data.Slice(2, length);
 
         data = data.Discard(2 + length);
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.EPC_Class1_Gen2,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
@@ -1563,7 +1452,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.ICode1,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
@@ -1575,7 +1464,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.ICodeEPC,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 
@@ -1587,7 +1476,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         return new FeigTransponder {
             TransponderType = FeigTransponderType.ICodeUID,
-            Identifier      = identifier,
+            Identifier = identifier,
         };
     }
 

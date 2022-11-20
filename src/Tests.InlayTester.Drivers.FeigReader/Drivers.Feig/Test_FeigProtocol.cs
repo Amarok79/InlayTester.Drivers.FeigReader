@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -21,10 +21,8 @@ public class Test_FeigProtocol
     [Test]
     public void TestValues()
     {
-        Check.That((Int32) FeigProtocol.Standard)
-           .IsEqualTo(0);
+        Check.That((Int32)FeigProtocol.Standard).IsEqualTo(0);
 
-        Check.That((Int32) FeigProtocol.Advanced)
-           .IsEqualTo(1);
+        Check.That((Int32)FeigProtocol.Advanced).IsEqualTo(1);
     }
 }

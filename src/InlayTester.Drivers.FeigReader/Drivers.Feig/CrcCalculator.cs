@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Contracts;
@@ -68,12 +68,12 @@ internal sealed class CrcCalculator
     {
         Verify.IsInRange(order, 1, 32, nameof(order));
 
-        mOrder         = order;
-        mPolynom       = (UInt64) polynom;
-        mIsDirect      = isDirect;
-        mCrcInit       = (UInt64) crcInit;
-        mCrcXor        = (UInt64) crcXor;
-        mReflectInput  = reflectInput;
+        mOrder = order;
+        mPolynom = (UInt64)polynom;
+        mIsDirect = isDirect;
+        mCrcInit = (UInt64)crcInit;
+        mCrcXor = (UInt64)crcXor;
+        mReflectInput = reflectInput;
         mReflectOutput = reflectOutput;
 
         _Setup();
@@ -88,7 +88,7 @@ internal sealed class CrcCalculator
     /// </returns>
     public Int32 Calculate(in BufferSpan data)
     {
-        return (Int32) _Calculate(data.Buffer, data.Offset, data.Count);
+        return (Int32)_Calculate(data.Buffer, data.Offset, data.Count);
     }
 
     #endregion
@@ -97,8 +97,8 @@ internal sealed class CrcCalculator
 
     private void _Setup()
     {
-        mCrcMask    = ( ( ( (UInt64) 1 << ( mOrder - 1 ) ) - 1 ) << 1 ) | 1;
-        mCrcHighBit = (UInt64) 1 << ( mOrder - 1 );
+        mCrcMask = ( ( ( (UInt64)1 << ( mOrder - 1 ) ) - 1 ) << 1 ) | 1;
+        mCrcHighBit = (UInt64)1 << ( mOrder - 1 );
 
         _BuildTable();
         _Prepare();
@@ -108,7 +108,7 @@ internal sealed class CrcCalculator
     {
         UInt64 bit;
         UInt64 crc;
-        Int32  i;
+        Int32 i;
 
         if (!mIsDirect)
         {
@@ -116,7 +116,7 @@ internal sealed class CrcCalculator
 
             for (i = 0; i < mOrder; i++)
             {
-                bit =   crc & mCrcHighBit;
+                bit = crc & mCrcHighBit;
                 crc <<= 1;
 
                 if (bit != 0)
@@ -125,13 +125,13 @@ internal sealed class CrcCalculator
                 }
             }
 
-            crc            &= mCrcMask;
-            mCrcInitDirect =  crc;
+            crc &= mCrcMask;
+            mCrcInitDirect = crc;
         }
         else
         {
             mCrcInitDirect = mCrcInit;
-            crc            = mCrcInit;
+            crc = mCrcInit;
 
             for (i = 0; i < mOrder; i++)
             {
@@ -156,7 +156,7 @@ internal sealed class CrcCalculator
     {
         for (var i = 0; i < 256; i++)
         {
-            var crc = (UInt64) i;
+            var crc = (UInt64)i;
 
             if (mReflectInput)
             {
@@ -181,18 +181,18 @@ internal sealed class CrcCalculator
                 crc = _Reflect(crc, mOrder);
             }
 
-            crc          &= mCrcMask;
-            mCrcTable[i] =  crc;
+            crc &= mCrcMask;
+            mCrcTable[i] = crc;
         }
     }
 
     private static UInt64 _Reflect(UInt64 crc, Int32 bitnum)
     {
         // reflects the lower 'bitnum' bits of 'crc'
-        UInt64 j      = 1;
+        UInt64 j = 1;
         UInt64 crcout = 0;
 
-        for (var i = (UInt64) 1 << ( bitnum - 1 ); i != 0; i >>= 1)
+        for (var i = (UInt64)1 << ( bitnum - 1 ); i != 0; i >>= 1)
         {
             if (( crc & i ) != 0)
             {
@@ -218,8 +218,7 @@ internal sealed class CrcCalculator
             {
                 for (var i = offset; i < offset + count; i++)
                 {
-                    crc = ( crc << 8 ) ^
-                        mCrcTable[( ( crc >> ( mOrder - 8 ) ) & 0xff ) ^ buffer[i]];
+                    crc = ( crc << 8 ) ^ mCrcTable[( ( crc >> ( mOrder - 8 ) ) & 0xff ) ^ buffer[i]];
                 }
             }
             else

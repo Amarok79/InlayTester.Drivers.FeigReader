@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.IO;
@@ -240,10 +240,7 @@ public interface IFeigReader : IDisposable
     /// <exception cref="InvalidOperationException">
     ///     The transport has not been opened yet.
     /// </exception>
-    Task<Boolean> TestCommunication(
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    );
+    Task<Boolean> TestCommunication(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Resets the CPU on the reader. The RF-field will be switched off during a CPU reset.
@@ -352,11 +349,7 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
     ///     '(response)'.
     /// </exception>
-    Task SwitchRF(
-        Byte flag,
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    );
+    Task SwitchRF(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Gets information about the reader/module's software.
@@ -394,10 +387,7 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
     ///     '(response)'.
     /// </exception>
-    Task<FeigSoftwareInfo> GetSoftwareInfo(
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    );
+    Task<FeigSoftwareInfo> GetSoftwareInfo(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
 
     /// <summary>
@@ -539,10 +529,7 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
     ///     '(response)'.
     /// </exception>
-    Task SaveConfigurations(
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    );
+    Task SaveConfigurations(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Saves the specified configuration block currently in the reader's RAM to EEPROM.
@@ -582,11 +569,7 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
     ///     '(response)'.
     /// </exception>
-    Task SaveConfiguration(
-        Int32 block,
-        TimeSpan? timeout = null,
-        CancellationToken cancellationToken = default
-    );
+    Task SaveConfiguration(Int32 block, TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Resets all configuration blocks to their defaults.

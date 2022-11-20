@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Text;
@@ -32,8 +32,7 @@ public class Test_FeigChecksum
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
 
-        Check.That(crc)
-           .IsEqualTo(0x0933);
+        Check.That(crc).IsEqualTo(0x0933);
     }
 
     [Test]
@@ -43,7 +42,6 @@ public class Test_FeigChecksum
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
 
-        Check.That(crc)
-           .IsEqualTo(0x6F91);
+        Check.That(crc).IsEqualTo(0x6F91);
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Text;
@@ -79,18 +79,18 @@ public sealed class FeigRequest
     private BufferSpan _ToStandardProtocolFrame()
     {
         var frameLength = 5 + Data.Count;
-        var frame       = new Byte[frameLength];
+        var frame = new Byte[frameLength];
 
-        frame[0] = (Byte) frameLength;
+        frame[0] = (Byte)frameLength;
         frame[1] = Address;
-        frame[2] = (Byte) Command;
+        frame[2] = (Byte)Command;
 
         Buffer.BlockCopy(Data.Buffer, Data.Offset, frame, 3, Data.Count);
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 
-        frame[frameLength - 2] = (Byte) ( crc & 0xff );
-        frame[frameLength - 1] = (Byte) ( crc >> 8 );
+        frame[frameLength - 2] = (Byte)( crc & 0xff );
+        frame[frameLength - 1] = (Byte)( crc >> 8 );
 
         return BufferSpan.From(frame, frameLength);
     }
@@ -98,20 +98,20 @@ public sealed class FeigRequest
     private BufferSpan _ToAdvancedProtocolFrame()
     {
         var frameLength = 7 + Data.Count;
-        var frame       = new Byte[frameLength];
+        var frame = new Byte[frameLength];
 
         frame[0] = 0x02;
-        frame[1] = (Byte) ( frameLength >> 8 );
-        frame[2] = (Byte) ( frameLength & 0xff );
+        frame[1] = (Byte)( frameLength >> 8 );
+        frame[2] = (Byte)( frameLength & 0xff );
         frame[3] = Address;
-        frame[4] = (Byte) Command;
+        frame[4] = (Byte)Command;
 
         Buffer.BlockCopy(Data.Buffer, Data.Offset, frame, 5, Data.Count);
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 
-        frame[frameLength - 2] = (Byte) ( crc & 0xff );
-        frame[frameLength - 1] = (Byte) ( crc >> 8 );
+        frame[frameLength - 2] = (Byte)( crc & 0xff );
+        frame[frameLength - 1] = (Byte)( crc >> 8 );
 
         return BufferSpan.From(frame, frameLength);
     }

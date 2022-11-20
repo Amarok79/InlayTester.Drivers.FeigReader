@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Text;
@@ -30,14 +30,10 @@ public readonly struct FeigTransferResult
     public FeigResponse? Response { get; }
 
 
-    private FeigTransferResult(
-        FeigTransferStatus status,
-        FeigRequest request,
-        FeigResponse? response
-    )
+    private FeigTransferResult(FeigTransferStatus status, FeigRequest request, FeigResponse? response)
     {
-        Status   = status;
-        Request  = request;
+        Status = status;
+        Request = request;
         Response = response;
     }
 

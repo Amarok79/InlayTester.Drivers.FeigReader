@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.IO;
@@ -38,8 +38,7 @@ public class Test_DefaultFeigReader
 
             using (var reader = FeigReader.Create(settings, logger))
             {
-                Check.ThatCode(() => reader.Open())
-                   .DoesNotThrow();
+                Check.ThatCode(() => reader.Open()).DoesNotThrow();
             }
         }
 
@@ -62,8 +61,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Dispose();
 
-                Check.ThatCode(() => reader.Open())
-                   .Throws<ObjectDisposedException>();
+                Check.ThatCode(() => reader.Open()).Throws<ObjectDisposedException>();
             }
         }
 
@@ -84,11 +82,9 @@ public class Test_DefaultFeigReader
 
             using (var reader = FeigReader.Create(settings, logger))
             {
-                Check.ThatCode(() => reader.Open())
-                   .DoesNotThrow();
+                Check.ThatCode(() => reader.Open()).DoesNotThrow();
 
-                Check.ThatCode(() => reader.Open())
-                   .Throws<InvalidOperationException>();
+                Check.ThatCode(() => reader.Open()).Throws<InvalidOperationException>();
             }
         }
 
@@ -109,8 +105,7 @@ public class Test_DefaultFeigReader
 
             using (var reader = FeigReader.Create(settings, logger))
             {
-                Check.ThatCode(() => reader.Open())
-                   .Throws<IOException>();
+                Check.ThatCode(() => reader.Open()).Throws<IOException>();
             }
         }
     }
@@ -135,8 +130,7 @@ public class Test_DefaultFeigReader
 
             using (var reader = FeigReader.Create(settings, logger))
             {
-                Check.ThatCode(() => reader.Close())
-                   .DoesNotThrow();
+                Check.ThatCode(() => reader.Close()).DoesNotThrow();
             }
         }
 
@@ -159,8 +153,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Open();
 
-                Check.ThatCode(() => reader.Close())
-                   .DoesNotThrow();
+                Check.ThatCode(() => reader.Close()).DoesNotThrow();
             }
         }
 
@@ -183,8 +176,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Dispose();
 
-                Check.ThatCode(() => reader.Close())
-                   .Throws<ObjectDisposedException>();
+                Check.ThatCode(() => reader.Close()).Throws<ObjectDisposedException>();
             }
         }
     }
@@ -209,8 +201,7 @@ public class Test_DefaultFeigReader
 
             using (var reader = FeigReader.Create(settings, logger))
             {
-                Check.ThatCode(() => reader.Dispose())
-                   .DoesNotThrow();
+                Check.ThatCode(() => reader.Dispose()).DoesNotThrow();
             }
         }
 
@@ -233,8 +224,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Open();
 
-                Check.ThatCode(() => reader.Dispose())
-                   .DoesNotThrow();
+                Check.ThatCode(() => reader.Dispose()).DoesNotThrow();
             }
         }
 
@@ -257,8 +247,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Dispose();
 
-                Check.ThatCode(() => reader.Dispose())
-                   .DoesNotThrow();
+                Check.ThatCode(() => reader.Dispose()).DoesNotThrow();
             }
         }
     }
@@ -287,9 +276,7 @@ public class Test_DefaultFeigReader
 
                 var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
 
-                Check.ThatAsyncCode(
-                        async () => await reader.Transfer(request, FeigProtocol.Advanced)
-                    )
+                Check.ThatAsyncCode(async () => await reader.Transfer(request, FeigProtocol.Advanced))
                    .Throws<ObjectDisposedException>();
             }
         }
@@ -300,9 +287,9 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
             var request = new FeigRequest {
@@ -313,7 +300,7 @@ public class Test_DefaultFeigReader
             var response = new FeigResponse();
 
             var timeout = TimeSpan.FromMilliseconds(1000);
-            var cts     = new CancellationTokenSource();
+            var cts = new CancellationTokenSource();
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -334,10 +321,7 @@ public class Test_DefaultFeigReader
             await reader.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token);
 
             // assert
-            transport.Verify(
-                x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token),
-                Times.Once
-            );
+            transport.Verify(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token), Times.Once);
         }
 
         [Test]
@@ -346,9 +330,9 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
             var request = new FeigRequest {
@@ -360,14 +344,7 @@ public class Test_DefaultFeigReader
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
-            transport.Setup(
-                    x => x.Transfer(
-                        request,
-                        FeigProtocol.Standard,
-                        TimeSpan.FromMilliseconds(275),
-                        default
-                    )
-                )
+            transport.Setup(x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default))
                .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
             var logger = LoggerFactory.Create(
@@ -385,12 +362,7 @@ public class Test_DefaultFeigReader
 
             // assert
             transport.Verify(
-                x => x.Transfer(
-                    request,
-                    FeigProtocol.Standard,
-                    TimeSpan.FromMilliseconds(275),
-                    default
-                ),
+                x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default),
                 Times.Once
             );
         }
@@ -418,9 +390,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Dispose();
 
-                Check.ThatAsyncCode(
-                        async () => await reader.Transfer(FeigCommand.BaudRateDetection)
-                    )
+                Check.ThatAsyncCode(async () => await reader.Transfer(FeigCommand.BaudRateDetection))
                    .Throws<ObjectDisposedException>();
             }
         }
@@ -431,13 +401,13 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
             FeigRequest request = null;
-            var         timeout = TimeSpan.Zero;
+            var timeout = TimeSpan.Zero;
 
             var response = new FeigResponse();
 
@@ -446,12 +416,7 @@ public class Test_DefaultFeigReader
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
-                    x => x.Transfer(
-                        It.IsAny<FeigRequest>(),
-                        FeigProtocol.Standard,
-                        It.IsAny<TimeSpan>(),
-                        cts.Token
-                    )
+                    x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, It.IsAny<TimeSpan>(), cts.Token)
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
@@ -480,20 +445,15 @@ public class Test_DefaultFeigReader
             );
 
             // assert
-            Check.That(request)
-               .IsNotNull();
+            Check.That(request).IsNotNull();
 
-            Check.That(request.Address)
-               .IsEqualTo(123);
+            Check.That(request.Address).IsEqualTo(123);
 
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.BaudRateDetection);
+            Check.That(request.Command).IsEqualTo(FeigCommand.BaudRateDetection);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0x11, 0x22);
+            Check.That(request.Data.ToArray()).ContainsExactly(0x11, 0x22);
 
-            Check.That(timeout)
-               .IsEqualTo(TimeSpan.FromMilliseconds(500));
+            Check.That(timeout).IsEqualTo(TimeSpan.FromMilliseconds(500));
         }
 
         [Test]
@@ -502,15 +462,15 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
             FeigRequest request = null;
-            var         timeout = TimeSpan.Zero;
+            var timeout = TimeSpan.Zero;
 
-            var response  = new FeigResponse();
+            var response = new FeigResponse();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -543,20 +503,15 @@ public class Test_DefaultFeigReader
             await reader.Transfer(FeigCommand.BaudRateDetection);
 
             // assert
-            Check.That(request)
-               .IsNotNull();
+            Check.That(request).IsNotNull();
 
-            Check.That(request.Address)
-               .IsEqualTo(123);
+            Check.That(request.Address).IsEqualTo(123);
 
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.BaudRateDetection);
+            Check.That(request.Command).IsEqualTo(FeigCommand.BaudRateDetection);
 
-            Check.That(request.Data.IsEmpty)
-               .IsTrue();
+            Check.That(request.Data.IsEmpty).IsTrue();
 
-            Check.That(timeout)
-               .IsEqualTo(TimeSpan.FromMilliseconds(275));
+            Check.That(timeout).IsEqualTo(TimeSpan.FromMilliseconds(275));
         }
     }
 
@@ -584,9 +539,7 @@ public class Test_DefaultFeigReader
 
                 var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
 
-                Check.ThatAsyncCode(
-                        async () => await reader.Execute(request, FeigProtocol.Advanced)
-                    )
+                Check.ThatAsyncCode(async () => await reader.Execute(request, FeigProtocol.Advanced))
                    .Throws<ObjectDisposedException>();
             }
         }
@@ -597,9 +550,9 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
             var request = new FeigRequest {
@@ -610,7 +563,7 @@ public class Test_DefaultFeigReader
             var response = new FeigResponse();
 
             var timeout = TimeSpan.FromMilliseconds(1000);
-            var cts     = new CancellationTokenSource();
+            var cts = new CancellationTokenSource();
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
@@ -631,13 +584,9 @@ public class Test_DefaultFeigReader
             var rsp = await reader.Execute(request, FeigProtocol.Advanced, timeout, cts.Token);
 
             // assert
-            transport.Verify(
-                x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token),
-                Times.Once
-            );
+            transport.Verify(x => x.Transfer(request, FeigProtocol.Advanced, timeout, cts.Token), Times.Once);
 
-            Check.That(rsp)
-               .IsSameReferenceAs(response);
+            Check.That(rsp).IsSameReferenceAs(response);
         }
 
         [Test]
@@ -646,9 +595,9 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
             var request = new FeigRequest {
@@ -660,14 +609,7 @@ public class Test_DefaultFeigReader
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
-            transport.Setup(
-                    x => x.Transfer(
-                        request,
-                        FeigProtocol.Standard,
-                        TimeSpan.FromMilliseconds(275),
-                        default
-                    )
-                )
+            transport.Setup(x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default))
                .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
             var logger = LoggerFactory.Create(
@@ -685,17 +627,11 @@ public class Test_DefaultFeigReader
 
             // assert
             transport.Verify(
-                x => x.Transfer(
-                    request,
-                    FeigProtocol.Standard,
-                    TimeSpan.FromMilliseconds(275),
-                    default
-                ),
+                x => x.Transfer(request, FeigProtocol.Standard, TimeSpan.FromMilliseconds(275), default),
                 Times.Once
             );
 
-            Check.That(rsp)
-               .IsSameReferenceAs(response);
+            Check.That(rsp).IsSameReferenceAs(response);
         }
 
         [Test]
@@ -704,7 +640,7 @@ public class Test_DefaultFeigReader
             var request = new FeigRequest();
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -728,8 +664,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(request))
-               .Throws<TimeoutException>();
+            Check.ThatAsyncCode(async () => await reader.Execute(request)).Throws<TimeoutException>();
         }
 
         [Test]
@@ -738,7 +673,7 @@ public class Test_DefaultFeigReader
             var request = new FeigRequest();
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -762,8 +697,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(request))
-               .Throws<OperationCanceledException>();
+            Check.ThatAsyncCode(async () => await reader.Execute(request)).Throws<OperationCanceledException>();
         }
 
         [Test]
@@ -772,7 +706,7 @@ public class Test_DefaultFeigReader
             var request = new FeigRequest();
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -804,11 +738,11 @@ public class Test_DefaultFeigReader
         [Test]
         public void UnexpectedResponse()
         {
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse();
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -841,11 +775,11 @@ public class Test_DefaultFeigReader
         [Test]
         public void Success_NotOk()
         {
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse { Status = FeigStatus.GeneralError };
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -878,11 +812,11 @@ public class Test_DefaultFeigReader
         [Test]
         public async Task Success_OK()
         {
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse { Status = FeigStatus.OK };
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -908,18 +842,17 @@ public class Test_DefaultFeigReader
             // act
             var rsp = await reader.Execute(request);
 
-            Check.That(rsp)
-               .IsSameReferenceAs(response);
+            Check.That(rsp).IsSameReferenceAs(response);
         }
 
         [Test]
         public async Task Success_NoTransponder()
         {
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse { Status = FeigStatus.NoTransponder };
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -945,8 +878,7 @@ public class Test_DefaultFeigReader
             // act
             var rsp = await reader.Execute(request);
 
-            Check.That(rsp)
-               .IsSameReferenceAs(response);
+            Check.That(rsp).IsSameReferenceAs(response);
         }
     }
 
@@ -972,9 +904,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Dispose();
 
-                Check.ThatAsyncCode(
-                        async () => await reader.Execute(FeigCommand.GetSoftwareVersion)
-                    )
+                Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
                    .Throws<ObjectDisposedException>();
             }
         }
@@ -985,9 +915,9 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
             var request = new FeigRequest {
@@ -998,18 +928,11 @@ public class Test_DefaultFeigReader
             var response = new FeigResponse();
 
             var timeout = TimeSpan.FromMilliseconds(1000);
-            var cts     = new CancellationTokenSource();
+            var cts = new CancellationTokenSource();
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
-            transport.Setup(
-                    x => x.Transfer(
-                        It.IsAny<FeigRequest>(),
-                        FeigProtocol.Standard,
-                        timeout,
-                        cts.Token
-                    )
-                )
+            transport.Setup(x => x.Transfer(It.IsAny<FeigRequest>(), FeigProtocol.Standard, timeout, cts.Token))
                .Returns(Task.FromResult(FeigTransferResult.Success(request, response)));
 
             var logger = LoggerFactory.Create(
@@ -1023,12 +946,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            var rsp = await reader.Execute(
-                FeigCommand.GetSoftwareVersion,
-                BufferSpan.Empty,
-                timeout,
-                cts.Token
-            );
+            var rsp = await reader.Execute(FeigCommand.GetSoftwareVersion, BufferSpan.Empty, timeout, cts.Token);
 
             // assert
             transport.Verify(
@@ -1036,8 +954,7 @@ public class Test_DefaultFeigReader
                 Times.Once
             );
 
-            Check.That(rsp)
-               .IsSameReferenceAs(response);
+            Check.That(rsp).IsSameReferenceAs(response);
         }
 
         [Test]
@@ -1046,9 +963,9 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
             var request = new FeigRequest {
@@ -1094,8 +1011,7 @@ public class Test_DefaultFeigReader
                 Times.Once
             );
 
-            Check.That(rsp)
-               .IsSameReferenceAs(response);
+            Check.That(rsp).IsSameReferenceAs(response);
         }
 
         [Test]
@@ -1104,7 +1020,7 @@ public class Test_DefaultFeigReader
             var request = new FeigRequest();
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -1138,7 +1054,7 @@ public class Test_DefaultFeigReader
             var request = new FeigRequest();
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -1172,7 +1088,7 @@ public class Test_DefaultFeigReader
             var request = new FeigRequest();
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -1204,11 +1120,11 @@ public class Test_DefaultFeigReader
         [Test]
         public void UnexpectedResponse()
         {
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse();
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -1241,11 +1157,11 @@ public class Test_DefaultFeigReader
         [Test]
         public void Success_NotOk()
         {
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse { Status = FeigStatus.GeneralError };
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -1278,11 +1194,11 @@ public class Test_DefaultFeigReader
         [Test]
         public async Task Success_OK()
         {
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse { Status = FeigStatus.OK };
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -1308,18 +1224,17 @@ public class Test_DefaultFeigReader
             // act
             var rsp = await reader.Execute(FeigCommand.CPUReset);
 
-            Check.That(rsp)
-               .IsSameReferenceAs(response);
+            Check.That(rsp).IsSameReferenceAs(response);
         }
 
         [Test]
         public async Task Success_NoTransponder()
         {
-            var request  = new FeigRequest();
+            var request = new FeigRequest();
             var response = new FeigResponse { Status = FeigStatus.NoTransponder };
 
             // arrange
-            var settings  = new FeigReaderSettings();
+            var settings = new FeigReaderSettings();
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
 
             transport.Setup(
@@ -1345,8 +1260,7 @@ public class Test_DefaultFeigReader
             // act
             var rsp = await reader.Execute(FeigCommand.CPUReset);
 
-            Check.That(rsp)
-               .IsSameReferenceAs(response);
+            Check.That(rsp).IsSameReferenceAs(response);
         }
     }
 
@@ -1360,13 +1274,13 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse { Status = FeigStatus.OK };
@@ -1383,8 +1297,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1404,23 +1318,17 @@ public class Test_DefaultFeigReader
             var result = await reader.TestCommunication();
 
             // assert
-            Check.That(result)
-               .IsTrue();
+            Check.That(result).IsTrue();
 
-            Check.That(request)
-               .IsNotNull();
+            Check.That(request).IsNotNull();
 
-            Check.That(request.Address)
-               .IsEqualTo(123);
+            Check.That(request.Address).IsEqualTo(123);
 
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.BaudRateDetection);
+            Check.That(request.Command).IsEqualTo(FeigCommand.BaudRateDetection);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0x00);
+            Check.That(request.Data.ToArray()).ContainsExactly(0x00);
 
-            Check.That(timeout)
-               .IsEqualTo(TimeSpan.FromMilliseconds(275));
+            Check.That(timeout).IsEqualTo(TimeSpan.FromMilliseconds(275));
         }
 
         [Test]
@@ -1429,13 +1337,13 @@ public class Test_DefaultFeigReader
             // arrange
             var settings = new FeigReaderSettings {
                 TransportSettings = new SerialTransportSettings { PortName = "COMA" },
-                Address           = 123,
-                Protocol          = FeigProtocol.Standard,
-                Timeout           = TimeSpan.FromMilliseconds(275),
+                Address = 123,
+                Protocol = FeigProtocol.Standard,
+                Timeout = TimeSpan.FromMilliseconds(275),
             };
 
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -1450,8 +1358,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1471,23 +1379,17 @@ public class Test_DefaultFeigReader
             var result = await reader.TestCommunication();
 
             // assert
-            Check.That(result)
-               .IsFalse();
+            Check.That(result).IsFalse();
 
-            Check.That(request)
-               .IsNotNull();
+            Check.That(request).IsNotNull();
 
-            Check.That(request.Address)
-               .IsEqualTo(123);
+            Check.That(request.Address).IsEqualTo(123);
 
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.BaudRateDetection);
+            Check.That(request.Command).IsEqualTo(FeigCommand.BaudRateDetection);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0x00);
+            Check.That(request.Data.ToArray()).ContainsExactly(0x00);
 
-            Check.That(timeout)
-               .IsEqualTo(TimeSpan.FromMilliseconds(275));
+            Check.That(timeout).IsEqualTo(TimeSpan.FromMilliseconds(275));
         }
     }
 
@@ -1498,8 +1400,8 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse { Status = FeigStatus.OK };
@@ -1516,8 +1418,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1539,11 +1441,9 @@ public class Test_DefaultFeigReader
             await reader.ResetCPU();
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.CPUReset);
+            Check.That(request.Command).IsEqualTo(FeigCommand.CPUReset);
 
-            Check.That(request.Data.ToArray())
-               .IsEmpty();
+            Check.That(request.Data.ToArray()).IsEmpty();
         }
     }
 
@@ -1554,8 +1454,8 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse { Status = FeigStatus.OK };
@@ -1572,8 +1472,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1595,11 +1495,9 @@ public class Test_DefaultFeigReader
             await reader.ResetRF();
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.RFReset);
+            Check.That(request.Command).IsEqualTo(FeigCommand.RFReset);
 
-            Check.That(request.Data.ToArray())
-               .IsEmpty();
+            Check.That(request.Data.ToArray()).IsEmpty();
         }
     }
 
@@ -1610,8 +1508,8 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse { Status = FeigStatus.OK };
@@ -1628,8 +1526,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1651,11 +1549,9 @@ public class Test_DefaultFeigReader
             await reader.SwitchRF(0x23);
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.RFOutputOnOff);
+            Check.That(request.Command).IsEqualTo(FeigCommand.RFOutputOnOff);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0x23);
+            Check.That(request.Data.ToArray()).ContainsExactly(0x23);
         }
     }
 
@@ -1666,15 +1562,15 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var data = new Byte[] { 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30 };
 
             var response = new FeigResponse {
                 Status = FeigStatus.OK,
-                Data   = BufferSpan.From(data),
+                Data = BufferSpan.From(data),
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -1689,8 +1585,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1712,29 +1608,21 @@ public class Test_DefaultFeigReader
             var info = await reader.GetSoftwareInfo();
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.GetSoftwareVersion);
+            Check.That(request.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
 
-            Check.That(request.Data.ToArray())
-               .IsEmpty();
+            Check.That(request.Data.ToArray()).IsEmpty();
 
-            Check.That(info.FirmwareVersion.Major)
-               .IsEqualTo(3);
+            Check.That(info.FirmwareVersion.Major).IsEqualTo(3);
 
-            Check.That(info.FirmwareVersion.Minor)
-               .IsEqualTo(3);
+            Check.That(info.FirmwareVersion.Minor).IsEqualTo(3);
 
-            Check.That(info.FirmwareVersion.Build)
-               .IsEqualTo(0);
+            Check.That(info.FirmwareVersion.Build).IsEqualTo(0);
 
-            Check.That(info.HardwareType)
-               .IsEqualTo(0x44);
+            Check.That(info.HardwareType).IsEqualTo(0x44);
 
-            Check.That(info.ReaderType)
-               .IsEqualTo(FeigReaderType.CPR40);
+            Check.That(info.ReaderType).IsEqualTo(FeigReaderType.CPR40);
 
-            Check.That(info.SupportedTransponders)
-               .IsEqualTo(0x0D30);
+            Check.That(info.SupportedTransponders).IsEqualTo(0x0D30);
         }
     }
 
@@ -1745,15 +1633,15 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var data = new Byte[14];
 
             var response = new FeigResponse {
                 Status = FeigStatus.OK,
-                Data   = BufferSpan.From(data),
+                Data = BufferSpan.From(data),
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -1768,8 +1656,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1791,14 +1679,11 @@ public class Test_DefaultFeigReader
             var result = await reader.ReadConfiguration(3, FeigBlockLocation.EEPROM);
 
             // assert
-            Check.That(result.Count)
-               .IsEqualTo(14);
+            Check.That(result.Count).IsEqualTo(14);
 
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.ReadConfiguration);
+            Check.That(request.Command).IsEqualTo(FeigCommand.ReadConfiguration);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0x83);
+            Check.That(request.Data.ToArray()).ContainsExactly(0x83);
         }
     }
 
@@ -1809,13 +1694,13 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse {
                 Status = FeigStatus.OK,
-                Data   = BufferSpan.Empty,
+                Data = BufferSpan.Empty,
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -1830,8 +1715,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1872,27 +1757,26 @@ public class Test_DefaultFeigReader
             );
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.WriteConfiguration);
+            Check.That(request.Command).IsEqualTo(FeigCommand.WriteConfiguration);
 
             Check.That(request.Data.ToArray())
-               .ContainsExactly(
-                    0x83,
-                    0x11,
-                    0x22,
-                    0x33,
-                    0x44,
-                    0x55,
-                    0x66,
-                    0x77,
-                    0x88,
-                    0x99,
-                    0xAA,
-                    0xBB,
-                    0xCC,
-                    0xDD,
-                    0xEE
-                );
+           .ContainsExactly(
+                0x83,
+                0x11,
+                0x22,
+                0x33,
+                0x44,
+                0x55,
+                0x66,
+                0x77,
+                0x88,
+                0x99,
+                0xAA,
+                0xBB,
+                0xCC,
+                0xDD,
+                0xEE
+            );
         }
     }
 
@@ -1903,13 +1787,13 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse {
                 Status = FeigStatus.OK,
-                Data   = BufferSpan.Empty,
+                Data = BufferSpan.Empty,
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -1924,8 +1808,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -1947,11 +1831,9 @@ public class Test_DefaultFeigReader
             await reader.SaveConfigurations();
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.SaveConfiguration);
+            Check.That(request.Command).IsEqualTo(FeigCommand.SaveConfiguration);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0x40);
+            Check.That(request.Data.ToArray()).ContainsExactly(0x40);
         }
     }
 
@@ -1962,13 +1844,13 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse {
                 Status = FeigStatus.OK,
-                Data   = BufferSpan.Empty,
+                Data = BufferSpan.Empty,
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -1983,8 +1865,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -2006,11 +1888,9 @@ public class Test_DefaultFeigReader
             await reader.SaveConfiguration(13);
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.SaveConfiguration);
+            Check.That(request.Command).IsEqualTo(FeigCommand.SaveConfiguration);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0x0D);
+            Check.That(request.Data.ToArray()).ContainsExactly(0x0D);
         }
     }
 
@@ -2021,13 +1901,13 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse {
                 Status = FeigStatus.OK,
-                Data   = BufferSpan.Empty,
+                Data = BufferSpan.Empty,
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -2042,8 +1922,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -2065,11 +1945,9 @@ public class Test_DefaultFeigReader
             await reader.ResetConfigurations(FeigBlockLocation.EEPROM);
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.SetDefaultConfiguration);
+            Check.That(request.Command).IsEqualTo(FeigCommand.SetDefaultConfiguration);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0xC0);
+            Check.That(request.Data.ToArray()).ContainsExactly(0xC0);
         }
     }
 
@@ -2080,13 +1958,13 @@ public class Test_DefaultFeigReader
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse {
                 Status = FeigStatus.OK,
-                Data   = BufferSpan.Empty,
+                Data = BufferSpan.Empty,
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -2101,8 +1979,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -2124,11 +2002,9 @@ public class Test_DefaultFeigReader
             await reader.ResetConfiguration(13, FeigBlockLocation.EEPROM);
 
             // assert
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.SetDefaultConfiguration);
+            Check.That(request.Command).IsEqualTo(FeigCommand.SetDefaultConfiguration);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly(0x8D);
+            Check.That(request.Data.ToArray()).ContainsExactly(0x8D);
         }
     }
 
@@ -2154,14 +2030,11 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_ISO14443A(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.ISO14443A);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
-            Check.That(transponder.Identifier.ToArray())
-               .ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+            Check.That(transponder.Identifier.ToArray()).ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2185,25 +2058,23 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_ISO14443A(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.ISO14443A);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
             Check.That(transponder.Identifier.ToArray())
-               .ContainsExactly(
-                    0xAA,
-                    0x99,
-                    0x88,
-                    0x77,
-                    0x66,
-                    0x55,
-                    0x44,
-                    0x33,
-                    0x22,
-                    0x11
-                );
+           .ContainsExactly(
+                0xAA,
+                0x99,
+                0x88,
+                0x77,
+                0x66,
+                0x55,
+                0x44,
+                0x33,
+                0x22,
+                0x11
+            );
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2224,14 +2095,11 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_ISO14443B(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.ISO14443B);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO14443B);
 
-            Check.That(transponder.Identifier.ToArray())
-               .ContainsExactly(0x44, 0x33, 0x22, 0x11);
+            Check.That(transponder.Identifier.ToArray()).ContainsExactly(0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2258,14 +2126,12 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_Innovatron(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.Innovatron);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.Innovatron);
 
             Check.That(transponder.Identifier.ToArray())
                .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0x13);
+            Check.That(data.ToArray()).ContainsExactly(0x13);
         }
 
         [Test]
@@ -2285,14 +2151,11 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_Jewel(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.Jewel);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.Jewel);
 
-            Check.That(transponder.Identifier.ToArray())
-               .ContainsExactly(0x44, 0x33, 0x22, 0x11);
+            Check.That(transponder.Identifier.ToArray()).ContainsExactly(0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2313,14 +2176,12 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_SR176(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.SR176);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.SR176);
 
             Check.That(transponder.Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2341,14 +2202,12 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_SRIxx(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.SRIxx);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.SRIxx);
 
             Check.That(transponder.Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2377,14 +2236,12 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_FeliCa(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.FeliCa);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.FeliCa);
 
             Check.That(transponder.Identifier.ToArray())
                .ContainsExactly(0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0x13);
+            Check.That(data.ToArray()).ContainsExactly(0x13);
         }
 
         [Test]
@@ -2405,14 +2262,12 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_ISO15693(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.ISO15693);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO15693);
 
             Check.That(transponder.Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2422,14 +2277,11 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_ISO18000_3M3(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.ISO18000_3M3);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO18000_3M3);
 
-            Check.That(transponder.Identifier.ToArray())
-               .ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
+            Check.That(transponder.Identifier.ToArray()).ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2439,14 +2291,11 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_EPC_Class1_Gen2(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.EPC_Class1_Gen2);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.EPC_Class1_Gen2);
 
-            Check.That(transponder.Identifier.ToArray())
-               .ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
+            Check.That(transponder.Identifier.ToArray()).ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2467,14 +2316,12 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_ICode1(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.ICode1);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ICode1);
 
             Check.That(transponder.Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2494,14 +2341,12 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_ICodeEPC(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.ICodeEPC);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ICodeEPC);
 
             Check.That(transponder.Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2532,14 +2377,11 @@ public class Test_DefaultFeigReader
 
             var transponder = DefaultFeigReader.Inventory_Parse_ICodeUID(ref data);
 
-            Check.That(transponder.TransponderType)
-               .IsEqualTo(FeigTransponderType.ICodeUID);
+            Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ICodeUID);
 
-            Check.That(transponder.Identifier.ToArray())
-               .ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
+            Check.That(transponder.Identifier.ToArray()).ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2679,16 +2521,9 @@ public class Test_DefaultFeigReader
 
             var transponders = DefaultFeigReader.Inventory_Parse(ref data);
 
-            Check.That(
-                    transponders[0]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ISO14443A);
+            Check.That(transponders[0].TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
-            Check.That(
-                    transponders[0]
-                       .Identifier.ToArray()
-                )
+            Check.That(transponders[0].Identifier.ToArray())
                .ContainsExactly(
                     0xAA,
                     0x99,
@@ -2702,140 +2537,56 @@ public class Test_DefaultFeigReader
                     0x11
                 );
 
-            Check.That(
-                    transponders[1]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ISO14443A);
+            Check.That(transponders[1].TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
-            Check.That(
-                    transponders[1]
-                       .Identifier.ToArray()
-                )
-               .ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
+            Check.That(transponders[1].Identifier.ToArray()).ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[2]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ISO14443B);
+            Check.That(transponders[2].TransponderType).IsEqualTo(FeigTransponderType.ISO14443B);
 
-            Check.That(
-                    transponders[2]
-                       .Identifier.ToArray()
-                )
-               .ContainsExactly(0x44, 0x33, 0x22, 0x11);
+            Check.That(transponders[2].Identifier.ToArray()).ContainsExactly(0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[3]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.Jewel);
+            Check.That(transponders[3].TransponderType).IsEqualTo(FeigTransponderType.Jewel);
 
-            Check.That(
-                    transponders[3]
-                       .Identifier.ToArray()
-                )
-               .ContainsExactly(0x44, 0x33, 0x22, 0x11);
+            Check.That(transponders[3].Identifier.ToArray()).ContainsExactly(0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[4]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.SR176);
+            Check.That(transponders[4].TransponderType).IsEqualTo(FeigTransponderType.SR176);
 
-            Check.That(
-                    transponders[4]
-                       .Identifier.ToArray()
-                )
+            Check.That(transponders[4].Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[5]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.SRIxx);
+            Check.That(transponders[5].TransponderType).IsEqualTo(FeigTransponderType.SRIxx);
 
-            Check.That(
-                    transponders[5]
-                       .Identifier.ToArray()
-                )
+            Check.That(transponders[5].Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[6]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ISO15693);
+            Check.That(transponders[6].TransponderType).IsEqualTo(FeigTransponderType.ISO15693);
 
-            Check.That(
-                    transponders[6]
-                       .Identifier.ToArray()
-                )
+            Check.That(transponders[6].Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[7]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ISO18000_3M3);
+            Check.That(transponders[7].TransponderType).IsEqualTo(FeigTransponderType.ISO18000_3M3);
 
-            Check.That(
-                    transponders[7]
-                       .Identifier.ToArray()
-                )
-               .ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
+            Check.That(transponders[7].Identifier.ToArray()).ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[8]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.EPC_Class1_Gen2);
+            Check.That(transponders[8].TransponderType).IsEqualTo(FeigTransponderType.EPC_Class1_Gen2);
 
-            Check.That(
-                    transponders[8]
-                       .Identifier.ToArray()
-                )
-               .ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
+            Check.That(transponders[8].Identifier.ToArray()).ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[9]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ICodeEPC);
+            Check.That(transponders[9].TransponderType).IsEqualTo(FeigTransponderType.ICodeEPC);
 
-            Check.That(
-                    transponders[9]
-                       .Identifier.ToArray()
-                )
+            Check.That(transponders[9].Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[10]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ICode1);
+            Check.That(transponders[10].TransponderType).IsEqualTo(FeigTransponderType.ICode1);
 
-            Check.That(
-                    transponders[10]
-                       .Identifier.ToArray()
-                )
+            Check.That(transponders[10].Identifier.ToArray())
                .ContainsExactly(0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(
-                    transponders[11]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ICodeUID);
+            Check.That(transponders[11].TransponderType).IsEqualTo(FeigTransponderType.ICodeUID);
 
-            Check.That(
-                    transponders[11]
-                       .Identifier.ToArray()
-                )
-               .ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
+            Check.That(transponders[11].Identifier.ToArray()).ContainsExactly(0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(data.ToArray())
-               .ContainsExactly(0xDD);
+            Check.That(data.ToArray()).ContainsExactly(0xDD);
         }
 
         [Test]
@@ -2857,16 +2608,15 @@ public class Test_DefaultFeigReader
                 0xDD
             );
 
-            Check.ThatCode(() => DefaultFeigReader.Inventory_Parse(ref data))
-               .Throws<NotSupportedException>();
+            Check.ThatCode(() => DefaultFeigReader.Inventory_Parse(ref data)).Throws<NotSupportedException>();
         }
 
         [Test]
         public async Task Success()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var data = new Byte[] {
@@ -2885,7 +2635,7 @@ public class Test_DefaultFeigReader
 
             var response = new FeigResponse {
                 Status = FeigStatus.OK,
-                Data   = BufferSpan.From(data),
+                Data = BufferSpan.From(data),
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -2900,8 +2650,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -2923,39 +2673,29 @@ public class Test_DefaultFeigReader
             var result = await reader.Inventory();
 
             // assert
-            Check.That(result.Transponders.Length)
-               .IsEqualTo(1);
+            Check.That(result.Transponders.Length).IsEqualTo(1);
 
-            Check.That(
-                    result.Transponders[0]
-                       .TransponderType
-                )
-               .IsEqualTo(FeigTransponderType.ISO14443A);
+            Check.That(result.Transponders[0].TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
-            Check.That(
-                    result.Transponders[0]
-                       .Identifier.ToArray()
-                )
+            Check.That(result.Transponders[0].Identifier.ToArray())
                .ContainsExactly(0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11);
 
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.ISOStandardHostCommand);
+            Check.That(request.Command).IsEqualTo(FeigCommand.ISOStandardHostCommand);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly((Byte) FeigISOStandardCommand.Inventory, 0x00);
+            Check.That(request.Data.ToArray()).ContainsExactly((Byte)FeigISOStandardCommand.Inventory, 0x00);
         }
 
         [Test]
         public async Task NoTransponder()
         {
             // arrange
-            FeigRequest       request           = null;
-            var               timeout           = TimeSpan.Zero;
+            FeigRequest request = null;
+            var timeout = TimeSpan.Zero;
             CancellationToken cancellationToken = default;
 
             var response = new FeigResponse {
                 Status = FeigStatus.NoTransponder,
-                Data   = BufferSpan.Empty,
+                Data = BufferSpan.Empty,
             };
 
             var transport = new Mock<IFeigTransport>(MockBehavior.Strict);
@@ -2970,8 +2710,8 @@ public class Test_DefaultFeigReader
                 )
                .Callback<FeigRequest, FeigProtocol, TimeSpan, CancellationToken>(
                     (r, p, t, c) => {
-                        request           = r;
-                        timeout           = t;
+                        request = r;
+                        timeout = t;
                         cancellationToken = c;
                     }
                 )
@@ -2993,14 +2733,11 @@ public class Test_DefaultFeigReader
             var result = await reader.Inventory();
 
             // assert
-            Check.That(result.Transponders.Length)
-               .IsEqualTo(0);
+            Check.That(result.Transponders.Length).IsEqualTo(0);
 
-            Check.That(request.Command)
-               .IsEqualTo(FeigCommand.ISOStandardHostCommand);
+            Check.That(request.Command).IsEqualTo(FeigCommand.ISOStandardHostCommand);
 
-            Check.That(request.Data.ToArray())
-               .ContainsExactly((Byte) FeigISOStandardCommand.Inventory, 0x00);
+            Check.That(request.Data.ToArray()).ContainsExactly((Byte)FeigISOStandardCommand.Inventory, 0x00);
         }
     }
 }

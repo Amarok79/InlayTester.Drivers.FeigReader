@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Shared;
@@ -22,15 +22,7 @@ public static class FeigChecksum
     // http://reveng.sourceforge.net/crc-catalogue/all.htm
 
     // static data
-    private static readonly CrcCalculator sCalculator = new(
-        16,
-        0x1021,
-        true,
-        0xffff,
-        0x0000,
-        true,
-        true
-    );
+    private static readonly CrcCalculator sCalculator = new(16, 0x1021, true, 0xffff, 0x0000, true, true);
 
 
     /// <summary>

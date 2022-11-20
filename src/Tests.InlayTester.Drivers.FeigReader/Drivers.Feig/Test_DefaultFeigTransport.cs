@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Threading;
@@ -53,11 +53,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -107,11 +107,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -164,20 +164,15 @@ public class Test_DefaultFeigTransport
                     default
                 );
 
-                Check.That(result.Status)
-                   .IsEqualTo(FeigTransferStatus.Success);
+                Check.That(result.Status).IsEqualTo(FeigTransferStatus.Success);
 
-                Check.That(result.Response.Address)
-                   .IsEqualTo(0x00);
+                Check.That(result.Response.Address).IsEqualTo(0x00);
 
-                Check.That(result.Response.Command)
-                   .IsEqualTo(FeigCommand.GetSoftwareVersion);
+                Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
 
-                Check.That(result.Response.Status)
-                   .IsEqualTo(FeigStatus.OK);
+                Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-                Check.That(result.Response.Data.ToArray())
-                   .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
             }
         }
     }
@@ -198,11 +193,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -221,15 +216,11 @@ public class Test_DefaultFeigTransport
                             data[5] == 0x6e &&
                             data[6] == 0x61)
                         {
-                            transportB.Send(
-                                BufferSpan.From(0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03)
-                            );
+                            transportB.Send(BufferSpan.From(0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03));
 
                             Thread.Sleep(100);
 
-                            transportB.Send(
-                                BufferSpan.From(0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69)
-                            );
+                            transportB.Send(BufferSpan.From(0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
                         }
                         else
                         {
@@ -245,20 +236,15 @@ public class Test_DefaultFeigTransport
                     default
                 );
 
-                Check.That(result.Status)
-                   .IsEqualTo(FeigTransferStatus.Success);
+                Check.That(result.Status).IsEqualTo(FeigTransferStatus.Success);
 
-                Check.That(result.Response.Address)
-                   .IsEqualTo(0x00);
+                Check.That(result.Response.Address).IsEqualTo(0x00);
 
-                Check.That(result.Response.Command)
-                   .IsEqualTo(FeigCommand.GetSoftwareVersion);
+                Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
 
-                Check.That(result.Response.Status)
-                   .IsEqualTo(FeigStatus.OK);
+                Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-                Check.That(result.Response.Data.ToArray())
-                   .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
             }
         }
     }
@@ -279,11 +265,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -338,11 +324,9 @@ public class Test_DefaultFeigTransport
                     default
                 );
 
-                Check.That(result.Status)
-                   .IsEqualTo(FeigTransferStatus.Timeout);
+                Check.That(result.Status).IsEqualTo(FeigTransferStatus.Timeout);
 
-                Check.That(result.Response)
-                   .IsNull();
+                Check.That(result.Response).IsNull();
 
                 Thread.Sleep(1000);
             }
@@ -365,11 +349,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -430,11 +414,9 @@ public class Test_DefaultFeigTransport
 
                 var result = await task;
 
-                Check.That(result.Status)
-                   .IsEqualTo(FeigTransferStatus.Canceled);
+                Check.That(result.Status).IsEqualTo(FeigTransferStatus.Canceled);
 
-                Check.That(result.Response)
-                   .IsNull();
+                Check.That(result.Response).IsNull();
 
                 Thread.Sleep(1000);
             }
@@ -457,11 +439,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -514,11 +496,9 @@ public class Test_DefaultFeigTransport
                     default
                 );
 
-                Check.That(result.Status)
-                   .IsEqualTo(FeigTransferStatus.CommunicationError);
+                Check.That(result.Status).IsEqualTo(FeigTransferStatus.CommunicationError);
 
-                Check.That(result.Response)
-                   .IsNull();
+                Check.That(result.Response).IsNull();
             }
         }
     }
@@ -539,11 +519,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -596,11 +576,9 @@ public class Test_DefaultFeigTransport
                     default
                 );
 
-                Check.That(result.Status)
-                   .IsEqualTo(FeigTransferStatus.CommunicationError);
+                Check.That(result.Status).IsEqualTo(FeigTransferStatus.CommunicationError);
 
-                Check.That(result.Response)
-                   .IsNull();
+                Check.That(result.Response).IsNull();
             }
         }
     }
@@ -621,11 +599,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -686,17 +664,13 @@ public class Test_DefaultFeigTransport
                     default
                 );
 
-                Check.That(result.Status)
-                   .IsEqualTo(FeigTransferStatus.UnexpectedResponse);
+                Check.That(result.Status).IsEqualTo(FeigTransferStatus.UnexpectedResponse);
 
-                Check.That(result.Response.Address)
-                   .IsEqualTo(0xff);
+                Check.That(result.Response.Address).IsEqualTo(0xff);
 
-                Check.That(result.Response.Command)
-                   .IsEqualTo(FeigCommand.ReadConfiguration);
+                Check.That(result.Response.Command).IsEqualTo(FeigCommand.ReadConfiguration);
 
-                Check.That(result.Response.Status)
-                   .IsEqualTo(FeigStatus.LengthError);
+                Check.That(result.Response.Status).IsEqualTo(FeigStatus.LengthError);
             }
         }
     }
@@ -717,11 +691,11 @@ public class Test_DefaultFeigTransport
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName  = "COMB",
-                Baud      = 38400,
-                DataBits  = 8,
-                Parity    = Parity.Even,
-                StopBits  = StopBits.One,
+                PortName = "COMB",
+                Baud = 38400,
+                DataBits = 8,
+                Parity = Parity.Even,
+                StopBits = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -776,17 +750,13 @@ public class Test_DefaultFeigTransport
                         default
                     );
 
-                    Check.That(result.Status)
-                       .IsEqualTo(FeigTransferStatus.Success);
+                    Check.That(result.Status).IsEqualTo(FeigTransferStatus.Success);
 
-                    Check.That(result.Response.Address)
-                       .IsEqualTo(0x00);
+                    Check.That(result.Response.Address).IsEqualTo(0x00);
 
-                    Check.That(result.Response.Command)
-                       .IsEqualTo(FeigCommand.GetSoftwareVersion);
+                    Check.That(result.Response.Command).IsEqualTo(FeigCommand.GetSoftwareVersion);
 
-                    Check.That(result.Response.Status)
-                       .IsEqualTo(FeigStatus.OK);
+                    Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                     Check.That(result.Response.Data.ToArray())
                        .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);

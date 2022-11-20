@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -18,26 +18,21 @@ public class Test_FeigParseResult
         {
             // act
             var response = new FeigResponse();
-            var result   = FeigParseResult.Success(response);
+            var result = FeigParseResult.Success(response);
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigParseStatus.Success);
+            Check.That(result.Status).IsEqualTo(FeigParseStatus.Success);
 
-            Check.That(result.Response)
-               .IsSameReferenceAs(response);
+            Check.That(result.Response).IsSameReferenceAs(response);
 
             Check.That(result.ToString())
-               .IsEqualTo(
-                    "Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
-                );
+               .IsEqualTo("Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
         }
 
         [Test]
         public void Exception_With_NullResponse()
         {
-            Check.ThatCode(() => FeigParseResult.Success(null))
-               .Throws<ArgumentNullException>();
+            Check.ThatCode(() => FeigParseResult.Success(null)).Throws<ArgumentNullException>();
         }
     }
 
@@ -51,14 +46,11 @@ public class Test_FeigParseResult
             var result = FeigParseResult.MoreDataNeeded();
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigParseStatus.MoreDataNeeded);
+            Check.That(result.Status).IsEqualTo(FeigParseStatus.MoreDataNeeded);
 
-            Check.That(result.Response)
-               .IsNull();
+            Check.That(result.Response).IsNull();
 
-            Check.That(result.ToString())
-               .IsEqualTo("Status: MoreDataNeeded, Response: { <null> }");
+            Check.That(result.ToString()).IsEqualTo("Status: MoreDataNeeded, Response: { <null> }");
         }
     }
 
@@ -70,19 +62,15 @@ public class Test_FeigParseResult
         {
             // act
             var response = new FeigResponse();
-            var result   = FeigParseResult.ChecksumError(response);
+            var result = FeigParseResult.ChecksumError(response);
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigParseStatus.ChecksumError);
+            Check.That(result.Status).IsEqualTo(FeigParseStatus.ChecksumError);
 
-            Check.That(result.Response)
-               .IsSameReferenceAs(response);
+            Check.That(result.Response).IsSameReferenceAs(response);
 
             Check.That(result.ToString())
-               .IsEqualTo(
-                    "Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
-                );
+               .IsEqualTo("Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
         }
     }
 
@@ -96,14 +84,11 @@ public class Test_FeigParseResult
             var result = FeigParseResult.FrameError();
 
             // assert
-            Check.That(result.Status)
-               .IsEqualTo(FeigParseStatus.FrameError);
+            Check.That(result.Status).IsEqualTo(FeigParseStatus.FrameError);
 
-            Check.That(result.Response)
-               .IsNull();
+            Check.That(result.Response).IsNull();
 
-            Check.That(result.ToString())
-               .IsEqualTo("Status: FrameError, Response: { <null> }");
+            Check.That(result.ToString()).IsEqualTo("Status: FrameError, Response: { <null> }");
         }
     }
 }

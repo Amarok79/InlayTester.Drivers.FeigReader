@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -18,22 +18,16 @@ public class Test_FeigSoftwareInfo
         var info = new FeigSoftwareInfo();
 
         // assert
-        Check.That(info.FirmwareVersion)
-           .IsEqualTo(new Version(0, 0, 0));
+        Check.That(info.FirmwareVersion).IsEqualTo(new Version(0, 0, 0));
 
-        Check.That(info.HardwareType)
-           .IsEqualTo(0x00);
+        Check.That(info.HardwareType).IsEqualTo(0x00);
 
-        Check.That(info.ReaderType)
-           .IsEqualTo(FeigReaderType.Unknown);
+        Check.That(info.ReaderType).IsEqualTo(FeigReaderType.Unknown);
 
-        Check.That(info.SupportedTransponders)
-           .IsEqualTo(0x0000);
+        Check.That(info.SupportedTransponders).IsEqualTo(0x0000);
 
         Check.That(info.ToString())
-           .IsEqualTo(
-                "FirmwareVersion: 0.0.0, HardwareType: 0x00, ReaderType: Unknown, SupportedTransponders: 0x0000"
-            );
+           .IsEqualTo("FirmwareVersion: 0.0.0, HardwareType: 0x00, ReaderType: Unknown, SupportedTransponders: 0x0000");
     }
 
     [Test]
@@ -41,30 +35,24 @@ public class Test_FeigSoftwareInfo
     {
         // act
         var copy = new FeigSoftwareInfo {
-            FirmwareVersion       = new Version(3, 4, 0),
-            HardwareType          = 0x34,
-            ReaderType            = FeigReaderType.CPR40,
+            FirmwareVersion = new Version(3, 4, 0),
+            HardwareType = 0x34,
+            ReaderType = FeigReaderType.CPR40,
             SupportedTransponders = 0x1234,
         };
 
         var info = new FeigSoftwareInfo(copy);
 
         // assert
-        Check.That(info.FirmwareVersion)
-           .IsEqualTo(new Version(3, 4, 0));
+        Check.That(info.FirmwareVersion).IsEqualTo(new Version(3, 4, 0));
 
-        Check.That(info.HardwareType)
-           .IsEqualTo(0x34);
+        Check.That(info.HardwareType).IsEqualTo(0x34);
 
-        Check.That(info.ReaderType)
-           .IsEqualTo(FeigReaderType.CPR40);
+        Check.That(info.ReaderType).IsEqualTo(FeigReaderType.CPR40);
 
-        Check.That(info.SupportedTransponders)
-           .IsEqualTo(0x1234);
+        Check.That(info.SupportedTransponders).IsEqualTo(0x1234);
 
         Check.That(info.ToString())
-           .IsEqualTo(
-                "FirmwareVersion: 3.4.0, HardwareType: 0x34, ReaderType: CPR40, SupportedTransponders: 0x1234"
-            );
+           .IsEqualTo("FirmwareVersion: 3.4.0, HardwareType: 0x34, ReaderType: CPR40, SupportedTransponders: 0x1234");
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Contracts;
@@ -30,8 +30,8 @@ public static class FeigReader
     {
         Verify.NotNull(settings, nameof(settings));
 
-        var copy      = new FeigReaderSettings(settings);
-        var logger    = NullLogger.Instance;
+        var copy = new FeigReaderSettings(settings);
+        var logger = NullLogger.Instance;
         var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
 
         return new DefaultFeigReader(copy, transport, logger);
@@ -56,8 +56,8 @@ public static class FeigReader
         Verify.NotNull(settings, nameof(settings));
         Verify.NotNull(hooks, nameof(hooks));
 
-        var copy      = new FeigReaderSettings(settings);
-        var logger    = NullLogger.Instance;
+        var copy = new FeigReaderSettings(settings);
+        var logger = NullLogger.Instance;
         var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
 
         return new DefaultFeigReader(copy, transport, logger);
@@ -82,7 +82,7 @@ public static class FeigReader
         Verify.NotNull(settings, nameof(settings));
         Verify.NotNull(logger, nameof(logger));
 
-        var copy      = new FeigReaderSettings(settings);
+        var copy = new FeigReaderSettings(settings);
         var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
 
         return new DefaultFeigReader(copy, transport, logger);
@@ -105,17 +105,13 @@ public static class FeigReader
     /// <exception cref="ArgumentNullException">
     ///     A null reference was passed to a method that did not accept it as a valid argument.
     /// </exception>
-    public static IFeigReader Create(
-        FeigReaderSettings settings,
-        ILogger logger,
-        ITransportHooks hooks
-    )
+    public static IFeigReader Create(FeigReaderSettings settings, ILogger logger, ITransportHooks hooks)
     {
         Verify.NotNull(settings, nameof(settings));
         Verify.NotNull(logger, nameof(logger));
         Verify.NotNull(hooks, nameof(hooks));
 
-        var copy      = new FeigReaderSettings(settings);
+        var copy = new FeigReaderSettings(settings);
         var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
 
         return new DefaultFeigReader(copy, transport, logger);

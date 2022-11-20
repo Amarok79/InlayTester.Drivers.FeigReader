@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -67,13 +67,10 @@ public class Test_FeigReaderType
     [Test]
     public void TestValues()
     {
-        Check.That((Byte) FeigReaderType.Unknown)
-           .IsEqualTo(0);
+        Check.That((Byte)FeigReaderType.Unknown).IsEqualTo(0);
 
-        Check.That((Byte) FeigReaderType.CPR40)
-           .IsEqualTo(83);
+        Check.That((Byte)FeigReaderType.CPR40).IsEqualTo(83);
 
-        Check.That((Byte) FeigReaderType.CPR74)
-           .IsEqualTo(114);
+        Check.That((Byte)FeigReaderType.CPR74).IsEqualTo(114);
     }
 }

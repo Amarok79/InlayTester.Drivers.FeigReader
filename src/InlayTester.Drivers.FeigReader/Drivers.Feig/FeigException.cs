@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 #pragma warning disable S3925 // "ISerializable" should be implemented correctly
 
@@ -36,7 +36,7 @@ public class FeigException : Exception
     /// </param>
     public FeigException(FeigRequest? request, FeigResponse? response)
     {
-        Request  = request;
+        Request = request;
         Response = response;
     }
 
@@ -63,7 +63,7 @@ public class FeigException : Exception
     public FeigException(String message, FeigRequest? request, FeigResponse? response)
         : base(message)
     {
-        Request  = request;
+        Request = request;
         Response = response;
     }
 

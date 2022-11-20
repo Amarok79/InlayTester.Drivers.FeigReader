@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Shared;
@@ -17,14 +17,11 @@ public class Test_FeigTransponder
     {
         var transponder = new FeigTransponder();
 
-        Check.That(transponder.TransponderType)
-           .IsEqualTo(FeigTransponderType.Unknown);
+        Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.Unknown);
 
-        Check.That(transponder.Identifier.IsEmpty)
-           .IsTrue();
+        Check.That(transponder.Identifier.IsEmpty).IsTrue();
 
-        Check.That(transponder.ToString())
-           .IsEqualTo("Type: Unknown, ID: <empty>");
+        Check.That(transponder.ToString()).IsEqualTo("Type: Unknown, ID: <empty>");
     }
 
     [Test]
@@ -32,18 +29,14 @@ public class Test_FeigTransponder
     {
         var transponder = new FeigTransponder {
             TransponderType = FeigTransponderType.ISO14443A,
-            Identifier =
-                BufferSpan.From(0x11, 0x22, 0x33),
+            Identifier = BufferSpan.From(0x11, 0x22, 0x33),
         };
 
-        Check.That(transponder.TransponderType)
-           .IsEqualTo(FeigTransponderType.ISO14443A);
+        Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
 
-        Check.That(transponder.Identifier.ToArray())
-           .ContainsExactly(0x11, 0x22, 0x33);
+        Check.That(transponder.Identifier.ToArray()).ContainsExactly(0x11, 0x22, 0x33);
 
-        Check.That(transponder.ToString())
-           .IsEqualTo("Type: ISO14443A, ID: 11-22-33");
+        Check.That(transponder.ToString()).IsEqualTo("Type: ISO14443A, ID: 11-22-33");
     }
 
     [Test]
@@ -52,11 +45,11 @@ public class Test_FeigTransponder
         var transponders = new[] {
             new FeigTransponder {
                 TransponderType = FeigTransponderType.ISO14443A,
-                Identifier      = BufferSpan.From(0x11, 0x22, 0x33),
+                Identifier = BufferSpan.From(0x11, 0x22, 0x33),
             },
             new FeigTransponder {
                 TransponderType = FeigTransponderType.Jewel,
-                Identifier      = BufferSpan.From(0x44, 0x55),
+                Identifier = BufferSpan.From(0x44, 0x55),
             },
         };
 
@@ -70,12 +63,11 @@ public class Test_FeigTransponder
         var transponders = new[] {
             new FeigTransponder {
                 TransponderType = FeigTransponderType.ISO14443A,
-                Identifier      = BufferSpan.From(0x11, 0x22, 0x33),
+                Identifier = BufferSpan.From(0x11, 0x22, 0x33),
             },
         };
 
-        Check.That(FeigTransponder.ToString(transponders))
-           .IsEqualTo("{ Type: ISO14443A, ID: 11-22-33 }");
+        Check.That(FeigTransponder.ToString(transponders)).IsEqualTo("{ Type: ISO14443A, ID: 11-22-33 }");
     }
 
     [Test]
@@ -83,14 +75,12 @@ public class Test_FeigTransponder
     {
         var transponders = Array.Empty<FeigTransponder>();
 
-        Check.That(FeigTransponder.ToString(transponders))
-           .IsEqualTo(String.Empty);
+        Check.That(FeigTransponder.ToString(transponders)).IsEqualTo(String.Empty);
     }
 
     [Test]
     public void ToString_Null()
     {
-        Check.That(FeigTransponder.ToString(null))
-           .IsEqualTo(String.Empty);
+        Check.That(FeigTransponder.ToString(null)).IsEqualTo(String.Empty);
     }
 }

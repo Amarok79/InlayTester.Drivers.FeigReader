@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Threading;
@@ -32,17 +32,13 @@ internal sealed class DefaultFeigTransport : IFeigTransport
     internal ILogger Logger => mLogger;
 
 
-    public DefaultFeigTransport(
-        SerialTransportSettings settings,
-        ILogger logger,
-        ITransportHooks? hooks = null
-    )
+    public DefaultFeigTransport(SerialTransportSettings settings, ILogger logger, ITransportHooks? hooks = null)
     {
         Verify.NotNull(settings, nameof(settings));
         Verify.NotNull(logger, nameof(logger));
 
         mSettings = settings;
-        mLogger   = logger;
+        mLogger = logger;
 
         mCompletionSource = new TaskCompletionSource<FeigTransferResult>();
         mCompletionSource.SetCanceled();
@@ -50,9 +46,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         mReceiveBuffer = BufferSpan.From(new Byte[1024]);
         mReceiveBuffer = mReceiveBuffer.Clear();
 
-        mTransport = hooks != null
-            ? Transport.Create(settings, logger, hooks)
-            : Transport.Create(settings, logger);
+        mTransport = hooks != null ? Transport.Create(settings, logger, hooks) : Transport.Create(settings, logger);
 
         mTransport.Received.Subscribe(x => _HandleReceived(x));
     }
@@ -96,7 +90,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         lock (mSyncThis)
         {
             // store for later use
-            mRequest  = request;
+            mRequest = request;
             mProtocol = protocol;
 
             // clear buffers
@@ -117,7 +111,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
                     #endregion
 
-                    ( (TaskCompletionSource<FeigTransferResult>) completionSource! ).TrySetResult(
+                    ( (TaskCompletionSource<FeigTransferResult>)completionSource! ).TrySetResult(
                         FeigTransferResult.Canceled(mRequest)
                     );
                 },
@@ -143,7 +137,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
                     #endregion
 
-                    ( (TaskCompletionSource<FeigTransferResult>) completionSource! ).TrySetResult(
+                    ( (TaskCompletionSource<FeigTransferResult>)completionSource! ).TrySetResult(
                         FeigTransferResult.Timeout(mRequest)
                     );
                 },
@@ -195,8 +189,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
                 {
                     _WaitForMoreData();
                 }
-                else if (result.Status == FeigParseStatus.FrameError ||
-                    result.Status == FeigParseStatus.ChecksumError)
+                else if (result.Status == FeigParseStatus.FrameError || result.Status == FeigParseStatus.ChecksumError)
                 {
                     _CompleteWithError(result);
                 }
@@ -280,9 +273,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
         #endregion
 
-        mCompletionSource.TrySetResult(
-            FeigTransferResult.UnexpectedResponse(mRequest!, result.Response!)
-        );
+        mCompletionSource.TrySetResult(FeigTransferResult.UnexpectedResponse(mRequest!, result.Response!));
     }
 
     private void _CompleteWithSuccess(FeigParseResult result)

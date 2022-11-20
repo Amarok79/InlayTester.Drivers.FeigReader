@@ -13,11 +13,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		_cleanup.cmd = _cleanup.cmd
+		global.json = global.json
 		LICENSE = LICENSE
 		.github\workflows\main.yml = .github\workflows\main.yml
 		nuget.config = nuget.config
 		README.md = README.md
+		_cleanup.cmd = _cleanup.cmd
 	EndProjectSection
 EndProject
 Global
