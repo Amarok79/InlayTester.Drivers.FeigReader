@@ -1,7 +1,5 @@
 ﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
 
-#pragma warning disable S3925 // "ISerializable" should be implemented correctly
-
 using System;
 
 

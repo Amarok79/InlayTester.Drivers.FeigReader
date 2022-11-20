@@ -106,7 +106,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
                     if (mLogger.IsEnabled(LogLevel.Information))
                     {
-                        mLogger.LogInformation("[{0}]  CANCELED", mSettings.PortName);
+                        mLogger.LogInformation("[{PortName}]  CANCELED", mSettings.PortName);
                     }
 
                     #endregion
@@ -129,7 +129,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
                     if (mLogger.IsEnabled(LogLevel.Information))
                     {
                         mLogger.LogInformation(
-                            "[{0}]  TIMEOUT   {1} ms",
+                            "[{PortName}]  TIMEOUT   {Timeout} ms",
                             mSettings.PortName,
                             timeout.TotalMilliseconds
                         );
@@ -160,7 +160,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
             if (mLogger.IsEnabled(LogLevel.Information))
             {
-                mLogger.LogInformation("[{0}]  SENT      {1}", mSettings.PortName, mRequest);
+                mLogger.LogInformation("[{PortName}]  SENT      {Request}", mSettings.PortName, mRequest);
             }
 
             #endregion
@@ -189,7 +189,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
                 {
                     _WaitForMoreData();
                 }
-                else if (result.Status == FeigParseStatus.FrameError || result.Status == FeigParseStatus.ChecksumError)
+                else if (result.Status is FeigParseStatus.FrameError or FeigParseStatus.ChecksumError)
                 {
                     _CompleteWithError(result);
                 }
@@ -211,7 +211,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
         #region (logging)
 
-        mLogger.LogTrace("[{0}]  IGNORED   {1}", mSettings.PortName, data);
+        mLogger.LogTrace("[{PortName}]  IGNORED   {Data}", mSettings.PortName, data);
 
         #endregion
     }
@@ -225,7 +225,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         if (mLogger.IsEnabled(LogLevel.Trace))
         {
             mLogger.LogTrace(
-                "[{0}]  PARSED    MoreDataNeeded;  ReceiveBuffer: {1}",
+                "[{PortName}]  PARSED    MoreDataNeeded;  ReceiveBuffer: {Buffer}",
                 mSettings.PortName,
                 mReceiveBuffer
             );
@@ -243,7 +243,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         if (mLogger.IsEnabled(LogLevel.Trace))
         {
             mLogger.LogTrace(
-                "[{0}]  PARSED    {1};  ReceiveBuffer: {2}",
+                "[{PortName}]  PARSED    {Status};  ReceiveBuffer: {Buffer}",
                 mSettings.PortName,
                 result.Status,
                 mReceiveBuffer
@@ -252,7 +252,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
         if (mLogger.IsEnabled(LogLevel.Trace))
         {
-            mLogger.LogTrace("[{0}]  COMMERR", mSettings.PortName);
+            mLogger.LogTrace("[{PortName}]  COMMERR", mSettings.PortName);
         }
 
         #endregion
@@ -268,7 +268,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  UNEXPECT  {1}", mSettings.PortName, result.Response);
+            mLogger.LogInformation("[{PortName}]  UNEXPECT  {Response}", mSettings.PortName, result.Response);
         }
 
         #endregion
@@ -284,7 +284,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  RECEIVED  {1}", mSettings.PortName, result.Response);
+            mLogger.LogInformation("[{PortName}]  RECEIVED  {Response}", mSettings.PortName, result.Response);
         }
 
         #endregion

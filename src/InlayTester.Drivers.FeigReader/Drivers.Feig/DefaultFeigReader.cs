@@ -137,7 +137,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  TRANSFER  #{1}", mSettings.TransportSettings.PortName, mTransferNo);
+            mLogger.LogInformation("[{PortName}]  TRANSFER  #{No}", mSettings.TransportSettings.PortName, mTransferNo);
         }
 
         #endregion
@@ -252,9 +252,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (result.Status == FeigTransferStatus.Success)
         {
-            if (result!.Response!.Status == FeigStatus.OK ||
-                result!.Response!.Status == FeigStatus.NoTransponder ||
-                result!.Response!.Status == FeigStatus.MoreData)
+            if (result!.Response!.Status is FeigStatus.OK or FeigStatus.NoTransponder or FeigStatus.MoreData)
             {
                 return result.Response; // success
             }
@@ -397,7 +395,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  TestCommunication()", mSettings.TransportSettings.PortName);
+            mLogger.LogInformation("[{PortName}]  TestCommunication()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
@@ -414,7 +412,11 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  TestCommunication()  =>  {1}", mSettings.TransportSettings.PortName, flag);
+            mLogger.LogInformation(
+                "[{PortName}]  TestCommunication()  =>  {Result}",
+                mSettings.TransportSettings.PortName,
+                flag
+            );
         }
 
         #endregion
@@ -460,7 +462,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  ResetCPU()", mSettings.TransportSettings.PortName);
+            mLogger.LogInformation("[{PortName}]  ResetCPU()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
@@ -472,7 +474,11 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  ResetCPU()  =>  {1}", mSettings.TransportSettings.PortName, response.Status);
+            mLogger.LogInformation(
+                "[{PortName}]  ResetCPU()  =>  {Status}",
+                mSettings.TransportSettings.PortName,
+                response.Status
+            );
         }
 
         #endregion
@@ -518,7 +524,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  ResetRF()", mSettings.TransportSettings.PortName);
+            mLogger.LogInformation("[{PortName}]  ResetRF()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
@@ -530,7 +536,11 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  ResetRF()  =>  {1}", mSettings.TransportSettings.PortName, response.Status);
+            mLogger.LogInformation(
+                "[{PortName}]  ResetRF()  =>  {Status}",
+                mSettings.TransportSettings.PortName,
+                response.Status
+            );
         }
 
         #endregion
@@ -579,7 +589,11 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  SwitchRF(0x{1})", mSettings.TransportSettings.PortName, flag.ToHex());
+            mLogger.LogInformation(
+                "[{PortName}]  SwitchRF(0x{Flag})",
+                mSettings.TransportSettings.PortName,
+                flag.ToHex()
+            );
         }
 
         #endregion
@@ -593,7 +607,11 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  SwitchRF()  =>  {1}", mSettings.TransportSettings.PortName, response.Status);
+            mLogger.LogInformation(
+                "[{PortName}]  SwitchRF()  =>  {Status}",
+                mSettings.TransportSettings.PortName,
+                response.Status
+            );
         }
 
         #endregion
@@ -644,7 +662,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  GetSoftwareInfo()", mSettings.TransportSettings.PortName);
+            mLogger.LogInformation("[{PortName}]  GetSoftwareInfo()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
@@ -664,7 +682,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  GetSoftwareInfo()  =>  {1}; {{ {2} }}",
+                "[{PortName}]  GetSoftwareInfo()  =>  {Status}; {{ {Info} }}",
                 mSettings.TransportSettings.PortName,
                 response.Status,
                 info
@@ -735,7 +753,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  ReadConfiguration(Block: {1}, Location: {2})",
+                "[{PortName}]  ReadConfiguration(Block: {Block}, Location: {Location})",
                 mSettings.TransportSettings.PortName,
                 block,
                 location
@@ -759,7 +777,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  ReadConfiguration()  =>  {1}; {2}",
+                "[{PortName}]  ReadConfiguration()  =>  {Status}; {Data}",
                 mSettings.TransportSettings.PortName,
                 response.Status,
                 response.Data
@@ -843,7 +861,7 @@ internal sealed class DefaultFeigReader : IFeigReader
             if (mLogger.IsEnabled(LogLevel.Information))
             {
                 mLogger.LogInformation(
-                    "[{0}]  WriteConfiguration(Block: {1}, Location: {2}, Data: {3})",
+                    "[{PortName}]  WriteConfiguration(Block: {Block}, Location: {Location}, Data: {Data})",
                     mSettings.TransportSettings.PortName,
                     block,
                     location,
@@ -871,7 +889,7 @@ internal sealed class DefaultFeigReader : IFeigReader
             if (mLogger.IsEnabled(LogLevel.Information))
             {
                 mLogger.LogInformation(
-                    "[{0}]  WriteConfiguration()  =>  {1}",
+                    "[{PortName}]  WriteConfiguration()  =>  {Status}",
                     mSettings.TransportSettings.PortName,
                     response.Status
                 );
@@ -919,7 +937,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  SaveConfigurations()", mSettings.TransportSettings.PortName);
+            mLogger.LogInformation("[{PortName}]  SaveConfigurations()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
@@ -936,7 +954,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  SaveConfigurations()  =>  {1}",
+                "[{PortName}]  SaveConfigurations()  =>  {Status}",
                 mSettings.TransportSettings.PortName,
                 response.Status
             );
@@ -995,7 +1013,11 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  SaveConfiguration(Block: {1})", mSettings.TransportSettings.PortName, block);
+            mLogger.LogInformation(
+                "[{PortName}]  SaveConfiguration(Block: {Block})",
+                mSettings.TransportSettings.PortName,
+                block
+            );
         }
 
         #endregion
@@ -1012,7 +1034,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  SaveConfiguration()  =>  {1}",
+                "[{PortName}]  SaveConfiguration()  =>  {Status}",
                 mSettings.TransportSettings.PortName,
                 response.Status
             );
@@ -1067,7 +1089,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  ResetConfigurations(Location: {1})",
+                "[{PortName}]  ResetConfigurations(Location: {Location})",
                 mSettings.TransportSettings.PortName,
                 location
             );
@@ -1091,7 +1113,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  ResetConfigurations()  =>  {1}",
+                "[{PortName}]  ResetConfigurations()  =>  {Status}",
                 mSettings.TransportSettings.PortName,
                 response.Status
             );
@@ -1155,7 +1177,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  ResetConfiguration(Block: {1}, Location: {2})",
+                "[{PortName}]  ResetConfiguration(Block: {Block}, Location: {Location})",
                 mSettings.TransportSettings.PortName,
                 block,
                 location
@@ -1180,7 +1202,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  ResetConfiguration()  =>  {1}",
+                "[{PortName}]  ResetConfiguration()  =>  {Status}",
                 mSettings.TransportSettings.PortName,
                 response.Status
             );
@@ -1234,7 +1256,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (mLogger.IsEnabled(LogLevel.Information))
         {
-            mLogger.LogInformation("[{0}]  Inventory()", mSettings.TransportSettings.PortName);
+            mLogger.LogInformation("[{PortName}]  Inventory()", mSettings.TransportSettings.PortName);
         }
 
         #endregion
@@ -1258,7 +1280,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (mLogger.IsEnabled(LogLevel.Information))
         {
             mLogger.LogInformation(
-                "[{0}]  Inventory()  =>  {1}; {2}",
+                "[{PortName}]  Inventory()  =>  {Status}; {Result}",
                 mSettings.TransportSettings.PortName,
                 response.Status,
                 FeigTransponder.ToString(result)
