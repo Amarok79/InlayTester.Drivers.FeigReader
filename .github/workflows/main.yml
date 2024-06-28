@@ -2,26 +2,31 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   buildtest:
     runs-on: windows-latest
     steps:
       - name: Install .NET 6.0
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.0.x
 
       - name: Install .NET 7.0
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 7.0.x
 
+      - name: Install .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Restore packages
         run: dotnet restore
@@ -35,18 +40,23 @@ jobs:
   buildrelease:
     runs-on: windows-latest
     steps:
-      - name: Install .NET 7.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 7.0.x
-
       - name: Install .NET 6.0
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.0.x
 
+      - name: Install .NET 7.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Install .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Restore packages
         run: dotnet restore
@@ -55,7 +65,7 @@ jobs:
         run: dotnet build --configuration Release -p:ContinuousIntegrationBuild=true
 
       - name: Upload NuGet package
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: nuget
           path: bin/lib/*.nupkg
