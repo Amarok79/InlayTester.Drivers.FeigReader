@@ -1,11 +1,11 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Contracts;
 using Amarok.Shared;
 
 
-namespace InlayTester.Shared;
+namespace InlayTester.Drivers.Feig;
 
 
 /// <summary>
@@ -97,8 +97,8 @@ internal sealed class CrcCalculator
 
     private void _Setup()
     {
-        mCrcMask = ( ( ( (UInt64)1 << ( mOrder - 1 ) ) - 1 ) << 1 ) | 1;
-        mCrcHighBit = (UInt64)1 << ( mOrder - 1 );
+        mCrcMask = ((((UInt64)1 << (mOrder - 1)) - 1) << 1) | 1;
+        mCrcHighBit = (UInt64)1 << (mOrder - 1);
 
         _BuildTable();
         _Prepare();
@@ -192,9 +192,9 @@ internal sealed class CrcCalculator
         UInt64 j = 1;
         UInt64 crcout = 0;
 
-        for (var i = (UInt64)1 << ( bitnum - 1 ); i != 0; i >>= 1)
+        for (var i = (UInt64)1 << (bitnum - 1); i != 0; i >>= 1)
         {
-            if (( crc & i ) != 0)
+            if ((crc & i) != 0)
             {
                 crcout |= j;
             }
@@ -218,7 +218,7 @@ internal sealed class CrcCalculator
             {
                 for (var i = offset; i < offset + count; i++)
                 {
-                    crc = ( crc << 8 ) ^ mCrcTable[( ( crc >> ( mOrder - 8 ) ) & 0xff ) ^ buffer[i]];
+                    crc = (crc << 8) ^ mCrcTable[((crc >> (mOrder - 8)) & 0xff) ^ buffer[i]];
                 }
             }
             else
@@ -227,7 +227,7 @@ internal sealed class CrcCalculator
 
                 for (var i = offset; i < offset + count; i++)
                 {
-                    crc = ( crc >> 8 ) ^ mCrcTable[( crc & 0xff ) ^ buffer[i]];
+                    crc = (crc >> 8) ^ mCrcTable[(crc & 0xff) ^ buffer[i]];
                 }
             }
 

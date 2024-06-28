@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Threading;
@@ -111,7 +111,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
                     #endregion
 
-                    ( (TaskCompletionSource<FeigTransferResult>)completionSource! ).TrySetResult(
+                    ((TaskCompletionSource<FeigTransferResult>)completionSource!).TrySetResult(
                         FeigTransferResult.Canceled(mRequest)
                     );
                 },
@@ -137,7 +137,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
 
                     #endregion
 
-                    ( (TaskCompletionSource<FeigTransferResult>)completionSource! ).TrySetResult(
+                    ((TaskCompletionSource<FeigTransferResult>)completionSource!).TrySetResult(
                         FeigTransferResult.Timeout(mRequest)
                     );
                 },
@@ -193,7 +193,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
                 {
                     _CompleteWithError(result);
                 }
-                else if (result!.Response!.Command != mRequest!.Command)
+                else if (result.Response!.Command != mRequest!.Command)
                 {
                     _CompleteWithUnexpectedResponse(result);
                 }

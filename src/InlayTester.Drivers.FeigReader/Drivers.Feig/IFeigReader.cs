@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
+
+// ReSharper disable InconsistentNaming
 
 using System;
 using System.IO;
@@ -122,7 +124,7 @@ public interface IFeigReader : IDisposable
 
     /// <summary>
     ///     Executes the supplied command by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. This
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These
     ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
@@ -169,7 +171,7 @@ public interface IFeigReader : IDisposable
 
     /// <summary>
     ///     Executes the supplied command by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. This
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These
     ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
@@ -278,7 +280,7 @@ public interface IFeigReader : IDisposable
 
     /// <summary>
     ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders
-    ///     which are within the antenna field of the reader will be reset to their base setting. After a
+    ///     which are within the antenna field of the reader will be reset to their base setting. After an
     ///     RF Reset a transponder which is located within the field has to be re-selected.
     /// </summary>
     /// 
@@ -317,7 +319,7 @@ public interface IFeigReader : IDisposable
     /// </summary>
     /// 
     /// <param name="flag">
-    ///     A value indicating which RF field should switched on or off. Specify 0x00 to switch off all
+    ///     A value indicating which RF field should switch on or off. Specify 0x00 to switch off all
     ///     antennas and 0x01 to switch on the first antenna. Look up more information in the reader's
     ///     manual.
     /// </param>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.IO;
@@ -203,7 +203,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     /// <summary>
     ///     Executes the supplied command by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. This
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These
     ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
@@ -252,7 +252,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         if (result.Status == FeigTransferStatus.Success)
         {
-            if (result!.Response!.Status is FeigStatus.OK or FeigStatus.NoTransponder or FeigStatus.MoreData)
+            if (result.Response!.Status is FeigStatus.OK or FeigStatus.NoTransponder or FeigStatus.MoreData)
             {
                 return result.Response; // success
             }
@@ -303,7 +303,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     /// <summary>
     ///     Executes the supplied command by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. This
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These
     ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
@@ -486,7 +486,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     /// <summary>
     ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders
-    ///     which are within the antenna field of the reader will be reset to their base setting. After a
+    ///     which are within the antenna field of the reader will be reset to their base setting. After an
     ///     RF Reset a transponder which is located within the field has to be re-selected.
     /// </summary>
     /// 
@@ -551,7 +551,7 @@ internal sealed class DefaultFeigReader : IFeigReader
     /// </summary>
     /// 
     /// <param name="flag">
-    ///     A value indicating which RF field should switched on or off. Specify 0x00 to switch off all
+    ///     A value indicating which RF field should switch on or off. Specify 0x00 to switch off all
     ///     antennas and 0x01 to switch on the first antenna. Look up more information in the reader's
     ///     manual.
     /// </param>
@@ -674,7 +674,7 @@ internal sealed class DefaultFeigReader : IFeigReader
             FirmwareVersion = new Version(response.Data[0], response.Data[1], response.Data[2]),
             HardwareType = response.Data[3],
             ReaderType = (FeigReaderType)response.Data[4],
-            SupportedTransponders = ( response.Data[5] << 8 ) | response.Data[6],
+            SupportedTransponders = (response.Data[5] << 8) | response.Data[6],
         };
 
         #region (logging)
@@ -764,7 +764,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         var addr = (Byte)0x00;
         addr |= (Byte)location;
-        addr |= (Byte)( block & 0x3F );
+        addr |= (Byte)(block & 0x3F);
 
         mRequestBuffer[0] = addr;
         var data = BufferSpan.From(mRequestBuffer, 0, 1);
@@ -873,15 +873,15 @@ internal sealed class DefaultFeigReader : IFeigReader
 
             var addr = (Byte)0x00;
             addr |= (Byte)location;
-            addr |= (Byte)( block & 0x3F );
+            addr |= (Byte)(block & 0x3F);
 
             mRequestBuffer[0] = addr;
 
             Buffer.BlockCopy(data.Buffer, data.Offset, mRequestBuffer, 1, data.Count);
 
-            var cfgdata = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
+            var cfgData = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
 
-            var response = await Execute(FeigCommand.WriteConfiguration, cfgdata, timeout, cancellationToken)
+            var response = await Execute(FeigCommand.WriteConfiguration, cfgData, timeout, cancellationToken)
                .ConfigureAwait(false);
 
             #region (logging)
@@ -1022,7 +1022,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         #endregion
 
-        mRequestBuffer[0] = (Byte)( block & 0x3F );
+        mRequestBuffer[0] = (Byte)(block & 0x3F);
 
         var data = BufferSpan.From(mRequestBuffer, 0, 1);
 
@@ -1188,7 +1188,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         var addr = (Byte)0x00;
         addr |= (Byte)location;
-        addr |= (Byte)( block & 0x3F );
+        addr |= (Byte)(block & 0x3F);
 
         mRequestBuffer[0] = addr;
 
@@ -1271,9 +1271,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         var rspDat = response.Data;
 
-        var result = response.Status == FeigStatus.NoTransponder
-            ? Array.Empty<FeigTransponder>()
-            : Inventory_Parse(ref rspDat);
+        var result = response.Status == FeigStatus.NoTransponder ? [] : Inventory_Parse(ref rspDat);
 
         #region (logging)
 
@@ -1289,7 +1287,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         #endregion
 
-        return ( result, response );
+        return (result, response);
     }
 
     internal static FeigTransponder[] Inventory_Parse(ref BufferSpan data)
@@ -1335,7 +1333,7 @@ internal sealed class DefaultFeigReader : IFeigReader
     internal static FeigTransponder Inventory_Parse_ISO14443A(ref BufferSpan data)
     {
         var info = data[0];
-        var length = ( info & 0x04 ) != 0 ? 10 : 7;
+        var length = (info & 0x04) != 0 ? 10 : 7;
         var identifier = data.Slice(2, length);
 
         data = data.Discard(2 + length);

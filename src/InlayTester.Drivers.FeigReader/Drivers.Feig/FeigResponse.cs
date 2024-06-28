@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Text;
@@ -105,7 +105,7 @@ public sealed class FeigResponse
 
         var lenHigh = span[1];
         var lenLow = span[2];
-        var frameLength = ( lenHigh << 8 ) | lenLow;
+        var frameLength = (lenHigh << 8) | lenLow;
 
         if (span.Count < frameLength)
         {
@@ -118,7 +118,7 @@ public sealed class FeigResponse
 
         var crcLow = span[frameLength - 2];
         var crcHigh = span[frameLength - 1];
-        var crc = ( crcHigh << 8 ) | crcLow;
+        var crc = (crcHigh << 8) | crcLow;
 
         var calcCrc = FeigChecksum.Calculate(BufferSpan.From(span.Buffer, span.Offset, frameLength - 2));
 
@@ -166,7 +166,7 @@ public sealed class FeigResponse
 
         var crcLow = span[frameLength - 2];
         var crcHigh = span[frameLength - 1];
-        var crc = ( crcHigh << 8 ) | crcLow;
+        var crc = (crcHigh << 8) | crcLow;
 
         var calcCrc = FeigChecksum.Calculate(BufferSpan.From(span.Buffer, span.Offset, frameLength - 2));
 

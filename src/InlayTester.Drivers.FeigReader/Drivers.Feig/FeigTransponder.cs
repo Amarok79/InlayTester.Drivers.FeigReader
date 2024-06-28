@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace InlayTester.Drivers.Feig;
 
 
 /// <summary>
-///     This type represents a RFID transponder consisting of type and identifier.
+///     This type represents an RFID transponder consisting of type and identifier.
 /// </summary>
 public sealed class FeigTransponder
 {
@@ -53,7 +53,7 @@ public sealed class FeigTransponder
     /// <summary>
     ///     Returns a string representation for the given transponders.
     /// </summary>
-    public static String ToString(IEnumerable<FeigTransponder> transponders)
+    public static String ToString(IEnumerable<FeigTransponder>? transponders)
     {
         if (transponders == null)
         {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Text;
@@ -67,7 +67,7 @@ public readonly struct FeigTransferResult
 
 
     /// <summary>
-    ///     Returns a result indicating a successfully transfer operation.
+    ///     Returns a result indicating a successful transfer operation.
     /// </summary>
     /// 
     /// <exception cref="ArgumentNullException">

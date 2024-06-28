@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Text;
@@ -89,8 +89,8 @@ public sealed class FeigRequest
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 
-        frame[frameLength - 2] = (Byte)( crc & 0xff );
-        frame[frameLength - 1] = (Byte)( crc >> 8 );
+        frame[frameLength - 2] = (Byte)(crc & 0xff);
+        frame[frameLength - 1] = (Byte)(crc >> 8);
 
         return BufferSpan.From(frame, frameLength);
     }
@@ -101,8 +101,8 @@ public sealed class FeigRequest
         var frame = new Byte[frameLength];
 
         frame[0] = 0x02;
-        frame[1] = (Byte)( frameLength >> 8 );
-        frame[2] = (Byte)( frameLength & 0xff );
+        frame[1] = (Byte)(frameLength >> 8);
+        frame[2] = (Byte)(frameLength & 0xff);
         frame[3] = Address;
         frame[4] = (Byte)Command;
 
@@ -110,8 +110,8 @@ public sealed class FeigRequest
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 
-        frame[frameLength - 2] = (Byte)( crc & 0xff );
-        frame[frameLength - 1] = (Byte)( crc >> 8 );
+        frame[frameLength - 2] = (Byte)(crc & 0xff);
+        frame[frameLength - 1] = (Byte)(crc >> 8);
 
         return BufferSpan.From(frame, frameLength);
     }
