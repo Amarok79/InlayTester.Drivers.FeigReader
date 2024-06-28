@@ -276,7 +276,7 @@ public class Test_DefaultFeigReader
 
                 var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
 
-                Check.ThatAsyncCode(async () => await reader.Transfer(request, FeigProtocol.Advanced))
+                Check.ThatCode(async () => await reader.Transfer(request, FeigProtocol.Advanced))
                    .Throws<ObjectDisposedException>();
             }
         }
@@ -390,7 +390,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Dispose();
 
-                Check.ThatAsyncCode(async () => await reader.Transfer(FeigCommand.BaudRateDetection))
+                Check.ThatCode(async () => await reader.Transfer(FeigCommand.BaudRateDetection))
                    .Throws<ObjectDisposedException>();
             }
         }
@@ -539,7 +539,7 @@ public class Test_DefaultFeigReader
 
                 var request = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
 
-                Check.ThatAsyncCode(async () => await reader.Execute(request, FeigProtocol.Advanced))
+                Check.ThatCode(async () => await reader.Execute(request, FeigProtocol.Advanced))
                    .Throws<ObjectDisposedException>();
             }
         }
@@ -664,7 +664,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(request)).Throws<TimeoutException>();
+            Check.ThatCode(async () => await reader.Execute(request)).Throws<TimeoutException>();
         }
 
         [Test]
@@ -697,7 +697,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(request)).Throws<OperationCanceledException>();
+            Check.ThatCode(async () => await reader.Execute(request)).Throws<OperationCanceledException>();
         }
 
         [Test]
@@ -730,7 +730,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(request))
+            Check.ThatCode(async () => await reader.Execute(request))
                .Throws<FeigException>()
                .WithProperty(x => x.Request, request);
         }
@@ -766,7 +766,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(request))
+            Check.ThatCode(async () => await reader.Execute(request))
                .Throws<FeigException>()
                .WithProperty(x => x.Request, request)
                .And.WithProperty(x => x.Response, response);
@@ -803,7 +803,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(request))
+            Check.ThatCode(async () => await reader.Execute(request))
                .Throws<FeigException>()
                .WithProperty(x => x.Request, request)
                .And.WithProperty(x => x.Response, response);
@@ -904,7 +904,7 @@ public class Test_DefaultFeigReader
             {
                 reader.Dispose();
 
-                Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+                Check.ThatCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
                    .Throws<ObjectDisposedException>();
             }
         }
@@ -1044,7 +1044,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+            Check.ThatCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
                .Throws<TimeoutException>();
         }
 
@@ -1078,7 +1078,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+            Check.ThatCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
                .Throws<OperationCanceledException>();
         }
 
@@ -1112,7 +1112,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+            Check.ThatCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
                .Throws<FeigException>()
                .WithProperty(x => x.Request, request);
         }
@@ -1148,7 +1148,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.BaudRateDetection))
+            Check.ThatCode(async () => await reader.Execute(FeigCommand.BaudRateDetection))
                .Throws<FeigException>()
                .WithProperty(x => x.Request, request)
                .And.WithProperty(x => x.Response, response);
@@ -1185,7 +1185,7 @@ public class Test_DefaultFeigReader
             var reader = new DefaultFeigReader(settings, transport.Object, logger);
 
             // act
-            Check.ThatAsyncCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
+            Check.ThatCode(async () => await reader.Execute(FeigCommand.GetSoftwareVersion))
                .Throws<FeigException>()
                .WithProperty(x => x.Request, request)
                .And.WithProperty(x => x.Response, response);
