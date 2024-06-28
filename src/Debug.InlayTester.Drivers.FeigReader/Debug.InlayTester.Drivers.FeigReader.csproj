@@ -2,35 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>net48;net6.0;net7.0</TargetFrameworks>
-        <RootNamespace>InlayTester</RootNamespace>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
-        <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     </PropertyGroup>
-
-    <PropertyGroup>
-        <OutputPath>..\..\bin\dbgapp\</OutputPath>
-        <LangVersion>latest</LangVersion>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <NoWarn>1701;1702</NoWarn>
-        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-        <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningsAsErrors />
-        <NoWarn>1701;1702</NoWarn>
-        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-        <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <None Include="..\amarok.snk" Link="amarok.snk" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />

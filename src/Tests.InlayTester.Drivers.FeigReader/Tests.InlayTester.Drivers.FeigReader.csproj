@@ -2,32 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>net48;net6.0;net7.0</TargetFrameworks>
-        <RootNamespace>InlayTester</RootNamespace>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
-        <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     </PropertyGroup>
-
-    <PropertyGroup>
-        <OutputPath>..\..\bin\tests\</OutputPath>
-        <LangVersion>latest</LangVersion>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-        <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningsAsErrors />
-        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-        <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <None Include="..\amarok.snk" Link="amarok.snk" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="3.2.0">

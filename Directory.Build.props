@@ -1,0 +1,53 @@
+﻿<Project>
+
+    <PropertyGroup>
+        <Version>5.0.0</Version>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <RootNamespace>InlayTester</RootNamespace>
+        <LangVersion>Latest</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Authors>Olaf Kober</Authors>
+        <Description>A shared library with a (serial) driver for communicating with RFID readers/modules from FEIG Electronic.</Description>
+        <Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <OutputPath>..\..\bin\lib</OutputPath>
+        <Nullable>Enable</Nullable>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <IsPackable>True</IsPackable>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <SignAssembly>True</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)src\amarok.snk</AssemblyOriginatorKeyFile>
+        <Deterministic>True</Deterministic>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Tests.'))">
+        <OutputPath>..\..\bin\tests</OutputPath>
+        <Nullable>Disable</Nullable>
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+        <IsPackable>False</IsPackable>
+        <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Benchmarks.'))">
+        <OutputPath>..\..\bin\benchmark</OutputPath>
+        <Nullable>Disable</Nullable>
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+        <IsPackable>False</IsPackable>
+        <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Debug.'))">
+        <OutputPath>..\..\bin\dbgapp</OutputPath>
+        <Nullable>Disable</Nullable>
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+        <IsPackable>False</IsPackable>
+        <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+</Project>

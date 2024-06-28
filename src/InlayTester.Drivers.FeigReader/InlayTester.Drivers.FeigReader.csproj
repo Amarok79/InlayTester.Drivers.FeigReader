@@ -3,17 +3,6 @@
     <PropertyGroup>
         <Version>5.0.0</Version>
         <TargetFrameworks>netstandard2.0;net6.0;net7.0</TargetFrameworks>
-        <RootNamespace>InlayTester</RootNamespace>
-        <Authors>Olaf Kober</Authors>
-        <Company>&lt;none&gt;</Company>
-        <Description>A shared library with a (serial) driver for communicating with RFID readers/modules from FEIG Electronic.</Description>
-        <Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>..\amarok.snk</AssemblyOriginatorKeyFile>
-        <DelaySign>false</DelaySign>
-        <Nullable>enable</Nullable>
-        <EnableNETAnalyzers>true</EnableNETAnalyzers>
-        <Deterministic>true</Deterministic>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -21,37 +10,14 @@
         <PackageProjectUrl>https://github.com/Amarok79/InlayTester.Drivers.FeigReader</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Amarok79/InlayTester.Drivers.FeigReader</RepositoryUrl>
         <PackageIcon>inlaytester.png</PackageIcon>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <PackageTags></PackageTags>
+        <PublishRepositoryUrl>True</PublishRepositoryUrl>
+        <EmbedUntrackedSources>True</EmbedUntrackedSources>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <OutputPath>..\..\bin\lib\</OutputPath>
-        <DocumentationFile>..\..\bin\lib\InlayTester.Drivers.FeigReader.xml</DocumentationFile>
-        <LangVersion>latest</LangVersion>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <NoWarn>1701;1702</NoWarn>
-        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-        <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningsAsErrors />
-        <NoWarn>1701;1702</NoWarn>
-        <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-        <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
-    </PropertyGroup>
-
     <ItemGroup>
-        <None Include="..\amarok.snk" Link="amarok.snk" />
         <None Include="..\inlaytester.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 
