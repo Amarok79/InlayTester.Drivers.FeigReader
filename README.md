@@ -6,7 +6,7 @@
 This library is available as NuGet package:
 [InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
 
-The package provides strong-named binaries for .NET Standard 2.0, .NET 6.0, and .NET 7.0. Tests are performed with .NET Framework 4.8, .NET 6.0, and .NET 7.0.
+The package provides strong-named binaries for .NET Standard 2.0, .NET 6.0, and .NET 7.0. Tests are performed with .NET Framework 4.8, .NET 6.0, .NET 7.0, and .NET 8.0.
 
 For development, you need *Visual Studio 2022*. For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
 
@@ -177,14 +177,14 @@ Most Feig RFID reader/modules support a set of common commands. These commands a
 
 Following commands are supported out-of-the-box:
 
-| Feig Command                     | Method on IFeigReader     |
-| ---                              | ---                       |
-| 0x52  Baud Rate Detection        | TestCommunication()       |
-| 0x63  CPU Reset                  | ResetCPU()                |
-| 0x65  Get Software Version       | GetSoftwareInfo()         |
-| 0x69  RF Reset                   | ResetRF()                 |
-| 0x80  Read Configuration         | ReadConfiguration(..)     |
-| 0x81  Write Configuration        | WriteConfiguration(..)    |
-| 0x82  Save Configuration         | SaveConfigurations(), SaveConfiguration(..)       |
-| 0x83  Set Default Configuration  | ResetConfigurations(), ResetConfiguration(..)     |
-| 0x0B 0x01 Inventory ISO Standard | Inventory() |
+| Feig Command                     | Method on IFeigReader                         |
+|----------------------------------|-----------------------------------------------|
+| 0x52  Baud Rate Detection        | TestCommunication()                           |
+| 0x63  CPU Reset                  | ResetCPU()                                    |
+| 0x65  Get Software Version       | GetSoftwareInfo()                             |
+| 0x69  RF Reset                   | ResetRF()                                     |
+| 0x80  Read Configuration         | ReadConfiguration(..)                         |
+| 0x81  Write Configuration        | WriteConfiguration(..)                        |
+| 0x82  Save Configuration         | SaveConfigurations(), SaveConfiguration(..)   |
+| 0x83  Set Default Configuration  | ResetConfigurations(), ResetConfiguration(..) |
+| 0x0B 0x01 Inventory ISO Standard | Inventory()                                   |
