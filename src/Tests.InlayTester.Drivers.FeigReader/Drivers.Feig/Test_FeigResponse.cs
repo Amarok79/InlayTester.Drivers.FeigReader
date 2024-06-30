@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Shared;
@@ -19,19 +19,8 @@ public class Test_FeigResponse
         {
             // act
             var data = new Byte[] {
-                0x0D,
-                0x00,
-                0x65,
-                0x00,
-                0x03,
-                0x03,
-                0x00,
-                0x44,
-                0x53,
-                0x0D,
-                0x30,
-                0x33,
-                0x09,
+                0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
+                0x53, 0x0D, 0x30, 0x33, 0x09,
             };
 
             var span = BufferSpan.From(data, 0, data.Length);
@@ -56,29 +45,15 @@ public class Test_FeigResponse
             Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
             Check.That(result.Response.ToString())
-               .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
         }
 
         [Test]
         public void StandardResponse_GetSoftwareVersion_ByteByByte()
         {
             var data = new Byte[] {
-                0xFF,
-                0xFF,
-                0x0D,
-                0x00,
-                0x65,
-                0x00,
-                0x03,
-                0x03,
-                0x00,
-                0x44,
-                0x53,
-                0x0D,
-                0x30,
-                0x33,
-                0x09,
-                0xFF,
+                0xFF, 0xFF, 0x0D, 0x00, 0x65, 0x00, 0x03, 0x03,
+                0x00, 0x44, 0x53, 0x0D, 0x30, 0x33, 0x09, 0xFF,
                 0xFF,
             };
 
@@ -135,7 +110,7 @@ public class Test_FeigResponse
             Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
             Check.That(result.Response.ToString())
-               .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
         }
 
         [Test]
@@ -143,19 +118,8 @@ public class Test_FeigResponse
         {
             // act
             var data = new Byte[] {
-                0x0D,
-                0x00,
-                0x65,
-                0x00,
-                0x03,
-                0x03,
-                0x00,
-                0x44,
-                0x53,
-                0x0D,
-                0x30,
-                0x33, /*0x09*/
-                0x08,
+                0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
+                0x53, 0x0D, 0x30, 0x33, /*0x09*/ 0x08,
             };
 
             var span = BufferSpan.From(data, 0, data.Length);
@@ -180,7 +144,7 @@ public class Test_FeigResponse
             Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
             Check.That(result.Response.ToString())
-               .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
         }
 
         [Test]
@@ -188,20 +152,8 @@ public class Test_FeigResponse
         {
             // act
             var data = new Byte[] {
-                /*0x0D,*/
-                0x03,
-                0x00,
-                0x65,
-                0x00,
-                0x03,
-                0x03,
-                0x00,
-                0x44,
-                0x53,
-                0x0D,
-                0x30,
-                0x33,
-                0x08,
+                /*0x0D,*/ 0x03, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
+                0x53, 0x0D, 0x30, 0x33, 0x08,
             };
 
             var span = BufferSpan.From(data, 0, data.Length);
@@ -220,21 +172,8 @@ public class Test_FeigResponse
         {
             // act
             var data = new Byte[] {
-                0x02,
-                0x00,
-                0x0F,
-                0x00,
-                0x65,
-                0x00,
-                0x03,
-                0x03,
-                0x00,
-                0x44,
-                0x53,
-                0x0D,
-                0x30,
-                0x74,
-                0x69,
+                0x02, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03,
+                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, 0x69,
             };
 
             var span = BufferSpan.From(data, 0, data.Length);
@@ -259,32 +198,16 @@ public class Test_FeigResponse
             Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
             Check.That(result.Response.ToString())
-               .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
         }
 
         [Test]
         public void AdvancedResponse_GetSoftwareVersion_ByteByByte()
         {
             var data = new Byte[] {
-                0xFF,
-                0xFF,
-                0x02,
-                0x00,
-                0x0F,
-                0x00,
-                0x65,
-                0x00,
-                0x03,
-                0x03,
-                0x00,
-                0x44,
-                0x53,
-                0x0D,
-                0x30,
-                0x74,
-                0x69,
-                0xFF,
-                0xFF,
+                0xFF, 0xFF, 0x02, 0x00, 0x0F, 0x00, 0x65, 0x00,
+                0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30, 0x74,
+                0x69, 0xFF, 0xFF,
             };
 
             // act
@@ -340,7 +263,7 @@ public class Test_FeigResponse
             Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
             Check.That(result.Response.ToString())
-               .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
         }
 
         [Test]
@@ -348,21 +271,8 @@ public class Test_FeigResponse
         {
             // act
             var data = new Byte[] {
-                0x02,
-                0x00,
-                0x0F,
-                0x00,
-                0x65,
-                0x00,
-                0x03,
-                0x03,
-                0x00,
-                0x44,
-                0x53,
-                0x0D,
-                0x30,
-                0x74, /*0x69*/
-                0x68,
+                0x02, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03,
+                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, /*0x69*/ 0x68,
             };
 
             var span = BufferSpan.From(data, 0, data.Length);
@@ -387,7 +297,7 @@ public class Test_FeigResponse
             Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
             Check.That(result.Response.ToString())
-               .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
+                .IsEqualTo("Address: 0, Command: GetSoftwareVersion, Status: OK, Data: 03-03-00-44-53-0D-30");
         }
 
         [Test]
@@ -395,22 +305,8 @@ public class Test_FeigResponse
         {
             // act
             var data = new Byte[] {
-                /*0x02*/
-                0xFF,
-                0x00,
-                0x0F,
-                0x00,
-                0x65,
-                0x00,
-                0x03,
-                0x03,
-                0x00,
-                0x44,
-                0x53,
-                0x0D,
-                0x30,
-                0x74,
-                0x68,
+                /*0x02*/ 0xFF, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03,
+                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, 0x68,
             };
 
             var span = BufferSpan.From(data, 0, data.Length);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Diagnostics;
@@ -33,16 +33,16 @@ public static class Program
 
         var settings = new FeigReaderSettings {
             TransportSettings = new SerialTransportSettings {
-                PortName = "COM3",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COM3",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             },
-            Address = 255,
+            Address  = 255,
             Protocol = FeigProtocol.Advanced,
-            Timeout = TimeSpan.FromMilliseconds(1500),
+            Timeout  = TimeSpan.FromMilliseconds(1500),
         };
 
         using (var reader = FeigReader.Create(settings, log))

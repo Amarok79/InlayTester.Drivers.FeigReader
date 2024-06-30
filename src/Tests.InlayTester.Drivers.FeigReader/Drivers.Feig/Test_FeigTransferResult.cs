@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -17,9 +17,9 @@ public class Test_FeigTransferResult
         public void Success_With_Response()
         {
             // act
-            var request = new FeigRequest();
+            var request  = new FeigRequest();
             var response = new FeigResponse();
-            var result = FeigTransferResult.Success(request, response);
+            var result   = FeigTransferResult.Success(request, response);
 
             // assert
             Check.That(result.Status).IsEqualTo(FeigTransferStatus.Success);
@@ -29,7 +29,7 @@ public class Test_FeigTransferResult
             Check.That(result.Response).IsSameReferenceAs(response);
 
             Check.That(result.ToString())
-               .IsEqualTo(
+                .IsEqualTo(
                     "Status: Success, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
                 );
         }
@@ -55,7 +55,7 @@ public class Test_FeigTransferResult
         {
             // act
             var request = new FeigRequest();
-            var result = FeigTransferResult.Canceled(request);
+            var result  = FeigTransferResult.Canceled(request);
 
             // assert
             Check.That(result.Status).IsEqualTo(FeigTransferStatus.Canceled);
@@ -65,7 +65,7 @@ public class Test_FeigTransferResult
             Check.That(result.Response).IsNull();
 
             Check.That(result.ToString())
-               .IsEqualTo(
+                .IsEqualTo(
                     "Status: Canceled, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
                 );
         }
@@ -85,7 +85,7 @@ public class Test_FeigTransferResult
         {
             // act
             var request = new FeigRequest();
-            var result = FeigTransferResult.Timeout(request);
+            var result  = FeigTransferResult.Timeout(request);
 
             // assert
             Check.That(result.Status).IsEqualTo(FeigTransferStatus.Timeout);
@@ -95,7 +95,7 @@ public class Test_FeigTransferResult
             Check.That(result.Response).IsNull();
 
             Check.That(result.ToString())
-               .IsEqualTo(
+                .IsEqualTo(
                     "Status: Timeout, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
                 );
         }
@@ -115,7 +115,7 @@ public class Test_FeigTransferResult
         {
             // act
             var request = new FeigRequest();
-            var result = FeigTransferResult.CommunicationError(request);
+            var result  = FeigTransferResult.CommunicationError(request);
 
             // assert
             Check.That(result.Status).IsEqualTo(FeigTransferStatus.CommunicationError);
@@ -125,7 +125,7 @@ public class Test_FeigTransferResult
             Check.That(result.Response).IsNull();
 
             Check.That(result.ToString())
-               .IsEqualTo(
+                .IsEqualTo(
                     "Status: CommunicationError, Request: { Address: 255, Command: None, Data: <empty> }, Response: { <null> }"
                 );
         }
@@ -144,9 +144,9 @@ public class Test_FeigTransferResult
         public void Success()
         {
             // act
-            var request = new FeigRequest();
+            var request  = new FeigRequest();
             var response = new FeigResponse();
-            var result = FeigTransferResult.UnexpectedResponse(request, response);
+            var result   = FeigTransferResult.UnexpectedResponse(request, response);
 
             // assert
             Check.That(result.Status).IsEqualTo(FeigTransferStatus.UnexpectedResponse);
@@ -156,7 +156,7 @@ public class Test_FeigTransferResult
             Check.That(result.Response).IsSameReferenceAs(response);
 
             Check.That(result.ToString())
-               .IsEqualTo(
+                .IsEqualTo(
                     "Status: UnexpectedResponse, Request: { Address: 255, Command: None, Data: <empty> }, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }"
                 );
         }
@@ -165,14 +165,14 @@ public class Test_FeigTransferResult
         public void Exception_With_NullRequest()
         {
             Check.ThatCode(() => FeigTransferResult.UnexpectedResponse(null, new FeigResponse()))
-               .Throws<ArgumentNullException>();
+                .Throws<ArgumentNullException>();
         }
 
         [Test]
         public void Exception_With_NullResponse()
         {
             Check.ThatCode(() => FeigTransferResult.UnexpectedResponse(new FeigRequest(), null))
-               .Throws<ArgumentNullException>();
+                .Throws<ArgumentNullException>();
         }
     }
 }

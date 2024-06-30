@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Text;
@@ -17,17 +17,8 @@ public class Test_FeigChecksum
     public void UseCase()
     {
         var buffer = new Byte[] {
-            0x0D,
-            0x00,
-            0x65,
-            0x00,
-            0x03,
-            0x03,
-            0x00,
-            0x44,
-            0x53,
-            0x0D,
-            0x30,
+            0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
+            0x53, 0x0D, 0x30,
         };
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));

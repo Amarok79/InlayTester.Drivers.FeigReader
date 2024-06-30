@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using InlayTester.Shared.Transports;
@@ -22,7 +22,7 @@ public class Test_FeigReader
         {
             // act
             var settings = new FeigReaderSettings();
-            var reader = FeigReader.Create(settings);
+            var reader   = FeigReader.Create(settings);
 
             // assert
             Check.That(reader).IsInstanceOf<DefaultFeigReader>();
@@ -56,9 +56,9 @@ public class Test_FeigReader
         public void Success()
         {
             // act
-            var hooks = new Mock<ITransportHooks>();
+            var hooks    = new Mock<ITransportHooks>();
             var settings = new FeigReaderSettings();
-            var reader = FeigReader.Create(settings, hooks.Object);
+            var reader   = FeigReader.Create(settings, hooks.Object);
 
             // assert
             Check.That(reader).IsInstanceOf<DefaultFeigReader>();
@@ -110,7 +110,7 @@ public class Test_FeigReader
                         builder.AddSimpleConsole();
                     }
                 )
-               .CreateLogger("Test");
+                .CreateLogger("Test");
 
             var reader = FeigReader.Create(settings, logger);
 
@@ -142,7 +142,7 @@ public class Test_FeigReader
         public void Exception_For_NullLogger()
         {
             Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), (ILogger)null))
-               .Throws<ArgumentNullException>();
+                .Throws<ArgumentNullException>();
         }
     }
 
@@ -153,7 +153,7 @@ public class Test_FeigReader
         public void Success()
         {
             // act
-            var hooks = new Mock<ITransportHooks>();
+            var hooks    = new Mock<ITransportHooks>();
             var settings = new FeigReaderSettings();
 
             var logger = LoggerFactory.Create(
@@ -162,7 +162,7 @@ public class Test_FeigReader
                         builder.AddSimpleConsole();
                     }
                 )
-               .CreateLogger("Test");
+                .CreateLogger("Test");
 
             var reader = FeigReader.Create(settings, logger, hooks.Object);
 
@@ -194,14 +194,14 @@ public class Test_FeigReader
         public void Exception_For_NullLogger()
         {
             Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), (ILogger)null))
-               .Throws<ArgumentNullException>();
+                .Throws<ArgumentNullException>();
         }
 
         [Test]
         public void Exception_For_NullHooks()
         {
             Check.ThatCode(() => FeigReader.Create(new FeigReaderSettings(), NullLogger.Instance, null))
-               .Throws<ArgumentNullException>();
+                .Throws<ArgumentNullException>();
         }
     }
 }

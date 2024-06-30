@@ -103,8 +103,8 @@ public sealed class FeigResponse
             return FeigParseResult.FrameError();
         }
 
-        var lenHigh = span[1];
-        var lenLow = span[2];
+        var lenHigh     = span[1];
+        var lenLow      = span[2];
         var frameLength = (lenHigh << 8) | lenLow;
 
         if (span.Count < frameLength)
@@ -114,11 +114,11 @@ public sealed class FeigResponse
 
         var address = span[3];
         var command = span[4];
-        var status = span[5];
+        var status  = span[5];
 
-        var crcLow = span[frameLength - 2];
+        var crcLow  = span[frameLength - 2];
         var crcHigh = span[frameLength - 1];
-        var crc = (crcHigh << 8) | crcLow;
+        var crc     = (crcHigh << 8) | crcLow;
 
         var calcCrc = FeigChecksum.Calculate(BufferSpan.From(span.Buffer, span.Offset, frameLength - 2));
 
@@ -126,11 +126,11 @@ public sealed class FeigResponse
 
         var response = new FeigResponse {
             FrameLength = frameLength,
-            Address = address,
-            Command = (FeigCommand)command,
-            Status = (FeigStatus)status,
-            Data = data,
-            Crc = calcCrc,
+            Address     = address,
+            Command     = (FeigCommand)command,
+            Status      = (FeigStatus)status,
+            Data        = data,
+            Crc         = calcCrc,
         };
 
         if (crc != calcCrc)
@@ -162,11 +162,11 @@ public sealed class FeigResponse
 
         var address = span[1];
         var command = span[2];
-        var status = span[3];
+        var status  = span[3];
 
-        var crcLow = span[frameLength - 2];
+        var crcLow  = span[frameLength - 2];
         var crcHigh = span[frameLength - 1];
-        var crc = (crcHigh << 8) | crcLow;
+        var crc     = (crcHigh << 8) | crcLow;
 
         var calcCrc = FeigChecksum.Calculate(BufferSpan.From(span.Buffer, span.Offset, frameLength - 2));
 
@@ -174,11 +174,11 @@ public sealed class FeigResponse
 
         var response = new FeigResponse {
             FrameLength = frameLength,
-            Address = address,
-            Command = (FeigCommand)command,
-            Status = (FeigStatus)status,
-            Data = data,
-            Crc = calcCrc,
+            Address     = address,
+            Command     = (FeigCommand)command,
+            Status      = (FeigStatus)status,
+            Data        = data,
+            Crc         = calcCrc,
         };
 
         if (crc != calcCrc)

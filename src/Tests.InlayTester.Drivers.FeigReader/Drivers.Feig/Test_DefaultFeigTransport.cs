@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Threading;
@@ -28,7 +28,7 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
@@ -48,16 +48,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -102,16 +102,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -122,13 +122,8 @@ public class Test_DefaultFeigTransport
 
                 transportB.Received.Subscribe(
                     data => {
-                        if (data[0] == 0x02 &&
-                            data[1] == 0x00 &&
-                            data[2] == 0x07 &&
-                            data[3] == 0xff &&
-                            data[4] == 0x65 &&
-                            data[5] == 0x6e &&
-                            data[6] == 0x61)
+                        if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
+                            data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
                             transportB.Send(
                                 BufferSpan.From(
@@ -188,16 +183,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -208,13 +203,8 @@ public class Test_DefaultFeigTransport
 
                 transportB.Received.Subscribe(
                     data => {
-                        if (data[0] == 0x02 &&
-                            data[1] == 0x00 &&
-                            data[2] == 0x07 &&
-                            data[3] == 0xff &&
-                            data[4] == 0x65 &&
-                            data[5] == 0x6e &&
-                            data[6] == 0x61)
+                        if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
+                            data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
                             transportB.Send(BufferSpan.From(0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03));
 
@@ -260,16 +250,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -280,13 +270,8 @@ public class Test_DefaultFeigTransport
 
                 transportB.Received.Subscribe(
                     data => {
-                        if (data[0] == 0x02 &&
-                            data[1] == 0x00 &&
-                            data[2] == 0x07 &&
-                            data[3] == 0xff &&
-                            data[4] == 0x65 &&
-                            data[5] == 0x6e &&
-                            data[6] == 0x61)
+                        if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
+                            data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
                             Thread.Sleep(500);
 
@@ -344,16 +329,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -364,13 +349,8 @@ public class Test_DefaultFeigTransport
 
                 transportB.Received.Subscribe(
                     data => {
-                        if (data[0] == 0x02 &&
-                            data[1] == 0x00 &&
-                            data[2] == 0x07 &&
-                            data[3] == 0xff &&
-                            data[4] == 0x65 &&
-                            data[5] == 0x6e &&
-                            data[6] == 0x61)
+                        if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
+                            data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
                             Thread.Sleep(500);
 
@@ -434,16 +414,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -454,13 +434,8 @@ public class Test_DefaultFeigTransport
 
                 transportB.Received.Subscribe(
                     data => {
-                        if (data[0] == 0x02 &&
-                            data[1] == 0x00 &&
-                            data[2] == 0x07 &&
-                            data[3] == 0xff &&
-                            data[4] == 0x65 &&
-                            data[5] == 0x6e &&
-                            data[6] == 0x61)
+                        if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
+                            data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
                             transportB.Send(
                                 BufferSpan.From(
@@ -514,16 +489,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -534,13 +509,8 @@ public class Test_DefaultFeigTransport
 
                 transportB.Received.Subscribe(
                     data => {
-                        if (data[0] == 0x02 &&
-                            data[1] == 0x00 &&
-                            data[2] == 0x07 &&
-                            data[3] == 0xff &&
-                            data[4] == 0x65 &&
-                            data[5] == 0x6e &&
-                            data[6] == 0x61)
+                        if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
+                            data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
                             transportB.Send(
                                 BufferSpan.From(
@@ -594,16 +564,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -614,13 +584,8 @@ public class Test_DefaultFeigTransport
 
                 transportB.Received.Subscribe(
                     data => {
-                        if (data[0] == 0x02 &&
-                            data[1] == 0x00 &&
-                            data[2] == 0x07 &&
-                            data[3] == 0xff &&
-                            data[4] == 0x65 &&
-                            data[5] == 0x6e &&
-                            data[6] == 0x61)
+                        if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
+                            data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
                             transportB.Send(
                                 BufferSpan.From(
@@ -686,16 +651,16 @@ public class Test_DefaultFeigTransport
                     builder.AddSimpleConsole();
                 }
             )
-           .CreateLogger("Test");
+            .CreateLogger("Test");
 
         using (var transportA = new DefaultFeigTransport(settingsA, logger))
         {
             var settings = new SerialTransportSettings {
-                PortName = "COMB",
-                Baud = 38400,
-                DataBits = 8,
-                Parity = Parity.Even,
-                StopBits = StopBits.One,
+                PortName  = "COMB",
+                Baud      = 38400,
+                DataBits  = 8,
+                Parity    = Parity.Even,
+                StopBits  = StopBits.One,
                 Handshake = Handshake.None,
             };
 
@@ -706,13 +671,8 @@ public class Test_DefaultFeigTransport
 
                 transportB.Received.Subscribe(
                     data => {
-                        if (data[0] == 0x02 &&
-                            data[1] == 0x00 &&
-                            data[2] == 0x07 &&
-                            data[3] == 0xff &&
-                            data[4] == 0x65 &&
-                            data[5] == 0x6e &&
-                            data[6] == 0x61)
+                        if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
+                            data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
                             transportB.Send(
                                 BufferSpan.From(
@@ -759,7 +719,7 @@ public class Test_DefaultFeigTransport
                     Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                     Check.That(result.Response.Data.ToArray())
-                       .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                        .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
                 }
             }
         }

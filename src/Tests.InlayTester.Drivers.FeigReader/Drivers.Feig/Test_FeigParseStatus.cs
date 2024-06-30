@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -15,7 +15,7 @@ public class Test_FeigParseStatus
     public void TestNames()
     {
         Check.That(Enum.GetNames(typeof(FeigParseStatus)))
-           .IsOnlyMadeOf(
+            .IsOnlyMadeOf(
                 nameof(FeigParseStatus.Success),
                 nameof(FeigParseStatus.MoreDataNeeded),
                 nameof(FeigParseStatus.ChecksumError),

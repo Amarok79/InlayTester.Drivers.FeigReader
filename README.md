@@ -6,26 +6,31 @@
 This library is available as NuGet package:
 [InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
 
-The package provides strong-named binaries for .NET Standard 2.0, .NET 6.0, and .NET 7.0. Tests are performed with .NET Framework 4.8, .NET 6.0, .NET 7.0, and .NET 8.0.
+The package provides strong-named binaries for .NET Standard 2.0, .NET 6.0, and .NET 7.0. Tests are performed with .NET
+Framework 4.8, .NET 6.0, .NET 7.0, and .NET 8.0.
 
-For development, you need *Visual Studio 2022*. For running the tests, you need to install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB". This virtual serial port pair is used throughout unit tests.
+For development, you need *Visual Studio 2022*. For running the tests, you need to
+install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB".
+This virtual serial port pair is used throughout unit tests.
 
-The library uses [Amarok79/InlayTester.Shared.Transports](https://github.com/Amarok79/InlayTester.Shared.Transports) under the hood, which again depends on the excellent [jcurl/SerialPortStream](https://github.com/jcurl/SerialPortStream) for serial communication.
-
+The library uses [Amarok79/InlayTester.Shared.Transports](https://github.com/Amarok79/InlayTester.Shared.Transports)
+under the hood, which again depends on the excellent [jcurl/SerialPortStream](https://github.com/jcurl/SerialPortStream)
+for serial communication.
 
 # Supported Feig RFID Reader/Modules
 
 In general, all Feig RFID reader/modules are supported that run Feig `s standard or advanced protocol.
 
 Specifically, following readers/modules have been extensively tested:
+
 - CPR40.xx
 - CPR74.xx
 - ISC.M02
 
-
 # Supported RFID Transponders
 
 The provided `Inventory()` API supports following transponders:
+
 - ISO14443A
 - ISO14443B
 - ISO15693
@@ -40,12 +45,12 @@ The provided `Inventory()` API supports following transponders:
 - Innovatron
 - FeliCa
 
-
 # Documentation
 
 ### Create, Open, Close
 
-To communicate with a Feig RFID reader/module connected via RS232, you first have to instantiate a **IFeigReader**. This is done via factory method **FeigReader.Create(..)**, which requires an instance of **FeigReaderSettings**.
+To communicate with a Feig RFID reader/module connected via RS232, you first have to instantiate a **IFeigReader**. This
+is done via factory method **FeigReader.Create(..)**, which requires an instance of **FeigReaderSettings**.
 
 ````cs
     var settings = new FeigReaderSettings {
@@ -61,16 +66,19 @@ To communicate with a Feig RFID reader/module connected via RS232, you first hav
         Protocol = FeigProtocol.Advanced,
         Timeout = TimeSpan.FromMilliseconds(500),
     };
-    
+
     using (IFeigReader reader = FeigReader.Create(settings))
     {
         // ...
     }
 ````
 
-The settings are used to provide configuration about serial communication (**SerialTransportSettings**) to the reader, but also to provide Feig-specific global settings like **Address**, **Protocol** and **Timeout**.
+The settings are used to provide configuration about serial communication (**SerialTransportSettings**) to the reader,
+but also to provide Feig-specific global settings like **Address**, **Protocol** and **Timeout**.
 
-So far, we only configured and created an instance of our reader in code. The specified serial port hasn't been opened yet. To open communication you have to call **Open()** on the reader. If necessary, you can **Close()** and re-open the communication transport multiple times on the same **IFeigReader** instance.
+So far, we only configured and created an instance of our reader in code. The specified serial port hasn't been opened
+yet. To open communication you have to call **Open()** on the reader. If necessary, you can **Close()** and re-open the
+communication transport multiple times on the same **IFeigReader** instance.
 
 ````cs
     using (IFeigReader reader = FeigReader.Create(settings))
@@ -83,10 +91,10 @@ So far, we only configured and created an instance of our reader in code. The sp
 
 Don't forget to dispose the **IFeigReader** at the end.
 
-
 ### Transfer
 
-Now, to communicate with the reader/module, we perform a transfer operation, which sends a request to the reader and then waits for a response.
+Now, to communicate with the reader/module, we perform a transfer operation, which sends a request to the reader and
+then waits for a response.
 
 ````cs
     var request = new FeigRequest {
@@ -99,7 +107,10 @@ Now, to communicate with the reader/module, we perform a transfer operation, whi
         .ConfigureAwait(false);
 ````
 
-Here we first instantiate a **FeigRequest** and then call the async **Transfer(..)**. The method overload uses *protocol* and *timeout* from global settings supplied earlier during reader construction. To override global settings for this single transfer operation only, you can provide them as additional arguments. You can even provide a cancellation token to cancel the transfer operation at any time.
+Here we first instantiate a **FeigRequest** and then call the async **Transfer(..)**. The method overload uses
+*protocol* and *timeout* from global settings supplied earlier during reader construction. To override global settings
+for this single transfer operation only, you can provide them as additional arguments. You can even provide a
+cancellation token to cancel the transfer operation at any time.
 
 ````cs
     FeigTransferResult result = await reader.Transfer(
@@ -107,7 +118,9 @@ Here we first instantiate a **FeigRequest** and then call the async **Transfer(.
         .ConfigureAwait(false);
 ````
 
-Now, **Transfer(..)** never throws exceptions for timeout, cancellation or errors. Instead, it returns a specific result object that contains detailed information about the transfer operation. You can use it to determine whether the transfer operation succeeded as shown in the following code snippet.
+Now, **Transfer(..)** never throws exceptions for timeout, cancellation or errors. Instead, it returns a specific result
+object that contains detailed information about the transfer operation. You can use it to determine whether the transfer
+operation succeeded as shown in the following code snippet.
 
 ````cs
     if (result.Status == FeigTransferStatus.Canceled)
@@ -139,12 +152,14 @@ Now, **Transfer(..)** never throws exceptions for timeout, cancellation or error
     }
 ````
 
-Error handling seems a bit tedious. But, you won't need to do it yourself. **Transfer(..)** represents a low-level method that gives you full control over transfer operations. In general, you will use other high-level methods better suited for most cases. It's just that you know you can do it that way.
-
+Error handling seems a bit tedious. But, you won't need to do it yourself. **Transfer(..)** represents a low-level
+method that gives you full control over transfer operations. In general, you will use other high-level methods better
+suited for most cases. It's just that you know you can do it that way.
 
 ### Execute
 
-**Execute(..)** is one of those higher-level methods that does this result-code checking for you, and that throws appropriate exceptions in certain error situations. On success, the method returns the received response.
+**Execute(..)** is one of those higher-level methods that does this result-code checking for you, and that throws
+appropriate exceptions in certain error situations. On success, the method returns the received response.
 
 ````cs
     var request = new FeigRequest {
@@ -155,11 +170,13 @@ Error handling seems a bit tedious. But, you won't need to do it yourself. **Tra
 
     var response = await reader.Execute(request)
         .ConfigureAwait(false);
-        
+
     var data = response.Data;
 ````
 
-In case of timeout, a **TimeoutException** is thrown. In case of cancellation an **OperationCanceledException**. Otherwise, if a communication error occurred or the reader/module returned an error code, an exception of type **FeigException** is thrown. In all other cases, the received **FeigResponse** is returned.
+In case of timeout, a **TimeoutException** is thrown. In case of cancellation an **OperationCanceledException**.
+Otherwise, if a communication error occurred or the reader/module returned an error code, an exception of type *
+*FeigException** is thrown. In all other cases, the received **FeigResponse** is returned.
 
 Regarding the previous code snippet. There exists another overload that allows you to write this in a much shorter way.
 
@@ -170,10 +187,10 @@ Regarding the previous code snippet. There exists another overload that allows y
 
 This overload constructs the necessary **FeigRequest** internally.
 
-
 ### Common Commands
 
-Most Feig RFID reader/modules support a set of common commands. These commands are already implemented and exposed as methods on the **IFeigReader** interface.
+Most Feig RFID reader/modules support a set of common commands. These commands are already implemented and exposed as
+methods on the **IFeigReader** interface.
 
 Following commands are supported out-of-the-box:
 

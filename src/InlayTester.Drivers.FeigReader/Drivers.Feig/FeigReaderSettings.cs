@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Text;
@@ -42,16 +42,16 @@ public sealed class FeigReaderSettings
     public FeigReaderSettings()
     {
         TransportSettings = new SerialTransportSettings {
-            PortName = "COM1",
-            Baud = 38400,
-            DataBits = 8,
-            Parity = Parity.Even,
-            StopBits = StopBits.One,
+            PortName  = "COM1",
+            Baud      = 38400,
+            DataBits  = 8,
+            Parity    = Parity.Even,
+            StopBits  = StopBits.One,
             Handshake = Handshake.None,
         };
 
-        Address = 0xFF;
-        Timeout = TimeSpan.FromMilliseconds(1000);
+        Address  = 0xFF;
+        Timeout  = TimeSpan.FromMilliseconds(1000);
         Protocol = FeigProtocol.Advanced;
     }
 
@@ -67,9 +67,9 @@ public sealed class FeigReaderSettings
         Verify.NotNull(settings, nameof(settings));
 
         TransportSettings = new SerialTransportSettings(settings.TransportSettings);
-        Address = settings.Address;
-        Timeout = settings.Timeout;
-        Protocol = settings.Protocol;
+        Address           = settings.Address;
+        Timeout           = settings.Timeout;
+        Protocol          = settings.Protocol;
     }
 
 

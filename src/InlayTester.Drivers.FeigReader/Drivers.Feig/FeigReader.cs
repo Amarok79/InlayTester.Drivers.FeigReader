@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Contracts;
@@ -30,8 +30,8 @@ public static class FeigReader
     {
         Verify.NotNull(settings, nameof(settings));
 
-        var copy = new FeigReaderSettings(settings);
-        var logger = NullLogger.Instance;
+        var copy      = new FeigReaderSettings(settings);
+        var logger    = NullLogger.Instance;
         var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
 
         return new DefaultFeigReader(copy, transport, logger);
@@ -56,8 +56,8 @@ public static class FeigReader
         Verify.NotNull(settings, nameof(settings));
         Verify.NotNull(hooks, nameof(hooks));
 
-        var copy = new FeigReaderSettings(settings);
-        var logger = NullLogger.Instance;
+        var copy      = new FeigReaderSettings(settings);
+        var logger    = NullLogger.Instance;
         var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
 
         return new DefaultFeigReader(copy, transport, logger);
@@ -82,7 +82,7 @@ public static class FeigReader
         Verify.NotNull(settings, nameof(settings));
         Verify.NotNull(logger, nameof(logger));
 
-        var copy = new FeigReaderSettings(settings);
+        var copy      = new FeigReaderSettings(settings);
         var transport = new DefaultFeigTransport(copy.TransportSettings, logger);
 
         return new DefaultFeigReader(copy, transport, logger);
@@ -111,7 +111,7 @@ public static class FeigReader
         Verify.NotNull(logger, nameof(logger));
         Verify.NotNull(hooks, nameof(hooks));
 
-        var copy = new FeigReaderSettings(settings);
+        var copy      = new FeigReaderSettings(settings);
         var transport = new DefaultFeigTransport(copy.TransportSettings, logger, hooks);
 
         return new DefaultFeigReader(copy, transport, logger);

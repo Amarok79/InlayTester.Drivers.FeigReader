@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using Amarok.Shared;
@@ -29,7 +29,7 @@ public class Test_FeigTransponder
     {
         var transponder = new FeigTransponder {
             TransponderType = FeigTransponderType.ISO14443A,
-            Identifier = BufferSpan.From(0x11, 0x22, 0x33),
+            Identifier      = BufferSpan.From(0x11, 0x22, 0x33),
         };
 
         Check.That(transponder.TransponderType).IsEqualTo(FeigTransponderType.ISO14443A);
@@ -45,16 +45,16 @@ public class Test_FeigTransponder
         var transponders = new[] {
             new FeigTransponder {
                 TransponderType = FeigTransponderType.ISO14443A,
-                Identifier = BufferSpan.From(0x11, 0x22, 0x33),
+                Identifier      = BufferSpan.From(0x11, 0x22, 0x33),
             },
             new FeigTransponder {
                 TransponderType = FeigTransponderType.Jewel,
-                Identifier = BufferSpan.From(0x44, 0x55),
+                Identifier      = BufferSpan.From(0x44, 0x55),
             },
         };
 
         Check.That(FeigTransponder.ToString(transponders))
-           .IsEqualTo("{ Type: ISO14443A, ID: 11-22-33 }, { Type: Jewel, ID: 44-55 }");
+            .IsEqualTo("{ Type: ISO14443A, ID: 11-22-33 }, { Type: Jewel, ID: 44-55 }");
     }
 
     [Test]
@@ -63,7 +63,7 @@ public class Test_FeigTransponder
         var transponders = new[] {
             new FeigTransponder {
                 TransponderType = FeigTransponderType.ISO14443A,
-                Identifier = BufferSpan.From(0x11, 0x22, 0x33),
+                Identifier      = BufferSpan.From(0x11, 0x22, 0x33),
             },
         };
 

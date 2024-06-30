@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using Amarok.Shared;
 using NFluent;
@@ -34,7 +34,7 @@ public class Test_FeigRequest
         var req = new FeigRequest {
             Address = 0x12,
             Command = FeigCommand.ReadConfiguration,
-            Data = BufferSpan.From(0x07),
+            Data    = BufferSpan.From(0x07),
         };
 
         // assert
@@ -82,7 +82,7 @@ public class Test_FeigRequest
         var req = new FeigRequest {
             Address = 0x12,
             Command = FeigCommand.ReadConfiguration,
-            Data = BufferSpan.From(0x07),
+            Data    = BufferSpan.From(0x07),
         };
 
         // assert

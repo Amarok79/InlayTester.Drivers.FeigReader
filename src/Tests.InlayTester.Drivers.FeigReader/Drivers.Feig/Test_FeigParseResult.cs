@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -18,7 +18,7 @@ public class Test_FeigParseResult
         {
             // act
             var response = new FeigResponse();
-            var result = FeigParseResult.Success(response);
+            var result   = FeigParseResult.Success(response);
 
             // assert
             Check.That(result.Status).IsEqualTo(FeigParseStatus.Success);
@@ -26,7 +26,7 @@ public class Test_FeigParseResult
             Check.That(result.Response).IsSameReferenceAs(response);
 
             Check.That(result.ToString())
-               .IsEqualTo("Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+                .IsEqualTo("Status: Success, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
         }
 
         [Test]
@@ -62,7 +62,7 @@ public class Test_FeigParseResult
         {
             // act
             var response = new FeigResponse();
-            var result = FeigParseResult.ChecksumError(response);
+            var result   = FeigParseResult.ChecksumError(response);
 
             // assert
             Check.That(result.Status).IsEqualTo(FeigParseStatus.ChecksumError);
@@ -70,7 +70,7 @@ public class Test_FeigParseResult
             Check.That(result.Response).IsSameReferenceAs(response);
 
             Check.That(result.ToString())
-               .IsEqualTo("Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
+                .IsEqualTo("Status: ChecksumError, Response: { Address: 0, Command: None, Status: OK, Data: <empty> }");
         }
     }
 

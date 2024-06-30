@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using InlayTester.Shared.Transports;
@@ -38,7 +38,7 @@ public class Test_FeigReaderSettings
         Check.That(settings.Protocol).IsEqualTo(FeigProtocol.Advanced);
 
         Check.That(settings.ToString())
-           .IsEqualTo("Transport: 'COM1,38400,8,Even,One,None', Address: 255, Timeout: 1000 ms, Protocol: Advanced");
+            .IsEqualTo("Transport: 'COM1,38400,8,Even,One,None', Address: 255, Timeout: 1000 ms, Protocol: Advanced");
     }
 
     [Test]
@@ -47,15 +47,15 @@ public class Test_FeigReaderSettings
         // act
         var copy = new FeigReaderSettings {
             TransportSettings = new SerialTransportSettings {
-                PortName = "COM3",
-                Baud = 19200,
-                DataBits = 7,
-                Parity = Parity.Mark,
-                StopBits = StopBits.Two,
+                PortName  = "COM3",
+                Baud      = 19200,
+                DataBits  = 7,
+                Parity    = Parity.Mark,
+                StopBits  = StopBits.Two,
                 Handshake = Handshake.RequestToSendXOnXOff,
             },
-            Address = 123,
-            Timeout = TimeSpan.FromMilliseconds(500),
+            Address  = 123,
+            Timeout  = TimeSpan.FromMilliseconds(500),
             Protocol = FeigProtocol.Standard,
         };
 
@@ -81,7 +81,7 @@ public class Test_FeigReaderSettings
         Check.That(settings.Protocol).IsEqualTo(FeigProtocol.Standard);
 
         Check.That(settings.ToString())
-           .IsEqualTo(
+            .IsEqualTo(
                 "Transport: 'COM3,19200,7,Mark,Two,RequestToSendXOnXOff', Address: 123, Timeout: 500 ms, Protocol: Standard"
             );
     }

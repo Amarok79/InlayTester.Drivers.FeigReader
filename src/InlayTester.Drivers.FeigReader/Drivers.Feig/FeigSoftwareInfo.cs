@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using System.Globalization;
@@ -42,7 +42,7 @@ public sealed class FeigSoftwareInfo
     public FeigSoftwareInfo()
     {
         FirmwareVersion = new Version(0, 0, 0);
-        ReaderType = FeigReaderType.Unknown;
+        ReaderType      = FeigReaderType.Unknown;
     }
 
     /// <summary>
@@ -56,9 +56,9 @@ public sealed class FeigSoftwareInfo
     {
         Verify.NotNull(info, nameof(info));
 
-        FirmwareVersion = info.FirmwareVersion;
-        HardwareType = info.HardwareType;
-        ReaderType = info.ReaderType;
+        FirmwareVersion       = info.FirmwareVersion;
+        HardwareType          = info.HardwareType;
+        ReaderType            = info.ReaderType;
         SupportedTransponders = info.SupportedTransponders;
     }
 

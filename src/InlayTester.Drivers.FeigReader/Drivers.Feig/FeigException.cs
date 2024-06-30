@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 
@@ -34,7 +34,7 @@ public class FeigException : Exception
     /// </param>
     public FeigException(FeigRequest? request, FeigResponse? response)
     {
-        Request = request;
+        Request  = request;
         Response = response;
     }
 
@@ -61,7 +61,7 @@ public class FeigException : Exception
     public FeigException(String message, FeigRequest? request, FeigResponse? response)
         : base(message)
     {
-        Request = request;
+        Request  = request;
         Response = response;
     }
 

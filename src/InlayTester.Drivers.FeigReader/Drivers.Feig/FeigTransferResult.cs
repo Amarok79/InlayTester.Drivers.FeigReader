@@ -32,8 +32,8 @@ public readonly struct FeigTransferResult
 
     private FeigTransferResult(FeigTransferStatus status, FeigRequest request, FeigResponse? response)
     {
-        Status = status;
-        Request = request;
+        Status   = status;
+        Request  = request;
         Response = response;
     }
 
@@ -124,8 +124,7 @@ public readonly struct FeigTransferResult
     }
 
     /// <summary>
-    ///     Returns a result indicating that the transfer operation failed because an unexpected response
-    ///     has been received.
+    ///     Returns a result indicating that the transfer operation failed because an unexpected response has been received.
     /// </summary>
     /// 
     /// <exception cref="ArgumentNullException">

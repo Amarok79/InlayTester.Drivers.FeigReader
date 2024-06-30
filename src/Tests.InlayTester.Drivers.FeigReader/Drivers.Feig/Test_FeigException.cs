@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -15,8 +15,8 @@ public class Test_FeigException
     public void Succeed_With_RequestResponse()
     {
         // act
-        var request = new FeigRequest();
-        var response = new FeigResponse();
+        var request   = new FeigRequest();
+        var response  = new FeigResponse();
         var exception = new FeigException(request, response);
 
         // assert
@@ -65,8 +65,8 @@ public class Test_FeigException
     public void Succeed_With_MessageRequestResponse()
     {
         // act
-        var request = new FeigRequest();
-        var response = new FeigResponse();
+        var request   = new FeigRequest();
+        var response  = new FeigResponse();
         var exception = new FeigException("MSG", request, response);
 
         // assert
@@ -84,7 +84,7 @@ public class Test_FeigException
     {
         // act
         var innerException = new ApplicationException();
-        var exception = new FeigException("MSG", innerException);
+        var exception      = new FeigException("MSG", innerException);
 
         // assert
         Check.That(exception.Message).IsEqualTo("MSG");

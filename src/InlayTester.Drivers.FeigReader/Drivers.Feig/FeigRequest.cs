@@ -14,8 +14,7 @@ namespace InlayTester.Drivers.Feig;
 public sealed class FeigRequest
 {
     /// <summary>
-    ///     The address of the device. The reader can be addressed via address 255 at any time. Defaults to
-    ///     255.
+    ///     The address of the device. The reader can be addressed via address 255 at any time. Defaults to 255.
     /// </summary>
     public Byte Address { get; set; } = 0xFF;
 
@@ -79,7 +78,7 @@ public sealed class FeigRequest
     private BufferSpan _ToStandardProtocolFrame()
     {
         var frameLength = 5 + Data.Count;
-        var frame = new Byte[frameLength];
+        var frame       = new Byte[frameLength];
 
         frame[0] = (Byte)frameLength;
         frame[1] = Address;
@@ -98,7 +97,7 @@ public sealed class FeigRequest
     private BufferSpan _ToAdvancedProtocolFrame()
     {
         var frameLength = 7 + Data.Count;
-        var frame = new Byte[frameLength];
+        var frame       = new Byte[frameLength];
 
         frame[0] = 0x02;
         frame[1] = (Byte)(frameLength >> 8);

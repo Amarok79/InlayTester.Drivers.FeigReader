@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022, Olaf Kober <olaf.kober@outlook.com>
+﻿// Copyright (c) 2024, Olaf Kober <olaf.kober@outlook.com>
 
 using System;
 using NFluent;
@@ -15,7 +15,7 @@ public class Test_FeigReaderType
     public void TestNames()
     {
         Check.That(Enum.GetNames(typeof(FeigReaderType)))
-           .IsOnlyMadeOf(
+            .IsOnlyMadeOf(
                 nameof(FeigReaderType.CPR30),
                 nameof(FeigReaderType.CPR40),
                 nameof(FeigReaderType.CPR40U),

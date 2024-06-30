@@ -38,7 +38,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         Verify.NotNull(logger, nameof(logger));
 
         mSettings = settings;
-        mLogger = logger;
+        mLogger   = logger;
 
         mCompletionSource = new TaskCompletionSource<FeigTransferResult>();
         mCompletionSource.SetCanceled();
@@ -69,8 +69,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
     }
 
     /// <summary>
-    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
-    ///     resources.
+    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
     public void Dispose()
     {
@@ -90,7 +89,7 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         lock (mSyncThis)
         {
             // store for later use
-            mRequest = request;
+            mRequest  = request;
             mProtocol = protocol;
 
             // clear buffers
