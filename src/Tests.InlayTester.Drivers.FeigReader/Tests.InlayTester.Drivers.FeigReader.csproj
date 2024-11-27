@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj"/>
+        <ProjectReference Include="..\InlayTester.Drivers.FeigReader\InlayTester.Drivers.FeigReader.csproj" />
     </ItemGroup>
 
 </Project>

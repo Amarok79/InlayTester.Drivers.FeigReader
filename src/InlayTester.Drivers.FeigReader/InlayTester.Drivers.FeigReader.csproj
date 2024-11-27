@@ -5,19 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <PackageIcon>inlaytester.png</PackageIcon>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/Amarok79/InlayTester.Drivers.FeigReader</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Amarok79/InlayTester.Drivers.FeigReader</RepositoryUrl>
-        <PackageIcon>inlaytester.png</PackageIcon>
-        <PublishRepositoryUrl>True</PublishRepositoryUrl>
-        <EmbedUntrackedSources>True</EmbedUntrackedSources>
-        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-        <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\inlaytester.png" Pack="true" PackagePath="\"/>
+        <None Include="..\inlaytester.png" Pack="True" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>
