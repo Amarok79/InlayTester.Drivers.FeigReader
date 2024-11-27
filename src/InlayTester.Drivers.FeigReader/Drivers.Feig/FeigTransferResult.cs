@@ -124,7 +124,8 @@ public readonly struct FeigTransferResult
     }
 
     /// <summary>
-    ///     Returns a result indicating that the transfer operation failed because an unexpected response has been received.
+    ///     Returns a result indicating that the transfer operation failed because an unexpected response has been
+    ///     received.
     /// </summary>
     /// 
     /// <exception cref="ArgumentNullException">

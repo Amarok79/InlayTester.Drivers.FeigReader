@@ -56,9 +56,7 @@ public sealed class FeigTransponder
     public static String ToString(IEnumerable<FeigTransponder>? transponders)
     {
         if (transponders == null)
-        {
             return String.Empty;
-        }
 
         StringBuilder? sb = null;
 
@@ -71,9 +69,7 @@ public sealed class FeigTransponder
             foreach (var item in transponders)
             {
                 if (i++ > 0)
-                {
                     sb.Append(", ");
-                }
 
                 sb.Append("{ ");
                 sb.Append(item);

@@ -18,8 +18,7 @@ public class Test_FeigChecksum
     {
         var buffer = new Byte[] {
             0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
-            0x53, 0x0D, 0x30,
-        };
+            0x53, 0x0D, 0x30 };
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(buffer));
 

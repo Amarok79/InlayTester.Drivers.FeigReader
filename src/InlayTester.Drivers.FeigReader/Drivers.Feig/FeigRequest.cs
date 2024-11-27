@@ -62,14 +62,10 @@ public sealed class FeigRequest
     public BufferSpan ToBufferSpan(FeigProtocol protocol = FeigProtocol.Standard)
     {
         if (protocol == FeigProtocol.Standard)
-        {
             return _ToStandardProtocolFrame();
-        }
 
         if (protocol == FeigProtocol.Advanced)
-        {
             return _ToAdvancedProtocolFrame();
-        }
 
         throw new NotSupportedException($"Protocol {protocol} not supported!");
     }

@@ -57,7 +57,9 @@ public class Test_FeigRequest
     public void StandardFrame_GetSoftwareVersion()
     {
         // act
-        var req = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
+        var req = new FeigRequest {
+            Command = FeigCommand.GetSoftwareVersion,
+        };
 
         // assert
         Check.That(req.Address).IsEqualTo(0xFF);
@@ -105,7 +107,9 @@ public class Test_FeigRequest
     public void AdvancedFrame_GetSoftwareVersion()
     {
         // act
-        var req = new FeigRequest { Command = FeigCommand.GetSoftwareVersion };
+        var req = new FeigRequest {
+            Command = FeigCommand.GetSoftwareVersion,
+        };
 
         // assert
         Check.That(req.Address).IsEqualTo(0xFF);

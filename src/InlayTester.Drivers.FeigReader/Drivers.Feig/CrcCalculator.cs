@@ -120,9 +120,7 @@ internal sealed class CrcCalculator
                 crc <<= 1;
 
                 if (bit != 0)
-                {
                     crc ^= mPolynom;
-                }
             }
 
             crc            &= mCrcMask;
@@ -138,16 +136,12 @@ internal sealed class CrcCalculator
                 bit = crc & 1;
 
                 if (bit != 0)
-                {
                     crc ^= mPolynom;
-                }
 
                 crc >>= 1;
 
                 if (bit != 0)
-                {
                     crc |= mCrcHighBit;
-                }
             }
         }
     }
@@ -159,9 +153,7 @@ internal sealed class CrcCalculator
             var crc = (UInt64)i;
 
             if (mReflectInput)
-            {
                 crc = _Reflect(crc, 8);
-            }
 
             crc <<= mOrder - 8;
 
@@ -171,15 +163,11 @@ internal sealed class CrcCalculator
                 crc <<= 1;
 
                 if (bit != 0)
-                {
                     crc ^= mPolynom;
-                }
             }
 
             if (mReflectInput)
-            {
                 crc = _Reflect(crc, mOrder);
-            }
 
             crc          &= mCrcMask;
             mCrcTable[i] =  crc;
@@ -195,9 +183,7 @@ internal sealed class CrcCalculator
         for (var i = (UInt64)1 << (bitnum - 1); i != 0; i >>= 1)
         {
             if ((crc & i) != 0)
-            {
                 crcout |= j;
-            }
 
             j <<= 1;
         }
@@ -232,9 +218,7 @@ internal sealed class CrcCalculator
             }
 
             if (mReflectOutput ^ mReflectInput)
-            {
                 crc = _Reflect(crc, mOrder);
-            }
 
             crc ^= mCrcXor;
             crc &= mCrcMask;

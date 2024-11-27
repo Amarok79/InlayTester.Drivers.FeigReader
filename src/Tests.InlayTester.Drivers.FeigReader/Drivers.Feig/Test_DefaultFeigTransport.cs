@@ -20,7 +20,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public void Open_Close_Dispose()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -40,7 +42,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public void ReceivedDataIgnored()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -94,7 +98,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public async Task Success_ReceivedResponse()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -146,14 +152,14 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
-                        {
                             Assert.Fail("Received unknown data");
-                        }
                     }
                 );
 
                 var result = await transportA.Transfer(
-                    new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+                    new FeigRequest {
+                        Command = FeigCommand.GetSoftwareVersion,
+                    },
                     FeigProtocol.Advanced,
                     TimeSpan.FromMilliseconds(5000),
                     default
@@ -175,7 +181,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public async Task Success_ReceivedResponse_MultiplePackets()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -213,14 +221,14 @@ public class Test_DefaultFeigTransport
                             transportB.Send(BufferSpan.From(0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
                         }
                         else
-                        {
                             Assert.Fail("Received unknown data");
-                        }
                     }
                 );
 
                 var result = await transportA.Transfer(
-                    new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+                    new FeigRequest {
+                        Command = FeigCommand.GetSoftwareVersion,
+                    },
                     FeigProtocol.Advanced,
                     TimeSpan.FromMilliseconds(5000),
                     default
@@ -242,7 +250,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public async Task Timeout()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -296,14 +306,14 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
-                        {
                             Assert.Fail("Received unknown data");
-                        }
                     }
                 );
 
                 var result = await transportA.Transfer(
-                    new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+                    new FeigRequest {
+                        Command = FeigCommand.GetSoftwareVersion,
+                    },
                     FeigProtocol.Advanced,
                     TimeSpan.FromMilliseconds(100),
                     default
@@ -321,7 +331,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public async Task Canceled()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -375,16 +387,16 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
-                        {
                             Assert.Fail("Received unknown data");
-                        }
                     }
                 );
 
                 var cts = new CancellationTokenSource();
 
                 var task = transportA.Transfer(
-                    new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+                    new FeigRequest {
+                        Command = FeigCommand.GetSoftwareVersion,
+                    },
                     FeigProtocol.Advanced,
                     TimeSpan.FromMilliseconds(5000),
                     cts.Token
@@ -406,7 +418,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public async Task CommunicationError_ChecksumError()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -458,14 +472,14 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
-                        {
                             Assert.Fail("Received unknown data");
-                        }
                     }
                 );
 
                 var result = await transportA.Transfer(
-                    new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+                    new FeigRequest {
+                        Command = FeigCommand.GetSoftwareVersion,
+                    },
                     FeigProtocol.Advanced,
                     TimeSpan.FromMilliseconds(5000),
                     default
@@ -481,7 +495,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public async Task CommunicationError_FrameError()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -533,14 +549,14 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
-                        {
                             Assert.Fail("Received unknown data");
-                        }
                     }
                 );
 
                 var result = await transportA.Transfer(
-                    new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+                    new FeigRequest {
+                        Command = FeigCommand.GetSoftwareVersion,
+                    },
                     FeigProtocol.Advanced,
                     TimeSpan.FromMilliseconds(5000),
                     default
@@ -556,7 +572,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public async Task UnexpectedResponse()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -616,14 +634,14 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
-                        {
                             Assert.Fail("Received unknown data");
-                        }
                     }
                 );
 
                 var result = await transportA.Transfer(
-                    new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+                    new FeigRequest {
+                        Command = FeigCommand.GetSoftwareVersion,
+                    },
                     FeigProtocol.Advanced,
                     TimeSpan.FromMilliseconds(5000),
                     default
@@ -643,7 +661,9 @@ public class Test_DefaultFeigTransport
     [Test, NUnit.Framework.Category("com0com"), Serial]
     public async Task Success_ReceivedResponse_MultipleTimes()
     {
-        var settingsA = new SerialTransportSettings { PortName = "COMA" };
+        var settingsA = new SerialTransportSettings {
+            PortName = "COMA",
+        };
 
         var logger = LoggerFactory.Create(
                 builder => {
@@ -695,16 +715,16 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
-                        {
                             Assert.Fail("Received unknown data");
-                        }
                     }
                 );
 
                 for (var i = 0; i < 100; i++)
                 {
                     var result = await transportA.Transfer(
-                        new FeigRequest { Command = FeigCommand.GetSoftwareVersion },
+                        new FeigRequest {
+                            Command = FeigCommand.GetSoftwareVersion,
+                        },
                         FeigProtocol.Advanced,
                         TimeSpan.FromMilliseconds(5000),
                         default

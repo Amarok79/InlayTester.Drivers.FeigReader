@@ -48,8 +48,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     #region ++ IFeigReader Interface (Open, Close, Dispose) ++
 
     /// <summary>
-    ///     Opens the transport (serial connection) to the Feig RFID reader. The transport can be opened and closed multiple
-    ///     times.
+    ///     Opens the transport (serial connection) to the Feig RFID reader. The transport can be opened and closed
+    ///     multiple times.
     /// </summary>
     /// 
     /// <exception cref="ObjectDisposedException">
@@ -67,8 +67,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     }
 
     /// <summary>
-    ///     Closes the transport (serial connection) to the Feig RFID reader. The transport can be opened and closed multiple
-    ///     times.
+    ///     Closes the transport (serial connection) to the Feig RFID reader. The transport can be opened and closed
+    ///     multiple times.
     /// </summary>
     /// 
     /// <exception cref="ObjectDisposedException">
@@ -92,17 +92,18 @@ internal sealed class DefaultFeigReader : IFeigReader
     #region ++ IFeigReader Interface (Transfer) ++
 
     /// <summary>
-    ///     Performs a transfer operation by sending a request to the reader/module and then waits for a corresponding response
-    ///     from the reader/module or for timeout, whatever comes first. This method doesn't throw exceptions for timeout or
-    ///     failed transfer operations. Instead, a result object providing detailed information about the transfer operation is
-    ///     returned.
+    ///     Performs a transfer operation by sending a request to the reader/module and then waits for a
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method doesn't
+    ///     throw exceptions for timeout or failed transfer operations. Instead, a result object providing detailed
+    ///     information about the transfer operation is returned.
     /// </summary>
     /// 
     /// <param name="request">
     ///     The request to send to the reader.
     /// </param>
     /// <param name="protocol">
-    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global setting is used.
+    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global setting is
+    ///     used.
     /// </param>
     /// <param name="timeout">
     ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
@@ -133,9 +134,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
-        {
             mLogger.LogInformation("[{PortName}]  TRANSFER  #{No}", mSettings.TransportSettings.PortName, mTransferNo);
-        }
 
         #endregion
 
@@ -148,10 +147,10 @@ internal sealed class DefaultFeigReader : IFeigReader
     }
 
     /// <summary>
-    ///     Performs a transfer operation by sending a request to the reader/module and then waits for a corresponding response
-    ///     from the reader/module or for timeout, whatever comes first. This method doesn't throw exceptions for timeout or
-    ///     failed transfer operations. Instead, a result object providing detailed information about the transfer operation is
-    ///     returned.
+    ///     Performs a transfer operation by sending a request to the reader/module and then waits for a
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method doesn't
+    ///     throw exceptions for timeout or failed transfer operations. Instead, a result object providing detailed
+    ///     information about the transfer operation is returned.
     /// </summary>
     /// 
     /// <param name="command">
@@ -198,16 +197,17 @@ internal sealed class DefaultFeigReader : IFeigReader
     #region ++ IFeigReader Interface (Execute) ++
 
     /// <summary>
-    ///     Executes the supplied command by sending a request to the reader/module and then waits for a corresponding response
-    ///     from the reader/module or for timeout, whatever comes first. These methods throws appropriate exceptions for
-    ///     timeout, cancellation or failed operations.
+    ///     Executes the supplied command by sending a request to the reader/module and then waits for a
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These methods throws
+    ///     appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
     /// <param name="request">
     ///     The request to send to the reader.
     /// </param>
     /// <param name="protocol">
-    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global setting is used.
+    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global setting is
+    ///     used.
     /// </param>
     /// <param name="timeout">
     ///     (Optional) The timeout for this operation. If not specified, the global timeout is used.
@@ -246,9 +246,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (result.Status == FeigTransferStatus.Success)
         {
             if (result.Response!.Status is FeigStatus.OK or FeigStatus.NoTransponder or FeigStatus.MoreData)
-            {
                 return result.Response; // success
-            }
 
             throw new FeigException(
                 $"The operation '{result.Request}' failed because the reader returned error code " +
@@ -268,9 +266,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         }
 
         if (result.Status == FeigTransferStatus.Canceled)
-        {
             throw new OperationCanceledException($"The operation '{request}' has been canceled.");
-        }
 
         if (result.Status == FeigTransferStatus.CommunicationError)
         {
@@ -295,9 +291,9 @@ internal sealed class DefaultFeigReader : IFeigReader
     }
 
     /// <summary>
-    ///     Executes the supplied command by sending a request to the reader/module and then waits for a corresponding response
-    ///     from the reader/module or for timeout, whatever comes first. These methods throws appropriate exceptions for
-    ///     timeout, cancellation or failed operations.
+    ///     Executes the supplied command by sending a request to the reader/module and then waits for a
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These methods throws
+    ///     appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
     /// <param name="command">
@@ -352,9 +348,9 @@ internal sealed class DefaultFeigReader : IFeigReader
     #region ++ IFeigReader Interface (Common Commands) ++
 
     /// <summary>
-    ///     Tests whether communication to RFID reader is working. This method sends a 'Baud Rate Detection' command request to
-    ///     the reader to determine whether communication is working. This method doesn't throw exceptions for communication
-    ///     errors.
+    ///     Tests whether communication to RFID reader is working. This method sends a 'Baud Rate Detection' command
+    ///     request to the reader to determine whether communication is working. This method doesn't throw exceptions
+    ///     for communication errors.
     /// </summary>
     /// 
     /// <param name="timeout">
@@ -382,9 +378,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
-        {
             mLogger.LogInformation("[{PortName}]  TestCommunication()", mSettings.TransportSettings.PortName);
-        }
 
         #endregion
 
@@ -446,9 +440,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
-        {
             mLogger.LogInformation("[{PortName}]  ResetCPU()", mSettings.TransportSettings.PortName);
-        }
 
         #endregion
 
@@ -470,9 +462,9 @@ internal sealed class DefaultFeigReader : IFeigReader
     }
 
     /// <summary>
-    ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders which are within the
-    ///     antenna field of the reader will be reset to their base setting. After an RF Reset a transponder which is located
-    ///     within the field has to be re-selected.
+    ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders which are
+    ///     within the antenna field of the reader will be reset to their base setting. After an RF Reset a
+    ///     transponder which is located within the field has to be re-selected.
     /// </summary>
     /// 
     /// <param name="timeout">
@@ -505,9 +497,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
-        {
             mLogger.LogInformation("[{PortName}]  ResetRF()", mSettings.TransportSettings.PortName);
-        }
 
         #endregion
 
@@ -533,8 +523,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     /// </summary>
     /// 
     /// <param name="flag">
-    ///     A value indicating which RF field should switch on or off. Specify 0x00 to switch off all antennas and 0x01 to
-    ///     switch on the first antenna. Look up more information in the reader's manual.
+    ///     A value indicating which RF field should switch on or off. Specify 0x00 to switch off all antennas and
+    ///     0x01 to switch on the first antenna. Look up more information in the reader's manual.
     /// </param>
     /// <param name="timeout">
     ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
@@ -636,9 +626,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
-        {
             mLogger.LogInformation("[{PortName}]  GetSoftwareInfo()", mSettings.TransportSettings.PortName);
-        }
 
         #endregion
 
@@ -816,9 +804,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         Verify.IsInRange(block, 0, 63, nameof(block));
 
         if (data.Count != 14)
-        {
             throw new ArgumentException("Exactly 14 bytes must be specified as configuration data.", nameof(data));
-        }
 
         return writeConfiguration();
 
@@ -902,9 +888,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
-        {
             mLogger.LogInformation("[{PortName}]  SaveConfigurations()", mSettings.TransportSettings.PortName);
-        }
 
         #endregion
 
@@ -1209,9 +1193,7 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
-        {
             mLogger.LogInformation("[{PortName}]  Inventory()", mSettings.TransportSettings.PortName);
-        }
 
         #endregion
 
@@ -1225,7 +1207,7 @@ internal sealed class DefaultFeigReader : IFeigReader
 
         var rspDat = response.Data;
 
-        var result = response.Status == FeigStatus.NoTransponder ? [] : Inventory_Parse(ref rspDat);
+        var result = response.Status == FeigStatus.NoTransponder ? [ ] : Inventory_Parse(ref rspDat);
 
         #region (logging)
 
