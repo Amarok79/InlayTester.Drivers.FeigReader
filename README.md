@@ -6,8 +6,8 @@
 This library is available as NuGet package:
 [InlayTester.Drivers.FeigReader](https://www.nuget.org/packages/InlayTester.Drivers.FeigReader/)
 
-The package provides strong-named binaries for .NET Standard 2.0, .NET 6.0, and .NET 7.0. Tests are performed with .NET
-Framework 4.8, .NET 6.0, .NET 7.0, and .NET 8.0.
+The package provides strong-named binaries for .NET Standard 2.0, .NET 6.0, and .NET 8.0. Tests are performed with .NET
+Framework 4.8, .NET 6.0, and .NET 8.0.
 
 For development, you need *Visual Studio 2022*. For running the tests, you need to
 install [com0com](https://sourceforge.net/projects/com0com/) and set up a serial port pair with names "COMA" and "COMB".
