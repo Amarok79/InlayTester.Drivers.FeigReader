@@ -48,8 +48,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     #region ++ IFeigReader Interface (Open, Close, Dispose) ++
 
     /// <summary>
-    ///     Opens the transport (serial connection) to the Feig RFID reader. The transport can be opened and closed
-    ///     multiple times.
+    ///     Opens the transport (serial connection) to the Feig RFID reader. The transport can be opened
+    ///     and closed multiple times.
     /// </summary>
     /// 
     /// <exception cref="ObjectDisposedException">
@@ -67,8 +67,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     }
 
     /// <summary>
-    ///     Closes the transport (serial connection) to the Feig RFID reader. The transport can be opened and closed
-    ///     multiple times.
+    ///     Closes the transport (serial connection) to the Feig RFID reader. The transport can be opened
+    ///     and closed multiple times.
     /// </summary>
     /// 
     /// <exception cref="ObjectDisposedException">
@@ -80,7 +80,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     }
 
     /// <summary>
-    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+    ///     resources.
     /// </summary>
     public void Dispose()
     {
@@ -93,20 +94,21 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     /// <summary>
     ///     Performs a transfer operation by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method doesn't
-    ///     throw exceptions for timeout or failed transfer operations. Instead, a result object providing detailed
-    ///     information about the transfer operation is returned.
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method
+    ///     doesn't throw exceptions for timeout or failed transfer operations. Instead, a result object
+    ///     providing detailed information about the transfer operation is returned.
     /// </summary>
     /// 
     /// <param name="request">
     ///     The request to send to the reader.
     /// </param>
     /// <param name="protocol">
-    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global setting is
-    ///     used.
+    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global
+    ///     setting is used.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -134,7 +136,9 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  TRANSFER  #{No}", mSettings.TransportSettings.PortName, mTransferNo);
+        }
 
         #endregion
 
@@ -148,9 +152,9 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     /// <summary>
     ///     Performs a transfer operation by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method doesn't
-    ///     throw exceptions for timeout or failed transfer operations. Instead, a result object providing detailed
-    ///     information about the transfer operation is returned.
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method
+    ///     doesn't throw exceptions for timeout or failed transfer operations. Instead, a result object
+    ///     providing detailed information about the transfer operation is returned.
     /// </summary>
     /// 
     /// <param name="command">
@@ -160,7 +164,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     (Optional) The data associated with the command that should be sent to the reader.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -198,16 +203,16 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     /// <summary>
     ///     Executes the supplied command by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. These methods throws
-    ///     appropriate exceptions for timeout, cancellation or failed operations.
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These
+    ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
     /// <param name="request">
     ///     The request to send to the reader.
     /// </param>
     /// <param name="protocol">
-    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global setting is
-    ///     used.
+    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global
+    ///     setting is used.
     /// </param>
     /// <param name="timeout">
     ///     (Optional) The timeout for this operation. If not specified, the global timeout is used.
@@ -229,10 +234,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task<FeigResponse> Execute(
         FeigRequest request,
@@ -246,7 +253,9 @@ internal sealed class DefaultFeigReader : IFeigReader
         if (result.Status == FeigTransferStatus.Success)
         {
             if (result.Response!.Status is FeigStatus.OK or FeigStatus.NoTransponder or FeigStatus.MoreData)
+            {
                 return result.Response; // success
+            }
 
             throw new FeigException(
                 $"The operation '{result.Request}' failed because the reader returned error code " +
@@ -266,7 +275,9 @@ internal sealed class DefaultFeigReader : IFeigReader
         }
 
         if (result.Status == FeigTransferStatus.Canceled)
+        {
             throw new OperationCanceledException($"The operation '{request}' has been canceled.");
+        }
 
         if (result.Status == FeigTransferStatus.CommunicationError)
         {
@@ -292,8 +303,8 @@ internal sealed class DefaultFeigReader : IFeigReader
 
     /// <summary>
     ///     Executes the supplied command by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. These methods throws
-    ///     appropriate exceptions for timeout, cancellation or failed operations.
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These
+    ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
     /// <param name="command">
@@ -303,7 +314,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     (Optional) The data associated with the command that should be sent to the reader.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -322,10 +334,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public Task<FeigResponse> Execute(
         FeigCommand command,
@@ -348,20 +362,22 @@ internal sealed class DefaultFeigReader : IFeigReader
     #region ++ IFeigReader Interface (Common Commands) ++
 
     /// <summary>
-    ///     Tests whether communication to RFID reader is working. This method sends a 'Baud Rate Detection' command
-    ///     request to the reader to determine whether communication is working. This method doesn't throw exceptions
-    ///     for communication errors.
+    ///     Tests whether communication to RFID reader is working. This method sends a 'Baud Rate
+    ///     Detection' command request to the reader to determine whether communication is working. This
+    ///     method doesn't throw exceptions for communication errors.
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
     /// </param>
     /// 
     /// <returns>
-    ///     True, if the communication test succeeded; otherwise False. In case of cancellation, False is returned.
+    ///     True, if the communication test succeeded; otherwise False. In case of cancellation, False is
+    ///     returned.
     /// </returns>
     /// 
     /// <exception cref="ObjectDisposedException">
@@ -378,7 +394,9 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  TestCommunication()", mSettings.TransportSettings.PortName);
+        }
 
         #endregion
 
@@ -411,7 +429,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -430,17 +449,21 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task ResetCPU(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
     {
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  ResetCPU()", mSettings.TransportSettings.PortName);
+        }
 
         #endregion
 
@@ -462,13 +485,14 @@ internal sealed class DefaultFeigReader : IFeigReader
     }
 
     /// <summary>
-    ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders which are
-    ///     within the antenna field of the reader will be reset to their base setting. After an RF Reset a
-    ///     transponder which is located within the field has to be re-selected.
+    ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders
+    ///     which are within the antenna field of the reader will be reset to their base setting. After an
+    ///     RF Reset a transponder which is located within the field has to be re-selected.
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -487,17 +511,21 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task ResetRF(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
     {
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  ResetRF()", mSettings.TransportSettings.PortName);
+        }
 
         #endregion
 
@@ -523,11 +551,13 @@ internal sealed class DefaultFeigReader : IFeigReader
     /// </summary>
     /// 
     /// <param name="flag">
-    ///     A value indicating which RF field should switch on or off. Specify 0x00 to switch off all antennas and
-    ///     0x01 to switch on the first antenna. Look up more information in the reader's manual.
+    ///     A value indicating which RF field should switch on or off. Specify 0x00 to switch off all
+    ///     antennas and 0x01 to switch on the first antenna. Look up more information in the reader's
+    ///     manual.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -546,10 +576,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task SwitchRF(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default)
     {
@@ -590,7 +622,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -613,10 +646,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task<FeigSoftwareInfo> GetSoftwareInfo(
         TimeSpan? timeout = null,
@@ -626,7 +661,9 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  GetSoftwareInfo()", mSettings.TransportSettings.PortName);
+        }
 
         #endregion
 
@@ -668,7 +705,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The location of the block to read from, either EEPROM or RAM.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -694,10 +732,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task<BufferSpan> ReadConfiguration(
         Int32 block,
@@ -763,7 +803,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The data of the configuration block; must be exactly 14 bytes.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -788,10 +829,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public Task WriteConfiguration(
         Int32 block,
@@ -804,7 +847,9 @@ internal sealed class DefaultFeigReader : IFeigReader
         Verify.IsInRange(block, 0, 63, nameof(block));
 
         if (data.Count != 14)
+        {
             throw new ArgumentException("Exactly 14 bytes must be specified as configuration data.", nameof(data));
+        }
 
         return writeConfiguration();
 
@@ -832,7 +877,13 @@ internal sealed class DefaultFeigReader : IFeigReader
 
             mRequestBuffer[0] = addr;
 
-            Buffer.BlockCopy(data.Buffer, data.Offset, mRequestBuffer, 1, data.Count);
+            Buffer.BlockCopy(
+                data.Buffer,
+                data.Offset,
+                mRequestBuffer,
+                1,
+                data.Count
+            );
 
             var cfgData = BufferSpan.From(mRequestBuffer, 0, 1 + data.Count);
 
@@ -859,7 +910,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -878,17 +930,21 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task SaveConfigurations(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
     {
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  SaveConfigurations()", mSettings.TransportSettings.PortName);
+        }
 
         #endregion
 
@@ -921,7 +977,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The configuration block to save.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -943,10 +1000,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task SaveConfiguration(
         Int32 block,
@@ -998,7 +1057,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The location of the block to reset, either EEPROM or RAM.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -1017,10 +1077,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task ResetConfigurations(
         FeigBlockLocation location,
@@ -1077,7 +1139,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The location of the block to reset, either EEPROM or RAM.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -1099,10 +1162,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task ResetConfiguration(
         Int32 block,
@@ -1157,7 +1222,8 @@ internal sealed class DefaultFeigReader : IFeigReader
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -1180,10 +1246,12 @@ internal sealed class DefaultFeigReader : IFeigReader
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     public async Task<(FeigTransponder[] Transponders, FeigResponse Response)> Inventory(
         TimeSpan? timeout = null,
@@ -1193,7 +1261,9 @@ internal sealed class DefaultFeigReader : IFeigReader
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  Inventory()", mSettings.TransportSettings.PortName);
+        }
 
         #endregion
 

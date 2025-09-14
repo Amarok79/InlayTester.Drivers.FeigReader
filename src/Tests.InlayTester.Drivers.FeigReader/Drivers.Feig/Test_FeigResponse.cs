@@ -20,7 +20,8 @@ public class Test_FeigResponse
             // act
             var data = new Byte[] {
                 0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
-                0x53, 0x0D, 0x30, 0x33, 0x09 };
+                0x53, 0x0D, 0x30, 0x33, 0x09,
+            };
 
             var span = BufferSpan.From(data, 0, data.Length);
 
@@ -39,7 +40,16 @@ public class Test_FeigResponse
 
             Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-            Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+            Check.That(result.Response.Data.ToArray())
+            .ContainsExactly(
+                0x03,
+                0x03,
+                0x00,
+                0x44,
+                0x53,
+                0x0D,
+                0x30
+            );
 
             Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
@@ -53,7 +63,8 @@ public class Test_FeigResponse
             var data = new Byte[] {
                 0xFF, 0xFF, 0x0D, 0x00, 0x65, 0x00, 0x03, 0x03,
                 0x00, 0x44, 0x53, 0x0D, 0x30, 0x33, 0x09, 0xFF,
-                0xFF };
+                0xFF,
+            };
 
             // act
             var result = FeigResponse.TryParse(BufferSpan.From(data, 2, 0), FeigProtocol.Standard);
@@ -103,7 +114,16 @@ public class Test_FeigResponse
 
             Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-            Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+            Check.That(result.Response.Data.ToArray())
+            .ContainsExactly(
+                0x03,
+                0x03,
+                0x00,
+                0x44,
+                0x53,
+                0x0D,
+                0x30
+            );
 
             Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
@@ -117,7 +137,8 @@ public class Test_FeigResponse
             // act
             var data = new Byte[] {
                 0x0D, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
-                0x53, 0x0D, 0x30, 0x33, /*0x09*/ 0x08 };
+                0x53, 0x0D, 0x30, 0x33, /*0x09*/ 0x08,
+            };
 
             var span = BufferSpan.From(data, 0, data.Length);
 
@@ -136,7 +157,16 @@ public class Test_FeigResponse
 
             Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-            Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+            Check.That(result.Response.Data.ToArray())
+            .ContainsExactly(
+                0x03,
+                0x03,
+                0x00,
+                0x44,
+                0x53,
+                0x0D,
+                0x30
+            );
 
             Check.That(result.Response.Crc).IsEqualTo(0x0933);
 
@@ -150,7 +180,8 @@ public class Test_FeigResponse
             // act
             var data = new Byte[] {
                 /*0x0D,*/ 0x03, 0x00, 0x65, 0x00, 0x03, 0x03, 0x00, 0x44,
-                0x53, 0x0D, 0x30, 0x33, 0x08 };
+                0x53, 0x0D, 0x30, 0x33, 0x08,
+            };
 
             var span = BufferSpan.From(data, 0, data.Length);
 
@@ -169,7 +200,8 @@ public class Test_FeigResponse
             // act
             var data = new Byte[] {
                 0x02, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03,
-                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, 0x69 };
+                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, 0x69,
+            };
 
             var span = BufferSpan.From(data, 0, data.Length);
 
@@ -188,7 +220,16 @@ public class Test_FeigResponse
 
             Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-            Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+            Check.That(result.Response.Data.ToArray())
+            .ContainsExactly(
+                0x03,
+                0x03,
+                0x00,
+                0x44,
+                0x53,
+                0x0D,
+                0x30
+            );
 
             Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
@@ -202,7 +243,8 @@ public class Test_FeigResponse
             var data = new Byte[] {
                 0xFF, 0xFF, 0x02, 0x00, 0x0F, 0x00, 0x65, 0x00,
                 0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30, 0x74,
-                0x69, 0xFF, 0xFF };
+                0x69, 0xFF, 0xFF,
+            };
 
             // act
             var result = FeigResponse.TryParse(BufferSpan.From(data, 2, 0), FeigProtocol.Advanced);
@@ -252,7 +294,16 @@ public class Test_FeigResponse
 
             Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-            Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+            Check.That(result.Response.Data.ToArray())
+            .ContainsExactly(
+                0x03,
+                0x03,
+                0x00,
+                0x44,
+                0x53,
+                0x0D,
+                0x30
+            );
 
             Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
@@ -266,7 +317,8 @@ public class Test_FeigResponse
             // act
             var data = new Byte[] {
                 0x02, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03,
-                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, /*0x69*/ 0x68 };
+                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, /*0x69*/ 0x68,
+            };
 
             var span = BufferSpan.From(data, 0, data.Length);
 
@@ -285,7 +337,16 @@ public class Test_FeigResponse
 
             Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-            Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0D, 0x30);
+            Check.That(result.Response.Data.ToArray())
+            .ContainsExactly(
+                0x03,
+                0x03,
+                0x00,
+                0x44,
+                0x53,
+                0x0D,
+                0x30
+            );
 
             Check.That(result.Response.Crc).IsEqualTo(0x6974);
 
@@ -299,7 +360,8 @@ public class Test_FeigResponse
             // act
             var data = new Byte[] {
                 /*0x02*/ 0xFF, 0x00, 0x0F, 0x00, 0x65, 0x00, 0x03, 0x03,
-                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, 0x68 };
+                0x00, 0x44, 0x53, 0x0D, 0x30, 0x74, 0x68,
+            };
 
             var span = BufferSpan.From(data, 0, data.Length);
 

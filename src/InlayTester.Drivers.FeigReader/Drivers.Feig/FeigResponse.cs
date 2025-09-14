@@ -79,10 +79,14 @@ public sealed class FeigResponse
     public static FeigParseResult TryParse(in BufferSpan span, FeigProtocol protocol)
     {
         if (protocol == FeigProtocol.Advanced)
+        {
             return _TryParseAdvancedProtocolFrame(span);
+        }
 
         if (protocol == FeigProtocol.Standard)
+        {
             return _TryParseStandardProtocolFrame(span);
+        }
 
         throw new NotSupportedException($"Protocol {protocol} not supported!");
     }
@@ -90,17 +94,23 @@ public sealed class FeigResponse
     private static FeigParseResult _TryParseAdvancedProtocolFrame(in BufferSpan span)
     {
         if (span.Count < 8)
+        {
             return FeigParseResult.MoreDataNeeded();
+        }
 
         if (span[0] != 0x02)
+        {
             return FeigParseResult.FrameError();
+        }
 
         var lenHigh     = span[1];
         var lenLow      = span[2];
         var frameLength = (lenHigh << 8) | lenLow;
 
         if (span.Count < frameLength)
+        {
             return FeigParseResult.MoreDataNeeded();
+        }
 
         var address = span[3];
         var command = span[4];
@@ -124,7 +134,9 @@ public sealed class FeigResponse
         };
 
         if (crc != calcCrc)
+        {
             return FeigParseResult.ChecksumError(response);
+        }
 
         return FeigParseResult.Success(response);
     }
@@ -132,15 +144,21 @@ public sealed class FeigResponse
     private static FeigParseResult _TryParseStandardProtocolFrame(in BufferSpan span)
     {
         if (span.Count < 6)
+        {
             return FeigParseResult.MoreDataNeeded();
+        }
 
         var frameLength = span[0];
 
         if (frameLength < 6)
+        {
             return FeigParseResult.FrameError();
+        }
 
         if (span.Count < frameLength)
+        {
             return FeigParseResult.MoreDataNeeded();
+        }
 
         var address = span[1];
         var command = span[2];
@@ -164,7 +182,9 @@ public sealed class FeigResponse
         };
 
         if (crc != calcCrc)
+        {
             return FeigParseResult.ChecksumError(response);
+        }
 
         return FeigParseResult.Success(response);
     }

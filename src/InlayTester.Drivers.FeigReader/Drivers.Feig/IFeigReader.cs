@@ -18,8 +18,8 @@ namespace InlayTester.Drivers.Feig;
 public interface IFeigReader : IDisposable
 {
     /// <summary>
-    ///     Opens the transport (serial connection) to the Feig RFID reader. The transport can be opened and closed
-    ///     multiple times.
+    ///     Opens the transport (serial connection) to the Feig RFID reader. The transport can be opened
+    ///     and closed multiple times.
     /// </summary>
     /// 
     /// <exception cref="ObjectDisposedException">
@@ -34,8 +34,8 @@ public interface IFeigReader : IDisposable
     void Open();
 
     /// <summary>
-    ///     Closes the transport (serial connection) to the Feig RFID reader. The transport can be opened and closed
-    ///     multiple times.
+    ///     Closes the transport (serial connection) to the Feig RFID reader. The transport can be opened
+    ///     and closed multiple times.
     /// </summary>
     /// 
     /// <exception cref="ObjectDisposedException">
@@ -46,20 +46,21 @@ public interface IFeigReader : IDisposable
 
     /// <summary>
     ///     Performs a transfer operation by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method doesn't
-    ///     throw exceptions for timeout or failed transfer operations. Instead, a result object providing detailed
-    ///     information about the transfer operation is returned.
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method
+    ///     doesn't throw exceptions for timeout or failed transfer operations. Instead, a result object
+    ///     providing detailed information about the transfer operation is returned.
     /// </summary>
     /// 
     /// <param name="request">
     ///     The request to send to the reader.
     /// </param>
     /// <param name="protocol">
-    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global setting is
-    ///     used.
+    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global
+    ///     setting is used.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -84,9 +85,9 @@ public interface IFeigReader : IDisposable
 
     /// <summary>
     ///     Performs a transfer operation by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method doesn't
-    ///     throw exceptions for timeout or failed transfer operations. Instead, a result object providing detailed
-    ///     information about the transfer operation is returned.
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. This method
+    ///     doesn't throw exceptions for timeout or failed transfer operations. Instead, a result object
+    ///     providing detailed information about the transfer operation is returned.
     /// </summary>
     /// 
     /// <param name="command">
@@ -96,7 +97,8 @@ public interface IFeigReader : IDisposable
     ///     (Optional) The data associated with the command that should be sent to the reader.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -122,16 +124,16 @@ public interface IFeigReader : IDisposable
 
     /// <summary>
     ///     Executes the supplied command by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. These methods throws
-    ///     appropriate exceptions for timeout, cancellation or failed operations.
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These
+    ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
     /// <param name="request">
     ///     The request to send to the reader.
     /// </param>
     /// <param name="protocol">
-    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global setting is
-    ///     used.
+    ///     (Optional) The protocol to use in communication with the reader. If not specified, the global
+    ///     setting is used.
     /// </param>
     /// <param name="timeout">
     ///     (Optional) The timeout for this operation. If not specified, the global timeout is used.
@@ -153,10 +155,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task<FeigResponse> Execute(
         FeigRequest request,
@@ -167,8 +171,8 @@ public interface IFeigReader : IDisposable
 
     /// <summary>
     ///     Executes the supplied command by sending a request to the reader/module and then waits for a
-    ///     corresponding response from the reader/module or for timeout, whatever comes first. These methods throws
-    ///     appropriate exceptions for timeout, cancellation or failed operations.
+    ///     corresponding response from the reader/module or for timeout, whatever comes first. These
+    ///     methods throws appropriate exceptions for timeout, cancellation or failed operations.
     /// </summary>
     /// 
     /// <param name="command">
@@ -178,7 +182,8 @@ public interface IFeigReader : IDisposable
     ///     (Optional) The data associated with the command that should be sent to the reader.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -197,10 +202,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task<FeigResponse> Execute(
         FeigCommand command,
@@ -211,20 +218,22 @@ public interface IFeigReader : IDisposable
 
 
     /// <summary>
-    ///     Tests whether communication to RFID reader is working. This method sends a 'Baud Rate Detection' command
-    ///     request to the reader to determine whether communication is working. This method doesn't throw exceptions
-    ///     for communication errors.
+    ///     Tests whether communication to RFID reader is working. This method sends a 'Baud Rate
+    ///     Detection' command request to the reader to determine whether communication is working. This
+    ///     method doesn't throw exceptions for communication errors.
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
     /// </param>
     /// 
     /// <returns>
-    ///     True, if the communication test succeeded; otherwise False. In case of cancellation, False is returned.
+    ///     True, if the communication test succeeded; otherwise False. In case of cancellation, False is
+    ///     returned.
     /// </returns>
     /// 
     /// <exception cref="ObjectDisposedException">
@@ -240,7 +249,8 @@ public interface IFeigReader : IDisposable
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -259,21 +269,24 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task ResetCPU(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders which are
-    ///     within the antenna field of the reader will be reset to their base setting. After an RF Reset a
-    ///     transponder which is located within the field has to be re-selected.
+    ///     The RF-field of the Reader antenna is switched off for approx. 6 ms. Thus, all transponders
+    ///     which are within the antenna field of the reader will be reset to their base setting. After an
+    ///     RF Reset a transponder which is located within the field has to be re-selected.
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -292,10 +305,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task ResetRF(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
@@ -304,11 +319,13 @@ public interface IFeigReader : IDisposable
     /// </summary>
     /// 
     /// <param name="flag">
-    ///     A value indicating which RF field should switch on or off. Specify 0x00 to switch off all antennas and
-    ///     0x01 to switch on the first antenna. Look up more information in the reader's manual.
+    ///     A value indicating which RF field should switch on or off. Specify 0x00 to switch off all
+    ///     antennas and 0x01 to switch on the first antenna. Look up more information in the reader's
+    ///     manual.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -327,10 +344,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task SwitchRF(Byte flag, TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
@@ -339,7 +358,8 @@ public interface IFeigReader : IDisposable
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -362,10 +382,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task<FeigSoftwareInfo> GetSoftwareInfo(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
@@ -381,7 +403,8 @@ public interface IFeigReader : IDisposable
     ///     The location of the block to read from, either EEPROM or RAM.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -407,10 +430,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task<BufferSpan> ReadConfiguration(
         Int32 block,
@@ -433,7 +458,8 @@ public interface IFeigReader : IDisposable
     ///     The data of the configuration block; must be exactly 14 bytes.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -458,10 +484,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task WriteConfiguration(
         Int32 block,
@@ -476,7 +504,8 @@ public interface IFeigReader : IDisposable
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -495,10 +524,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task SaveConfigurations(TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
@@ -510,7 +541,8 @@ public interface IFeigReader : IDisposable
     ///     The configuration block to save.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -532,10 +564,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task SaveConfiguration(Int32 block, TimeSpan? timeout = null, CancellationToken cancellationToken = default);
 
@@ -547,7 +581,8 @@ public interface IFeigReader : IDisposable
     ///     The location of the block to reset, either EEPROM or RAM.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -566,10 +601,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task ResetConfigurations(
         FeigBlockLocation location,
@@ -588,7 +625,8 @@ public interface IFeigReader : IDisposable
     ///     The location of the block to reset, either EEPROM or RAM.
     /// </param>
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -610,10 +648,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task ResetConfiguration(
         Int32 block,
@@ -627,7 +667,8 @@ public interface IFeigReader : IDisposable
     /// </summary>
     /// 
     /// <param name="timeout">
-    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is used.
+    ///     (Optional) The timeout for this transfer operation. If not specified, the global timeout is
+    ///     used.
     /// </param>
     /// <param name="cancellationToken">
     ///     (Optional) A cancellation token that can be used to cancel the transfer operation.
@@ -650,10 +691,12 @@ public interface IFeigReader : IDisposable
     ///     The operation '(request)' has been canceled.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because of a communication error. Received corrupted '(response)'.
+    ///     The operation '(request)' failed because of a communication error. Received corrupted
+    ///     '(response)'.
     /// </exception>
     /// <exception cref="FeigException">
-    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received '(response)'.
+    ///     The operation '(request)' failed because the reader returned error code '(error)'. Received
+    ///     '(response)'.
     /// </exception>
     Task<(FeigTransponder[] Transponders, FeigResponse Response)> Inventory(
         TimeSpan? timeout = null,

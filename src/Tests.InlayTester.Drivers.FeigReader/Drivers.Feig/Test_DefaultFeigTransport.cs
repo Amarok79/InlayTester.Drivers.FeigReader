@@ -152,7 +152,9 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
+                        {
                             Assert.Fail("Received unknown data");
+                        }
                     }
                 );
 
@@ -173,7 +175,16 @@ public class Test_DefaultFeigTransport
 
                 Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                Check.That(result.Response.Data.ToArray())
+                .ContainsExactly(
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0d,
+                    0x30
+                );
             }
         }
     }
@@ -214,14 +225,37 @@ public class Test_DefaultFeigTransport
                         if (data[0] == 0x02 && data[1] == 0x00 && data[2] == 0x07 && data[3] == 0xff &&
                             data[4] == 0x65 && data[5] == 0x6e && data[6] == 0x61)
                         {
-                            transportB.Send(BufferSpan.From(0x02, 0x00, 0x0f, 0x00, 0x65, 0x00, 0x03, 0x03));
+                            transportB.Send(
+                                BufferSpan.From(
+                                    0x02,
+                                    0x00,
+                                    0x0f,
+                                    0x00,
+                                    0x65,
+                                    0x00,
+                                    0x03,
+                                    0x03
+                                )
+                            );
 
                             Thread.Sleep(100);
 
-                            transportB.Send(BufferSpan.From(0x00, 0x44, 0x53, 0x0d, 0x30, 0x74, 0x69));
+                            transportB.Send(
+                                BufferSpan.From(
+                                    0x00,
+                                    0x44,
+                                    0x53,
+                                    0x0d,
+                                    0x30,
+                                    0x74,
+                                    0x69
+                                )
+                            );
                         }
                         else
+                        {
                             Assert.Fail("Received unknown data");
+                        }
                     }
                 );
 
@@ -242,7 +276,16 @@ public class Test_DefaultFeigTransport
 
                 Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
-                Check.That(result.Response.Data.ToArray()).ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                Check.That(result.Response.Data.ToArray())
+                .ContainsExactly(
+                    0x03,
+                    0x03,
+                    0x00,
+                    0x44,
+                    0x53,
+                    0x0d,
+                    0x30
+                );
             }
         }
     }
@@ -306,7 +349,9 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
+                        {
                             Assert.Fail("Received unknown data");
+                        }
                     }
                 );
 
@@ -387,7 +432,9 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
+                        {
                             Assert.Fail("Received unknown data");
+                        }
                     }
                 );
 
@@ -472,7 +519,9 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
+                        {
                             Assert.Fail("Received unknown data");
+                        }
                     }
                 );
 
@@ -549,7 +598,9 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
+                        {
                             Assert.Fail("Received unknown data");
+                        }
                     }
                 );
 
@@ -634,7 +685,9 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
+                        {
                             Assert.Fail("Received unknown data");
+                        }
                     }
                 );
 
@@ -715,7 +768,9 @@ public class Test_DefaultFeigTransport
                             );
                         }
                         else
+                        {
                             Assert.Fail("Received unknown data");
+                        }
                     }
                 );
 
@@ -739,7 +794,15 @@ public class Test_DefaultFeigTransport
                     Check.That(result.Response.Status).IsEqualTo(FeigStatus.OK);
 
                     Check.That(result.Response.Data.ToArray())
-                        .ContainsExactly(0x03, 0x03, 0x00, 0x44, 0x53, 0x0d, 0x30);
+                    .ContainsExactly(
+                        0x03,
+                        0x03,
+                        0x00,
+                        0x44,
+                        0x53,
+                        0x0d,
+                        0x30
+                    );
                 }
             }
         }

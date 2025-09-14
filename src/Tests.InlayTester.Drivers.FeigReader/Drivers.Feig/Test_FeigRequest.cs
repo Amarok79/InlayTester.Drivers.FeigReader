@@ -48,7 +48,15 @@ public class Test_FeigRequest
         var frame = req.ToBufferSpan();
 
         // assert
-        Check.That(frame.ToArray()).ContainsExactly(0x06, 0x12, 0x80, 0x07, 0xe5, 0x80);
+        Check.That(frame.ToArray())
+        .ContainsExactly(
+            0x06,
+            0x12,
+            0x80,
+            0x07,
+            0xe5,
+            0x80
+        );
 
         Check.That(req.ToString()).IsEqualTo("Address: 18, Command: ReadConfiguration, Data: 07");
     }
@@ -72,7 +80,14 @@ public class Test_FeigRequest
         var frame = req.ToBufferSpan();
 
         // assert
-        Check.That(frame.ToArray()).ContainsExactly(0x05, 0xFF, 0x65, 0xE5, 0xCB);
+        Check.That(frame.ToArray())
+        .ContainsExactly(
+            0x05,
+            0xFF,
+            0x65,
+            0xE5,
+            0xCB
+        );
 
         Check.That(req.ToString()).IsEqualTo("Address: 255, Command: GetSoftwareVersion, Data: <empty>");
     }
@@ -98,7 +113,17 @@ public class Test_FeigRequest
         var frame = req.ToBufferSpan(FeigProtocol.Advanced);
 
         // assert
-        Check.That(frame.ToArray()).ContainsExactly(0x02, 0x00, 0x08, 0x12, 0x80, 0x07, 0xA0, 0x2D);
+        Check.That(frame.ToArray())
+        .ContainsExactly(
+            0x02,
+            0x00,
+            0x08,
+            0x12,
+            0x80,
+            0x07,
+            0xA0,
+            0x2D
+        );
 
         Check.That(req.ToString()).IsEqualTo("Address: 18, Command: ReadConfiguration, Data: 07");
     }
@@ -122,7 +147,16 @@ public class Test_FeigRequest
         var frame = req.ToBufferSpan(FeigProtocol.Advanced);
 
         // assert
-        Check.That(frame.ToArray()).ContainsExactly(0x02, 0x00, 0x07, 0xFF, 0x65, 0x6E, 0x61);
+        Check.That(frame.ToArray())
+        .ContainsExactly(
+            0x02,
+            0x00,
+            0x07,
+            0xFF,
+            0x65,
+            0x6E,
+            0x61
+        );
 
         Check.That(req.ToString()).IsEqualTo("Address: 255, Command: GetSoftwareVersion, Data: <empty>");
     }

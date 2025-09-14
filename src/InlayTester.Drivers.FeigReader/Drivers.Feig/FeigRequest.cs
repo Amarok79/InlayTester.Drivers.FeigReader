@@ -14,7 +14,8 @@ namespace InlayTester.Drivers.Feig;
 public sealed class FeigRequest
 {
     /// <summary>
-    ///     The address of the device. The reader can be addressed via address 255 at any time. Defaults to 255.
+    ///     The address of the device. The reader can be addressed via address 255 at any time. Defaults to
+    ///     255.
     /// </summary>
     public Byte Address { get; set; } = 0xFF;
 
@@ -62,10 +63,14 @@ public sealed class FeigRequest
     public BufferSpan ToBufferSpan(FeigProtocol protocol = FeigProtocol.Standard)
     {
         if (protocol == FeigProtocol.Standard)
+        {
             return _ToStandardProtocolFrame();
+        }
 
         if (protocol == FeigProtocol.Advanced)
+        {
             return _ToAdvancedProtocolFrame();
+        }
 
         throw new NotSupportedException($"Protocol {protocol} not supported!");
     }
@@ -80,7 +85,13 @@ public sealed class FeigRequest
         frame[1] = Address;
         frame[2] = (Byte)Command;
 
-        Buffer.BlockCopy(Data.Buffer, Data.Offset, frame, 3, Data.Count);
+        Buffer.BlockCopy(
+            Data.Buffer,
+            Data.Offset,
+            frame,
+            3,
+            Data.Count
+        );
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 
@@ -101,7 +112,13 @@ public sealed class FeigRequest
         frame[3] = Address;
         frame[4] = (Byte)Command;
 
-        Buffer.BlockCopy(Data.Buffer, Data.Offset, frame, 5, Data.Count);
+        Buffer.BlockCopy(
+            Data.Buffer,
+            Data.Offset,
+            frame,
+            5,
+            Data.Count
+        );
 
         var crc = FeigChecksum.Calculate(BufferSpan.From(frame, 0, frameLength - 2));
 

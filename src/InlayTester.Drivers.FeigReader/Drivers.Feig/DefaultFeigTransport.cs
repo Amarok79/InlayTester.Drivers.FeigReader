@@ -69,7 +69,8 @@ internal sealed class DefaultFeigTransport : IFeigTransport
     }
 
     /// <summary>
-    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+    ///     resources.
     /// </summary>
     public void Dispose()
     {
@@ -104,7 +105,9 @@ internal sealed class DefaultFeigTransport : IFeigTransport
                     #region (logging)
 
                     if (mLogger.IsEnabled(LogLevel.Information))
+                    {
                         mLogger.LogInformation("[{PortName}]  CANCELED", mSettings.PortName);
+                    }
 
                     #endregion
 
@@ -156,7 +159,9 @@ internal sealed class DefaultFeigTransport : IFeigTransport
             #region (logging)
 
             if (mLogger.IsEnabled(LogLevel.Information))
+            {
                 mLogger.LogInformation("[{PortName}]  SENT      {Request}", mSettings.PortName, mRequest);
+            }
 
             #endregion
 
@@ -172,20 +177,30 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         lock (mSyncThis)
         {
             if (mCompletionSource.Task.IsCompleted)
+            {
                 _IgnoreReceivedData(data);
+            }
             else
             {
                 mReceiveBuffer = mReceiveBuffer.Append(data);
                 var result = FeigResponse.TryParse(mReceiveBuffer, mProtocol);
 
                 if (result.Status == FeigParseStatus.MoreDataNeeded)
+                {
                     _WaitForMoreData();
+                }
                 else if (result.Status is FeigParseStatus.FrameError or FeigParseStatus.ChecksumError)
+                {
                     _CompleteWithError(result);
+                }
                 else if (result.Response!.Command != mRequest!.Command)
+                {
                     _CompleteWithUnexpectedResponse(result);
+                }
                 else
+                {
                     _CompleteWithSuccess(result);
+                }
             }
         }
     }
@@ -236,7 +251,9 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         }
 
         if (mLogger.IsEnabled(LogLevel.Trace))
+        {
             mLogger.LogTrace("[{PortName}]  COMMERR", mSettings.PortName);
+        }
 
         #endregion
 
@@ -250,7 +267,9 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  UNEXPECT  {Response}", mSettings.PortName, result.Response);
+        }
 
         #endregion
 
@@ -264,7 +283,9 @@ internal sealed class DefaultFeigTransport : IFeigTransport
         #region (logging)
 
         if (mLogger.IsEnabled(LogLevel.Information))
+        {
             mLogger.LogInformation("[{PortName}]  RECEIVED  {Response}", mSettings.PortName, result.Response);
+        }
 
         #endregion
 
