@@ -16,9 +16,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Amarok.Contracts" Version="6.0.0" />
-        <PackageReference Include="InlayTester.Shared.Transports" Version="6.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
+        <PackageReference Include="Amarok.Contracts" Version="7.1.0" />
+        <PackageReference Include="InlayTester.Shared.Transports" Version="6.3.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     </ItemGroup>
 

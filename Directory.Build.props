@@ -15,6 +15,10 @@
         <Copyright>Copyright (c) 2018, Olaf Kober</Copyright>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <CheckEolTargetFramework>False</CheckEolTargetFramework>
+        <SuppressTfmSupportBuildWarnings>True</SuppressTfmSupportBuildWarnings>
+    </PropertyGroup>
 
     <PropertyGroup>
         <RootDir>$([MSBuild]::NormalizeDirectory($(MSBuildThisFileDirectory)))</RootDir>
